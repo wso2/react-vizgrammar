@@ -1,6 +1,6 @@
 import React from 'react';
 import VizG from './Components/VizG';
-
+import Perf from 'react-addons-perf';
 
 
 
@@ -44,7 +44,7 @@ export default class App extends React.Component {
 
     singleAreaChartConfig2 = {
         x: 'rpm',
-        charts: [{type: 'area', y: 'torque',color:'EngineType', mode:'stacked' }],
+        charts: [{type: 'area', y: 'torque',color:'EngineType' }],
         maxLength: 30,
         width: 700,
         height: 450,
