@@ -375,8 +375,8 @@ export default class VizG extends React.Component {
                 <div style={{width: '20%', display:'inline',float:'right'}}>
                     <VictoryLegend
                         containerComponent={<VictoryContainer responsive={true}/>}
-                        height={this.state.height}
-
+                        
+                        width={300}
                         title="Legend"
                         centerTitle
 
