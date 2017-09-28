@@ -36,7 +36,6 @@
  */
 
 
-import React from 'react';
 import {
     VictoryChart,
     VictoryGroup,
@@ -49,8 +48,10 @@ import {
     VictoryPortal,
     VictoryTooltip,
     VictoryContainer,
-    VictoryVoronoiContainer
+    VictoryVoronoiContainer,
+    VictoryLegend
 } from 'victory';
+import React from 'react';
 // import AreaMarkSeries from './AreaMarkSeries';
 
 
@@ -71,7 +72,10 @@ export default class VizG extends React.Component {
             xScale: 'linear',
             initialized: false,
             orientation: 'bottom',
-
+            width: props.width || props.config.width || 800,
+            height: props.height || props.config.height || 450,
+            multiDimensional: false,
+            nOfCategories: 2
         };
 
         this._sortAndPopulateDataSet = this._sortAndPopulateDataSet.bind(this);
@@ -105,12 +109,16 @@ export default class VizG extends React.Component {
      */
     _sortAndPopulateDataSet(props) {
         let {metadata, config, data} = props;
-        let {dataSets, initialized, orientation, chartArray, xScale} = this.state;
+        let {dataSets, initialized, orientation, chartArray, xScale, multiDimensional} = this.state;
 
+        if (config.charts.length > 1) {
+            multiDimensional = true;
+        }
         //if x is defined it's either line,bar or area or geo chart
         if (config.x) {
             let xIndex = metadata.names.indexOf(config.x);
             xScale = metadata.types[xIndex] === 'time' ? 'time' : xScale;
+
             config.charts.map((chart, chartIndex) => {
 
                 orientation = orientation === 'left' ? orientation : (chart.orientation || 'bottom');
@@ -122,8 +130,11 @@ export default class VizG extends React.Component {
                         dataSetNames: {},
                         mode: chart.mode,
                         orientation: chart.orientation,
-                        colorScale: Array.isArray(chart.colorScale) ? chart.colorScale : this._getColorRangeArray(chart.colorScale || 'category10')
+                        colorScale: Array.isArray(chart.colorScale) ? chart.colorScale : this._getColorRangeArray(chart.colorScale || 'category10'),
+                        colorIndex: 0
                     });
+
+
                 }
                 data.map((datum, datIndex) => {
                     let dataSetName = metadata.names[yIndex];
@@ -144,16 +155,16 @@ export default class VizG extends React.Component {
 
                     // console.info(chartArray[chartIndex].dataSetNames);
                     if (!chartArray[chartIndex].dataSetNames.hasOwnProperty(dataSetName)) {
-                        chartArray[chartIndex].dataSetNames[dataSetName] = null;
+                        if (chartArray[chartIndex].colorIndex >= chartArray[chartIndex].colorScale.length) {
+                            chartArray[chartIndex].colorIndex = 0;
+                        }
 
                         if (chart.colorDomain) {
                             let colorIn = chart.colorDomain.indexOf(dataSetName);
-                            if (colorIn > -1) {
-                                chartArray[chartIndex].dataSetNames[dataSetName] = Array.isArray(chart.colorScale) ?
-                                    (colorIn > chart.colorDomain.length ? chart.colorDomain[0] : chart.colorDomain[colorIn]) : VizG._getColorFromSchemaOrdinal(chart.colorScale || 'category10', colorIn);
-                            }
+                            chartArray[chartIndex].dataSetNames[dataSetName] = colorIn >= 0 ? (colorIn < chartArray[chartIndex].colorScale.length ? chartArray[chartIndex].colorScale[colorIn] : chartArray[chartIndex].colorScale[chartArray[chartIndex].colorIndex++] ) : chartArray[chartIndex].colorScale[chartArray[chartIndex].colorIndex++];
+                        } else {
+                            chartArray[chartIndex].dataSetNames[dataSetName] = chartArray[chartIndex].colorScale[chartArray[chartIndex].colorIndex++];
                         }
-
                     }
 
                 });
@@ -168,7 +179,9 @@ export default class VizG extends React.Component {
             chartArray: chartArray,
             xScale: xScale,
             orientation: orientation,
-            initialized: initialized
+            initialized: initialized,
+            multiDimensional: multiDimensional,
+
         });
 
 
@@ -229,226 +242,149 @@ export default class VizG extends React.Component {
 
     render() {
         let {metadata, config} = this.props;
-        let {chartArray, dataSets, orientation, xScale} = this.state;
+        let {chartArray, dataSets, barCharts, orientation, xScale, multiDimensional, nOfCategories, width} = this.state;
         let chartComponents = [];
         let legendItems = [];
 
         chartArray.map((chart, chartIndex) => {
+            let lineCharts = [];
+            let areaCharts = [];
+            let barcharts = [];
+
+
             switch (chart.type) {
                 case 'line':
-                    // console.info(Object.keys(chart.dataSetNames));
-                    chartComponents.push(
-                        [
+                    Object.keys(chart.dataSetNames).map((dataSetName) => {
+                        legendItems.push({ name: dataSetName, symbol: { fill: chart.dataSetNames[dataSetName] } });
+                        lineCharts.push(
                             <VictoryGroup
-                                colorScale={chart.colorScale}
-
+                                key={`chart-${chartIndex}-${chart.type}-${dataSetName}`}
+                                data={dataSets[dataSetName]}
+                                color={chart.dataSetNames[dataSetName]}
                             >
-                                {Object.keys(chart.dataSetNames).map((dataSetName) => {
-                                    return (
-                                        <VictoryLine
-                                            interpolation={chart.mode}
-                                            key={`chart-${chartIndex}-line-${dataSetName}`}
-                                            data={dataSets[dataSetName]}
-
-                                            color={chart.dataSetNames[dataSetName]}
-                                        />
-
-                                    );
-                                })}
-                            </VictoryGroup>,
-                            <VictoryGroup
-                                colorScale={chart.colorScale}
-
-                            >
-                                {Object.keys(chart.dataSetNames).map((dataSetName) => {
-                                    return (
-                                        <VictoryScatter
-                                            key={`chart-${chartIndex}-lineScatter-${dataSetName}`}
-                                            data={dataSets[dataSetName]}
-                                            style={{data: {fillOpacity: 0.5}}}
-                                            color={chart.dataSetNames[dataSetName]}
-                                            label={(d)=>d.y}
-                                            labelComponent={<VictoryTooltip/>}
-                                        />
-
-                                    );
-                                })}
+                                <VictoryLine/>
+                                <VictoryPortal>
+                                    <VictoryScatter/>
+                                </VictoryPortal>
                             </VictoryGroup>
-                        ]
-                    );
+                        );
+                    });
                     break;
-                case 'bar':
-                    // console.info(Object.keys(chart.dataSetNames));
 
+                case 'area': {
+                    let areaLocal = [];
+                    Object.keys(chart.dataSetNames).map((dataSetName) => {
+                        legendItems.push({ name: dataSetName, symbol: { fill: chart.dataSetNames[dataSetName] } });
+
+                        areaLocal.push(
+                            <VictoryGroup
+                                key={`chart-${chartIndex}-${chart.type}-${dataSetName}`}
+                                data={dataSets[dataSetName]}
+                                color={chart.dataSetNames[dataSetName]}
+                                style={{data: {fillOpacity: 0.5}}}
+                            >
+                                <VictoryArea/>
+                                <VictoryPortal>
+                                    <VictoryScatter
+                                        size={2}
+                                    />
+                                </VictoryPortal>
+                            </VictoryGroup>
+                        );
+                    });
 
                     if (chart.mode === 'stacked') {
-                        chartComponents.push(
-                            <VictoryStack
-                                colorScale={chart.colorScale}
-
-                            >
-                                {Object.keys(chart.dataSetNames).map((dataSetName) => {
-                                    if (chartArray[chartIndex].dataSetNames[dataSetName]) {
-                                        return (
-                                            <VictoryBar
-                                                key={`chart-${chartIndex}-bar-${dataSetName}`}
-                                                data={dataSets[dataSetName]}
-                                                style={{data: {fill: chartArray[chartIndex].dataSetNames[dataSetName]}}}
-                                                horizontal={orientation === 'left'}
-                                            />
-                                        );
-                                    } else {
-                                        return (
-                                            <VictoryBar
-                                                key={`chart-${chartIndex}-bar-${dataSetName}`}
-                                                data={dataSets[dataSetName]}
-                                                horizontal={orientation === 'left'}
-                                            />
-                                        );
-                                    }
-
-                                })}
-
+                        areaCharts.push(
+                            <VictoryStack>
+                                {areaLocal}
                             </VictoryStack>
-                            // </VictoryGroup>
                         );
                     } else {
-                        chartComponents.push(
-                            <VictoryGroup
-                                colorScale={chart.colorScale}
-                                offset={4}
-                                style={{data: {width: 4}}}
-                            >
-                                {Object.keys(chart.dataSetNames).map((dataSetName) => {
-                                    if (chartArray[chartIndex].dataSetNames[dataSetName]) {
-                                        return (
-                                            <VictoryBar
-                                                key={`chart-${chartIndex}-bar-${dataSetName}`}
-                                                data={dataSets[dataSetName]}
-                                                style={{
-                                                    data: {
-                                                        fill: chartArray[chartIndex].dataSetNames[dataSetName],
-                                                        fillOpacity: 0.5
-                                                    }
-                                                }}
-                                                horizontal={orientation === 'left'}
-                                                containerComponent={<VictoryContainer responsive={false}/>}
-                                                width={1}
+                        areaCharts = areaCharts.concat(areaLocal);
+                    }
 
-                                            />
-                                        );
-                                    } else {
-                                        return (
-                                            <VictoryBar
-                                                key={`chart-${chartIndex}-bar-${dataSetName}`}
-                                                data={dataSets[dataSetName]}
-                                                style={{data: {fillOpacity: 0.5}}}
-                                                horizontal={orientation === 'left'}
-                                                width={1}
-                                                containerComponent={<VictoryContainer responsive={false}/>}
+                    break;
+                }
 
-                                            />
-                                        );
-                                    }
+                case 'bar': {
+                    let localBar = [];
 
-                                })}
-                            </VictoryGroup>
+                    Object.keys(chart.dataSetNames).map((dataSetName) => {
+                        legendItems.push({ name: dataSetName, symbol: { fill: chart.dataSetNames[dataSetName] } });
+                        localBar.push(
+                            <VictoryBar
+                                data={dataSets[dataSetName]}
+                                color={chart.dataSetNames[dataSetName]}
+                            />
                         );
+                    });
+
+                    if (chart.mode === 'stacked') {
+                        barcharts.push(
+                            <VictoryStack>
+                                {localBar}
+                            </VictoryStack>
+                        );
+                    } else {
+                        barcharts = barcharts.concat(localBar);
                     }
 
 
                     break;
-                case 'area':
-                    // console.info(Object.keys(chart.dataSetNames));
-                    if (chart.mode === 'stacked') {
-                        chartComponents.push(
-                            <VictoryStack
-                                colorScale={chart.colorScale}
-                            >
-
-                                {Object.keys(chart.dataSetNames).map((dataSetName) => {
-                                    return (
-                                        <VictoryGroup
-                                            key={`chart-${chartIndex}-area-${dataSetName}`}
-                                            data={dataSets[dataSetName]}
-                                        >
-                                            <VictoryArea
-                                                style={{data: {fillOpacity: 0.5}}}
-                                            />
-                                            <VictoryPortal>
-                                                <VictoryScatter
-
-                                                    size={1}
-                                                />
-                                            </VictoryPortal>
-                                        </VictoryGroup>
-                                    );
-                                })}
+                }
 
 
-                            </VictoryStack>
-                        );
-                    } else {
-                        chartComponents.push(
-                            [
-                                <VictoryGroup
-                                    colorScale={chart.colorScale}
-                                >
-                                    {Object.keys(chart.dataSetNames).map((dataSetName) => {
-                                        return (
-                                            <VictoryGroup
-                                                key={`chart-${chartIndex}-area-${dataSetName}`}
-                                                data={dataSets[dataSetName]}
-                                                color={chart.dataSetNames[dataSetName]}
-                                            >
-                                                <VictoryArea
-                                                    style={{data: {fillOpacity: 0.5}}}
-
-                                                />
-
-                                            </VictoryGroup>
-                                        );
-                                    })}
-
-                                </VictoryGroup>,
-                                <VictoryGroup
-                                    colorScale={chart.colorScale}
-                                >
-                                    {Object.keys(chart.dataSetNames).map((dataSetName) => {
-                                        return (
-                                            <VictoryGroup
-                                                key={`chart-${chartIndex}-areaScatter-${dataSetName}`}
-                                                data={dataSets[dataSetName]}
-                                                color={chart.dataSetNames[dataSetName]}
-                                            >
-                                                <VictoryScatter
-                                                    style={{data: {fillOpacity: 0.5}}}
-
-                                                />
-
-                                            </VictoryGroup>
-                                        );
-                                    })}
-
-                                </VictoryGroup>
-                            ]
-                        );
-                    }
-                    break;
             }
+
+
+            if (areaCharts.length > 0) chartComponents = chartComponents.concat(areaCharts);
+            if (lineCharts.length > 0) chartComponents = chartComponents.concat(lineCharts);
+            if (barcharts.length > 0) {
+
+                let barWidth = (width) / (config.maxLength * nOfCategories);
+
+                chartComponents.push(
+                    <VictoryGroup
+                        offset={barWidth > 2 ? barWidth - 2 : barWidth}
+                        style={{data: {width: barWidth > 2 ? barWidth - 2 : barWidth}}}
+                    >
+                        {barcharts}
+                    </VictoryGroup>
+                );
+            }
+            // chartComponents.concat(areaCharts);
+            // chartComponents.concat(lineCharts);
+            // chartComponents.push(<VictoryGroup/>)
         });
 
+        console.info(legendItems);
 
         return (
             <div>
-                <VictoryChart
-                    width={800}
-                    height={400}
-                    theme={VictoryTheme.material}
-                    container={<VictoryVoronoiContainer/>}
-                >
-                    {chartComponents}
-                </VictoryChart>
+                <div style={{float: 'left', width: '80%', display:'inline'}}>
+                    <VictoryChart
+                        width={800}
+                        height={400}
+                        theme={VictoryTheme.material}
+                        container={<VictoryVoronoiContainer/>}
+                    >
+                        {chartComponents}
+
+                    </VictoryChart>
+                </div>
+                <div style={{width: '20%', display:'inline',float:'right'}}>
+                    <VictoryLegend
+                        containerComponent={<VictoryContainer responsive={true}/>}
+                        height={this.state.height}
+
+                        title="Legend"
+                        centerTitle
+
+
+                        style={{title: {fontSize: 25 },labels:{fontSize:20}}}
+                        data={legendItems.length>0 ? legendItems : [{name:'undefined', symbol:{fill:'#333'}}]}
+                    />
+                </div>
             </div>
 
 
@@ -456,3 +392,11 @@ export default class VizG extends React.Component {
     }
 }
 
+
+VizG.propTypes = {
+    config: PropTypes.object.isRequired,
+    data: PropTypes.array.isRequired,
+    metadata: PropTypes.object.isRequired,
+    width: PropTypes.number,
+    height: PropTypes.number
+};

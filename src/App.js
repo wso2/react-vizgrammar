@@ -100,7 +100,7 @@ export default class App extends React.Component {
 
         setInterval(() => {
             // Perf.start();
-            let randomY = Math.random() * 100;
+            let randomY = (this.state.timer+7)*5;
             this.setState({
                 data: [
                     [this.state.timer, this.state.timer === 20 ? null : randomY * 2, 10, 'piston'],
