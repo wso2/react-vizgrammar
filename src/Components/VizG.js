@@ -137,7 +137,7 @@ export default class VizG extends React.Component {
                 }
 
 
-                data.map((datum, datIndex) => {
+                data.map((datum) => {
                     let dataSetName = metadata.names[yIndex];
                     if (chart.color) {
                         let colorIndex = metadata.names.indexOf(chart.color);
@@ -207,7 +207,7 @@ export default class VizG extends React.Component {
                             dataSets['scatterChart'+chartIndex].shift();
                         }
 
-                        console.info(datum[sizeIndex]);
+                        // console.info(datum[sizeIndex]);
                         
                         if(scatterPlotRange.length===0){
                             scatterPlotRange=[datum[colorIndex],datum[colorIndex]];
@@ -220,7 +220,7 @@ export default class VizG extends React.Component {
                         chartArray[chartIndex].dataSetNames['scatterChart'+chartIndex] = chartArray[chartIndex].dataSetNames['scatterChart'+chartIndex] || null;      
                     });
                 } else {
-                    data.map((datum, datIndex) => {
+                    data.map((datum) => {
                         let dataSetName = 'scatterChart'+chartIndex;
                         if (chart.color) {
                             let colorIndex = metadata.names.indexOf(chart.color);
@@ -419,7 +419,7 @@ export default class VizG extends React.Component {
                     let localBar = [];
 
                     horizontal=horizontal ? horizontal : chart.orientation==='left';
-                    let barNumber=0;
+                    
                     Object.keys(chart.dataSetNames).map((dataSetName) => {
                         legendItems.push({ name: dataSetName, symbol: { fill: chart.dataSetNames[dataSetName] } });
                         localBar.push(
@@ -435,7 +435,7 @@ export default class VizG extends React.Component {
                                 
                             />
                         );
-                        barNumber++;
+                        
                     });
 
                     if (chart.mode === 'stacked') {
