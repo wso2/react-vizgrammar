@@ -52,11 +52,7 @@ import {
     VictoryLegend
 } from 'victory';
 import React from 'react';
-// import AreaMarkSeries from './AreaMarkSeries';
-
-
 import * as d3 from 'd3';
-// import '../../node_modules/react-vis/dist/style.css';
 import PropTypes from 'prop-types';
 import {scaleLinear} from 'd3-scale';
 
@@ -132,7 +128,8 @@ export default class VizG extends React.Component {
                         mode: chart.mode,
                         orientation: chart.orientation,
                         colorScale: Array.isArray(chart.colorScale) ? chart.colorScale : this._getColorRangeArray(chart.colorScale || 'category10'),
-                        colorIndex: 0
+                        colorIndex: 0,
+                        scatterPlotRange:[]
                     });
 
 
@@ -189,7 +186,9 @@ export default class VizG extends React.Component {
                     chartArray.push({
                         type: chart.type,
                         dataSetNames: {},
-                        colorType: metadata.types[colorIndex]
+                        colorType: metadata.types[colorIndex],
+                        colorScale: Array.isArray(chart.colorScale) ? chart.colorScale : this._getColorRangeArray(chart.colorScale || 'category10'),
+                        colorIndex:0
                     });
                 }
 
@@ -200,12 +199,52 @@ export default class VizG extends React.Component {
                         dataSets['scatterChart'+chartIndex]=dataSets['scatterChart'+chartIndex] || [];
                         dataSets['scatterChart'+chartIndex].push({x:datum[xIndex],y:datum[yIndex],color:datum[colorIndex],size:datum[sizeIndex]});
 
+                        if (dataSets['scatterChart'+chartIndex].length > config.maxLength) {
+                            // console.info('check');
+                            dataSets['scatterChart'+chartIndex].shift();
+                        }
+                        
 
+
+                        chartArray[chartIndex].dataSetNames['scatterChart'+chartIndex] = chartArray[chartIndex].dataSetNames['scatterChart'+chartIndex] || null;      
                     });
-
-
                 } else {
-
+                    data.map((datum, datIndex) => {
+                        let dataSetName = 'scatterChart'+chartIndex;
+                        if (chart.color) {
+                            let colorIndex = metadata.names.indexOf(chart.color);
+                            dataSetName = colorIndex > -1 ? datum[colorIndex] : dataSetName;
+                        }
+    
+                        dataSets[dataSetName] = dataSets[dataSetName] || [];
+                        // console.info(yIndex);
+                        dataSets[dataSetName].push({x: datum[xIndex], y: datum[yIndex],size:datum[sizeIndex]});
+    
+                        // console.info(chart.maxLength);
+                        if (dataSets[dataSetName].length > config.maxLength) {
+                            // console.info('check');
+                            dataSets[dataSetName].shift();
+                        }
+    
+                        // console.info(chartArray[chartIndex].dataSetNames);
+                        if (!chartArray[chartIndex].dataSetNames.hasOwnProperty(dataSetName)) {
+                            if (chartArray[chartIndex].colorIndex >= chartArray[chartIndex].colorScale.length) {
+                                chartArray[chartIndex].colorIndex = 0;
+                            }
+    
+                            if (chart.colorDomain) {
+                                let colorIn = chart.colorDomain.indexOf(dataSetName);
+                                chartArray[chartIndex].dataSetNames[dataSetName] = colorIn >= 0 ? (colorIn < chartArray[chartIndex].colorScale.length ? chartArray[chartIndex].colorScale[colorIn] : chartArray[chartIndex].colorScale[chartArray[chartIndex].colorIndex++] ) : chartArray[chartIndex].colorScale[chartArray[chartIndex].colorIndex++];
+                            } else {
+                                chartArray[chartIndex].dataSetNames[dataSetName] = chartArray[chartIndex].colorScale[chartArray[chartIndex].colorIndex++];
+                            }
+    
+                            // chartArray[chartIndex].dataSetNames[dataSetName]=chart.fill || chartArray[chartIndex].dataSetNames[dataSetName];
+    
+    
+                        }
+    
+                    });
                 }
             });
         }
@@ -398,6 +437,17 @@ export default class VizG extends React.Component {
 
                     break;
                 }
+                case 'scatter':
+                    if(chart.colorType==='linear'){
+                        Object.keys(chart.dataSetNames).map((name)=>{
+
+                        })
+                    } else {
+
+                    }
+
+                    break;
+
 
 
             }
