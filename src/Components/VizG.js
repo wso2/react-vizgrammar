@@ -71,7 +71,8 @@ export default class VizG extends React.Component {
             width: props.width || props.config.width || 800,
             height: props.height || props.config.height || 450,
             multiDimensional: false,
-            nOfCategories: 2
+            nOfCategories: 2,
+            scatterPlotRange:[]
         };
 
         this._sortAndPopulateDataSet = this._sortAndPopulateDataSet.bind(this);
@@ -106,7 +107,7 @@ export default class VizG extends React.Component {
      */
     _sortAndPopulateDataSet(props) {
         let {metadata, config, data} = props;
-        let {dataSets, initialized, orientation, chartArray, xScale, multiDimensional} = this.state;
+        let {dataSets, initialized, orientation, chartArray, xScale, multiDimensional,scatterPlotRange} = this.state;
 
         if (config.charts.length > 1) {
             multiDimensional = true;
@@ -129,7 +130,7 @@ export default class VizG extends React.Component {
                         orientation: chart.orientation,
                         colorScale: Array.isArray(chart.colorScale) ? chart.colorScale : this._getColorRangeArray(chart.colorScale || 'category10'),
                         colorIndex: 0,
-                        scatterPlotRange:[]
+
                     });
 
 
@@ -197,13 +198,21 @@ export default class VizG extends React.Component {
                     data.map((datum)=>{
 
                         dataSets['scatterChart'+chartIndex]=dataSets['scatterChart'+chartIndex] || [];
-                        dataSets['scatterChart'+chartIndex].push({x:datum[xIndex],y:datum[yIndex],color:datum[colorIndex],size:datum[sizeIndex]});
+                        dataSets['scatterChart'+chartIndex].push({x:datum[xIndex],y:datum[yIndex],color:datum[colorIndex],amount:datum[sizeIndex]});
 
-                        if (dataSets['scatterChart'+chartIndex].length > config.maxLength) {
+                        if (dataSets['scatterChart'+chartIndex].length > chart.maxLength) {
                             // console.info('check');
                             dataSets['scatterChart'+chartIndex].shift();
                         }
+
+                        console.info(datum[sizeIndex]);
                         
+                        if(scatterPlotRange.length===0){
+                            scatterPlotRange=[datum[colorIndex],datum[colorIndex]];
+                        }else {
+                            scatterPlotRange[0]=scatterPlotRange[0]>datum[colorIndex] ? datum[colorIndex] : scatterPlotRange[0]
+                            scatterPlotRange[1]=scatterPlotRange[1]<datum[colorIndex] ? datum[colorIndex] : scatterPlotRange[1]
+                        }
 
 
                         chartArray[chartIndex].dataSetNames['scatterChart'+chartIndex] = chartArray[chartIndex].dataSetNames['scatterChart'+chartIndex] || null;      
@@ -260,6 +269,7 @@ export default class VizG extends React.Component {
             orientation: orientation,
             initialized: initialized,
             multiDimensional: multiDimensional,
+            scatterPlotRange:scatterPlotRange
 
         });
 
@@ -322,7 +332,7 @@ export default class VizG extends React.Component {
     
     render() {
         let {metadata, config} = this.props;
-        let {chartArray, dataSets, barCharts, orientation, xScale, multiDimensional, nOfCategories, width, height} = this.state;
+        let {chartArray, dataSets, orientation, xScale, multiDimensional, nOfCategories, width, height} = this.state;
         let chartComponents = [];
         let legendItems = [];
         let horizontal=false;
@@ -439,9 +449,20 @@ export default class VizG extends React.Component {
                 }
                 case 'scatter':
                     if(chart.colorType==='linear'){
-                        Object.keys(chart.dataSetNames).map((name)=>{
-
-                        })
+                        Object.keys(chart.dataSetNames).map((dataSetName)=>{
+                            chartComponents.push(
+                                <VictoryScatter
+                                    bubbleProperty='amount'
+                                    maxBubbleSize={20}
+                                    minBubbleSize={5}
+                                    style={{data:{fill:(d)=>{
+                                        {/* console.info(d3.scaleLinear().range(['#FFFFDD', '#3E9583', '#1F2D86']).domain(this.state.scatterPlotRange)(d.color)); */}
+                                        return d3.scaleLinear().range([chart.colorScale[0],chart.colorScale[1]]).domain(this.state.scatterPlotRange).interpolate(d3.interpolateHcl)(d.color);
+                                    }}}}
+                                    data={dataSets[dataSetName]}
+                                />
+                            );
+                        });
                     } else {
 
                     }
