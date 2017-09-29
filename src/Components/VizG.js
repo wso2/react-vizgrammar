@@ -71,7 +71,7 @@ export default class VizG extends React.Component {
             width: props.width || props.config.width || 800,
             height: props.height || props.config.height || 450,
             multiDimensional: false,
-            nOfCategories: 2,
+            nOfCategories: 1,
             scatterPlotRange:[]
         };
 
@@ -107,7 +107,7 @@ export default class VizG extends React.Component {
      */
     _sortAndPopulateDataSet(props) {
         let {metadata, config, data} = props;
-        let {dataSets, initialized, orientation, chartArray, xScale, multiDimensional,scatterPlotRange} = this.state;
+        let {dataSets, initialized, orientation, chartArray, xScale, multiDimensional,scatterPlotRange,nOfCategories} = this.state;
 
         if (config.charts.length > 1) {
             multiDimensional = true;
@@ -171,7 +171,9 @@ export default class VizG extends React.Component {
 
 
                     }
-
+                    // console.info(chartArray[chartIndex].dataSetNames);
+                    nOfCategories=Object.keys(chartArray[chartIndex].dataSetNames).length > nOfCategories ?  Object.keys(chartArray[chartIndex].dataSetNames).length : nOfCategories; 
+                    // console.info(nOfCategories);
                 });
                 // console.info('awa');
 
@@ -227,7 +229,7 @@ export default class VizG extends React.Component {
     
                         dataSets[dataSetName] = dataSets[dataSetName] || [];
                         // console.info(yIndex);
-                        dataSets[dataSetName].push({x: datum[xIndex], y: datum[yIndex],size:datum[sizeIndex]});
+                        dataSets[dataSetName].push({x: datum[xIndex], y: datum[yIndex], amount:datum[sizeIndex]});
     
                         // console.info(chart.maxLength);
                         if (dataSets[dataSetName].length > config.maxLength) {
@@ -269,8 +271,8 @@ export default class VizG extends React.Component {
             orientation: orientation,
             initialized: initialized,
             multiDimensional: multiDimensional,
-            scatterPlotRange:scatterPlotRange
-
+            scatterPlotRange:scatterPlotRange,
+            nOfCategories:nOfCategories
         });
 
 
@@ -357,7 +359,7 @@ export default class VizG extends React.Component {
                                 <VictoryLine/>
                                 <VictoryPortal>
                                     <VictoryScatter 
-                                        labels={(d)=> `${config.x}:${d.y}\n${config.charts[chartIndex].y}:${d.y}`}
+                                        labels={(d)=> `${config.x}:${d.x}\n${config.charts[chartIndex].y}:${d.y}`}
                                         labelComponent={
                                             <VictoryTooltip
                                                 orientation='bottom'
@@ -386,7 +388,7 @@ export default class VizG extends React.Component {
                                 <VictoryArea/>
                                 <VictoryPortal>
                                     <VictoryScatter
-                                        labels={(d)=> `${config.x}:${d.y}\n${config.charts[chartIndex].y}:${d.y}`}
+                                        labels={(d)=> `${config.x}:${d.x}\n${config.charts[chartIndex].y}:${d.y}`}
                                         labelComponent={
                                             <VictoryTooltip
                                                 orientation='bottom'
@@ -407,6 +409,7 @@ export default class VizG extends React.Component {
                         );
                     } else {
                         areaCharts = areaCharts.concat(areaLocal);
+                        
                     }
 
                     break;
@@ -416,12 +419,12 @@ export default class VizG extends React.Component {
                     let localBar = [];
 
                     horizontal=horizontal ? horizontal : chart.orientation==='left';
-
+                    let barNumber=0;
                     Object.keys(chart.dataSetNames).map((dataSetName) => {
                         legendItems.push({ name: dataSetName, symbol: { fill: chart.dataSetNames[dataSetName] } });
                         localBar.push(
                             <VictoryBar
-                                labels={(d)=> `${config.x}:${d.y}\n${config.charts[chartIndex].y}:${d.y}`}
+                                labels={(d)=> `${config.x}:${d.x}\n${config.charts[chartIndex].y}:${d.y}`}
                                 labelComponent={
                                     <VictoryTooltip
                                         orientation='bottom'
@@ -432,6 +435,7 @@ export default class VizG extends React.Component {
                                 
                             />
                         );
+                        barNumber++;
                     });
 
                     if (chart.mode === 'stacked') {
@@ -457,14 +461,41 @@ export default class VizG extends React.Component {
                                     minBubbleSize={5}
                                     style={{data:{fill:(d)=>{
                                         {/* console.info(d3.scaleLinear().range(['#FFFFDD', '#3E9583', '#1F2D86']).domain(this.state.scatterPlotRange)(d.color)); */}
-                                        return d3.scaleLinear().range([chart.colorScale[0],chart.colorScale[1]]).domain(this.state.scatterPlotRange).interpolate(d3.interpolateHcl)(d.color);
+                                        return d3.scaleLinear().range([chart.colorScale[0],chart.colorScale[1]]).domain(this.state.scatterPlotRange)(d.color);
                                     }}}}
                                     data={dataSets[dataSetName]}
+                                    labels={(d)=> `${config.charts[chartIndex].x}:${d.x}\n
+                                                   ${config.charts[chartIndex].y}:${d.y}\n
+                                                   ${config.charts[chartIndex].size}:${d.amount}
+                                                   ${config.charts[chartIndex].color}:${d.color}`}
+                                    labelComponent={
+                                        <VictoryTooltip
+                                            orientation='bottom'
+                                        />
+                                    }
+
                                 />
                             );
                         });
                     } else {
+                        Object.keys(chart.dataSetNames).map((dataSetName)=>{
+                            chartComponents.push(
+                                <VictoryScatter
+                                    bubbleProperty='amount'
+                                    maxBubbleSize={20}
+                                    minBubbleSize={5}
+                                    style={{data:{fill:chart.dataSetNames[dataSetName]}}}
+                                    data={dataSets[dataSetName]}
+                                    labels={(d)=> `${config.charts[chartIndex].x}:${d.x}\n${config.charts[chartIndex].y}:${d.y}\n${config.charts[chartIndex].size}:${d.amount}\n${config.charts[chartIndex].color}:${d.color}`}
+                                    labelComponent={
+                                        <VictoryTooltip
+                                            orientation='bottom'
+                                        />
+                                    }
 
+                                />
+                            );
+                        });
                     }
 
                     break;
@@ -483,15 +514,15 @@ export default class VizG extends React.Component {
         if (areaCharts.length > 0) chartComponents = chartComponents.concat(areaCharts);
         if (lineCharts.length > 0) chartComponents = chartComponents.concat(lineCharts);
         if (barcharts.length > 0) {
-
-            let barWidth = (horizontal ? height : width) / (config.maxLength * nOfCategories);
+            // console.info('bar length',barcharts.length);
+            let barWidth = (horizontal ? height : width) / (config.maxLength * barcharts.length);
             // if(!horizontal) console.info(barWidth);
             // if(multiDimensional) console.info(barcharts);
             chartComponents.push(
                 <VictoryGroup
                     horizontal={horizontal}
                     offset={barWidth<0 ? 1 : barWidth > 2 ? barWidth - 2 : barWidth}
-                    style={{data: {width: barWidth<0 ? 1 : barWidth > 2 ? barWidth - 2 : barWidth}}}
+                    style={{data: {width: barWidth < 0 ? 1 : barWidth > 2 ? barWidth - 2 : barWidth}}}
                 >
                     {barcharts}
                 </VictoryGroup>

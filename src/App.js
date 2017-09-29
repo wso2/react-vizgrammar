@@ -127,13 +127,13 @@ export default class App extends React.Component {
                 <Row media={true} chart={'line'} title={'Line Charts'} actionBar={true}>
                     <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data}/>
                 </Row>
-                <Row media={true} chart={'line'} title={'Bar Charts'} actionBar={true}>
+                <Row media={true} chart={'bar'} title={'Bar Charts'} actionBar={true}>
                     <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data}/>
                 </Row>
-                <Row media={true} chart={'line'} title={'Area Charts'} actionBar={true}>
+                <Row media={true} chart={'area'} title={'Area Charts'} actionBar={true}>
                     <VizG config={this.singleAreaChartConfig} metadata={this.metadata} data={this.state.data2}/>
                 </Row>
-                <Row media={true} chart={'line'} title={'Area Charts'} actionBar={true}>
+                <Row media={true} chart={'scatter'} title={'Area Charts'} actionBar={true}>
                     <VizG config={this.scatterPlotConfig} metadata={this.metadata} data={this.state.scatterPlot}/>
                 </Row>
                 {/* <div>
