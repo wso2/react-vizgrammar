@@ -4,6 +4,8 @@ import App from './App';
 import LineChart from './Samples/LineChartsSamples';
 import BarChart from './Samples/BarChartConfigSample';
 import AreaChart from './Samples/AreaChartConfig';
+import ScatterPlot from './Samples/ScatterPlotConfigSample';
+
 import {
     BrowserRouter as Router,
     Route,
@@ -19,6 +21,6 @@ ReactDOM.render(
         <Route exact path="/line-charts" component={LineChart}/>
         <Route exact path="/bar-charts" component={BarChart}/>
         <Route exact path="/area-charts/" component={AreaChart}/>
-        {/*<Route exact path='/scatter-charts' component={ScatterPlot}/> */}
+        <Route exact path='/scatter-charts' component={ScatterPlot}/>
     </div>
 </Router>,document.getElementById('root'));
