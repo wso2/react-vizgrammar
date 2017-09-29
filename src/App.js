@@ -1,7 +1,7 @@
 import React from 'react';
 import VizG from './Components/VizG';
 import Perf from 'react-addons-perf';
-
+import {Row} from './Samples/util';
 
 
 export default class App extends React.Component {
@@ -124,8 +124,16 @@ export default class App extends React.Component {
 
             <div>
                 <center><h1>Charting Config Samples</h1></center>
-
-                <div>
+                <Row media={true} chart={'line'} title={'Line Charts'} actionBar={true}>
+                    <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data}/>
+                </Row>
+                <Row media={true} chart={'line'} title={'Bar Charts'} actionBar={true}>
+                    <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data}/>
+                </Row>
+                <Row media={true} chart={'line'} title={'Area Charts'} actionBar={true}>
+                    <VizG config={this.singleAreaChartConfig} metadata={this.metadata} data={this.state.data2}/>
+                </Row>
+                {/* <div>
                     <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data}/>
                 </div>
                 <div>
@@ -133,7 +141,7 @@ export default class App extends React.Component {
                 </div>
                 <div>
                     <VizG config={this.singleAreaChartConfig2} metadata={this.metadata} data={this.state.data}/>
-                </div>
+                </div> */}
 
 
                 {/*<Row title="asd" chart="asd"/>*/}

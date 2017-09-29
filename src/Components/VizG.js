@@ -87,6 +87,7 @@ export default class VizG extends React.Component {
         this._sortAndPopulateDataSet(this.props);
     }
 
+    
     componentWillReceiveProps(nextProps) {
         this._sortAndPopulateDataSet(nextProps);
     }
@@ -136,6 +137,8 @@ export default class VizG extends React.Component {
 
 
                 }
+
+
                 data.map((datum, datIndex) => {
                     let dataSetName = metadata.names[yIndex];
                     if (chart.color) {
@@ -165,13 +168,50 @@ export default class VizG extends React.Component {
                         } else {
                             chartArray[chartIndex].dataSetNames[dataSetName] = chartArray[chartIndex].colorScale[chartArray[chartIndex].colorIndex++];
                         }
+
+                        chartArray[chartIndex].dataSetNames[dataSetName]=chart.fill || chartArray[chartIndex].dataSetNames[dataSetName];
+
+
                     }
 
                 });
                 // console.info('awa');
 
             });
+        } else if(config.type==='scatter'){
+            config.charts.map((chart,chartIndex)=>{
+                let xIndex = metadata.names.indexOf(chart.x);
+                let yIndex = metadata.names.indexOf(chart.y);
+                let colorIndex=metadata.names.indexOf(chart.color);
+                let sizeIndex=metadata.names.indexOf(chart.size);
+
+                if (!initialized) {
+                    chartArray.push({
+                        type: chart.type,
+                        dataSetNames: {},
+                        colorType: metadata.types[colorIndex]
+                    });
+                }
+
+
+                if(metadata.types[colorIndex]==='linear'){
+                    data.map((datum)=>{
+
+                        dataSets['scatterChart'+chartIndex]=dataSets['scatterChart'+chartIndex] || [];
+                        dataSets['scatterChart'+chartIndex].push({x:datum[xIndex],y:datum[yIndex],color:datum[colorIndex],size:datum[sizeIndex]});
+
+
+                    });
+
+
+                } else {
+
+                }
+            });
         }
+
+
+
         initialized = true;
 
         this.setState({
@@ -237,19 +277,22 @@ export default class VizG extends React.Component {
      * @private
      */
     _getFromLinearColorScale(domain, range, value) {
-        return scaleLinear().domain(domain).range(range);
+        return scaleLinear().domain(domain).range(range)(value);
     }
 
+    
     render() {
         let {metadata, config} = this.props;
-        let {chartArray, dataSets, barCharts, orientation, xScale, multiDimensional, nOfCategories, width} = this.state;
+        let {chartArray, dataSets, barCharts, orientation, xScale, multiDimensional, nOfCategories, width, height} = this.state;
         let chartComponents = [];
         let legendItems = [];
+        let horizontal=false;
+        let lineCharts = [];
+        let areaCharts = [];
+        let barcharts = [];
 
         chartArray.map((chart, chartIndex) => {
-            let lineCharts = [];
-            let areaCharts = [];
-            let barcharts = [];
+            
 
 
             switch (chart.type) {
@@ -264,7 +307,15 @@ export default class VizG extends React.Component {
                             >
                                 <VictoryLine/>
                                 <VictoryPortal>
-                                    <VictoryScatter/>
+                                    <VictoryScatter 
+                                        labels={(d)=> `${config.x}:${d.y}\n${config.charts[chartIndex].y}:${d.y}`}
+                                        labelComponent={
+                                            <VictoryTooltip
+                                                orientation='bottom'
+                                            />
+                                        }
+                                        size={(d, a) => {return a ? 20 : 6;}}
+                                    />
                                 </VictoryPortal>
                             </VictoryGroup>
                         );
@@ -286,7 +337,13 @@ export default class VizG extends React.Component {
                                 <VictoryArea/>
                                 <VictoryPortal>
                                     <VictoryScatter
-                                        size={2}
+                                        labels={(d)=> `${config.x}:${d.y}\n${config.charts[chartIndex].y}:${d.y}`}
+                                        labelComponent={
+                                            <VictoryTooltip
+                                                orientation='bottom'
+                                            />
+                                        }
+                                        size={(d, a) => {return a ? 20 : 6;}}
                                     />
                                 </VictoryPortal>
                             </VictoryGroup>
@@ -309,12 +366,21 @@ export default class VizG extends React.Component {
                 case 'bar': {
                     let localBar = [];
 
+                    horizontal=horizontal ? horizontal : chart.orientation==='left';
+
                     Object.keys(chart.dataSetNames).map((dataSetName) => {
                         legendItems.push({ name: dataSetName, symbol: { fill: chart.dataSetNames[dataSetName] } });
                         localBar.push(
                             <VictoryBar
+                                labels={(d)=> `${config.x}:${d.y}\n${config.charts[chartIndex].y}:${d.y}`}
+                                labelComponent={
+                                    <VictoryTooltip
+                                        orientation='bottom'
+                                    />
+                                }
                                 data={dataSets[dataSetName]}
                                 color={chart.dataSetNames[dataSetName]}
+                                
                             />
                         );
                     });
@@ -337,30 +403,33 @@ export default class VizG extends React.Component {
             }
 
 
-            if (areaCharts.length > 0) chartComponents = chartComponents.concat(areaCharts);
-            if (lineCharts.length > 0) chartComponents = chartComponents.concat(lineCharts);
-            if (barcharts.length > 0) {
-
-                let barWidth = (width) / (config.maxLength * nOfCategories);
-
-                chartComponents.push(
-                    <VictoryGroup
-                        offset={barWidth > 2 ? barWidth - 2 : barWidth}
-                        style={{data: {width: barWidth > 2 ? barWidth - 2 : barWidth}}}
-                    >
-                        {barcharts}
-                    </VictoryGroup>
-                );
-            }
+            
             // chartComponents.concat(areaCharts);
             // chartComponents.concat(lineCharts);
             // chartComponents.push(<VictoryGroup/>)
         });
 
-        console.info(legendItems);
+        if (areaCharts.length > 0) chartComponents = chartComponents.concat(areaCharts);
+        if (lineCharts.length > 0) chartComponents = chartComponents.concat(lineCharts);
+        if (barcharts.length > 0) {
+
+            let barWidth = (horizontal ? height : width) / (config.maxLength * nOfCategories);
+            // if(!horizontal) console.info(barWidth);
+            // if(multiDimensional) console.info(barcharts);
+            chartComponents.push(
+                <VictoryGroup
+                    horizontal={horizontal}
+                    offset={barWidth<0 ? 1 : barWidth > 2 ? barWidth - 2 : barWidth}
+                    style={{data: {width: barWidth<0 ? 1 : barWidth > 2 ? barWidth - 2 : barWidth}}}
+                >
+                    {barcharts}
+                </VictoryGroup>
+            );
+        }
+        // console.info(legendItems);
 
         return (
-            <div>
+            <div style={{overflow: 'hidden'}}>
                 <div style={{float: 'left', width: '80%', display:'inline'}}>
                     <VictoryChart
                         width={800}
@@ -375,12 +444,9 @@ export default class VizG extends React.Component {
                 <div style={{width: '20%', display:'inline',float:'right'}}>
                     <VictoryLegend
                         containerComponent={<VictoryContainer responsive={true}/>}
-                        
+                        height={this.state.height}
                         width={300}
                         title="Legend"
-                        centerTitle
-
-
                         style={{title: {fontSize: 25 },labels:{fontSize:20}}}
                         data={legendItems.length>0 ? legendItems : [{name:'undefined', symbol:{fill:'#333'}}]}
                     />
