@@ -26,12 +26,14 @@
   "homepage": "https://github.com/CharukaK/VizG#readme",
   "dependencies": {
     "d3": "^4.10.2",
+    "d3-geo": "^1.8.1",
     "d3-scale": "^1.0.6",
     "material-ui": "^0.19.2",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-router-dom": "^4.2.2",
+    "topojson-client": "^3.0.0",
     "victory": "^0.22.2"
   },
   "devDependencies": {

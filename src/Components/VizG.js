@@ -50,7 +50,8 @@ import {
     VictoryContainer,
     VictoryVoronoiContainer,
     VictoryLegend,
-    VictoryPie
+    VictoryPie,
+    VictoryLabel
 } from 'victory';
 import React from 'react';
 import * as d3 from 'd3';
@@ -95,7 +96,14 @@ export default class VizG extends React.Component {
         this._sortAndPopulateDataSet(nextProps);
     }
 
-
+    /**
+     * generates a data set for the given value
+     * @param value for data set should be generated
+     * @private
+     */
+    _getPercentDataForPieChart(value){
+        return [{x:'primary',y:value},{x:'secondary',y:100-value}]
+    }
     /**
      * Gives a range of colors that can be used in the scatter plot color range
      * @param scheme color scheme given as a string
@@ -272,7 +280,7 @@ export default class VizG extends React.Component {
                 let arcConfig=config.charts[0];
                 let xIndex=metadata.names.indexOf(arcConfig.x);
                 let colorIndex=metadata.names.indexOf(arcConfig.color);
-                if(arcConfig.color){
+                if(!config.percentage){
                     
                     if (!initialized) {
                         chartArray.push({
@@ -315,7 +323,19 @@ export default class VizG extends React.Component {
                         } 
                     });
                 } else {
-                    chartType='arc';
+                    chartType='percentage';
+                    legend=false;
+                    if (!initialized) {
+                        chartArray.push({
+                            type: arcConfig.type,
+                            colorScale: Array.isArray(arcConfig.colorScale) ? arcConfig.colorScale : this._getColorRangeArray(arcConfig.colorScale || 'category10'),
+                        });
+
+                    }
+
+                    data.map((datum)=>{
+                        dataSets=this._getPercentDataForPieChart(datum[xIndex]);
+                    });
                 }             
             } else{
                 //TODO: Table data set
@@ -570,25 +590,39 @@ export default class VizG extends React.Component {
 
                     let pieChartData=[];
                     let total=0;
-                    Object.keys(chart.dataSetNames).map((dataSetName)=>{
-                        // console.info(chart.dataSetNames[dataSetName]);
-                        legendItems.push({ name: dataSetName, symbol: { fill: chart.dataSetNames[dataSetName] } });
-                        total+=dataSets[dataSetName].y;
-                        pieChartData.push(dataSets[dataSetName]);
-                    });
+                    if(chartType!=='percentage'){
+                        Object.keys(chart.dataSetNames).map((dataSetName)=>{
+                            // console.info(chart.dataSetNames[dataSetName]);
+                            legendItems.push({ name: dataSetName, symbol: { fill: chart.dataSetNames[dataSetName] } });
+                            total+=dataSets[dataSetName].y;
+                            pieChartData.push(dataSets[dataSetName]);
+                        });
+                    }
 
                     chartComponents.push(
-                        <VictoryPie
-                            height={height}
-                            width={height}
-                            data={pieChartData}
-                            labelComponent={<VictoryTooltip width={50} height={25} />}
-                            labels={(d)=>`${d.x} : ${(d.y/total)*100}%`}
-                            style={{labels:{fontSize:9}}}
-                            labelRadius={10}
-                            innerRadius={chart.mode==='donut' ? height/2 : 0}
-                            randomUpdater={randomUpdater}
-                        />
+                        <svg width='100%' height={'100%'} viewBox={`0 0 ${height} ${width}`}>
+                            <VictoryPie
+                                height={height}
+                                width={width}
+                                colorScale={chart.colorScale}
+                                data={chartType==='percentage'? dataSets : pieChartData}
+                                labelComponent={<VictoryTooltip width={50} height={25} />}
+                                labels={chartType==='percentage'? null : (d)=>`${d.x} : ${(d.y/total)*100}%`}
+                                style={{labels:{fontSize:9}}}
+                                labelRadius={10}
+                                innerRadius={chart.mode==='donut' || chartType==='percentage' ? height/2.5 : 0}
+                                randomUpdater={randomUpdater}
+                            />
+                            {
+                                chartType==='percentage'?
+                                    <VictoryLabel
+                                        textAnchor="middle" verticalAnchor="middle"
+                                        x={height/2} y={width/2}
+                                        text={`${Math.round(dataSets[0].y)}%`}
+                                        style={{ fontSize: 45 }}
+                                    />:null
+                            }
+                        </svg>
                     );
                     // console.info(pieChartData);
                     // console.info(chartComponents);
