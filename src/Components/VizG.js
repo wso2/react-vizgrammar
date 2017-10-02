@@ -49,7 +49,8 @@ import {
     VictoryTooltip,
     VictoryContainer,
     VictoryVoronoiContainer,
-    VictoryLegend
+    VictoryLegend,
+    VictoryPie
 } from 'victory';
 import React from 'react';
 import * as d3 from 'd3';
@@ -72,7 +73,9 @@ export default class VizG extends React.Component {
             height: props.height || props.config.height || 450,
             multiDimensional: false,
             nOfCategories: 1,
-            scatterPlotRange:[]
+            scatterPlotRange:[],
+            legend:true,
+            chartType:'general'
         };
 
         this._sortAndPopulateDataSet = this._sortAndPopulateDataSet.bind(this);
@@ -107,7 +110,7 @@ export default class VizG extends React.Component {
      */
     _sortAndPopulateDataSet(props) {
         let {metadata, config, data} = props;
-        let {dataSets, initialized, orientation, chartArray, xScale, multiDimensional,scatterPlotRange,nOfCategories} = this.state;
+        let {dataSets, initialized, orientation, chartArray, legend, xScale, multiDimensional,scatterPlotRange,nOfCategories,chartType} = this.state;
 
         if (config.charts.length > 1) {
             multiDimensional = true;
@@ -197,6 +200,7 @@ export default class VizG extends React.Component {
 
 
                 if(metadata.types[colorIndex]==='linear'){
+                    legend=false;
                     data.map((datum)=>{
 
                         dataSets['scatterChart'+chartIndex]=dataSets['scatterChart'+chartIndex] || [];
@@ -258,6 +262,69 @@ export default class VizG extends React.Component {
                     });
                 }
             });
+        } else {
+            if(config.charts[0].type==='arc'){
+                chartType='arc';
+                //TODO: pie charts
+                let arcConfig=config.charts[0];
+                let xIndex=metadata.names.indexOf(arcConfig.x);
+                let colorIndex=metadata.names.indexOf(arcConfig.color);
+                if(arcConfig.color){
+                    
+                    if (!initialized) {
+                        chartArray.push({
+                            type: arcConfig.type,
+                            dataSetNames: {},
+                            mode: arcConfig.mode,
+                            colorScale: Array.isArray(arcConfig.colorScale) ? arcConfig.colorScale : this._getColorRangeArray(arcConfig.colorScale || 'category10'),
+                            colorIndex: 0,
+    
+                        });
+                        
+                        data.map((datum)=>{
+                            let dataSetName=datum[colorIndex];
+
+                            if(dataSets[dataSetName]){
+                                dataSets[dataSetName].y+=datum[xIndex];
+                            }else {
+                                chartArray[0].colorIndex= chartArray[0].colorIndex>=chartArray[0].colorScale.length ? 0 : chartArray[0].colorIndex;
+                                if(arcConfig.colorDomain){
+                                    let colorDomIndex=arcConfig.colorDomain.indexOf(dataSetName);
+
+                                    if(colorDomIndex>-1 && colorDomIndex<chartArray[0].colorScale.length ){
+                                        dataSets[dataSetName]={x:dataSetName,y:datum[xIndex],fill:chartArray[0].colorScale[colorDomIndex]};
+                                        chartArray[0].dataSetNames[dataSetName]=chartArray[0].colorIndex++;
+                                    }else {
+                                        dataSets[dataSetName]={x:dataSetName,y:datum[xIndex],fill:chartArray[0].colorScale[chartArray[0].colorIndex]};
+                                    }
+
+                                }else {
+                                    dataSets[dataSetName]={x:dataSetName,y:datum[xIndex],fill:chartArray[0].colorScale[chartArray[0].colorIndex]};
+                                }
+
+                                if(!chartArray[0].dataSetNames[dataSetName]){
+                                    chartArray[0].dataSetNames[dataSetName]=chartArray[0].colorScale[chartArray[0].colorIndex++];
+                                }
+
+                            }
+
+
+
+
+
+
+                            
+                        });
+
+                        
+                    }
+                } else {
+                    chartType='arc';
+                }             
+            } else{
+                //TODO: Table data set
+                chartType='table';
+            }
         }
 
 
@@ -272,7 +339,9 @@ export default class VizG extends React.Component {
             initialized: initialized,
             multiDimensional: multiDimensional,
             scatterPlotRange:scatterPlotRange,
-            nOfCategories:nOfCategories
+            nOfCategories:nOfCategories,
+            legend:legend,
+            chartType:chartType
         });
 
 
@@ -334,7 +403,7 @@ export default class VizG extends React.Component {
     
     render() {
         let {metadata, config} = this.props;
-        let {chartArray, dataSets, orientation, xScale, multiDimensional, nOfCategories, width, height} = this.state;
+        let {chartArray, dataSets, orientation, xScale, multiDimensional, width, height,legend,chartType} = this.state;
         let chartComponents = [];
         let legendItems = [];
         let horizontal=false;
@@ -499,7 +568,34 @@ export default class VizG extends React.Component {
                     }
 
                     break;
+                
+                case 'arc':{
 
+                    let pieChartData=[];
+                    let total=0;
+                    Object.keys(chart.dataSetNames).map((dataSetName)=>{
+                        console.info(chart.dataSetNames[dataSetName]);
+                        legendItems.push({ name: dataSetName, symbol: { fill: chart.dataSetNames[dataSetName] } });
+                        total+=dataSets[dataSetName].y;
+                        pieChartData.push(dataSets[dataSetName]);
+                    });
+
+                    chartComponents.push(
+                        <VictoryPie
+                            height={height}
+                            width={height}
+                            data={pieChartData}
+                            labelComponent={<VictoryTooltip width={50} height={25} />}
+                            labels={(d)=>`${d.x} : ${(d.y/total)*100}%`}
+                            style={{labels:{fontSize:9}}}
+                            labelRadius={10}
+                            innerRadius={chart.mode==='donut' ? height/2 : 0}
+                        />
+                    );
+                    // console.info(pieChartData);
+                    // console.info(chartComponents);
+                    break;
+                }
 
 
             }
@@ -515,7 +611,7 @@ export default class VizG extends React.Component {
         if (lineCharts.length > 0) chartComponents = chartComponents.concat(lineCharts);
         if (barcharts.length > 0) {
             // console.info('bar length',barcharts.length);
-            let barWidth = (horizontal ? height : width) / (config.maxLength * barcharts.length);
+            let barWidth = (horizontal ? width : height) / (config.maxLength * barcharts.length);
             // if(!horizontal) console.info(barWidth);
             // if(multiDimensional) console.info(barcharts);
             chartComponents.push(
@@ -532,27 +628,36 @@ export default class VizG extends React.Component {
 
         return (
             <div style={{overflow: 'hidden'}}>
-                <div style={{float: 'left', width: '80%', display:'inline'}}>
-                    <VictoryChart
-                        width={800}
-                        height={400}
-                        theme={VictoryTheme.material}
-                        container={<VictoryVoronoiContainer/>}
-                    >
-                        {chartComponents}
+                <div style={{float: 'left', width: legend ? '80%':'100%', display:'inline'}}>
+                    {
+                        chartType==='general' ?
+                            <VictoryChart
+                                width={800}
+                                height={400}
+                                theme={VictoryTheme.material}
+                                container={<VictoryVoronoiContainer/>}
+                            >
+                                {chartComponents}
 
-                    </VictoryChart>
+                            </VictoryChart>:
+                            chartComponents
+
+                    }
                 </div>
-                <div style={{width: '20%', display:'inline',float:'right'}}>
-                    <VictoryLegend
-                        containerComponent={<VictoryContainer responsive={true}/>}
-                        height={this.state.height}
-                        width={300}
-                        title="Legend"
-                        style={{title: {fontSize: 25 },labels:{fontSize:20}}}
-                        data={legendItems.length>0 ? legendItems : [{name:'undefined', symbol:{fill:'#333'}}]}
-                    />
-                </div>
+                {
+                    legend ?
+                    <div style={{width: '20%', display:'inline',float:'right'}}>
+                        <VictoryLegend
+                            containerComponent={<VictoryContainer responsive={true}/>}
+                            height={this.state.height}
+                            width={300}
+                            title="Legend"
+                            style={{title: {fontSize: 25 },labels:{fontSize:20}}}
+                            data={legendItems.length>0 ? legendItems : [{name:'undefined', symbol:{fill:'#333'}}]}
+                        />
+                    </div>:
+                    null
+                }
             </div>
 
 
