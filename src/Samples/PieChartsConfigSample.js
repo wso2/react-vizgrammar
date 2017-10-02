@@ -16,29 +16,25 @@ export default class LineChartConfigSample extends React.Component {
     }
 
     metadata = {
-        names: ['rpm', 'torque', 'horsepower','EngineType','weight' ],
-        types: ['linear', 'linear', 'linear', 'ordinal','linear']
+        names: ['rpm', 'torque', 'horsepower', 'EngineType', 'weight'],
+        types: ['linear', 'linear', 'linear', 'ordinal', 'linear']
     };
 
 
     /*****************[START] Chart Config******************/
     lineChartConfig = {
-        x: 'rpm',
-        charts: [{type: 'line', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston']}],
-        maxLength: 7,
-        width: 700,
-        height: 450,
-        // animation: true
+        charts: [{type: 'arc', x: 'torque', color: 'EngineType', mode: 'donut'}],
+        width: 300,
+        height: 250
     };
 
-    singleLineChartConfig = {
-        x: 'rpm',
-        charts: [{type: 'line', y: 'horsepower', fill: '#2ca02c'}, {type: 'line', y: 'torque', fill: '#ff7f0e'}],
-        maxLength: 7,
-        width: 700,
-        height: 450,
-        // animation: true
+    configPie = {
+        charts : [{type: 'arc',  x : 'torque', color : 'EngineType', mode: 'pie'}],
+        width: 400,
+        height: 300
     };
+
+
 
     /*****************[END] Chart Config******************/
 
@@ -48,7 +44,9 @@ export default class LineChartConfigSample extends React.Component {
             this.setState({
                 data: [
                     [this.state.timer, this.state.timer === 20 ? null : Math.random() * 100, 10, 'piston'],
-                    [this.state.timer, Math.random() * 100, 10, 'rotary']
+                    [this.state.timer, Math.random() * 100, 10, 'rotary'],
+                    [this.state.timer, this.state.timer === 20 ? null : Math.random() * 100, 10, 'piston2'],
+                    [this.state.timer, Math.random() * 100, 10, 'rotary2']
                 ],
                 data2: [
 
@@ -65,36 +63,33 @@ export default class LineChartConfigSample extends React.Component {
         return (
             <div>
                 <center><h1>Line Chart Config Samples</h1></center>
-                <Row title="Group MultiLine Chart Sample" chart="line" media={true} actionBar={false}>
+                <Row title="Donut Chart Sample" chart="line" media={true} actionBar={false}>
                     <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data}/>
                     <br/><br/>
-                    <div style={{display:'block'}}>
+                    <div style={{display: 'block'}}>
                        <pre>
-                           {'{\n' +
-                           '\tx: \'rpm\',\n' +
-                           '\tcharts: [\n\t    { type: \'line\', y: \'torque\', color: \'EngineType\',colorDomain:[\'\',\'\',\'piston\']}\n\t],\n' +
-                           '\tmaxLength: 7,\n' +
-                           '\twidth: 700,\n' +
-                           '\theight: 450,\n' +
-                           '\tanimation:true\n}'
+                           {
+                               '{\n' +
+                               '\tcharts : [{type:"arc", x:"torque", color:"EngineType", mode:"donut"}],\n' +
+                               '\twidth: 300,\n' +
+                               '\theight: 250\n' +
+                               '}'
 
                            }
                        </pre>
                     </div>
                 </Row>
-                <Row title="Multi Line Chart Sample" chart="line" media={true} actionBar={false}>
-                    <VizG config={this.singleLineChartConfig} metadata={this.metadata} data={this.state.data2}/>
+                <Row title="Pie Chart Sample" chart="line" media={true} actionBar={false}>
+                    <VizG config={this.configPie} metadata={this.metadata} data={this.state.data}/>
                     <br/>
                     <div>
                        <pre>
-                           {'{\n' +
-                           '\tx: \'rpm\',\n' +
-                           '\tcharts: [\n\t    { type: \'line\', y: \'horsepower\', fill:\'#2ca02c\'}\n\t    { type: \'line\', y: \'torque\', fill:\'#ff7f0e\'}\n\t],\n' +
-                           '\tmaxLength: 7,\n' +
-                           '\twidth: 700,\n' +
-                           '\theight: 450,\n' +
-                           '\tanimation:true\n}'
-
+                           {
+                               '{\n' +
+                               '\tcharts : [{type: "arc",  x : "torque", color : "EngineType", mode: "pie"}],\n' +
+                               '\twidth: 400,\n' +
+                               '\theight: 300\n' +
+                               '}'
                            }
                        </pre>
                     </div>

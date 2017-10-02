@@ -75,7 +75,8 @@ export default class VizG extends React.Component {
             nOfCategories: 1,
             scatterPlotRange:[],
             legend:true,
-            chartType:'general'
+            chartType:'general',
+            randomUpdater:0
         };
 
         this._sortAndPopulateDataSet = this._sortAndPopulateDataSet.bind(this);
@@ -84,11 +85,13 @@ export default class VizG extends React.Component {
 
 
     componentDidMount() {
+        console.info('cdm');
         this._sortAndPopulateDataSet(this.props);
     }
 
     
     componentWillReceiveProps(nextProps) {
+        
         this._sortAndPopulateDataSet(nextProps);
     }
 
@@ -110,7 +113,7 @@ export default class VizG extends React.Component {
      */
     _sortAndPopulateDataSet(props) {
         let {metadata, config, data} = props;
-        let {dataSets, initialized, orientation, chartArray, legend, xScale, multiDimensional,scatterPlotRange,nOfCategories,chartType} = this.state;
+        let {dataSets, initialized, orientation, randomUpdater, chartArray, legend, xScale, multiDimensional,scatterPlotRange,nOfCategories,chartType} = this.state;
 
         if (config.charts.length > 1) {
             multiDimensional = true;
@@ -279,45 +282,38 @@ export default class VizG extends React.Component {
                             colorScale: Array.isArray(arcConfig.colorScale) ? arcConfig.colorScale : this._getColorRangeArray(arcConfig.colorScale || 'category10'),
                             colorIndex: 0,
     
-                        });
-                        
-                        data.map((datum)=>{
-                            let dataSetName=datum[colorIndex];
+                        });                        
+                    }
 
-                            if(dataSets[dataSetName]){
-                                dataSets[dataSetName].y+=datum[xIndex];
-                            }else {
-                                chartArray[0].colorIndex= chartArray[0].colorIndex>=chartArray[0].colorScale.length ? 0 : chartArray[0].colorIndex;
-                                if(arcConfig.colorDomain){
-                                    let colorDomIndex=arcConfig.colorDomain.indexOf(dataSetName);
+                    data.map((datum)=>{
+                        randomUpdater++;
+                        let dataSetName=datum[colorIndex];
 
-                                    if(colorDomIndex>-1 && colorDomIndex<chartArray[0].colorScale.length ){
-                                        dataSets[dataSetName]={x:dataSetName,y:datum[xIndex],fill:chartArray[0].colorScale[colorDomIndex]};
-                                        chartArray[0].dataSetNames[dataSetName]=chartArray[0].colorIndex++;
-                                    }else {
-                                        dataSets[dataSetName]={x:dataSetName,y:datum[xIndex],fill:chartArray[0].colorScale[chartArray[0].colorIndex]};
-                                    }
+                        if(dataSets[dataSetName]){
+                            dataSets[dataSetName].y+=datum[xIndex];
+                            
+                        }else {
+                            chartArray[0].colorIndex= chartArray[0].colorIndex>=chartArray[0].colorScale.length ? 0 : chartArray[0].colorIndex;
+                            if(arcConfig.colorDomain){
+                                let colorDomIndex=arcConfig.colorDomain.indexOf(dataSetName);
 
+                                if(colorDomIndex>-1 && colorDomIndex<chartArray[0].colorScale.length ){
+                                    dataSets[dataSetName]={x:dataSetName,y:datum[xIndex],fill:chartArray[0].colorScale[colorDomIndex]};
+                                    chartArray[0].dataSetNames[dataSetName]=chartArray[0].colorIndex++;
                                 }else {
                                     dataSets[dataSetName]={x:dataSetName,y:datum[xIndex],fill:chartArray[0].colorScale[chartArray[0].colorIndex]};
                                 }
 
-                                if(!chartArray[0].dataSetNames[dataSetName]){
-                                    chartArray[0].dataSetNames[dataSetName]=chartArray[0].colorScale[chartArray[0].colorIndex++];
-                                }
-
+                            }else {
+                                dataSets[dataSetName]={x:dataSetName,y:datum[xIndex],fill:chartArray[0].colorScale[chartArray[0].colorIndex]};
                             }
 
+                            if(!chartArray[0].dataSetNames[dataSetName]){
+                                chartArray[0].dataSetNames[dataSetName]=chartArray[0].colorScale[chartArray[0].colorIndex++];
+                            }
 
-
-
-
-
-                            
-                        });
-
-                        
-                    }
+                        } 
+                    });
                 } else {
                     chartType='arc';
                 }             
@@ -341,7 +337,8 @@ export default class VizG extends React.Component {
             scatterPlotRange:scatterPlotRange,
             nOfCategories:nOfCategories,
             legend:legend,
-            chartType:chartType
+            chartType:chartType,
+            randomUpdater:randomUpdater
         });
 
 
@@ -403,14 +400,14 @@ export default class VizG extends React.Component {
     
     render() {
         let {metadata, config} = this.props;
-        let {chartArray, dataSets, orientation, xScale, multiDimensional, width, height,legend,chartType} = this.state;
+        let {chartArray, dataSets, orientation, randomUpdater, xScale, multiDimensional, width, height,legend,chartType} = this.state;
         let chartComponents = [];
         let legendItems = [];
         let horizontal=false;
         let lineCharts = [];
         let areaCharts = [];
         let barcharts = [];
-
+        console.info('hj');
         chartArray.map((chart, chartIndex) => {
             
 
@@ -574,7 +571,7 @@ export default class VizG extends React.Component {
                     let pieChartData=[];
                     let total=0;
                     Object.keys(chart.dataSetNames).map((dataSetName)=>{
-                        console.info(chart.dataSetNames[dataSetName]);
+                        // console.info(chart.dataSetNames[dataSetName]);
                         legendItems.push({ name: dataSetName, symbol: { fill: chart.dataSetNames[dataSetName] } });
                         total+=dataSets[dataSetName].y;
                         pieChartData.push(dataSets[dataSetName]);
@@ -590,6 +587,7 @@ export default class VizG extends React.Component {
                             style={{labels:{fontSize:9}}}
                             labelRadius={10}
                             innerRadius={chart.mode==='donut' ? height/2 : 0}
+                            randomUpdater={randomUpdater}
                         />
                     );
                     // console.info(pieChartData);
