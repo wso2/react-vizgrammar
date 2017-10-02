@@ -76,6 +76,12 @@ export default class App extends React.Component {
         height: 450
     };
 
+    pieChartConfig={
+        charts : [{type:'arc', x:'torque', color:'EngineType', mode:'donut'}],
+        width: 300,
+        height: 250
+    };
+
     /*****************[END] Chart Config******************/
 
 
@@ -133,8 +139,11 @@ export default class App extends React.Component {
                 <Row media={true} chart={'area'} title={'Area Charts'} actionBar={true}>
                     <VizG config={this.singleAreaChartConfig} metadata={this.metadata} data={this.state.data2}/>
                 </Row>
-                <Row media={true} chart={'scatter'} title={'Area Charts'} actionBar={true}>
+                <Row media={true} chart={'scatter'} title={'Scatter Plots'} actionBar={true}>
                     <VizG config={this.scatterPlotConfig} metadata={this.metadata} data={this.state.scatterPlot}/>
+                </Row>
+                <Row media={true} chart={'pie'} title={'Pie Charts'} actionBar={true}>
+                    <VizG config={this.pieChartConfig} metadata={this.metadata} data={this.state.data}/>
                 </Row>
                 {/* <div>
                     <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data}/>
