@@ -34,6 +34,16 @@ export default class LineChartConfigSample extends React.Component {
         height: 300
     };
 
+    configT = {
+        charts : [{type: 'arc',  x : 'torque', color : 'EngineType'}],
+
+        tooltip: {'enabled':false},
+        legend:false, percentage:true, colorScale:['steelblue', '#80ccff'],
+        width: 300,
+        height: 300
+    }
+
+
 
 
     /*****************[END] Chart Config******************/
@@ -95,6 +105,22 @@ export default class LineChartConfigSample extends React.Component {
                     </div>
                 </Row>
 
+                <Row title="Donut Chart Sample" chart="line" media={true} actionBar={false}>
+                    <VizG config={this.configT} metadata={this.metadata} data={this.state.data}/>
+                    <br/><br/>
+                    <div style={{display: 'block'}}>
+                       <pre>
+                           {
+                               '{\n' +
+                               '\tcharts : [{type:"arc", x:"torque", color:"EngineType", mode:"donut"}],\n' +
+                               '\twidth: 300,\n' +
+                               '\theight: 250\n' +
+                               '}'
+
+                           }
+                       </pre>
+                    </div>
+                </Row>
 
                 <Row title="Sample Data Set" chart="line">
                     <div>
