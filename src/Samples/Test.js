@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {VictoryPie} from 'victory';
-import Map from '../Components/MapComponents/App';
+// import Map from '../Components/MapComponents/App';
 
 class Test extends Component {
 
@@ -20,7 +20,6 @@ class Test extends Component {
         // console.log("AAAA"+this.state.data)
         return (
             <div>
-                <Map />
             </div>
         );
     }
