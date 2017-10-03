@@ -21,6 +21,8 @@ export default class AreaChartConfigSample extends React.Component {
         types: ['linear', 'linear', 'linear', 'ordinal']
     };
 
+    //interval id
+    interval_id=null;
 
     /*****************[START] Chart Config******************/
     areaChartConfig = {
@@ -56,7 +58,7 @@ export default class AreaChartConfigSample extends React.Component {
 
 
     componentDidMount() {
-        setInterval(() => {
+        this.interval_id=setInterval(() => {
             this.setState({
                 data: [
                     [this.state.timer, this.state.timer === 20 ? null : Math.random() * 100, 10, 'piston'],
@@ -72,6 +74,10 @@ export default class AreaChartConfigSample extends React.Component {
         }, 2000);
     }
 
+
+    componentWillUnmount(){
+        clearInterval(this.interval_id);
+    }
 
     render() {
         return (
