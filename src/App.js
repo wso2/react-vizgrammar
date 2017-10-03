@@ -23,6 +23,9 @@ export default class App extends React.Component {
     };
 
 
+    //interval id
+    interval_id=null;
+
     /*****************[START] Chart Config******************/
     lineChartConfig = {
         x: 'rpm',
@@ -104,7 +107,7 @@ export default class App extends React.Component {
         //     console.info('haha');
         // }, 60000 * 15);
 
-        setInterval(() => {
+        this.interval_id=setInterval(() => {
             // Perf.start();
             let randomY = (this.state.timer+7)*5;
             this.setState({
@@ -124,7 +127,10 @@ export default class App extends React.Component {
         }, 500);
     }
 
-    //<ChartWrapper config={this.areaChartConfig} metadata={this.metadata} data={this.state.data}/>
+    componentWillUnmount() {
+        clearInterval(this.interval_id);
+    }
+        //<ChartWrapper config={this.areaChartConfig} metadata={this.metadata} data={this.state.data}/>
     render() {
         return (
 
