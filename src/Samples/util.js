@@ -60,7 +60,7 @@ export class Row extends React.Component{
                         </CardMedia>
                         <CardActions>
                             <FlatButton label={this.state.actionBar?'View Usage' : ' '} onClick={()=>{
-                                window.location.href=this.state.chart+'-charts';
+                                window.location.href='#'+this.state.chart+'-charts';
                             }}/>
                             {/*<FlatButton label="Action2" />*/}
                         </CardActions>
