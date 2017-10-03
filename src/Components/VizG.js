@@ -609,10 +609,10 @@ export default class VizG extends React.Component {
                                 width={width}
                                 colorScale={chart.colorScale}
                                 data={chartType==='percentage'? dataSets : pieChartData}
-                                labelComponent={<VictoryTooltip width={50} height={25} />}
-                                labels={chartType==='percentage'? '' : (d)=>`${d.x} : ${(d.y/total)*100}%`}
-                                style={{labels:{fontSize:9}}}
-                                labelRadius={10}
+                                labelComponent={chartType==='percentage'? <VictoryLabel text={''}/>:<VictoryTooltip width={50} height={25} />}
+                                labels={chartType==='percentage'? '' : (d)=>`${d.x} : ${((d.y/total)*100).toFixed(2)}%`}
+                                style={{labels:{fontSize:6}}}
+                                labelRadius={40}
                                 innerRadius={chart.mode==='donut' || chartType==='percentage' ? height/2.5 : 0}
                                 randomUpdater={randomUpdater}
                             />

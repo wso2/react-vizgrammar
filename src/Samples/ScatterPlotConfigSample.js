@@ -17,6 +17,8 @@ export default class ScatterChartConfigSample extends React.Component {
         };
     }
 
+    interval_id=null;
+
     metadata = {
         names: ['rpm', 'torque', 'horsepower', 'weight', 'EngineType'],
         types: ['linear', 'linear', 'linear', 'linear', 'ordinal']
@@ -46,7 +48,7 @@ export default class ScatterChartConfigSample extends React.Component {
 
 
     componentDidMount() {
-        setInterval(() => {
+        this.interval_id=setInterval(() => {
             this.setState({
                 scatterPlot:[[this.state.timer,Math.random()*100,Math.random()*10,Math.random()*100,'piston'],[this.state.timer,Math.random()*100,Math.random()*10,Math.random()*100,'rotary']],
                 timer: this.state.timer + 1
@@ -55,6 +57,9 @@ export default class ScatterChartConfigSample extends React.Component {
         }, 2000);
     }
 
+    componentWillUnmount(){
+        clearInterval(this.interval_id);
+    }
 
     render() {
         return (

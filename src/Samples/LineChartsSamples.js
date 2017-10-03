@@ -15,6 +15,8 @@ export default class LineChartConfigSample extends React.Component {
         };
     }
 
+    interval_id=null;
+
     metadata = {
         names: ['rpm', 'torque', 'horsepower','EngineType','weight' ],
         types: ['linear', 'linear', 'linear', 'ordinal','linear']
@@ -44,7 +46,7 @@ export default class LineChartConfigSample extends React.Component {
 
 
     componentDidMount() {
-        setInterval(() => {
+        this.interval_id=setInterval(() => {
             this.setState({
                 data: [
                     [this.state.timer, this.state.timer === 20 ? null : Math.random() * 100, 10, 'piston'],
@@ -60,6 +62,9 @@ export default class LineChartConfigSample extends React.Component {
         }, 2000);
     }
 
+    componentWillUnmount(){
+        clearInterval(this.interval_id);
+    }
 
     render() {
         return (

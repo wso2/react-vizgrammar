@@ -9,7 +9,7 @@ import PieChart from './Samples/PieChartsConfigSample';
 import Test from './Samples/Test.js';
 
 import {
-    HashRouter as Router,
+    BrowserRouter as Router,
     Route
 } from 'react-router-dom';
 
