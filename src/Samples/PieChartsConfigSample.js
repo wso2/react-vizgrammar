@@ -35,13 +35,13 @@ export default class LineChartConfigSample extends React.Component {
     };
 
     configT = {
-        charts : [{type: 'arc',  x : 'torque', color : 'EngineType'}],
+        charts : [{type: 'arc',  x : 'torque', color : 'EngineType',colorScale:['steelblue', '#80ccff'],}],
 
         tooltip: {'enabled':false},
         legend:false, percentage:true, colorScale:['steelblue', '#80ccff'],
         width: 300,
         height: 300
-    }
+    };
 
 
 

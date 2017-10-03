@@ -33,6 +33,7 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-router-dom": "^4.2.2",
+    "react-simple-maps": "^0.8.3",
     "topojson-client": "^3.0.0",
     "victory": "^0.22.2"
   },

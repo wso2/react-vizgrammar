@@ -128,70 +128,74 @@ export default class VizG extends React.Component {
         }
         //if x is defined it's either line,bar or area or geo chart
         if (config.x) {
-            let xIndex = metadata.names.indexOf(config.x);
-            xScale = metadata.types[xIndex] === 'time' ? 'time' : xScale;
+            if(config.charts[0].type!=='map'){
+                let xIndex = metadata.names.indexOf(config.x);
+                xScale = metadata.types[xIndex] === 'time' ? 'time' : xScale;
 
-            config.charts.map((chart, chartIndex) => {
+                config.charts.map((chart, chartIndex) => {
 
-                orientation = orientation === 'left' ? orientation : (chart.orientation || 'bottom');
+                    orientation = orientation === 'left' ? orientation : (chart.orientation || 'bottom');
 
-                let yIndex = metadata.names.indexOf(chart.y);
-                if (!initialized) {
-                    chartArray.push({
-                        type: chart.type,
-                        dataSetNames: {},
-                        mode: chart.mode,
-                        orientation: chart.orientation,
-                        colorScale: Array.isArray(chart.colorScale) ? chart.colorScale : this._getColorRangeArray(chart.colorScale || 'category10'),
-                        colorIndex: 0,
+                    let yIndex = metadata.names.indexOf(chart.y);
+                    if (!initialized) {
+                        chartArray.push({
+                            type: chart.type,
+                            dataSetNames: {},
+                            mode: chart.mode,
+                            orientation: chart.orientation,
+                            colorScale: Array.isArray(chart.colorScale) ? chart.colorScale : this._getColorRangeArray(chart.colorScale || 'category10'),
+                            colorIndex: 0,
 
+                        });
+
+
+                    }
+
+
+                    data.map((datum) => {
+                        let dataSetName = metadata.names[yIndex];
+                        if (chart.color) {
+                            let colorIndex = metadata.names.indexOf(chart.color);
+                            dataSetName = colorIndex > -1 ? datum[colorIndex] : dataSetName;
+                        }
+
+                        dataSets[dataSetName] = dataSets[dataSetName] || [];
+                        // console.info(yIndex);
+                        dataSets[dataSetName].push({x: datum[xIndex], y: datum[yIndex]});
+
+                        // console.info(chart.maxLength);
+                        if (dataSets[dataSetName].length > config.maxLength) {
+                            // console.info('check');
+                            dataSets[dataSetName].shift();
+                        }
+
+                        // console.info(chartArray[chartIndex].dataSetNames);
+                        if (!chartArray[chartIndex].dataSetNames.hasOwnProperty(dataSetName)) {
+                            if (chartArray[chartIndex].colorIndex >= chartArray[chartIndex].colorScale.length) {
+                                chartArray[chartIndex].colorIndex = 0;
+                            }
+
+                            if (chart.colorDomain) {
+                                let colorIn = chart.colorDomain.indexOf(dataSetName);
+                                chartArray[chartIndex].dataSetNames[dataSetName] = colorIn >= 0 ? (colorIn < chartArray[chartIndex].colorScale.length ? chartArray[chartIndex].colorScale[colorIn] : chartArray[chartIndex].colorScale[chartArray[chartIndex].colorIndex++] ) : chartArray[chartIndex].colorScale[chartArray[chartIndex].colorIndex++];
+                            } else {
+                                chartArray[chartIndex].dataSetNames[dataSetName] = chartArray[chartIndex].colorScale[chartArray[chartIndex].colorIndex++];
+                            }
+
+                            chartArray[chartIndex].dataSetNames[dataSetName]=chart.fill || chartArray[chartIndex].dataSetNames[dataSetName];
+
+
+                        }
+                        // console.info(chartArray[chartIndex].dataSetNames);
+                        nOfCategories=Object.keys(chartArray[chartIndex].dataSetNames).length > nOfCategories ?  Object.keys(chartArray[chartIndex].dataSetNames).length : nOfCategories;
+                        // console.info(nOfCategories);
                     });
+                    // console.info('awa');
 
-
-                }
-
-
-                data.map((datum) => {
-                    let dataSetName = metadata.names[yIndex];
-                    if (chart.color) {
-                        let colorIndex = metadata.names.indexOf(chart.color);
-                        dataSetName = colorIndex > -1 ? datum[colorIndex] : dataSetName;
-                    }
-
-                    dataSets[dataSetName] = dataSets[dataSetName] || [];
-                    // console.info(yIndex);
-                    dataSets[dataSetName].push({x: datum[xIndex], y: datum[yIndex]});
-
-                    // console.info(chart.maxLength);
-                    if (dataSets[dataSetName].length > config.maxLength) {
-                        // console.info('check');
-                        dataSets[dataSetName].shift();
-                    }
-
-                    // console.info(chartArray[chartIndex].dataSetNames);
-                    if (!chartArray[chartIndex].dataSetNames.hasOwnProperty(dataSetName)) {
-                        if (chartArray[chartIndex].colorIndex >= chartArray[chartIndex].colorScale.length) {
-                            chartArray[chartIndex].colorIndex = 0;
-                        }
-
-                        if (chart.colorDomain) {
-                            let colorIn = chart.colorDomain.indexOf(dataSetName);
-                            chartArray[chartIndex].dataSetNames[dataSetName] = colorIn >= 0 ? (colorIn < chartArray[chartIndex].colorScale.length ? chartArray[chartIndex].colorScale[colorIn] : chartArray[chartIndex].colorScale[chartArray[chartIndex].colorIndex++] ) : chartArray[chartIndex].colorScale[chartArray[chartIndex].colorIndex++];
-                        } else {
-                            chartArray[chartIndex].dataSetNames[dataSetName] = chartArray[chartIndex].colorScale[chartArray[chartIndex].colorIndex++];
-                        }
-
-                        chartArray[chartIndex].dataSetNames[dataSetName]=chart.fill || chartArray[chartIndex].dataSetNames[dataSetName];
-
-
-                    }
-                    // console.info(chartArray[chartIndex].dataSetNames);
-                    nOfCategories=Object.keys(chartArray[chartIndex].dataSetNames).length > nOfCategories ?  Object.keys(chartArray[chartIndex].dataSetNames).length : nOfCategories; 
-                    // console.info(nOfCategories);
                 });
-                // console.info('awa');
-
-            });
+            }else {
+                //ToDO: map component
+            }
         } else if(config.type==='scatter'){
             config.charts.map((chart,chartIndex)=>{
                 let xIndex = metadata.names.indexOf(chart.x);
@@ -276,7 +280,6 @@ export default class VizG extends React.Component {
         } else {
             if(config.charts[0].type==='arc'){
                 chartType='arc';
-                //TODO: pie charts
                 let arcConfig=config.charts[0];
                 let xIndex=metadata.names.indexOf(arcConfig.x);
                 let colorIndex=metadata.names.indexOf(arcConfig.color);
@@ -607,7 +610,7 @@ export default class VizG extends React.Component {
                                 colorScale={chart.colorScale}
                                 data={chartType==='percentage'? dataSets : pieChartData}
                                 labelComponent={<VictoryTooltip width={50} height={25} />}
-                                labels={chartType==='percentage'? null : (d)=>`${d.x} : ${(d.y/total)*100}%`}
+                                labels={chartType==='percentage'? '' : (d)=>`${d.x} : ${(d.y/total)*100}%`}
                                 style={{labels:{fontSize:9}}}
                                 labelRadius={10}
                                 innerRadius={chart.mode==='donut' || chartType==='percentage' ? height/2.5 : 0}
