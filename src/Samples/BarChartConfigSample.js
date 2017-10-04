@@ -77,7 +77,7 @@ export default class BarChartConfigSample extends React.Component {
                 timer: this.state.timer + 1
             });
 
-        }, 2000);
+        }, 500);
     }
 
     componentWillUnmount(){
