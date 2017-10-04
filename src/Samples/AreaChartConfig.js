@@ -71,7 +71,7 @@ export default class AreaChartConfigSample extends React.Component {
                 timer: this.state.timer + 1
             });
 
-        }, 2000);
+        }, 500);
     }
 
 
