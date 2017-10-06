@@ -75,14 +75,14 @@ export default class App extends React.Component {
                 maxLength: 30
             }],
 
-        width: 400,
+        width: 800,
         height: 450
     };
 
     pieChartConfig={
         charts : [{type:'arc', x:'torque', color:'EngineType', mode:'donut'}],
-        width: 300,
-        height: 250
+        width: 400,
+        height: 400
     };
 
     /*****************[END] Chart Config******************/

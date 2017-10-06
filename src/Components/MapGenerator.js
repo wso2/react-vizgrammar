@@ -16,11 +16,12 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import {ComposableMap, ZoomableGroup, Geographies, Geography} from 'react-simple-maps';
+import {ComposableMap, ZoomableGroup, Geographies, Geography, Markers, Marker} from 'react-simple-maps';
 import worldMap from './resources/GeoJSON/world.json';
 import europeMap from './resources/GeoJSON/europe.json';
 import usaMap from './resources/GeoJSON/usa2.json';
 import {feature} from 'topojson-client';
+import ReactToolTip from 'react-tooltip';
 
 export default class MapGenerator extends React.Component {
     constructor(props) {
@@ -68,12 +69,14 @@ export default class MapGenerator extends React.Component {
                 projectionConfig['scale'] = 120;
                 break;
             case 'usa':
-                projectionConfig['scale']=600;
-                projectionConfig['yOffset']=this.state.height/1.2;
-                projectionConfig['xOffset']=this.state.width/0.75;
+                projectionConfig['scale'] = 600;
+                projectionConfig['yOffset'] = this.state.height / 1.2;
+                projectionConfig['xOffset'] = this.state.width / 0.75;
                 break;
             case 'europe':
-                projectionConfig['scale']=120;
+                projectionConfig['scale'] = 400;
+                projectionConfig['yOffset'] = this.state.height;
+                // projectionConfig['xOffset'] = this.state.width / 0.75;
                 break;
         }
 
@@ -84,18 +87,18 @@ export default class MapGenerator extends React.Component {
 
     render() {
         let {mapType} = this.state;
-        let mapFeatureData=null;
-        let mapComponents=[];
+        let mapFeatureData = null;
+        let mapComponents = [];
         console.info(mapType);
-        switch (mapType){
+        switch (mapType) {
             case 'world':
-                mapFeatureData=worldMap;
+                mapFeatureData = worldMap;
                 break;
             case 'usa':
-                mapFeatureData=usaMap;
+                mapFeatureData = usaMap;
                 break;
             case 'europe':
-                mapFeatureData=worldMap;
+                mapFeatureData = europeMap;
                 break;
         }
 
@@ -106,105 +109,103 @@ export default class MapGenerator extends React.Component {
 
         return (
 
-                <ComposableMap
-                    projection={'mercator'}
-                    projectionConfig={this.state.projectionConfig}
-                    width={this.state.width}
-                    heght={this.state.height}
+            <div style={{overflow: 'hidden'}}>
+                <div
                     style={{
-                        width:'100%',
-                        height:'100%'
+                        float: 'left',
+                        width: '85%',
+                        display: 'inline'
                     }}
                 >
-                    {
-                        mapType==='europe' ?
-                            <ZoomableGroup
-                                center={[25.106111,62.5775]}
-                                zoom={3}
-                            >
-                                <Geographies
-                                    geographyPaths={feature(mapFeatureData,mapFeatureData.objects[Object.keys(mapFeatureData.objects)[0]]).features}
-                                    disableOptimization={true}
-                                >
-                                    {
-                                        (geographies,projection)=>{
-                                            console.info(geographies);
+                    <ComposableMap
+                        projection={'mercator'}
+                        projectionConfig={this.state.projectionConfig}
+                        width={this.state.width}
+                        heght={this.state.height}
+                        style={{
+                            width: '100%',
+                            height: '100%'
+                        }}
+                    >
 
-                                            return geographies.map((geography,i)=>(
-                                                <Geography
-                                                    key={i}
-                                                    geography={geography}
-                                                    projection={projection}
-                                                    style={{
-                                                        default:{
-                                                            fill:'#ddd',
-                                                            stroke:'#fff',
-                                                            strokeWidth:0.5,
-                                                            outline:'none'
-                                                        },
-                                                        hover:{
-                                                            fill:'#fbff79',
+                        <Geographies
+                            geographyPaths={feature(mapFeatureData, mapFeatureData.objects[Object.keys(mapFeatureData.objects)[0]]).features}
+                            disableOptimization={true}
+                        >
+                            {
+                                (geographies, projection) => {
+                                    console.info(geographies);
 
-                                                            strokeWidth:0.5,
-                                                            outline:'none'
-
-                                                        },
-                                                        pressed:{
-                                                            fill:'#3a79ff',
-                                                            outline:'none'
-                                                        }
-                                                    }}
-
-
-                                                />
-                                            ));
-                                        }
-
-                                    }
-                                </Geographies>
-                            </ZoomableGroup> :
-                            <Geographies
-                                geographyPaths={feature(mapFeatureData,mapFeatureData.objects[Object.keys(mapFeatureData.objects)[0]]).features}
-                                disableOptimization={true}
-                            >
-                                {
-                                    (geographies,projection)=>{
-                                        console.info(geographies);
-
-                                        return geographies.map((geography,i)=>(
+                                    return geographies.map((geography, i) => {
+                                        return (
                                             <Geography
                                                 key={i}
+
                                                 geography={geography}
                                                 projection={projection}
                                                 style={{
-                                                    default:{
-                                                        fill:'#ddd',
-                                                        stroke:'#fff',
-                                                        strokeWidth:0.5,
-                                                        outline:'none'
+                                                    default: {
+                                                        fill: '#ddd',
+                                                        stroke: '#fff',
+                                                        strokeWidth: 0.5,
+                                                        outline: 'none'
                                                     },
-                                                    hover:{
-                                                        fill:'#fbff79',
+                                                    hover: {
+                                                        fill: '#fbff79',
 
-                                                        strokeWidth:0.5,
-                                                        outline:'none'
+                                                        strokeWidth: 0.5,
+                                                        outline: 'none'
 
                                                     },
-                                                    pressed:{
-                                                        fill:'#3a79ff',
-                                                        outline:'none'
+                                                    pressed: {
+                                                        fill: '#3a79ff',
+                                                        outline: 'none'
                                                     }
                                                 }}
 
 
-                                            />
-                                        ));
-                                    }
-
+                                            />);
+                                    });
                                 }
-                            </Geographies>
+
+                            }
+                        </Geographies>
+
+
+                    </ComposableMap>
+                    <ReactToolTip/>
+                    <svg height={'100%'} width={'100%'}>
+
+                    </svg>
+                </div>
+
+
+                <div style={{width: '15%', height: 'auto', display: 'inline', float: 'right'}}>
+                    {
+                        this.props.colorType === 'linear' ?
+
+                            <svg width={'100%'} height={'100%'}>
+                                <defs>
+                                    <linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset={'0%'} stopColor={this.props.colorScale[0]} stopOpacity={1}/>
+                                        <stop offset={'100%'} stopColor={this.props.colorScale[1]} stopOpacity={1}/>
+                                    </linearGradient>
+                                </defs>
+                                <g className='legend'>
+
+                                    <text x={20} y={20}>Map legend</text>
+                                    <text x={37} y={37}>100</text>
+                                    <text x={37} y={132}>0</text>
+                                    <rect x={20} y={30} fill='url(#grad1)' height={100} width={15}/>
+                                </g>
+
+                            </svg>
+                            : null
+
                     }
-                </ComposableMap>
+
+                </div>
+            </div>
 
         );
     }
@@ -214,6 +215,9 @@ MapGenerator.propTypes = {
     height: PropTypes.number,
     width: PropTypes.number,
     config: PropTypes.object.isRequired,
-    data: PropTypes.array.isRequired,
-    metadata: PropTypes.object
+    mapData: PropTypes.array,
+    metadata: PropTypes.object,
+    colorRange: PropTypes.array,
+    colorScale: PropTypes.array,
+    colorType: PropTypes.string
 };

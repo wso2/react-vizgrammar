@@ -28,12 +28,12 @@ export default class LineChartConfigSample extends React.Component {
     lineChartConfig = {
         charts: [{type: 'arc', x: 'torque', color: 'EngineType', mode: 'donut'}],
         width: 300,
-        height: 250
+        height: 300
     };
 
     configPie = {
         charts : [{type: 'arc',  x : 'torque', color : 'EngineType', mode: 'pie'}],
-        width: 400,
+        width: 300,
         height: 300
     };
 

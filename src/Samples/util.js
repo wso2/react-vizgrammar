@@ -75,6 +75,33 @@ export class Row extends React.Component{
     }
 }
 
+
+export function getColorFromSchemaOrdinal(schema, index) {
+    let length = 20, schemeCat;
+
+    switch (schema) {
+        case 'category10':
+            schemeCat = d3.schemeCategory10;
+            length = 10;
+            break;
+        case 'category20':
+            schemeCat = d3.schemeCategory20;
+            break;
+        case 'category20b':
+            schemeCat = d3.schemeCategory20b;
+            break;
+        case 'category20c':
+            schemeCat = d3.schemeCategory20c;
+            break;
+
+    }
+
+    return d3.scaleOrdinal()
+        .range(schemeCat)
+        .domain(Array.apply(null, {length: length}).map(Number.call, Number))(index);
+}
+
+
 Row.defaultProps={
     media:false,
     actionBar:false,

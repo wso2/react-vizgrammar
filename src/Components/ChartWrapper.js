@@ -19,9 +19,9 @@
 
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import BasicCharts from './ChartComponents/BasicCharts';
-import ScatterCharts from './ChartComponents/ScatterCharts';
-import PieCharts from './ChartComponents/PieCharts';
+import BasicCharts from "./ChartComponents/BasicCharts";
+import ScatterCharts from "./ChartComponents/ScatterCharts";
+import PieCharts from "./ChartComponents/PieCharts";
 
 
 class ChartWrapper extends Component {
