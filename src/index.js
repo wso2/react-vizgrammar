@@ -12,6 +12,7 @@ import {
     BrowserRouter as Router,
     Route
 } from 'react-router-dom';
+import MapChartConfigSample from "./Samples/MapChartConfigSample";
 
 
 ReactDOM.render(
@@ -24,5 +25,6 @@ ReactDOM.render(
         <Route exact path="/area-charts/" component={AreaChart}/>
         <Route exact path='/scatter-charts' component={ScatterPlot}/>
         <Route exact path='/pie-charts' component={PieChart}/>
+        <Route exact path='/map-charts' component={MapChartConfigSample}/>
     </div>
 </Router>,document.getElementById('root'));
