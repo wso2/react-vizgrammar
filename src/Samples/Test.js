@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {VictoryPie} from 'victory';
 import MapGenerator from '../Components/MapGenerator';
+
 // import Map from '../Components/MapComponents/App';
 
 class Test extends Component {
@@ -9,29 +10,34 @@ class Test extends Component {
         super(props);
 
     }
-    
 
 
     componentDidMount() {
 
     }
 
-    mapConfig={
-        x : 'Country',
-        charts : [{type: 'map',  y : 'Inflation',mapType:'usa'}],
+    mapConfig = {
+        x: 'Country',
+        charts: [{type: 'map', y: 'Inflation', mapType: 'world'}],
         width: 400,
         height: 200
     };
 
-    data=[];
+    data = [];
 
-    metadata={};
+    metadata = {};
 
     render() {
         // console.log("AAAA"+this.state.data)
         return (
             <div>
-                <MapGenerator config={this.mapConfig} data={this.data}/>
+                <div className="col-md-6 tile">
+                    <MapGenerator
+                        config={this.mapConfig}
+                        colorScale={['#403bff', '#2bff4d']}
+                        colorType={'linear'}
+                    />
+                </div>
             </div>
         );
     }
