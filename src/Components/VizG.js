@@ -22,6 +22,7 @@ import PropTypes from 'prop-types';
 import BasicCharts from './ChartComponents/BasicCharts';
 import ScatterCharts from './ChartComponents/ScatterCharts';
 import PieCharts from './ChartComponents/PieCharts';
+import MapGenerator from "./ChartComponents/MapGenerator";
 
 
 class ChartWrapper extends Component {
@@ -60,7 +61,7 @@ class ChartWrapper extends Component {
                         <BasicCharts config={config} metadata={metadata} data={data}/> :
                         chartType === 'scatter' ? <ScatterCharts config={config} metadata={metadata} data={data}/> :
                             chartType === 'arc' ? <PieCharts config={config} metadata={metadata} data={data}/>:
-                                chartType === 'map' ? <div></div> : null
+                                chartType === 'map' ? <MapGenerator config={config} metadata={metadata} data={data}/> : null
                 }
             </div>
         );

@@ -7,7 +7,7 @@ import {
     VictoryLabel
 } from 'victory';
 import PropTypes from 'prop-types';
-import {getColorRangeArray} from '../helper';
+import {getColorRangeArray} from './helper';
 
 
 export default class PieCharts extends React.Component {
