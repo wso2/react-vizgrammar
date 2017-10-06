@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import {VictoryPie} from 'victory';
 import MapGenerator from '../Components/ChartComponents/MapGenerator';
 import NumberCharts from '../Components/ChartComponents/NumberCharts';
+import TableCharts from '../Components/ChartComponents/TableCharts';
+import MapChartConfigSample from "./MapChartConfigSample";
+import {Row} from '../Samples/util';
 
 // import Map from '../Components/MapComponents/App';
 
@@ -11,26 +14,23 @@ class Test extends Component {
         super(props);
         this.state={
             data : [
-                [0, 10, 1, 'Piston']
-            ]
+                ["Afghanistan",4.23],
+                ["EGY",1.23],
+                ["Afghanistan",2.23],
+                ["United States",8.23]
+            ],
+            timer:1
         };
     }
 
 
     componentDidMount() {
-        setInterval(()=>{
-           this.setState({
-               data : [
-                   [0, Math.round(Math.random()*100), 1, 'Piston']
-               ]
-           });
-        },1000);
+
     }
 
     mapConfig = {
-        x : 'torque',
-        title :'Torque of Engine',
-        charts : [{type: 'number'}],
+        x : 'Country',
+        charts : [{type: 'map',  y : 'Inflation',mapType:'world'}],
         width: 400,
         height: 200
     };
@@ -38,17 +38,17 @@ class Test extends Component {
 
 
     metadata = {
-        'names' : ['rpm','torque','horsepower', 'EngineType'],
-        'types' : ['linear','linear', 'ordinal','ordinal']
+        'names' : ['Country','Inflation'],
+        'types' : ['ordinal','linear']
     };
 
     render() {
         // console.log("AAAA"+this.state.data)
         return (
             <div>
-                <div className="col-md-6 tile">
-                    <NumberCharts config={this.mapConfig} metadata={this.metadata} data={this.state.data}/>
-                </div>
+                <Row title="Group MultiLine Chart Sample" chart="line" media={true} actionBar={false}>
+                    <MapGenerator config={this.mapConfig} metadata={this.metadata} data={this.state.data}/>
+                </Row>
             </div>
         );
     }

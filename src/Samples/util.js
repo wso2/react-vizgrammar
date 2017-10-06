@@ -55,7 +55,9 @@ export class Row extends React.Component{
                         {/*<CardTitle/>*/}
                         <CardMedia>
 
-                            {this.state.children}
+                            <div>
+                                {this.props.children}
+                            </div>
 
                         </CardMedia>
                         <CardActions>
