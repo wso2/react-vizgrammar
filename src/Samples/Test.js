@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {VictoryPie} from 'victory';
 import MapGenerator from '../Components/ChartComponents/MapGenerator';
+import NumberCharts from '../Components/ChartComponents/NumberCharts';
 
 // import Map from '../Components/MapComponents/App';
 
@@ -8,32 +9,37 @@ class Test extends Component {
 
     constructor(props) {
         super(props);
-
+        this.state={
+            data : [
+                [0, 10, 1, 'Piston']
+            ]
+        };
     }
 
 
     componentDidMount() {
-
+        setInterval(()=>{
+           this.setState({
+               data : [
+                   [0, Math.round(Math.random()*100), 1, 'Piston']
+               ]
+           });
+        },1000);
     }
 
     mapConfig = {
-        x: 'Country',
-        charts: [{type: 'map', y: 'Inflation', mapType: 'world'}],
+        x : 'torque',
+        title :'Torque of Engine',
+        charts : [{type: 'number'}],
         width: 400,
         height: 200
     };
 
-    data = [
-        ['Afghanistan', 4.23],
-        ['EGY', 1.23],
-        ['Afghanistan', 2.23],
-        ['United States', 8.23]
-    ];
+
 
     metadata = {
-        'names': ['Country', 'Inflation'],
-        'types': ['ordinal', 'linear']
-
+        'names' : ['rpm','torque','horsepower', 'EngineType'],
+        'types' : ['linear','linear', 'ordinal','ordinal']
     };
 
     render() {
@@ -41,13 +47,7 @@ class Test extends Component {
         return (
             <div>
                 <div className="col-md-6 tile">
-                    <MapGenerator
-                        config={this.mapConfig}
-                        metadata={this.metadata}
-                        data={this.data}
-                        colorScale={['#403bff', '#2bff4d']}
-                        colorType={'linear'}
-                    />
+                    <NumberCharts config={this.mapConfig} metadata={this.metadata} data={this.state.data}/>
                 </div>
             </div>
         );

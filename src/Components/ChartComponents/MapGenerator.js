@@ -17,7 +17,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {ComposableMap, ZoomableGroup, Geographies, Geography, Markers, Marker} from 'react-simple-maps';
-import {VictoryLegend,VictoryContainer} from 'victory';
+import {VictoryLegend, VictoryContainer} from 'victory';
 import worldMap from './resources/GeoJSON/world.json';
 import europeMap from './resources/GeoJSON/europe.json';
 import usaMap from './resources/GeoJSON/usa2.json';
@@ -42,7 +42,7 @@ export default class MapGenerator extends React.Component {
             mapType: props.config.charts[0].mapType,
             mapDataRange: [],
             colorType: 'linear',
-            ordinalColorMap: [],
+            ordinalColorMap: {},
             colorIndex: 0,
             colorScale: [],
         };
@@ -149,7 +149,7 @@ export default class MapGenerator extends React.Component {
                     });
                 } else {
                     mapData.push({
-                        givenName:datum[xIndex],
+                        givenName: datum[xIndex],
                         x: this._convertCountryNamesToCode(datum[xIndex]),
                         y: datum[yIndex]
                     });
@@ -164,12 +164,13 @@ export default class MapGenerator extends React.Component {
                     if (colorIndex >= colorScale.length) {
                         colorIndex = 0;
                     }
-                    ordinalColorMap[datum[yIndex]] = colorScale[colorIndex];
+                    ordinalColorMap[datum[yIndex]] = colorScale[colorIndex++];
                 }
 
                 mapData.push({
-                    x: datum[xIndex],
-                    color: datum[yIndex]
+                    givenName: datum[xIndex],
+                    x: this._convertCountryNamesToCode(datum[xIndex]),
+                    y: datum[yIndex]
                 });
 
 
@@ -191,13 +192,13 @@ export default class MapGenerator extends React.Component {
     }
 
     render() {
-        let {config}=this.props;
+        let {config} = this.props;
         let {mapType, mapData, mapDataRange, colorType, ordinalColorMap} = this.state;
         let mapFeatureData = null;
         // let mapComponents = [];
         // console.info(mapType);
 
-        console.info(mapData);
+        // console.info(mapData);
         switch (mapType) {
             case 'world':
                 mapFeatureData = worldMap;
@@ -238,18 +239,22 @@ export default class MapGenerator extends React.Component {
                         >
                             {
                                 (geographies, projection) => {
-                                    console.info(geographies);
+                                    // console.info(geographies);
 
 
                                     return geographies.map((geography, i) => {
-                                        let dataTip=mapData.filter((x) => x.x === geography.id);
-                                        let toolTip=null;
+                                        let dataTip = mapData.filter((x) => x.x === geography.id);
+                                        let toolTip = null;
 
-                                        if(dataTip.length>0){
-                                            toolTip=''+config.x+' : '+dataTip[0].givenName+', '+config.charts[0].y+' : '+dataTip[0].y;
+                                        if (dataTip.length > 0) {
+
+                                            toolTip = '' + config.x + ' : ' + dataTip[0].givenName + ', ' + config.charts[0].y + ' : ' + dataTip[0].y;
+
+
+                                            // console.info(dataTip[0].color);
                                         }
 
-                                        console.info(this._getLinearColor(8.23));
+                                        // console.info(this._getLinearColor(8.23));
                                         return (
                                             <Geography
                                                 key={i}
@@ -259,9 +264,9 @@ export default class MapGenerator extends React.Component {
                                                 style={{
                                                     default: {
                                                         fill: dataTip.length > 0 ?
-                                                                            (colorType === 'linear' ?
-                                                                                this._getLinearColor(dataTip[0].y) :
-                                                                                ordinalColorMap[dataTip.y]) : '#ddd',
+                                                            (colorType === 'linear' ?
+                                                                this._getLinearColor(dataTip[0].y) :
+                                                                ordinalColorMap[dataTip[0].y]) : '#ddd',
                                                         stroke: '#fff',
                                                         strokeWidth: 0.5,
                                                         outline: 'none'
@@ -271,8 +276,8 @@ export default class MapGenerator extends React.Component {
                                                             (colorType === 'linear' ?
                                                                 this._getLinearColor(dataTip[0].y) :
                                                                 ordinalColorMap[dataTip[0].y]) : '#ddd',
-                                                        stroke:'#fff',
-                                                        opacity:0.8,
+                                                        stroke: '#fff',
+                                                        opacity: 0.8,
                                                         strokeWidth: 0.5,
                                                         outline: 'none'
 
@@ -325,8 +330,8 @@ export default class MapGenerator extends React.Component {
                                 width={300}
                                 title="Legend"
                                 style={{title: {fontSize: 25}, labels: {fontSize: 20}}}
-                                data={Object.keys(ordinalColorMap).map((name)=>{
-                                    return {name:name,symbol:{fill:ordinalColorMap[name]}};
+                                data={Object.keys(ordinalColorMap).map((name) => {
+                                    return {name: name, symbol: {fill: ordinalColorMap[name]}};
                                 })}
                             />
 
