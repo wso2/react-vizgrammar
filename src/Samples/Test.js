@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {VictoryPie} from 'victory';
-import MapGenerator from '../Components/MapGenerator';
+import MapGenerator from '../Components/ChartComponents/MapGenerator';
 
 // import Map from '../Components/MapComponents/App';
 
@@ -23,9 +23,18 @@ class Test extends Component {
         height: 200
     };
 
-    data = [];
+    data = [
+        ['Afghanistan', 4.23],
+        ['EGY', 1.23],
+        ['Afghanistan', 2.23],
+        ['United States', 8.23]
+    ];
 
-    metadata = {};
+    metadata = {
+        'names': ['Country', 'Inflation'],
+        'types': ['ordinal', 'linear']
+
+    };
 
     render() {
         // console.log("AAAA"+this.state.data)
@@ -34,6 +43,8 @@ class Test extends Component {
                 <div className="col-md-6 tile">
                     <MapGenerator
                         config={this.mapConfig}
+                        metadata={this.metadata}
+                        data={this.data}
                         colorScale={['#403bff', '#2bff4d']}
                         colorType={'linear'}
                     />
