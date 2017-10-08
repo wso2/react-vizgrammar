@@ -181,7 +181,11 @@ export default class App extends React.Component {
         return (
 
             <div>
-                <center><h1>Charting Config Samples</h1></center>
+                <div className={'jumbotron'}>
+                    <center><h1>VizG</h1></center>
+                    <center><p>Charting Config Samples</p></center>
+                </div>
+
                 <Row media={true} chart={'line'} title={'Line Charts'} actionBar={true}>
                     <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data}/>
                 </Row>
