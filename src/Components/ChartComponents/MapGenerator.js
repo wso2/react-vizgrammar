@@ -13,6 +13,27 @@
  * limitations under the License.
  *
  */
+/**
+ * Copyright (c) 2015 Formidable Labs
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+ */
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -39,7 +60,7 @@ export default class MapGenerator extends React.Component {
             config: props.config,
             // xIndex: props.metadata.names.indexOf(props.config.x),
             projectionConfig: {},
-            mapType: props.config.charts[0].mapType,
+            mapType: props.config.charts[0].mapType || 'world',
             mapDataRange: [],
             colorType: 'linear',
             ordinalColorMap: {},
@@ -75,11 +96,17 @@ export default class MapGenerator extends React.Component {
      * @private
      */
     _convertCountryNamesToCode(countryName) {
-        console.info(countryName);
+        // console.info(countryName);
         if (countryName.length === 3) {
             return countryName;
         } else {
-            return CountryInfo.filter((x) => x.name === countryName)[0]['alpha-3'];
+            let countryName1=CountryInfo.filter((x) => x.name === countryName);
+            if(countryName1.length>0){
+                return countryName1[0]['alpha-3'];
+            }else {
+                return countryName;
+            }
+
         }
 
 
@@ -102,11 +129,11 @@ export default class MapGenerator extends React.Component {
         let {metadata, data, config} = props;
         let {projectionConfig, mapType, mapDataRange, mapData, colorType, ordinalColorMap, colorIndex, colorScale} = this.state;
         let mapConfig = config.charts[0];
-        // console.info(mapConfig);
+        // console.info(numConfig);
         let xIndex = metadata.names.indexOf(config.x);
         let yIndex = metadata.names.indexOf(mapConfig.y);
         colorScale = Array.isArray(mapConfig.colorScale) ? mapConfig.colorScale : getColorRangeArray(mapConfig.colorScale || 'category10');
-        // console.info(mapConfig.mapType);
+        // console.info(numConfig.mapType);
         mapType = mapConfig.mapType;
         switch (mapConfig.mapType) {
             case 'world':
@@ -138,19 +165,17 @@ export default class MapGenerator extends React.Component {
                 if (mapDataRange[1] < datum[yIndex]) {
                     mapDataRange[1] = datum[yIndex];
                 }
+
+                let dataIndex=mapData.findIndex((obj)=>obj.x===this._convertCountryNamesToCode(datum[xIndex]));
+                console.info(dataIndex);
+
                 // console.info(this._convertCountryNamesToCode(datum[xIndex]));
-                if (mapData.filter((x) => x.x === this._convertCountryNamesToCode(datum[xIndex])).length > 0) {
-                    mapData.map((dat, datIndex) => {
-
-                        if (dat.x === this._convertCountryNamesToCode(datum[xIndex])) {
-
-                            mapData[datIndex].y = datum[yIndex];
-                        }
-                    });
+                if (dataIndex>=0) {
+                    mapData[dataIndex].y=datum[yIndex];
                 } else {
                     mapData.push({
                         givenName: datum[xIndex],
-                        x: this._convertCountryNamesToCode(datum[xIndex]),
+                        x: mapType==='usa' ? datum[xIndex]:this._convertCountryNamesToCode(datum[xIndex]),
                         y: datum[yIndex]
                     });
                 }
@@ -169,13 +194,17 @@ export default class MapGenerator extends React.Component {
 
                 mapData.push({
                     givenName: datum[xIndex],
-                    x: this._convertCountryNamesToCode(datum[xIndex]),
+                    x: mapType==='usa' ? datum[xIndex]:this._convertCountryNamesToCode(datum[xIndex]),
                     y: datum[yIndex]
                 });
 
 
             });
         }
+
+        // if(mapType==='europe'){
+        //     console.info(mapData);
+        // }
 
 
         this.setState({
@@ -243,8 +272,16 @@ export default class MapGenerator extends React.Component {
 
 
                                     return geographies.map((geography, i) => {
-                                        let dataTip = mapData.filter((x) => x.x === geography.id);
+                                        let dataTip='';
                                         let toolTip = null;
+
+                                        if(mapType==='usa'){
+
+                                            dataTip= mapData.filter((x) => x.x === geography.properties.name);
+
+                                        }else {
+                                            dataTip= mapData.filter((x) => x.x === geography.id);
+                                        }
 
                                         if (dataTip.length > 0) {
 
@@ -309,7 +346,7 @@ export default class MapGenerator extends React.Component {
 
                             <svg width={'100%'} height={'100%'}>
                                 <defs>
-                                    <linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <linearGradient id="grad1" x1="0%" y1="100%" x2="0%" y2="0%">
                                         <stop offset={'0%'} stopColor={this.state.colorScale[0]} stopOpacity={1}/>
 
                                         <stop offset={'100%'} stopColor={this.state.colorScale[1]} stopOpacity={1}/>
