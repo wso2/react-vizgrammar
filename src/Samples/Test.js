@@ -2,9 +2,7 @@ import React, {Component} from 'react';
 import {VictoryPie} from 'victory';
 import MapGenerator from '../Components/ChartComponents/MapGenerator';
 import NumberCharts from '../Components/ChartComponents/NumberCharts';
-import TableCharts from '../Components/ChartComponents/TableCharts';
-import MapChartConfigSample from "./MapChartConfigSample";
-import {Row} from '../Samples/util';
+import TableCharts from "../Components/ChartComponents/TableCharts";
 
 // import Map from '../Components/MapComponents/App';
 
@@ -14,10 +12,7 @@ class Test extends Component {
         super(props);
         this.state={
             data : [
-                ["Afghanistan",4.23],
-                ["EGY",1.23],
-                ["Afghanistan",2.23],
-                ["United States",8.23]
+                [0, 10, 1, 'Piston']
             ],
             timer:1
         };
@@ -25,12 +20,24 @@ class Test extends Component {
 
 
     componentDidMount() {
-
+        setInterval(()=>{
+           this.setState({
+               data : [[Math.round(Math.random()*100), Math.round(Math.random()*100), 1, 'Piston'],[Math.round(Math.random()*100), Math.round(Math.random()*100), 1, 'rotary']]   ,
+               timer: this.state.timer+1
+           });
+        },1000);
     }
 
     mapConfig = {
-        x : 'Country',
-        charts : [{type: 'map',  y : 'Inflation',mapType:'world'}],
+        key : 'rpm',
+        charts : [{ type: 'table',
+            y : 'torque',
+            color: '*',
+            columns:['EngineType',  'torque', 'rpm'],
+            columnTitles:['Engine Type',  'Engine Torque', 'Engine RPM'],
+            }
+        ],
+        maxLength: 7,
         width: 400,
         height: 200
     };
@@ -38,17 +45,17 @@ class Test extends Component {
 
 
     metadata = {
-        'names' : ['Country','Inflation'],
-        'types' : ['ordinal','linear']
+        'names' : ['rpm','torque','horsepower', 'EngineType'],
+        'types' : ['linear','linear', 'ordinal','ordinal']
     };
 
     render() {
         // console.log("AAAA"+this.state.data)
         return (
             <div>
-                <Row title="Group MultiLine Chart Sample" chart="line" media={true} actionBar={false}>
-                    <MapGenerator config={this.mapConfig} metadata={this.metadata} data={this.state.data}/>
-                </Row>
+                <div className="col-md-6 tile">
+                    <TableCharts config={this.mapConfig} metadata={this.metadata} data={this.state.data}/>
+                </div>
             </div>
         );
     }

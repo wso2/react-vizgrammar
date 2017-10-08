@@ -24,9 +24,10 @@ import ScatterCharts from './ChartComponents/ScatterCharts';
 import PieCharts from './ChartComponents/PieCharts';
 import MapGenerator from './ChartComponents/MapGenerator';
 import TableCharts from './ChartComponents/TableCharts';
+import NumberCharts from "./ChartComponents/NumberCharts";
 
 
-class ChartWrapper extends Component {
+class VizG extends Component {
 
     constructor(props) {
         super(props);
@@ -63,17 +64,18 @@ class ChartWrapper extends Component {
                         chartType === 'scatter' ? <ScatterCharts config={config} metadata={metadata} data={data}/> :
                             chartType === 'arc' ? <PieCharts config={config} metadata={metadata} data={data}/>:
                                 chartType === 'map' ? <MapGenerator config={config} metadata={metadata} data={data}/> :
-                                    chartType === 'table' ? <TableCharts metadata={metadata} config={config} data={data}/> : null
+                                    chartType === 'table' ? <TableCharts metadata={metadata} config={config} data={data}/> :
+                                        chartType==='number' ? <NumberCharts metadata={metadata} config={config} data={data}/>:null
                 }
             </div>
         );
     }
 }
 
-ChartWrapper.propTypes = {
+VizG.propTypes = {
     config: PropTypes.object.isRequired,
     data: PropTypes.array,
     metadata: PropTypes.object.isRequired
 };
 
-export default ChartWrapper;
+export default VizG;

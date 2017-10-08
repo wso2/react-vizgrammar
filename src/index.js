@@ -13,6 +13,9 @@ import {
     Route
 } from 'react-router-dom';
 import MapChartConfigSample from "./Samples/MapChartConfigSample";
+import NumberChartConfigSample from "./Samples/NumberChartConfigSample";
+import TableCharts from "./Samples/TableChartConfigSample";
+
 
 
 ReactDOM.render(
@@ -26,5 +29,7 @@ ReactDOM.render(
         <Route exact path='/scatter-charts' component={ScatterPlot}/>
         <Route exact path='/pie-charts' component={PieChart}/>
         <Route exact path='/map-charts' component={MapChartConfigSample}/>
+        <Route exact path='/number-charts' component={NumberChartConfigSample}/>
+        <Route exact path='/table-charts' component={TableCharts}/>
     </div>
 </Router>,document.getElementById('root'));
