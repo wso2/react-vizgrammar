@@ -27,7 +27,7 @@ export default class BarChartConfigSample extends React.Component {
     barChartConfig = {
         x: 'rpm',
         charts: [{type: 'bar', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston']}],
-        maxLength: 7,
+        maxLength: 20,
         width: 700,
         height: 450,
 
@@ -36,7 +36,7 @@ export default class BarChartConfigSample extends React.Component {
     barHorizontalChartConfig = {
         x: 'rpm',
         charts: [{type: 'bar', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston'], orientation: 'left'}],
-        maxLength: 7,
+        maxLength: 20,
         width: 700,
         height: 450,
         // animation: false
@@ -45,7 +45,7 @@ export default class BarChartConfigSample extends React.Component {
     stackedBarChartConfig = {
         x: 'rpm',
         charts: [{type: 'bar', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston'], mode: 'stacked'}],
-        maxLength: 7,
+        maxLength: 20,
         width: 700,
         height: 450,
         // animation: true
@@ -54,7 +54,7 @@ export default class BarChartConfigSample extends React.Component {
     singleBarChartConfig = {
         x: 'rpm',
         charts: [{type: 'bar', y: 'horsepower', fill: '#2ca02c'}, {type: 'bar', y: 'torque', fill: '#ff7f0e'}],
-        maxLength: 7,
+        maxLength: 20,
         width: 700,
         height: 450,
         // animation: true
