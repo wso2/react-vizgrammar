@@ -49,7 +49,8 @@ import {
     VictoryContainer,
     VictoryVoronoiContainer,
     VictoryLegend,
-    VictoryScatter
+    VictoryScatter,
+    VictoryAxis
 } from 'victory';
 import PropTypes from 'prop-types';
 
@@ -285,13 +286,13 @@ export default class BasicCharts extends React.Component {
         if (lineCharts.length > 0) chartComponents = chartComponents.concat(lineCharts);
         if (barcharts.length > 0) {
 
-            let barWidth = (horizontal ? width : height) / (config.maxLength * barcharts.length);
+            let barWidth = (horizontal ? height : width) / (config.maxLength * (barcharts.length>1 ? barcharts.length : 2))-config.maxLength-2;
 
             chartComponents.push(
                 <VictoryGroup
                     horizontal={horizontal}
-                    offset={barWidth < 0 ? 1 : barWidth > 2 ? barWidth - 2 : barWidth}
-                    style={{data: {width: barWidth < 0 ? 1 : barWidth > 2 ? barWidth - 2 : barWidth}}}
+                    offset={barWidth}
+                    style={{data: {width: barWidth}}}
                 >
                     {barcharts}
                 </VictoryGroup>
@@ -308,7 +309,18 @@ export default class BasicCharts extends React.Component {
                         height={height}
                         theme={VictoryTheme.material}
                         container={<VictoryVoronoiContainer/>}
+                        scale={{ x:{xScale} }}
                     >
+                    <VictoryAxis crossAxis
+                        style={{axisLabel:{padding:35}}}
+                        label={config.x}
+                        standalone={false}
+                    />
+                    <VictoryAxis dependentAxis crossAxis
+                        style={{axisLabel:{padding:35}}}
+                        label={config.charts.length > 1 ? '' : config.charts[0].y}
+                        standalone={false}
+                    />
                         {chartComponents}
 
                     </VictoryChart>

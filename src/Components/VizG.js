@@ -24,7 +24,7 @@ import ScatterCharts from './ChartComponents/ScatterCharts';
 import PieCharts from './ChartComponents/PieCharts';
 import MapGenerator from './ChartComponents/MapGenerator';
 import TableCharts from './ChartComponents/TableCharts';
-import NumberCharts from "./ChartComponents/NumberCharts";
+import NumberCharts from './ChartComponents/NumberCharts';
 
 
 class VizG extends Component {
