@@ -286,7 +286,7 @@ export default class BasicCharts extends React.Component {
         if (lineCharts.length > 0) chartComponents = chartComponents.concat(lineCharts);
         if (barcharts.length > 0) {
 
-            let barWidth = (horizontal ? height : width) / (config.maxLength * (barcharts.length>1 ? barcharts.length : 2))-config.maxLength-2;
+            let barWidth = (horizontal ? height : width) / (config.maxLength * (barcharts.length>1 ? barcharts.length : 2))-3;
 
             chartComponents.push(
                 <VictoryGroup

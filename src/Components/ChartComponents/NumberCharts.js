@@ -99,7 +99,7 @@ export default class NumberCharts extends React.Component{
                     textAnchor="middle" verticalAnchor="middle"
                     x={width / 2} y={height / 2}
 
-                    text={(value===null ? value : value.toFixed(2))}
+                    text={(value===null ? value : value.toFixed(3))}
                     style={{fontSize: 45}}
                 />
 
@@ -107,15 +107,25 @@ export default class NumberCharts extends React.Component{
                     textAnchor="middle" verticalAnchor="middle"
                     x={width / 2} y={(height / 2)+50}
 
-                    text={(prevValue<value? '+':'')+(eval(prevValue-value)*(-1))}
+                    text={(Math.abs(eval(prevValue-value))).toFixed(3)}
                     style={{fontSize: 15}}
                 />
                 <VictoryLabel
                     textAnchor="middle" verticalAnchor="middle"
                     x={width / 2} y={(height / 2)+70}
 
-                    text={(prevValue<value? '+':'')+(100*((prevValue-value)/prevValue)*(-1))+'%'}
+                    text={(Math.abs((100*((value-prevValue)/prevValue))).toFixed(3))+'%'}
                     style={{fontSize: 15}}
+                />
+
+
+                
+                <VictoryLabel
+                    textAnchor="middle" verticalAnchor="middle"
+                    x={width / 2+50} y={(height / 2+55)}
+
+                    text={prevValue<value? '↑' : prevValue===value ? '' : '↓'}
+                    style={{fontSize: 45}}
                 />
             </svg>
         );
