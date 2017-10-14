@@ -17,7 +17,7 @@
 
 
 
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import BasicCharts from './ChartComponents/BasicCharts';
 import ScatterCharts from './ChartComponents/ScatterCharts';
@@ -25,6 +25,7 @@ import PieCharts from './ChartComponents/PieCharts';
 import MapGenerator from './ChartComponents/MapGenerator';
 import TableCharts from './ChartComponents/TableCharts';
 import NumberCharts from './ChartComponents/NumberCharts';
+import SparkCharts from './ChartComponents/InlineChartsBasic';
 
 
 class VizG extends Component {
@@ -53,19 +54,21 @@ class VizG extends Component {
 
     render() {
 
-        let {config, data, metadata} = this.state;
+        let { config, data, metadata } = this.state;
         let chartType = config.charts[0].type;
 
         return (
             <div>
                 {
                     chartType === 'line' || chartType === 'area' || chartType === 'bar' ?
-                        <BasicCharts config={config} metadata={metadata} data={data}/> :
-                        chartType === 'scatter' ? <ScatterCharts config={config} metadata={metadata} data={data}/> :
-                            chartType === 'arc' ? <PieCharts config={config} metadata={metadata} data={data}/>:
-                                chartType === 'map' ? <MapGenerator config={config} metadata={metadata} data={data}/> :
-                                    chartType === 'table' ? <TableCharts metadata={metadata} config={config} data={data}/> :
-                                        chartType==='number' ? <NumberCharts metadata={metadata} config={config} data={data}/>:null
+                        <BasicCharts config={config} metadata={metadata} data={data} /> :
+                        chartType === 'scatter' ? <ScatterCharts config={config} metadata={metadata} data={data} /> :
+                            chartType === 'arc' ? <PieCharts config={config} metadata={metadata} data={data} /> :
+                                chartType === 'map' ? <MapGenerator config={config} metadata={metadata} data={data} /> :
+                                    chartType === 'table' ? <TableCharts metadata={metadata} config={config} data={data} /> :
+                                        chartType === 'number' ? <NumberCharts metadata={metadata} config={config} data={data} /> :
+                                            chartType === 'spark-line' || chartType === 'spark-bar' || chartType === 'spark-area' ?
+                                                <SparkCharts metadata={metadata} config={config} data={data} /> : null
                 }
             </div>
         );
