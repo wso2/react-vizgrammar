@@ -35,6 +35,12 @@
  *
  */
 
+
+
+
+//TODO: Time formatting
+//TODO: Browser test IE10 and above, chrome, safari
+
 import React from 'react';
 import {
     VictoryChart,
@@ -299,7 +305,7 @@ export default class BasicCharts extends React.Component {
             );
         }
 
-
+        console.info('xscale :',xScale);
         return (
             <div style={{overflow: 'hidden'}}>
                 <div style={{float: 'left', width: '80%', display: 'inline'}}>
@@ -309,12 +315,13 @@ export default class BasicCharts extends React.Component {
                         height={height}
                         theme={VictoryTheme.material}
                         container={<VictoryVoronoiContainer/>}
-                        scale={{ x:{xScale} }}
+                        scale={{ x:xScale==='linear' ? 'linear':'time',y:'linear' }}
                     >
                     <VictoryAxis crossAxis
                         style={{axisLabel:{padding:35}}}
                         label={config.x}
                         standalone={false}
+                        
                     />
                     <VictoryAxis dependentAxis crossAxis
                         style={{axisLabel:{padding:35}}}

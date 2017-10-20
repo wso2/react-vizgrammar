@@ -142,6 +142,8 @@ export default class LineChartConfigSample extends React.Component {
                        </pre>
                     </div>
                 </Row>
+
+                {/* TODO: add innerRadius to the config */}
                 <Row title="API" chart="line">
                     <div>
                        <pre>

@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/CharukaK/VizG#readme",
   "dependencies": {
+    "axios": "^0.16.2",
     "d3": "^4.10.2",
     "d3-geo": "^1.8.1",
     "d3-scale": "^1.0.6",

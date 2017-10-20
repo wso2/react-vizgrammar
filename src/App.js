@@ -1,6 +1,6 @@
 import React from 'react';
 import VizG from './Components/VizG';
-import Perf from 'react-addons-perf';
+// import Perf from 'react-addons-perf';
 import {Row} from './Samples/util';
 
 

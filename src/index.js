@@ -12,9 +12,10 @@ import {
     BrowserRouter as Router,
     Route
 } from 'react-router-dom';
-import MapChartConfigSample from "./Samples/MapChartConfigSample";
-import NumberChartConfigSample from "./Samples/NumberChartConfigSample";
-import TableCharts from "./Samples/TableChartConfigSample";
+import MapChartConfigSample from './Samples/MapChartConfigSample';
+import NumberChartConfigSample from './Samples/NumberChartConfigSample';
+import TableCharts from './Samples/TableChartConfigSample';
+import WebsocketTest from './Samples/webSocketSample/TestWithWS';
 
 
 
@@ -23,6 +24,7 @@ ReactDOM.render(
     <div>
         <Route exact path="/" component={App}/>
         <Route exact path="/test" component={Test}/>
+        <Route exact path="/websocketTest" component={WebsocketTest}/>
         <Route exact path="/line-charts" component={LineChart}/>
         <Route exact path="/bar-charts" component={BarChart}/>
         <Route exact path="/area-charts/" component={AreaChart}/>

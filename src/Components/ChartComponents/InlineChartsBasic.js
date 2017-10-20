@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { VictoryLine, VictoryArea, VictoryGroup, VictoryPortal, VictoryBar, VictoryScatter, VictoryTooltip, VictoryStack } from 'victory';
+import { VictoryLine, VictoryArea, VictoryGroup,  VictoryBar,  VictoryTooltip, VictoryStack } from 'victory';
 import { getColorRangeArray } from './helper';
 import PropTypes from 'prop-types';
 
@@ -31,7 +31,7 @@ class InlineChartsBasic extends Component {
 
     /**
      * populate data and render the chart
-     * @param props 
+     * @param props
      */
     _handleAndSortData(props) {
         let { config, metadata, data } = props;
@@ -103,7 +103,7 @@ class InlineChartsBasic extends Component {
     render() {
 
         let { config } = this.props;
-        let { height, width, chartArray, dataSets, xScale } = this.state;
+        let { height, width, chartArray, dataSets} = this.state;
         let chartComponents = [];
         let legendItems = [];
         let horizontal = false;
@@ -255,7 +255,7 @@ class InlineChartsBasic extends Component {
                     style={{ data: { width: barWidth } }}
                     height={height}
                     width={width}
-                    padding={0}
+                    padding={5}
                 >
                     {barcharts}
                 </VictoryGroup>
