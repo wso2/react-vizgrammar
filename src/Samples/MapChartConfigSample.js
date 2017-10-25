@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {VictoryPie} from 'victory';
-import MapGenerator from '../Components/ChartComponents/MapGenerator';
-import NumberCharts from '../Components/ChartComponents/NumberCharts';
-import TableCharts from '../Components/ChartComponents/TableCharts';
+import MapGenerator from '../components/ChartComponents/MapGenerator';
+import NumberCharts from '../components/ChartComponents/NumberCharts';
+import TableCharts from '../components/ChartComponents/TableCharts';
 import MapChartConfigSample from './MapChartConfigSample';
 import {Row} from '../Samples/util';
 
-// import Map from '../Components/MapComponents/App';
+// import Map from '../components/MapComponents/App';
 
 class Test extends Component {
 

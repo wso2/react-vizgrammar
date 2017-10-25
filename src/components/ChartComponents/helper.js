@@ -22,7 +22,8 @@ export function getColorFromSchemaOrdinal(schema, index) {
         case 'category20c':
             schemeCat = d3.schemeCategory20c;
             break;
-
+        default:
+            //TODO:remove the switch & apply a default color set
     }
 
     return d3.scaleOrdinal()

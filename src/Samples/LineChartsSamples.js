@@ -1,8 +1,9 @@
 import React from 'react';
 import { Row } from './util';
 import './css/Table.css';
-import VizG from '../Components/VizG';
+import VizG from '../components/VizG';
 import { VictoryLine } from 'victory';
+import Axios from 'axios';
 // import t from 'GridTest';
 
 
@@ -70,6 +71,22 @@ export default class LineChartConfigSample extends React.Component {
             });
 
         }, 500);
+
+
+        Axios
+        .post(
+            'http://localhost:8080/chart-gen-service/poll-db',
+            'test text',
+            {
+                headers: { 'Content-Length': 0, 'Content-Type': 'text/plain' },
+                responseType: 'text'
+            }
+        ).then((response) => {
+            console.info(response);
+        })
+        .catch((error) => {
+            console.info(error);
+        });
     }
 
     componentWillUnmount() {

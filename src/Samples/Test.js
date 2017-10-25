@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {VictoryPie} from 'victory';
-import MapGenerator from '../Components/ChartComponents/MapGenerator';
-import NumberCharts from '../Components/ChartComponents/NumberCharts';
-import TableCharts from "../Components/ChartComponents/TableCharts";
+import MapGenerator from '../components/ChartComponents/MapGenerator';
+import NumberCharts from '../components/ChartComponents/NumberCharts';
+import TableCharts from '../components/ChartComponents/TableCharts';
+import VizG from '../components/VizG';
 
-// import Map from '../Components/MapComponents/App';
+// import Map from '../components/MapComponents/App';
 
 class Test extends Component {
 
@@ -43,7 +44,25 @@ class Test extends Component {
     };
 
 
+    sparkLineConfig = {
+        x: 'rpm',
+        charts: [{ type: 'line', y: 'torque', fill: '#0fd8e2' }],
+        maxLength: 7,
+        width: 800,
+        height: 400,
+        // animation: true
+    };
 
+    metadataWithTime = {
+        'names' : ['rpm','torque','horsepower', 'EngineType'],
+        'types' : ['time','linear', 'ordinal','ordinal']
+    };
+
+    dataWithT=[
+        [new Date('2017-10-21 00:00:00'),12,12,'piston'],
+        [new Date('2017-10-22 00:00:00'),24,12,'piston'],
+        [new Date('2017-10-23 00:00:00'),16,12,'piston']
+    ]
     metadata = {
         'names' : ['rpm','torque','horsepower', 'EngineType'],
         'types' : ['linear','linear', 'ordinal','ordinal']
@@ -54,7 +73,7 @@ class Test extends Component {
         return (
             <div>
                 <div className="col-md-6 tile">
-                    <TableCharts config={this.mapConfig} metadata={this.metadata} data={this.state.data}/>
+                    <VizG config={this.sparkLineConfig} metadata={this.metadataWithTime} data={this.dataWithT}/>
                 </div>
             </div>
         );
