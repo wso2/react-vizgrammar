@@ -111,7 +111,8 @@ export default class BasicCharts extends React.Component {
                     dataSetNames: {},
                     mode: chart.mode,
                     orientation: chart.orientation,
-                    colorScale: Array.isArray(chart.colorScale) ? chart.colorScale : getColorRangeArray(chart.colorScale || 'category10'),
+                    colorScale: Array.isArray(chart.colorScale) ? chart.colorScale :
+                                                        getColorRangeArray(chart.colorScale || 'category10'),
                     colorIndex: 0,
 
                 });
@@ -129,8 +130,13 @@ export default class BasicCharts extends React.Component {
 
                 dataSets[dataSetName] = dataSets[dataSetName] || [];
 
-                dataSets[dataSetName].push({x: datum[xIndex], y: datum[yIndex]});
+                
 
+                if(xScale!=='time'){
+                    dataSets[dataSetName].push({x: datum[xIndex], y: datum[yIndex]});
+                } else{
+                    dataSets[dataSetName].push({x: new Date(datum[xIndex]), y: datum[yIndex]});
+                }
 
                 if (dataSets[dataSetName].length > config.maxLength) {
 
@@ -305,7 +311,7 @@ export default class BasicCharts extends React.Component {
             );
         }
 
-        console.info('xscale :',xScale);
+        // console.info('xscale :',xScale);
         return (
             <div style={{overflow: 'hidden'}}>
                 <div style={{float: 'left', width: '80%', display: 'inline'}}>

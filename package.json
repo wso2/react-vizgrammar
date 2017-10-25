@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --progress"
+    "samples": "webpack-dev-server --progress"
   },
   "repository": {
     "type": "git",
@@ -26,16 +26,16 @@
   "homepage": "https://github.com/CharukaK/VizG#readme",
   "dependencies": {
     "axios": "^0.16.2",
-    "d3": "^4.10.2",
-    "d3-geo": "^1.8.1",
+    "d3": "^4.11.0",
+    "d3-geo": "^1.9.0",
     "d3-scale": "^1.0.6",
-    "material-ui": "^0.19.2",
-    "prop-types": "^15.5.10",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
+    "material-ui": "^0.19.4",
+    "prop-types": "^15.6.0",
+    "react": "^15.6.2",
+    "react-dom": "^15.6.2",
     "react-router-dom": "^4.2.2",
-    "react-simple-maps": "^0.8.3",
-    "react-tooltip": "^3.3.0",
+    "react-simple-maps": "^0.8.4",
+    "react-tooltip": "^3.4.0",
     "topojson-client": "^3.0.0",
     "victory": "^0.22.2"
   },
@@ -47,15 +47,18 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "css-loader": "^0.28.7",
-    "eslint": "^4.7.0",
-    "eslint-plugin-react": "^7.3.0",
+    "eslint": "^4.9.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.4.0",
     "json-loader": "^0.5.7",
     "node-sass": "^4.5.3",
     "nodemon": "^1.12.1",
     "react-addons-perf": "^15.4.2",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
-    "webpack": "^3.6.0",
-    "webpack-dev-server": "^2.8.2"
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.3"
   }
 }

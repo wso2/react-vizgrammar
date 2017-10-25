@@ -15,7 +15,7 @@ import {
 import MapChartConfigSample from './Samples/MapChartConfigSample';
 import NumberChartConfigSample from './Samples/NumberChartConfigSample';
 import TableCharts from './Samples/TableChartConfigSample';
-import WebsocketTest from './Samples/webSocketSample/TestWithWS';
+import WebsocketTest from './Samples/webSocketSample/ws-client.jsx';
 
 
 
