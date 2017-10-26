@@ -1,11 +1,12 @@
 import React from 'react';
+
 import {Row} from './util';
 import './css/Table.css';
-import VizG from '../components/VizG';
+import VizG from '../../src/VizG.jsx';
 // import t from 'GridTest';
 
 
-export default class LineChartConfigSample extends React.Component {
+export default class AreaChartConfigSample extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -15,51 +16,53 @@ export default class LineChartConfigSample extends React.Component {
         };
     }
 
-
-    interval_jd=null;
-
     metadata = {
-        names: ['rpm', 'torque', 'horsepower', 'EngineType', 'weight'],
-        types: ['linear', 'linear', 'linear', 'ordinal', 'linear']
+        names: ['rpm', 'torque', 'horsepower', 'EngineType'],
+        types: ['linear', 'linear', 'linear', 'ordinal']
     };
 
+    //interval id
+    interval_id=null;
 
     /*****************[START] Chart Config******************/
-    lineChartConfig = {
-        charts: [{type: 'arc', x: 'torque', color: 'EngineType', mode: 'donut'}],
-        width: 300,
-        height: 300
-    };
+    areaChartConfig = {
+        x: 'rpm',
+        charts: [{type: 'area', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston']}],
+        maxLength: 7,
+        width: 700,
+        height: 450,
 
-    configPie = {
-        charts : [{type: 'arc',  x : 'torque', color : 'EngineType', mode: 'pie'}],
-        width: 300,
-        height: 300
-    };
-
-    configT = {
-        charts : [{type: 'arc',  x : 'torque', color : 'EngineType',colorScale:['steelblue', '#80ccff'],}],
-
-        tooltip: {'enabled':false},
-        legend:false, percentage:true, colorScale:['steelblue', '#80ccff'],
-        width: 300,
-        height: 300
     };
 
 
 
+    stackedAreaChartConfig = {
+        x: 'rpm',
+        charts: [{type: 'area', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston'],mode:'stacked'}],
+        maxLength: 7,
+        width: 700,
+        height: 450,
+
+    };
+
+    singleAreaChartConfig = {
+        x: 'rpm',
+        charts: [{type: 'area', y: 'horsepower', fill: '#2ca02c'}, {type: 'area', y: 'torque', fill: '#ff7f0e'}],
+        maxLength: 7,
+        width: 700,
+        height: 450,
+
+    };
 
     /*****************[END] Chart Config******************/
 
 
     componentDidMount() {
-        this.interval_jd=setInterval(() => {
+        this.interval_id=setInterval(() => {
             this.setState({
                 data: [
                     [this.state.timer, this.state.timer === 20 ? null : Math.random() * 100, 10, 'piston'],
-                    [this.state.timer, Math.random() * 100, 10, 'rotary'],
-                    [this.state.timer, this.state.timer === 20 ? null : Math.random() * 100, 10, 'piston2'],
-                    [this.state.timer, Math.random() * 100, 10, 'rotary2']
+                    [this.state.timer, Math.random() * 100, 10, 'rotary']
                 ],
                 data2: [
 
@@ -71,63 +74,76 @@ export default class LineChartConfigSample extends React.Component {
         }, 500);
     }
 
+
     componentWillUnmount(){
         clearInterval(this.interval_id);
     }
 
-
     render() {
         return (
             <div>
-                <center><h1>Line Chart Config Samples</h1></center>
-                <Row title="Donut Chart Sample" chart="line" media={true} actionBar={false}>
-                    <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data}/>
-                    <br/><br/>
-                    <div style={{display: 'block'}}>
+                <center><h1>Area Chart Config Samples</h1></center>
+                <Row title="Group Area Chart Sample" chart="line" media={true} actionBar={false}>
+                    <VizG config={this.areaChartConfig} metadata={this.metadata} data={this.state.data}/>
+                    <br/>
+                    <div>
+
                        <pre>
-                           {
-                               '{\n' +
-                               '\tcharts : [{type:"arc", x:"torque", color:"EngineType", mode:"donut"}],\n' +
-                               '\twidth: 300,\n' +
-                               '\theight: 250\n' +
-                               '}'
+                           <p>Configuration: </p>
+
+                           {'{\n' +
+                           '\tx: \'rpm\',\n' +
+                           '\tcharts: [\n\t    { type: \'area\', y: \'torque\', color: \'EngineType\',colorDomain:[\'\',\'\',\'piston\']}\n\t],\n' +
+                           '\tmaxLength: 7,\n' +
+                           '\twidth: 700,\n' +
+                           '\theight: 450,\n' +
+                           '\tanimation:true\n}'
 
                            }
                        </pre>
                     </div>
                 </Row>
-                <Row title="Pie Chart Sample" chart="line" media={true} actionBar={false}>
-                    <VizG config={this.configPie} metadata={this.metadata} data={this.state.data}/>
+                <Row title="Multi Area Chart Sample" chart="line" media={true} actionBar={false}>
+                    <VizG config={this.singleAreaChartConfig} metadata={this.metadata} data={this.state.data2}/>
                     <br/>
                     <div>
                        <pre>
-                           {
-                               '{\n' +
-                               '\tcharts : [{type: "arc",  x : "torque", color : "EngineType", mode: "pie"}],\n' +
-                               '\twidth: 400,\n' +
-                               '\theight: 300\n' +
-                               '}'
+                           <p>Configuration: </p>
+                           {'{\n' +
+                           '\tx: \'rpm\',\n' +
+                           '\tcharts: [\n\t    { type: \'area\', y: \'horsepower\', fill:\'#2ca02c\'}\n\t    { type: \'area\', y: \'torque\', fill:\'#ff7f0e\'}\n\t],\n' +
+                           '\tmaxLength: 7,\n' +
+                           '\twidth: 700,\n' +
+                           '\theight: 450,\n' +
+                           '\tanimation:true\n}'
+
                            }
                        </pre>
                     </div>
                 </Row>
 
-                <Row title="Donut Chart Sample" chart="line" media={true} actionBar={false}>
-                    <VizG config={this.configT} metadata={this.metadata} data={this.state.data}/>
-                    <br/><br/>
-                    <div style={{display: 'block'}}>
+
+                <Row title="Group Area Chart Sample stacked" chart="line" media={true} actionBar={false}>
+                    <VizG config={this.stackedAreaChartConfig} metadata={this.metadata} data={this.state.data}/>
+                    <br/>
+                    <div>
+
                        <pre>
-                           {
-                               '{\n' +
-                               '\tcharts : [{type:"arc", x:"torque", color:"EngineType", mode:"donut"}],\n' +
-                               '\twidth: 300,\n' +
-                               '\theight: 250\n' +
-                               '}'
+                           <p>Configuration: </p>
+
+                           {'{\n' +
+                           '\tx: \'rpm\',\n' +
+                           '\tcharts: [\n\t    { type: \'area\', y: \'torque\', color: \'EngineType\',mode:\'stacked\',colorDomain:[\'\',\'\',\'piston\']}\n\t],\n' +
+                           '\tmaxLength: 7,\n' +
+                           '\twidth: 700,\n' +
+                           '\theight: 450,\n' +
+                           '\tanimation:true\n}'
 
                            }
                        </pre>
                     </div>
                 </Row>
+
 
                 <Row title="Sample Data Set" chart="line">
                     <div>
@@ -142,8 +158,6 @@ export default class LineChartConfigSample extends React.Component {
                        </pre>
                     </div>
                 </Row>
-
-                {/* TODO: add innerRadius to the config */}
                 <Row title="API" chart="line">
                     <div>
                        <pre>
@@ -170,13 +184,13 @@ export default class LineChartConfigSample extends React.Component {
                                    <td>int</td>
                                    <td>Maximum length of the dataSet displayed</td>
                                </tr>
+
                                <tr>
                                    <td>height</td>
                                    <td>int</td>
                                    <td>Height of the chart in pixels</td>
                                </tr>
                                </tbody>
-
                            </table>
                            <br/>
                            <p>Chart Object Properties</p>
@@ -205,8 +219,9 @@ export default class LineChartConfigSample extends React.Component {
                                <tr>
                                    <td>mode</td>
                                    <td>string</td>
-                                   <td>type of the line curve (see <a href="https://github.com/d3/d3-shape#curves">d3-documentation</a> for possible curve types)</td>
+                                   <td>whether the chart should be stacked or not (default:null)</td>
                                </tr>
+
                                <tr>
                                    <td>colorScale</td>
                                    <td>string | Array(string)</td>

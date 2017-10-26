@@ -18,7 +18,7 @@
 import React from 'react';
 import * as d3 from 'd3';
 import PropTypes from 'prop-types';
-import {getColorRangeArray} from './helper';
+import {getDefaultColorScale} from './helper';
 
 
 export default class TableCharts extends React.Component {
@@ -60,7 +60,7 @@ export default class TableCharts extends React.Component {
         let {config, metadata, data} = props;
         let tableConfig = config.charts[0];
         let {dataSet, columnArray, initialized, columnColorIndex, colorScale} = this.state;
-        colorScale = Array.isArray(tableConfig.colorScale) ? tableConfig.colorScale : getColorRangeArray(tableConfig.colorScale || 'category10')
+        colorScale = Array.isArray(tableConfig.colorScale) ? tableConfig.colorScale : getDefaultColorScale();
 
         if (columnColorIndex >= colorScale.length) {
             columnColorIndex = 0;

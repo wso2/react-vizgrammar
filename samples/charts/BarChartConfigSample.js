@@ -1,12 +1,11 @@
 import React from 'react';
-
 import {Row} from './util';
 import './css/Table.css';
-import VizG from '../components/VizG';
+import VizG from '../../src/VizG.jsx';
 // import t from 'GridTest';
 
 
-export default class AreaChartConfigSample extends React.Component {
+export default class BarChartConfigSample extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -21,37 +20,44 @@ export default class AreaChartConfigSample extends React.Component {
         types: ['linear', 'linear', 'linear', 'ordinal']
     };
 
-    //interval id
+
     interval_id=null;
 
     /*****************[START] Chart Config******************/
-    areaChartConfig = {
+    barChartConfig = {
         x: 'rpm',
-        charts: [{type: 'area', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston']}],
-        maxLength: 7,
+        charts: [{type: 'bar', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston']}],
+        maxLength: 20,
         width: 700,
         height: 450,
 
     };
 
-
-
-    stackedAreaChartConfig = {
+    barHorizontalChartConfig = {
         x: 'rpm',
-        charts: [{type: 'area', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston'],mode:'stacked'}],
-        maxLength: 7,
+        charts: [{type: 'bar', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston'], orientation: 'left'}],
+        maxLength: 20,
         width: 700,
         height: 450,
-
+        // animation: false
     };
 
-    singleAreaChartConfig = {
+    stackedBarChartConfig = {
         x: 'rpm',
-        charts: [{type: 'area', y: 'horsepower', fill: '#2ca02c'}, {type: 'area', y: 'torque', fill: '#ff7f0e'}],
-        maxLength: 7,
+        charts: [{type: 'bar', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston'], mode: 'stacked'}],
+        maxLength: 20,
         width: 700,
         height: 450,
+        // animation: true
+    };
 
+    singleBarChartConfig = {
+        x: 'rpm',
+        charts: [{type: 'bar', y: 'horsepower', fill: '#2ca02c'}, {type: 'bar', y: 'torque', fill: '#ff7f0e'}],
+        maxLength: 20,
+        width: 700,
+        height: 450,
+        // animation: true
     };
 
     /*****************[END] Chart Config******************/
@@ -74,7 +80,6 @@ export default class AreaChartConfigSample extends React.Component {
         }, 500);
     }
 
-
     componentWillUnmount(){
         clearInterval(this.interval_id);
     }
@@ -82,9 +87,9 @@ export default class AreaChartConfigSample extends React.Component {
     render() {
         return (
             <div>
-                <center><h1>Area Chart Config Samples</h1></center>
-                <Row title="Group Area Chart Sample" chart="line" media={true} actionBar={false}>
-                    <VizG config={this.areaChartConfig} metadata={this.metadata} data={this.state.data}/>
+                <center><h1>Bar Chart Config Samples</h1></center>
+                <Row title="Group MultiLine Chart Sample" chart="line" media={true} actionBar={false}>
+                    <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data}/>
                     <br/>
                     <div>
 
@@ -93,7 +98,7 @@ export default class AreaChartConfigSample extends React.Component {
 
                            {'{\n' +
                            '\tx: \'rpm\',\n' +
-                           '\tcharts: [\n\t    { type: \'area\', y: \'torque\', color: \'EngineType\',colorDomain:[\'\',\'\',\'piston\']}\n\t],\n' +
+                           '\tcharts: [\n\t    { type: \'bar\', y: \'torque\', color: \'EngineType\',colorDomain:[\'\',\'\',\'piston\']}\n\t],\n' +
                            '\tmaxLength: 7,\n' +
                            '\twidth: 700,\n' +
                            '\theight: 450,\n' +
@@ -103,15 +108,35 @@ export default class AreaChartConfigSample extends React.Component {
                        </pre>
                     </div>
                 </Row>
-                <Row title="Multi Area Chart Sample" chart="line" media={true} actionBar={false}>
-                    <VizG config={this.singleAreaChartConfig} metadata={this.metadata} data={this.state.data2}/>
+                <Row title="Multi Line Chart Sample" chart="line" media={true} actionBar={false}>
+                    <VizG config={this.singleBarChartConfig} metadata={this.metadata} data={this.state.data2}/>
                     <br/>
                     <div>
                        <pre>
                            <p>Configuration: </p>
                            {'{\n' +
                            '\tx: \'rpm\',\n' +
-                           '\tcharts: [\n\t    { type: \'area\', y: \'horsepower\', fill:\'#2ca02c\'}\n\t    { type: \'area\', y: \'torque\', fill:\'#ff7f0e\'}\n\t],\n' +
+                           '\tcharts: [\n\t    { type: \'bar\', y: \'horsepower\', fill:\'#2ca02c\'}\n\t    { type: \'bar\', y: \'torque\', fill:\'#ff7f0e\'}\n\t],\n' +
+                           '\tmaxLength: 7,\n' +
+                           '\twidth: 700,\n' +
+                           '\theight: 450,\n' +
+                           '\tanimation:true\n}'
+
+                           }
+                       </pre>
+                    </div>
+                </Row>
+                <Row title="Group MultiLine Chart Sample Horizontal" chart="line" media={true} actionBar={false}>
+                    <VizG config={this.barHorizontalChartConfig} metadata={this.metadata} data={this.state.data}/>
+                    <br/>
+                    <div>
+
+                       <pre>
+                           <p>Configuration: </p>
+
+                           {'{\n' +
+                           '\tx: \'rpm\',\n' +
+                           '\tcharts: [\n\t    { type: \'bar\', y: \'torque\', color: \'EngineType\',orientation:\'left\',colorDomain:[\'\',\'\',\'piston\']}\n\t],\n' +
                            '\tmaxLength: 7,\n' +
                            '\twidth: 700,\n' +
                            '\theight: 450,\n' +
@@ -122,9 +147,8 @@ export default class AreaChartConfigSample extends React.Component {
                     </div>
                 </Row>
 
-
-                <Row title="Group Area Chart Sample stacked" chart="line" media={true} actionBar={false}>
-                    <VizG config={this.stackedAreaChartConfig} metadata={this.metadata} data={this.state.data}/>
+                <Row title="Group MultiLine Chart Sample stacked" chart="line" media={true} actionBar={false}>
+                    <VizG config={this.stackedBarChartConfig} metadata={this.metadata} data={this.state.data}/>
                     <br/>
                     <div>
 
@@ -133,7 +157,7 @@ export default class AreaChartConfigSample extends React.Component {
 
                            {'{\n' +
                            '\tx: \'rpm\',\n' +
-                           '\tcharts: [\n\t    { type: \'area\', y: \'torque\', color: \'EngineType\',mode:\'stacked\',colorDomain:[\'\',\'\',\'piston\']}\n\t],\n' +
+                           '\tcharts: [\n\t    { type: \'bar\', y: \'torque\', color: \'EngineType\',mode:\'stacked\',colorDomain:[\'\',\'\',\'piston\']}\n\t],\n' +
                            '\tmaxLength: 7,\n' +
                            '\twidth: 700,\n' +
                            '\theight: 450,\n' +
@@ -184,12 +208,12 @@ export default class AreaChartConfigSample extends React.Component {
                                    <td>int</td>
                                    <td>Maximum length of the dataSet displayed</td>
                                </tr>
-
                                <tr>
                                    <td>height</td>
                                    <td>int</td>
                                    <td>Height of the chart in pixels</td>
                                </tr>
+
                                </tbody>
                            </table>
                            <br/>
@@ -221,7 +245,11 @@ export default class AreaChartConfigSample extends React.Component {
                                    <td>string</td>
                                    <td>whether the chart should be stacked or not (default:null)</td>
                                </tr>
-
+                               <tr>
+                                   <td>orientation</td>
+                                   <td>string</td>
+                                   <td>orientation of the chart (default:vertical)</td>
+                               </tr>
                                <tr>
                                    <td>colorScale</td>
                                    <td>string | Array(string)</td>

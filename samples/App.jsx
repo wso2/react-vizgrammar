@@ -1,7 +1,7 @@
 import React from 'react';
-import VizG from './components/VizG';
+import VizG from '../src/index';
 // import Perf from 'react-addons-perf';
-import {Row} from './Samples/util';
+import {Row} from './charts/util';
 
 
 export default class App extends React.Component {
@@ -176,7 +176,7 @@ export default class App extends React.Component {
     componentWillUnmount() {
         clearInterval(this.interval_id);
     }
-        //<ChartWrapper config={this.areaChartConfig} metadata={this.metadata} data={this.state.data}/>
+    //<ChartWrapper config={this.areaChartConfig} metadata={this.metadata} data={this.state.data}/>
     render() {
         return (
 

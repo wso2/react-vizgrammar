@@ -1,8 +1,8 @@
 module.exports = {
     devtool: 'source-map',
-    entry: './src/index.js',
+    entry: './samples/index.js',
     output: {
-        path: __dirname + '/public',
+        path: __dirname + 'samples/public',
         filename: 'app.js'
     },
     module: {
@@ -29,10 +29,10 @@ module.exports = {
         ]
     },
     devServer: {
-        contentBase: './public',
+        contentBase: './samples/public',
 
         historyApiFallback: true,
         inline: true,
-        port: 9000
+        port: 8080
     }
 };

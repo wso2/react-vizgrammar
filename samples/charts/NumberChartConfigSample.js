@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import NumberCharts from '../components/ChartComponents/NumberCharts';
+import NumberCharts from '../../src/components/NumberChart.jsx';
 import {Row} from './util';
 
 // import Map from '../Components/MapComponents/App';
