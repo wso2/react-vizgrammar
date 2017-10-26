@@ -1,106 +1,27 @@
-import React, { Component } from 'react';
+import React from 'react';
+import BasicChart from './BasicChart.jsx';
 import { VictoryLine, VictoryArea, VictoryGroup,  VictoryBar,  VictoryTooltip, VictoryStack } from 'victory';
-import { getColorRangeArray } from './helper';
-import PropTypes from 'prop-types';
 
-class InlineChartsBasic extends Component {
+export default class InlineChart extends BasicChart {
 
-    constructor(props) {
+    constructor(props){
         super(props);
-        this.state = {
-            height: props.height || props.config.height || 450,
-            width: props.width || props.config.width || 800,
-            dataSets: {},
-            chartArray: [],
-            initialized: false,
-            xScale: 'linear',
-            orientation: 'bottom',
-        };
 
-        this._handleAndSortData = this._handleAndSortData.bind(this);
+        this.handleAndSortData=this.handleAndSortData.bind(this);
     }
 
 
-    componentDidMount() {
-        this._handleAndSortData(this.props);
+    componentDidMount(){
+        this.handleAndSortData(this.props);
+        console.info(this.state);
     }
 
-    componentWillReceiveProps(nextProps) {
-        this._handleAndSortData(nextProps);
+
+    componentWillReceiveProps(nextProps){
+        this.handleAndSortData(nextProps);
     }
 
-    /**
-     * populate data and render the chart
-     * @param props
-     */
-    _handleAndSortData(props) {
-        let { config, metadata, data } = props;
-        let { dataSets, chartArray, initialized, xScale, orientation } = this.state;
-        let xIndex = metadata.names.indexOf(config.x);
-        xScale = metadata.types[xIndex] === 'time' ? 'time' : xScale;
-        config.charts.map((chart, chartIndex) => {
-            orientation = orientation === 'left' ? orientation : (chart.orientation || 'bottom');
-
-            let yIndex = metadata.names.indexOf(chart.y);
-            if (!initialized) {
-                chartArray.push({
-                    type: chart.type,
-                    dataSetNames: {},
-                    mode: chart.mode,
-                    orientation: chart.orientation,
-                    colorScale: Array.isArray(chart.colorScale) ? chart.colorScale : getColorRangeArray(chart.colorScale || 'category10'),
-                    colorIndex: 0,
-
-                });
-
-
-            }
-
-
-            data.map((datum) => {
-                let dataSetName = metadata.names[yIndex];
-                if (chart.color) {
-                    let colorIndex = metadata.names.indexOf(chart.color);
-                    dataSetName = colorIndex > -1 ? datum[colorIndex] : dataSetName;
-                }
-
-                dataSets[dataSetName] = dataSets[dataSetName] || [];
-
-                dataSets[dataSetName].push({ x: datum[xIndex], y: datum[yIndex] });
-
-
-                if (dataSets[dataSetName].length > config.maxLength) {
-
-                    dataSets[dataSetName].shift();
-                }
-
-
-                if (!chartArray[chartIndex].dataSetNames.hasOwnProperty(dataSetName)) {
-                    if (chartArray[chartIndex].colorIndex >= chartArray[chartIndex].colorScale.length) {
-                        chartArray[chartIndex].colorIndex = 0;
-                    }
-
-                    if (chart.colorDomain) {
-                        let colorIn = chart.colorDomain.indexOf(dataSetName);
-                        chartArray[chartIndex].dataSetNames[dataSetName] = colorIn >= 0 ? (colorIn < chartArray[chartIndex].colorScale.length ? chartArray[chartIndex].colorScale[colorIn] : chartArray[chartIndex].colorScale[chartArray[chartIndex].colorIndex++]) : chartArray[chartIndex].colorScale[chartArray[chartIndex].colorIndex++];
-                    } else {
-                        chartArray[chartIndex].dataSetNames[dataSetName] = chartArray[chartIndex].colorScale[chartArray[chartIndex].colorIndex++];
-                    }
-
-                    chartArray[chartIndex].dataSetNames[dataSetName] = chart.fill || chartArray[chartIndex].dataSetNames[dataSetName];
-
-
-                }
-
-            });
-        });
-
-        initialized = true;
-
-        this.setState({ dataSets, chartArray, initialized, xScale, orientation });
-    }
-
-    render() {
+    render(){
 
         let { config } = this.props;
         let { height, width, chartArray, dataSets} = this.state;
@@ -109,7 +30,7 @@ class InlineChartsBasic extends Component {
         let horizontal = false;
         let lineCharts = [];
         let areaCharts = [];
-        let barcharts = [];
+        let barCharts = [];
 
         chartArray.map((chart, chartIndex) => {
             switch (chart.type) {
@@ -222,7 +143,7 @@ class InlineChartsBasic extends Component {
                     });
 
                     if (chart.mode === 'stacked') {
-                        barcharts.push(
+                        barCharts.push(
                             <VictoryStack
                                 height={height}
                                 width={width}
@@ -232,7 +153,7 @@ class InlineChartsBasic extends Component {
                             </VictoryStack>
                         );
                     } else {
-                        barcharts = barcharts.concat(localBar);
+                        barCharts = barCharts.concat(localBar);
                     }
 
 
@@ -244,9 +165,9 @@ class InlineChartsBasic extends Component {
 
         if (areaCharts.length > 0) chartComponents = chartComponents.concat(areaCharts);
         if (lineCharts.length > 0) chartComponents = chartComponents.concat(lineCharts);
-        if (barcharts.length > 0) {
+        if (barCharts.length > 0) {
 
-            let barWidth = (horizontal ? height : width) / (config.maxLength * (barcharts.length > 1 ? barcharts.length : 2)) - 3;
+            let barWidth = (horizontal ? height : width) / (config.maxLength * (barCharts.length > 1 ? barCharts.length : 2)) - 3;
 
             chartComponents.push(
                 <VictoryGroup
@@ -257,25 +178,18 @@ class InlineChartsBasic extends Component {
                     width={width}
                     padding={5}
                 >
-                    {barcharts}
+                    {barCharts}
                 </VictoryGroup>
             );
         }
+
+        console.info(chartComponents);
 
 
         return (
             <div>{chartComponents}</div>
         );
+
     }
+
 }
-
-InlineChartsBasic.propTypes = {
-    data: PropTypes.array,
-    config: PropTypes.object.isRequired,
-    metadata: PropTypes.object.isRequired,
-    width: PropTypes.number,
-    height: PropTypes.number
-};
-
-
-export default InlineChartsBasic;

@@ -1,11 +1,11 @@
 import React from 'react';
 import {Row} from './util';
 import './css/Table.css';
-import VizG from '../components/VizG';
+import VizG from '../../src/VizG.jsx';
 // import t from 'GridTest';
 
 
-export default class BarChartConfigSample extends React.Component {
+export default class LineChartConfigSample extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -15,60 +15,51 @@ export default class BarChartConfigSample extends React.Component {
         };
     }
 
+
+    interval_jd=null;
+
     metadata = {
-        names: ['rpm', 'torque', 'horsepower', 'EngineType'],
-        types: ['linear', 'linear', 'linear', 'ordinal']
+        names: ['rpm', 'torque', 'horsepower', 'EngineType', 'weight'],
+        types: ['linear', 'linear', 'linear', 'ordinal', 'linear']
     };
 
-
-    interval_id=null;
 
     /*****************[START] Chart Config******************/
-    barChartConfig = {
-        x: 'rpm',
-        charts: [{type: 'bar', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston']}],
-        maxLength: 20,
-        width: 700,
-        height: 450,
-
+    lineChartConfig = {
+        charts: [{type: 'arc', x: 'torque', color: 'EngineType', mode: 'donut'}],
+        width: 300,
+        height: 300
     };
 
-    barHorizontalChartConfig = {
-        x: 'rpm',
-        charts: [{type: 'bar', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston'], orientation: 'left'}],
-        maxLength: 20,
-        width: 700,
-        height: 450,
-        // animation: false
+    configPie = {
+        charts : [{type: 'arc',  x : 'torque', color : 'EngineType', mode: 'pie'}],
+        width: 300,
+        height: 300
     };
 
-    stackedBarChartConfig = {
-        x: 'rpm',
-        charts: [{type: 'bar', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston'], mode: 'stacked'}],
-        maxLength: 20,
-        width: 700,
-        height: 450,
-        // animation: true
+    configT = {
+        charts : [{type: 'arc',  x : 'torque', color : 'EngineType',colorScale:['steelblue', '#80ccff'],}],
+
+        tooltip: {'enabled':false},
+        legend:false, percentage:true, colorScale:['steelblue', '#80ccff'],
+        width: 300,
+        height: 300
     };
 
-    singleBarChartConfig = {
-        x: 'rpm',
-        charts: [{type: 'bar', y: 'horsepower', fill: '#2ca02c'}, {type: 'bar', y: 'torque', fill: '#ff7f0e'}],
-        maxLength: 20,
-        width: 700,
-        height: 450,
-        // animation: true
-    };
+
+
 
     /*****************[END] Chart Config******************/
 
 
     componentDidMount() {
-        this.interval_id=setInterval(() => {
+        this.interval_jd=setInterval(() => {
             this.setState({
                 data: [
                     [this.state.timer, this.state.timer === 20 ? null : Math.random() * 100, 10, 'piston'],
-                    [this.state.timer, Math.random() * 100, 10, 'rotary']
+                    [this.state.timer, Math.random() * 100, 10, 'rotary'],
+                    [this.state.timer, this.state.timer === 20 ? null : Math.random() * 100, 10, 'piston2'],
+                    [this.state.timer, Math.random() * 100, 10, 'rotary2']
                 ],
                 data2: [
 
@@ -84,90 +75,59 @@ export default class BarChartConfigSample extends React.Component {
         clearInterval(this.interval_id);
     }
 
+
     render() {
         return (
             <div>
-                <center><h1>Bar Chart Config Samples</h1></center>
-                <Row title="Group MultiLine Chart Sample" chart="line" media={true} actionBar={false}>
-                    <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data}/>
-                    <br/>
-                    <div>
-
+                <center><h1>Line Chart Config Samples</h1></center>
+                <Row title="Donut Chart Sample" chart="line" media={true} actionBar={false}>
+                    <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data}/>
+                    <br/><br/>
+                    <div style={{display: 'block'}}>
                        <pre>
-                           <p>Configuration: </p>
-
-                           {'{\n' +
-                           '\tx: \'rpm\',\n' +
-                           '\tcharts: [\n\t    { type: \'bar\', y: \'torque\', color: \'EngineType\',colorDomain:[\'\',\'\',\'piston\']}\n\t],\n' +
-                           '\tmaxLength: 7,\n' +
-                           '\twidth: 700,\n' +
-                           '\theight: 450,\n' +
-                           '\tanimation:true\n}'
+                           {
+                               '{\n' +
+                               '\tcharts : [{type:"arc", x:"torque", color:"EngineType", mode:"donut"}],\n' +
+                               '\twidth: 300,\n' +
+                               '\theight: 250\n' +
+                               '}'
 
                            }
                        </pre>
                     </div>
                 </Row>
-                <Row title="Multi Line Chart Sample" chart="line" media={true} actionBar={false}>
-                    <VizG config={this.singleBarChartConfig} metadata={this.metadata} data={this.state.data2}/>
+                <Row title="Pie Chart Sample" chart="line" media={true} actionBar={false}>
+                    <VizG config={this.configPie} metadata={this.metadata} data={this.state.data}/>
                     <br/>
                     <div>
                        <pre>
-                           <p>Configuration: </p>
-                           {'{\n' +
-                           '\tx: \'rpm\',\n' +
-                           '\tcharts: [\n\t    { type: \'bar\', y: \'horsepower\', fill:\'#2ca02c\'}\n\t    { type: \'bar\', y: \'torque\', fill:\'#ff7f0e\'}\n\t],\n' +
-                           '\tmaxLength: 7,\n' +
-                           '\twidth: 700,\n' +
-                           '\theight: 450,\n' +
-                           '\tanimation:true\n}'
-
-                           }
-                       </pre>
-                    </div>
-                </Row>
-                <Row title="Group MultiLine Chart Sample Horizontal" chart="line" media={true} actionBar={false}>
-                    <VizG config={this.barHorizontalChartConfig} metadata={this.metadata} data={this.state.data}/>
-                    <br/>
-                    <div>
-
-                       <pre>
-                           <p>Configuration: </p>
-
-                           {'{\n' +
-                           '\tx: \'rpm\',\n' +
-                           '\tcharts: [\n\t    { type: \'bar\', y: \'torque\', color: \'EngineType\',orientation:\'left\',colorDomain:[\'\',\'\',\'piston\']}\n\t],\n' +
-                           '\tmaxLength: 7,\n' +
-                           '\twidth: 700,\n' +
-                           '\theight: 450,\n' +
-                           '\tanimation:true\n}'
-
+                           {
+                               '{\n' +
+                               '\tcharts : [{type: "arc",  x : "torque", color : "EngineType", mode: "pie"}],\n' +
+                               '\twidth: 400,\n' +
+                               '\theight: 300\n' +
+                               '}'
                            }
                        </pre>
                     </div>
                 </Row>
 
-                <Row title="Group MultiLine Chart Sample stacked" chart="line" media={true} actionBar={false}>
-                    <VizG config={this.stackedBarChartConfig} metadata={this.metadata} data={this.state.data}/>
-                    <br/>
-                    <div>
-
+                <Row title="Donut Chart Sample" chart="line" media={true} actionBar={false}>
+                    <VizG config={this.configT} metadata={this.metadata} data={this.state.data}/>
+                    <br/><br/>
+                    <div style={{display: 'block'}}>
                        <pre>
-                           <p>Configuration: </p>
-
-                           {'{\n' +
-                           '\tx: \'rpm\',\n' +
-                           '\tcharts: [\n\t    { type: \'bar\', y: \'torque\', color: \'EngineType\',mode:\'stacked\',colorDomain:[\'\',\'\',\'piston\']}\n\t],\n' +
-                           '\tmaxLength: 7,\n' +
-                           '\twidth: 700,\n' +
-                           '\theight: 450,\n' +
-                           '\tanimation:true\n}'
+                           {
+                               '{\n' +
+                               '\tcharts : [{type:"arc", x:"torque", color:"EngineType", mode:"donut"}],\n' +
+                               '\twidth: 300,\n' +
+                               '\theight: 250\n' +
+                               '}'
 
                            }
                        </pre>
                     </div>
                 </Row>
-
 
                 <Row title="Sample Data Set" chart="line">
                     <div>
@@ -182,6 +142,8 @@ export default class BarChartConfigSample extends React.Component {
                        </pre>
                     </div>
                 </Row>
+
+                
                 <Row title="API" chart="line">
                     <div>
                        <pre>
@@ -193,10 +155,21 @@ export default class BarChartConfigSample extends React.Component {
                                    <th>Type</th>
                                    <th>Description</th>
                                </tr>
+                               
                                <tr>
                                    <td>x</td>
                                    <td>string</td>
                                    <td>independent axis</td>
+                               </tr>
+                               <tr>
+                                   <td>labelColor</td>
+                                   <td>string(color)</td>
+                                   <td>label color of the percentage mode</td>
+                               </tr>
+                               <tr>
+                                   <td>innerRadius</td>
+                                   <td>int(pixel)</td>
+                                   <td>innerRadius in pixels for the chart in donut mode or percentage mode</td>
                                </tr>
                                <tr>
                                    <td>charts</td>
@@ -213,8 +186,8 @@ export default class BarChartConfigSample extends React.Component {
                                    <td>int</td>
                                    <td>Height of the chart in pixels</td>
                                </tr>
-
                                </tbody>
+
                            </table>
                            <br/>
                            <p>Chart Object Properties</p>
@@ -243,12 +216,7 @@ export default class BarChartConfigSample extends React.Component {
                                <tr>
                                    <td>mode</td>
                                    <td>string</td>
-                                   <td>whether the chart should be stacked or not (default:null)</td>
-                               </tr>
-                               <tr>
-                                   <td>orientation</td>
-                                   <td>string</td>
-                                   <td>orientation of the chart (default:vertical)</td>
+                                   <td>type of the line curve (see <a href="https://github.com/d3/d3-shape#curves">d3-documentation</a> for possible curve types)</td>
                                </tr>
                                <tr>
                                    <td>colorScale</td>

@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Row} from './util';
 import './css/Table.css';
-import VizG from '../components/VizG';
+import VizG from '../../src/VizG.jsx';
 // import t from 'GridTest';
 
 
