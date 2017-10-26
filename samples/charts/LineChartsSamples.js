@@ -1,9 +1,8 @@
 import React from 'react';
 import { Row } from './util';
 import './css/Table.css';
-import VizG from '../components/VizG';
-import { VictoryLine } from 'victory';
-import Axios from 'axios';
+import VizG from '../../src/VizG.jsx';
+// import Axios from 'axios';
 // import t from 'GridTest';
 
 
@@ -73,20 +72,20 @@ export default class LineChartConfigSample extends React.Component {
         }, 500);
 
 
-        Axios
-        .post(
-            'http://localhost:8080/chart-gen-service/poll-db',
-            'test text',
-            {
-                headers: { 'Content-Length': 0, 'Content-Type': 'text/plain' },
-                responseType: 'text'
-            }
-        ).then((response) => {
-            console.info(response);
-        })
-        .catch((error) => {
-            console.info(error);
-        });
+        // Axios
+        // .post(
+        //     'http://localhost:8080/chart-gen-service/poll-db',
+        //     'test text',
+        //     {
+        //         headers: { 'Content-Length': 0, 'Content-Type': 'text/plain' },
+        //         responseType: 'text'
+        //     }
+        // ).then((response) => {
+        //     console.info(response);
+        // })
+        // .catch((error) => {
+        //     console.info(error);
+        // });
     }
 
     componentWillUnmount() {
@@ -182,6 +181,27 @@ export default class LineChartConfigSample extends React.Component {
                                         <td>Charts to be plotted</td>
                                     </tr>
                                     <tr>
+                                        <td>yAxisTickAngle</td>
+                                        <td>int</td>
+                                        <td>tick angle value of yAxis ticks | default : 0</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>xAxisTickAngle</td>
+                                        <td>int</td>
+                                        <td>tick angle value of xAxis ticks | default : 0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>axisLabelColor</td>
+                                        <td>String(color)</td>
+                                        <td>Label Color of the axis label</td>
+                                    </tr>
+                                    <tr>
+                                        <td>tickLabelColor</td>
+                                        <td>String(color)</td>
+                                        <td>Label Color of the tick label</td>
+                                    </tr>
+                                    <tr>
                                         <td>maxLength</td>
                                         <td>int</td>
                                         <td>Maximum length of the dataSet displayed</td>
@@ -213,6 +233,7 @@ export default class LineChartConfigSample extends React.Component {
                                         <td>string</td>
                                         <td>dependent axis</td>
                                     </tr>
+                                    
                                     <tr>
                                         <td>color</td>
                                         <td>string</td>

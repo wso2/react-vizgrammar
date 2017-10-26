@@ -13,27 +13,7 @@
  * limitations under the License.
  *
  */
-/**
- * Copyright (c) 2015 Formidable Labs
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- *
- */
+
 
 import React from 'react';
 import {
@@ -44,7 +24,7 @@ import {
     VictoryLabel
 } from 'victory';
 import PropTypes from 'prop-types';
-import {getColorRangeArray} from './helper';
+import {getDefaultColorScale} from './helper';
 
 
 export default class PieCharts extends React.Component {
@@ -99,7 +79,7 @@ export default class PieCharts extends React.Component {
                         type: arcConfig.type,
                         dataSetNames: {},
                         mode: arcConfig.mode,
-                        colorScale: Array.isArray(arcConfig.colorScale) ? arcConfig.colorScale : getColorRangeArray(arcConfig.colorScale || 'category10'),
+                        colorScale: Array.isArray(arcConfig.colorScale) ? arcConfig.colorScale : getDefaultColorScale(),
                         colorIndex: 0,
 
                     });
@@ -221,7 +201,7 @@ export default class PieCharts extends React.Component {
                             <VictoryTooltip width={50} height={25}/>}
                         labels={config.percentage === 'percentage' ? '' : (d) => `${d.x} : ${((d.y / total) * 100).toFixed(2)}%`}
                         style={{labels: {fontSize: 6}}}
-                        labelRadius={40}
+                        labelRadius={height/4}
                         innerRadius={chart.mode === 'donut' || config.percentage ? config.innerRadius || height>width ? width : height / 4: 0}
                         randomUpdater={randomUpdater}
                     />
@@ -231,7 +211,7 @@ export default class PieCharts extends React.Component {
                                 textAnchor="middle" verticalAnchor="middle"
                                 x={height / 2} y={width / 2}
                                 text={`${Math.round(dataSets[0].y)}%`}
-                                style={{fontSize: 45}}
+                                style={{fontSize: 45,fill: config.labelColor || 'black'}}
                             /> : null
                     }
                 </svg>

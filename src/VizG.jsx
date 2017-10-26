@@ -19,14 +19,13 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import BasicCharts from './ChartComponents/BasicCharts';
-import ScatterCharts from './ChartComponents/ScatterCharts';
-import PieCharts from './ChartComponents/PieCharts';
-import MapGenerator from './ChartComponents/MapGenerator';
-import TableCharts from './ChartComponents/TableCharts';
-import NumberCharts from './ChartComponents/NumberCharts';
-import SparkCharts from './ChartComponents/InlineChartsBasic';
-
+import BasicCharts from './components/BasicChart.jsx';
+import ScatterCharts from './components/ScatterChart.jsx';
+import PieCharts from './components/PieChart.jsx';
+import MapGenerator from './components/MapChart.jsx';
+import TableCharts from './components/TableChart.jsx';
+import NumberCharts from './components/NumberChart.jsx';
+import InlineCharts from './components/InlineChart.jsx';
 
 class VizG extends Component {
 
@@ -68,7 +67,7 @@ class VizG extends Component {
                                     chartType === 'table' ? <TableCharts metadata={metadata} config={config} data={data} /> :
                                         chartType === 'number' ? <NumberCharts metadata={metadata} config={config} data={data} /> :
                                             chartType === 'spark-line' || chartType === 'spark-bar' || chartType === 'spark-area' ?
-                                                <SparkCharts metadata={metadata} config={config} data={data} /> : null
+                                                <InlineCharts metadata={metadata} config={config} data={data} /> : null
                 }
             </div>
         );

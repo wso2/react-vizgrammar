@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
-import {VictoryPie} from 'victory';
-import MapGenerator from '../components/ChartComponents/MapGenerator';
-import NumberCharts from '../components/ChartComponents/NumberCharts';
-import TableCharts from '../components/ChartComponents/TableCharts';
+import TableCharts from '../../src/components/TableChart.jsx';
 import {Row} from './util';
 
 // import Map from '../components/MapComponents/App';

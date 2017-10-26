@@ -17,15 +17,16 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import {ComposableMap, ZoomableGroup, Geographies, Geography, Markers, Marker} from 'react-simple-maps';
+import {ComposableMap, Geographies, Geography} from 'react-simple-maps';
 import {VictoryLegend, VictoryContainer} from 'victory';
-import worldMap from './resources/GeoJSON/world.json';
-import europeMap from './resources/GeoJSON/europe.json';
-import usaMap from './resources/GeoJSON/usa2.json';
-import CountryInfo from './resources/GeoJSON/countryInfo.json';
-import {feature} from 'topojson-client';
+import {CountryInfo, EuropeMap, WorldMap, USAMap} from './resources/MapData';
+// import CountryInfo from './resources/countryInfo';
+// import EuropeMap from './resources/europe.json';
+// import WorldMap from './resources/world.json';
+// import USAMap from './resources/usa2.json';
+import  feature from 'topojson-client/src/feature';
 import ReactToolTip from 'react-tooltip';
-import {getColorRangeArray} from './helper';
+import {getDefaultColorScale} from './helper';
 import * as d3 from 'd3';
 
 
@@ -80,10 +81,10 @@ export default class MapGenerator extends React.Component {
         if (countryName.length === 3) {
             return countryName;
         } else {
-            let countryName1=CountryInfo.filter((x) => x.name === countryName);
-            if(countryName1.length>0){
+            let countryName1 = CountryInfo.filter((x) => x.name === countryName);
+            if (countryName1.length > 0) {
                 return countryName1[0]['alpha-3'];
-            }else {
+            } else {
                 return countryName;
             }
 
@@ -112,7 +113,7 @@ export default class MapGenerator extends React.Component {
         // console.info(numConfig);
         let xIndex = metadata.names.indexOf(config.x);
         let yIndex = metadata.names.indexOf(mapConfig.y);
-        colorScale = Array.isArray(mapConfig.colorScale) ? mapConfig.colorScale : getColorRangeArray(mapConfig.colorScale || 'category10');
+        colorScale = Array.isArray(mapConfig.colorScale) ? mapConfig.colorScale : getDefaultColorScale();
         // console.info(numConfig.mapType);
         mapType = mapConfig.mapType;
         switch (mapConfig.mapType) {
@@ -146,16 +147,16 @@ export default class MapGenerator extends React.Component {
                     mapDataRange[1] = datum[yIndex];
                 }
 
-                let dataIndex=mapData.findIndex((obj)=>obj.x===this._convertCountryNamesToCode(datum[xIndex]));
+                let dataIndex = mapData.findIndex((obj) => obj.x === this._convertCountryNamesToCode(datum[xIndex]));
                 console.info(dataIndex);
 
                 // console.info(this._convertCountryNamesToCode(datum[xIndex]));
-                if (dataIndex>=0) {
-                    mapData[dataIndex].y=datum[yIndex];
+                if (dataIndex >= 0) {
+                    mapData[dataIndex].y = datum[yIndex];
                 } else {
                     mapData.push({
                         givenName: datum[xIndex],
-                        x: mapType==='usa' ? datum[xIndex]:this._convertCountryNamesToCode(datum[xIndex]),
+                        x: mapType === 'usa' ? datum[xIndex] : this._convertCountryNamesToCode(datum[xIndex]),
                         y: datum[yIndex]
                     });
                 }
@@ -174,7 +175,7 @@ export default class MapGenerator extends React.Component {
 
                 mapData.push({
                     givenName: datum[xIndex],
-                    x: mapType==='usa' ? datum[xIndex]:this._convertCountryNamesToCode(datum[xIndex]),
+                    x: mapType === 'usa' ? datum[xIndex] : this._convertCountryNamesToCode(datum[xIndex]),
                     y: datum[yIndex]
                 });
 
@@ -210,20 +211,20 @@ export default class MapGenerator extends React.Component {
         // console.info(mapData);
         switch (mapType) {
             case 'world':
-                mapFeatureData = worldMap;
+                mapFeatureData = WorldMap;
                 break;
             case 'usa':
-                mapFeatureData = usaMap;
+                mapFeatureData = USAMap;
                 break;
             case 'europe':
-                mapFeatureData = europeMap;
+                mapFeatureData = EuropeMap;
                 break;
         }
 
 
         return (
 
-            <div style={{overflow: 'hidden'}}>
+            <div style={{overflow: 'hidden',zIndex:9999}}>
                 <div
                     style={{
                         float: 'left',
@@ -252,15 +253,15 @@ export default class MapGenerator extends React.Component {
 
 
                                     return geographies.map((geography, i) => {
-                                        let dataTip='';
+                                        let dataTip = '';
                                         let toolTip = null;
 
-                                        if(mapType==='usa'){
+                                        if (mapType === 'usa') {
 
-                                            dataTip= mapData.filter((x) => x.x === geography.properties.name);
+                                            dataTip = mapData.filter((x) => x.x === geography.properties.name);
 
-                                        }else {
-                                            dataTip= mapData.filter((x) => x.x === geography.id);
+                                        } else {
+                                            dataTip = mapData.filter((x) => x.x === geography.id);
                                         }
 
                                         if (dataTip.length > 0) {
