@@ -41,7 +41,6 @@ export default class LineChartConfigSample extends React.Component {
         charts: [{type: 'arc', x: 'torque', color: 'EngineType', colorScale: ['steelblue', '#80ccff'],}],
 
         tooltip: {'enabled': false},
-
         legend: false, percentage: true, colorScale: ['steelblue', '#80ccff'],
         width: 300,
         height: 300
@@ -80,7 +79,7 @@ export default class LineChartConfigSample extends React.Component {
             <div>
                 <center><h1>Line Chart Config Samples</h1></center>
                 <Row title="Donut Chart Sample" chart="line" media={true} actionBar={false}>
-                    <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data}/>
+                    <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data} onClick={(data)=>{console.info(data)}}/>
                     <br/><br/>
                     <div style={{display: 'block'}}>
                        <pre>
