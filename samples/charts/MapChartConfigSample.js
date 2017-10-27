@@ -73,7 +73,7 @@ class Test extends Component {
         return (
             <div>
                 <Row title="World Map Sample" chart="line" media={true} actionBar={false}>
-                    <MapGenerator config={this.mapConfig} metadata={this.metadata} data={this.state.data}/>
+                    <MapGenerator config={this.mapConfig} metadata={this.metadata} data={this.state.data} onClick={(geo)=>{console.info(geo);}}/>
                     <pre>
                         {'{\n' +
                         '\tx : \'Country\',\n' +
@@ -84,7 +84,7 @@ class Test extends Component {
                     </pre>
                 </Row>
                 <Row title="Europe Map Sample" chart="line" media={true} actionBar={false}>
-                    <MapGenerator config={this.europeConfig} metadata={this.metadata} data={this.state.data}/>
+                    <MapGenerator config={this.europeConfig} metadata={this.metadata} data={this.state.data} onClick={(geo)=>{console.info(geo);}}/>
                     <pre>
                         {'{\n' +
                         '\tx : \'Country\',\n' +
@@ -95,7 +95,7 @@ class Test extends Component {
                     </pre>
                 </Row>
                 <Row title="United States Map Sample" chart="line" media={true} actionBar={false}>
-                    <MapGenerator config={this.usaConfig} metadata={this.metadata} data={this.state.data2}/>
+                    <MapGenerator config={this.usaConfig} metadata={this.metadata} data={this.state.data2} onClick={(geo)=>{console.info(geo);}}/>
                     <pre>
                         {'{\n' +
                         '\tx : \'County\',\n' +

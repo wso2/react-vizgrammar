@@ -35,6 +35,7 @@ class VizG extends Component {
             config: props.config,
             data: props.data,
             metadata: props.metadata,
+            onClick:props.onClick
         };
     }
 
@@ -53,19 +54,19 @@ class VizG extends Component {
 
     render() {
 
-        let { config, data, metadata } = this.state;
+        let { config, data, metadata, onClick } = this.state;
         let chartType = config.charts[0].type;
 
         return (
             <div>
                 {
                     chartType === 'line' || chartType === 'area' || chartType === 'bar' ?
-                        <BasicCharts config={config} metadata={metadata} data={data} /> :
-                        chartType === 'scatter' ? <ScatterCharts config={config} metadata={metadata} data={data} /> :
-                            chartType === 'arc' ? <PieCharts config={config} metadata={metadata} data={data} /> :
-                                chartType === 'map' ? <MapGenerator config={config} metadata={metadata} data={data} /> :
-                                    chartType === 'table' ? <TableCharts metadata={metadata} config={config} data={data} /> :
-                                        chartType === 'number' ? <NumberCharts metadata={metadata} config={config} data={data} /> :
+                        <BasicCharts config={config} metadata={metadata} data={data} onClick={onClick} /> :
+                        chartType === 'scatter' ? <ScatterCharts config={config} metadata={metadata} data={data} onClick={onClick} /> :
+                            chartType === 'arc' ? <PieCharts config={config} metadata={metadata} data={data} onClick={onClick} /> :
+                                chartType === 'map' ? <MapGenerator config={config} metadata={metadata} data={data} onClick={onClick} /> :
+                                    chartType === 'table' ? <TableCharts metadata={metadata} config={config} data={data} onClick={onClick} /> :
+                                        chartType === 'number' ? <NumberCharts metadata={metadata} config={config} data={data} onClick={onClick} /> :
                                             chartType === 'spark-line' || chartType === 'spark-bar' || chartType === 'spark-area' ?
                                                 <InlineCharts metadata={metadata} config={config} data={data} /> : null
                 }

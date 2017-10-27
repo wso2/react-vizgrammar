@@ -20,10 +20,6 @@ import PropTypes from 'prop-types';
 import {ComposableMap, Geographies, Geography} from 'react-simple-maps';
 import {VictoryLegend, VictoryContainer} from 'victory';
 import {CountryInfo, EuropeMap, WorldMap, USAMap} from './resources/MapData';
-// import CountryInfo from './resources/countryInfo';
-// import EuropeMap from './resources/europe.json';
-// import WorldMap from './resources/world.json';
-// import USAMap from './resources/usa2.json';
 import  feature from 'topojson-client/src/feature';
 import ReactToolTip from 'react-tooltip';
 import {getDefaultColorScale} from './helper';
@@ -48,7 +44,7 @@ export default class MapGenerator extends React.Component {
             colorIndex: 0,
             colorScale: [],
         };
-
+        this._handleMouseEvent = this._handleMouseEvent.bind(this);
     }
 
     componentDidMount() {
@@ -67,6 +63,16 @@ export default class MapGenerator extends React.Component {
         this.setState({});
     }
 
+
+    /* *************************[Start] Event Handlers****************************/
+
+    _handleMouseEvent(evt) {
+        const { onClick } = this.props;
+
+        return onClick && onClick(evt);
+    }
+
+    /* *************************[END] Event Handlers****************************/
 
     /**
      * This function converts the country name into
@@ -132,8 +138,9 @@ export default class MapGenerator extends React.Component {
                 break;
         }
         // console.info(yIndex);
+        colorType=metadata.types[yIndex];
         if (metadata.types[yIndex] === 'linear') {
-            colorType = 'linear';
+            
             data.map((datum) => {
                 if (mapDataRange.length === 0) {
                     mapDataRange = [datum[yIndex], datum[yIndex]];
@@ -163,7 +170,7 @@ export default class MapGenerator extends React.Component {
 
             });
         } else {
-            colorType = 'ordinal';
+            
             // console.info(data);
             data.map((datum) => {
                 if (!ordinalColorMap.hasOwnProperty(datum[yIndex])) {
@@ -305,7 +312,7 @@ export default class MapGenerator extends React.Component {
                                                         outline: 'none'
                                                     }
                                                 }}
-
+                                                onClick={this._handleMouseEvent}
 
                                             />);
                                     });
@@ -370,5 +377,6 @@ MapGenerator.propTypes = {
     metadata: PropTypes.object,
     colorRange: PropTypes.array,
     colorScale: PropTypes.array,
-    colorType: PropTypes.string
+    colorType: PropTypes.string,
+    onClick:PropTypes.func
 };

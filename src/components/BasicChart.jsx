@@ -61,6 +61,7 @@ export default class BasicCharts extends React.Component {
         };
 
         this.handleAndSortData = this.handleAndSortData.bind(this);
+        this._handleMouseEvent = this._handleMouseEvent.bind(this);
     }
 
     componentDidMount() {
@@ -74,6 +75,17 @@ export default class BasicCharts extends React.Component {
     componentWillUnmount() {
         this.setState({});
     }
+
+
+    /* *************************[Start] Event Handlers****************************/
+
+    _handleMouseEvent(evt) {
+        const { onClick } = this.props;
+
+        return onClick && onClick(evt);
+    }
+
+    /* *************************[END] Event Handlers****************************/
 
     /**
      * Handles the sorting of data and populating the dataset
@@ -212,6 +224,20 @@ export default class BasicCharts extends React.Component {
                                         size={(d, a) => {
                                             return a ? 20 : 6;
                                         }}
+                                        events={[{
+                                            target: 'data',
+                                            eventHandlers: {
+                                                onClick: () => {
+                                                    return [
+                                                        {
+                                                            target: 'data',
+                                                            mutation: this._handleMouseEvent
+                                                        }
+                                                    ];
+                                                }
+                                            }
+                                        }]}
+
                                     />
                                 </VictoryPortal>
                             </VictoryGroup>
@@ -242,6 +268,19 @@ export default class BasicCharts extends React.Component {
                                         size={(d, a) => {
                                             return a ? 20 : 6;
                                         }}
+                                        events={[{
+                                            target: 'data',
+                                            eventHandlers: {
+                                                onClick: () => {
+                                                    return [
+                                                        {
+                                                            target: 'data',
+                                                            mutation: this._handleMouseEvent
+                                                        }
+                                                    ];
+                                                }
+                                            }
+                                        }]}
                                     />
                                 </VictoryPortal>
                             </VictoryGroup>
@@ -278,7 +317,19 @@ export default class BasicCharts extends React.Component {
                                 }
                                 data={dataSets[dataSetName]}
                                 color={chart.dataSetNames[dataSetName]}
-
+                                events={[{
+                                    target: 'data',
+                                    eventHandlers: {
+                                        onClick: () => {
+                                            return [
+                                                {
+                                                    target: 'data',
+                                                    mutation: this._handleMouseEvent
+                                                }
+                                            ];
+                                        }
+                                    }
+                                }]}
                             />
                         );
 
@@ -328,18 +379,18 @@ export default class BasicCharts extends React.Component {
                         height={height}
                         theme={VictoryTheme.material}
                         container={<VictoryVoronoiContainer />}
-                        style={{ marginLeft: 1000 }}
+                        
                         scale={{ x: xScale === 'linear' ? 'linear' : 'time', y: 'linear' }}
                         domain={{ x: this.state.xDomain[0] ? this.state.xDomain : null }}
                     >
                         <VictoryAxis crossAxis
-                            style={{ axisLabel: { padding: 35 }, fill: config.axisLabelColor || '#455A64' }}
+                            style={{ axis:{ fill:'red' },axisLabel: { padding: 35 }, fill: config.axisLabelColor || '#455A64', }}
                             label={config.x}
                             tickFormat={xScale === 'linear' ?
                                 (text) => {
                                     if (text.toString().match(/[a-z]/i)) {
                                         if (text.length > 5) {
-                                            return text.substring(0,4) + '...';
+                                            return text.substring(0, 4) + '...';
                                         } else {
                                             return text;
                                         }
@@ -388,7 +439,7 @@ export default class BasicCharts extends React.Component {
                         height={this.state.height}
                         width={300}
                         title="Legend"
-                        style={{ title: { fontSize: 25 }, labels: { fontSize: 20 } }}
+                        style={{ title: { fontSize: 25,fill:config.tickLabelColor  }, labels: { fontSize: 20,fill:config.tickLabelColor } }}
                         data={legendItems.length > 0 ? legendItems : [{
                             name: 'undefined',
                             symbol: { fill: '#333' }
@@ -402,9 +453,10 @@ export default class BasicCharts extends React.Component {
                         <div
                             style={{ width: '10%', display: 'inline', float: 'left', left: 20 }}
                         >
-                            <button onClick={() => { 
+                            <button onClick={() => {
                                 console.info(this.xRange);
-                                this.setState({ xDomain: this.xRange }); }}>Reset</button>
+                                this.setState({ xDomain: this.xRange });
+                            }}>Reset</button>
                         </div>
                         <div
                             style={{ width: '90%', display: 'inline', float: 'right' }}
@@ -415,9 +467,9 @@ export default class BasicCharts extends React.Component {
                                 defaultValue={this.xRange}
                                 value={this.state.xDomain}
                                 allowCross={false}
-                                onChange={(d)=>{
+                                onChange={(d) => {
                                     this.setState({
-                                        xDomain:d
+                                        xDomain: d
                                     });
                                 }}
                             />
@@ -436,5 +488,6 @@ BasicCharts.propTypes = {
     config: PropTypes.object.isRequired,
     metadata: PropTypes.object.isRequired,
     width: PropTypes.number,
-    height: PropTypes.number
+    height: PropTypes.number,
+    onClick: PropTypes.func
 };
