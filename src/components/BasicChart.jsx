@@ -339,12 +339,12 @@ export default class BasicCharts extends React.Component {
                                 (text) => {
                                     if (text.toString().match(/[a-z]/i)) {
                                         if (text.length > 5) {
-                                            return text.subString(0, 4) + '...';
+                                            return text.substring(0,4) + '...';
                                         } else {
                                             return text;
                                         }
                                     } else {
-                                        return formatPrefix(',.0', Number(text));
+                                        return formatPrefix(',.2', Number(text));
                                     }
                                 } :
                                 config.timeFormat ?
