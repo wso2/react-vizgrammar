@@ -354,7 +354,7 @@ export default class MapGenerator extends React.Component {
                                 height={this.state.height}
                                 width={300}
                                 title="Legend"
-                                style={{title: {fontSize: 25}, labels: {fontSize: 20}}}
+                                style={{title: {fontSize: 25, fill: config.axisLabelColor}, labels: {fontSize: 20, fill: config.axisLabelColor}}}
                                 data={Object.keys(ordinalColorMap).map((name) => {
                                     return {name: name, symbol: {fill: ordinalColorMap[name]}};
                                 })}
