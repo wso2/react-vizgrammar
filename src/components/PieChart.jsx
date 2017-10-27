@@ -24,7 +24,7 @@ import {
     VictoryLabel
 } from 'victory';
 import PropTypes from 'prop-types';
-import {getDefaultColorScale} from './helper';
+import { getDefaultColorScale } from './helper';
 
 
 export default class PieCharts extends React.Component {
@@ -44,6 +44,7 @@ export default class PieCharts extends React.Component {
         };
 
         this._handleAndSortData = this._handleAndSortData.bind(this);
+        this._handleMouseEvent=this._handleMouseEvent.bind(this);
     }
 
     componentDidMount() {
@@ -58,14 +59,24 @@ export default class PieCharts extends React.Component {
         this.setState({});
     }
 
+    /* *************************[Start] Event Handlers****************************/
+
+    _handleMouseEvent(evt) {
+        const { onClick } = this.props;
+
+        return onClick && onClick(evt);
+    }
+
+    /* *************************[END] Event Handlers****************************/
+
     /**
      * Handles the sorting of data and populating the dataset
      * @param props
      * @private
      */
     _handleAndSortData(props) {
-        let {config, metadata, data} = props;
-        let {dataSets, chartArray, initialized, xScale, orientation, legend, scatterPlotRange, randomUpdater} = this.state;
+        let { config, metadata, data } = props;
+        let { dataSets, chartArray, initialized, xScale, orientation, legend, scatterPlotRange, randomUpdater } = this.state;
 
 
         config.charts.map(() => {
@@ -132,7 +143,7 @@ export default class PieCharts extends React.Component {
                 if (!initialized) {
                     chartArray.push({
                         type: arcConfig.type,
-                        colorScale: Array.isArray(arcConfig.colorScale) ? arcConfig.colorScale : getColorRangeArray(arcConfig.colorScale || 'category10'),
+                        colorScale: Array.isArray(arcConfig.colorScale) ? arcConfig.colorScale : getDefaultColorScale(),
                     });
 
                 }
@@ -166,14 +177,14 @@ export default class PieCharts extends React.Component {
      * @private
      */
     _getPercentDataForPieChart(value) {
-        return [{x: 'primary', y: value}, {x: 'secondary', y: 100 - value}];
+        return [{ x: 'primary', y: value }, { x: 'secondary', y: 100 - value }];
     }
 
 
     render() {
 
-        let {config} = this.props;
-        let {height, width, chartArray, dataSets, xScale, legend,randomUpdater} = this.state;
+        let { config } = this.props;
+        let { height, width, chartArray, dataSets, xScale, legend, randomUpdater } = this.state;
         let chartComponents = [];
         let legendItems = [];
 
@@ -184,26 +195,38 @@ export default class PieCharts extends React.Component {
             if (!config.percentage) {
                 Object.keys(chart.dataSetNames).map((dataSetName) => {
                     // console.info(chart.dataSetNames[dataSetName]);
-                    legendItems.push({name: dataSetName, symbol: {fill: chart.dataSetNames[dataSetName]}});
+                    legendItems.push({ name: dataSetName, symbol: { fill: chart.dataSetNames[dataSetName] } });
                     total += dataSets[dataSetName].y;
                     pieChartData.push(dataSets[dataSetName]);
                 });
             }
 
             chartComponents.push(
-                <svg width='100%' height={'100%'} viewBox={`0 0 ${height>width ? width : height} ${height>width ? width : height}`}>
+                <svg width='100%' height={'100%'} viewBox={`0 0 ${height > width ? width : height} ${height > width ? width : height}`}>
                     <VictoryPie
-                        height={height>width ? width : height}
-                        width={height>width ? width : height}
+                        height={height > width ? width : height}
+                        width={height > width ? width : height}
                         colorScale={chart.colorScale}
                         data={config.percentage ? dataSets : pieChartData}
-                        labelComponent={config.percentage ? <VictoryLabel text={''}/> :
-                            <VictoryTooltip width={50} height={25}/>}
+                        labelComponent={config.percentage ? <VictoryLabel text={''} /> :
+                            <VictoryTooltip width={50} height={25} />}
                         labels={config.percentage === 'percentage' ? '' : (d) => `${d.x} : ${((d.y / total) * 100).toFixed(2)}%`}
-                        style={{labels: {fontSize: 6}}}
-                        labelRadius={height/4}
-                        innerRadius={chart.mode === 'donut' || config.percentage ? (height>width ? width : height / 4)+(config.innerRadius || 0): 0}
-
+                        style={{ labels: { fontSize: 6 } }}
+                        labelRadius={height / 4}
+                        innerRadius={chart.mode === 'donut' || config.percentage ? (height > width ? width : height / 4) + (config.innerRadius || 0) : 0}
+                        events={[{
+                            target: 'data',
+                            eventHandlers: {
+                                onClick: () => {
+                                    return [
+                                        {
+                                            target: 'data',
+                                            mutation: this._handleMouseEvent
+                                        }
+                                    ];
+                                }
+                            }
+                        }]}
                         randomUpdater={randomUpdater}
                     />
                     {
@@ -212,7 +235,7 @@ export default class PieCharts extends React.Component {
                                 textAnchor="middle" verticalAnchor="middle"
                                 x={height / 2} y={width / 2}
                                 text={`${Math.round(dataSets[0].y)}%`}
-                                style={{fontSize: 45,fill: config.labelColor || 'black'}}
+                                style={{ fontSize: 45, fill: config.labelColor || 'black' }}
                             /> : null
                     }
                 </svg>
@@ -221,22 +244,22 @@ export default class PieCharts extends React.Component {
 
         console.info(legend);
         return (
-            <div style={{overflow: 'hidden'}}>
-                <div style={{float: 'left', width: legend ? '80%' : '100%', display: 'inline'}}>
+            <div style={{ overflow: 'hidden' }}>
+                <div style={{ float: 'left', width: legend ? '80%' : '100%', display: 'inline' }}>
                     {chartComponents}
                 </div>
                 {
                     legend ?
-                        <div style={{width: '20%', display: 'inline', float: 'right'}}>
+                        <div style={{ width: '20%', display: 'inline', float: 'right' }}>
                             <VictoryLegend
-                                containerComponent={<VictoryContainer responsive={true}/>}
+                                containerComponent={<VictoryContainer responsive={true} />}
                                 height={this.state.height}
                                 width={300}
                                 title="Legend"
-                                style={{title: {fontSize: 25}, labels: {fontSize: 20}}}
+                                style={{ title: { fontSize: 25, fill: config.axisLabelColor }, labels: { fontSize: 20, fill: config.axisLabelColor } }}
                                 data={legendItems.length > 0 ? legendItems : [{
                                     name: 'undefined',
-                                    symbol: {fill: '#333'}
+                                    symbol: { fill: '#333' }
                                 }]}
                             />
                         </div> :
@@ -253,5 +276,6 @@ PieCharts.propTypes = {
     config: PropTypes.object.isRequired,
     metadata: PropTypes.object.isRequired,
     width: PropTypes.number,
-    height: PropTypes.number
+    height: PropTypes.number,
+    onClick: PropTypes.func
 };

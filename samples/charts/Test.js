@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 
 import VizG from '../../src/VizG.jsx';
 import InlineCharts from '../../src/components/InlineChart.jsx';
-
+// import ReactTable from 'react-table';
+import TableTest from '../../src/components/ReactTableTest.jsx';
 // import Map from '../components/MapComponents/App';
 
 class Test extends Component {
@@ -28,23 +29,23 @@ class Test extends Component {
         // }, 1000);
 
 
-            this.setState({
-                staticDataSet: this.state.staticDataSet.concat([[10, 11, 12, 13],
-                [11, 15, 12, 13],
-                [12, 14, 12, 13],
-                [13, 24, 12, 13],
-                [14, -6, 12, 13],
-                [15, 11, 12, 13],
-                [16, 15, 12, 13],
-                [17, 14, 12, 13],
-                [18, 24, 12, 13],
-                [19, 6, 12, 13],
-                [20, 11, 12, 13],
-                [21, 15, 12, 13],
-                [22, 14, 12, 13],
-                [23, 24, 12, 13],
-                [24, 6, 12, 13],])
-            });
+        this.setState({
+            staticDataSet: this.state.staticDataSet.concat([[10, 11, 12, 13],
+            [11, 15, 12, 13],
+            [12, 14, 12, 13],
+            [13, 24, 12, 13],
+            [14, -6, 12, 13],
+            [15, 11, 12, 13],
+            [16, 15, 12, 13],
+            [17, 14, 12, 13],
+            [18, 24, 12, 13],
+            [19, 6, 12, 13],
+            [20, 11, 12, 13],
+            [21, 15, 12, 13],
+            [22, 14, 12, 13],
+            [23, 24, 12, 13],
+            [24, 6, 12, 13],])
+        });
     }
 
     mapConfig = {
@@ -65,10 +66,11 @@ class Test extends Component {
 
     sparkLineConfig = {
         x: 'rpm',
-        charts: [{ type: 'spark-line', y: 'torque', fill: '#0fd8e2' }],
+        charts: [{ type: 'line', y: 'torque', fill: '#0fd8e2' }],
         maxLength: 30,
-        width: 100,
-        height: 40
+        width: 800,
+        height: 400,
+        brush:true
         // animation: true
     };
 
@@ -88,9 +90,25 @@ class Test extends Component {
     };
 
     staticDataSet = [
-
-
+        [10, 11, 12, 13],
+        [11, 15, 12, 13],
+        [12, 14, 12, 13],
+        [13, 24, 12, 13],
+        [14, -6, 12, 13],
+        [15, 11, 12, 13],
+        [16, 15, 12, 13],
+        [17, 14, 12, 13],
+        [18, 24, 12, 13],
+        [19, 6, 12, 13],
+        [20, 11, 12, 13],
+        [21, 15, 12, 13],
+        [22, 14, 12, 13],
+        [23, 24, 12, 13],
+        [24, 6, 12, 13],
     ];
+
+
+    
 
 
 
@@ -98,10 +116,13 @@ class Test extends Component {
         // console.log("AAAA"+this.state.data)
         return (
             <div>
-                <div className="col-md-6 tile" style={{height:100}}>
-                    {/*<VizG config={this.sparkLineConfig} metadata={this.metadata} data={this.state.staticDataSet} />*/}
-                    <InlineCharts config={this.sparkLineConfig} metadata={this.metadata} data={this.state.staticDataSet} />
-                </div>
+
+                {/* <VizG config={this.sparkLineConfig} metadata={this.metadata} data={this.staticDataSet} onClick={(data)=>{
+                    console.log(data);
+                }} /> */}
+                {/* <VizG config={this.sparkLineConfig} metadata={this.metadata} data={this.state.staticDataSet} /> */}
+
+                <TableTest config={this.mapConfig} metadata={this.metadata} data={this.staticDataSet}/>
             </div>
         );
     }

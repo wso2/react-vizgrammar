@@ -18,7 +18,7 @@
 import React from 'react';
 import * as d3 from 'd3';
 import PropTypes from 'prop-types';
-import {getDefaultColorScale} from './helper';
+    import {getDefaultColorScale} from './helper';
 
 
 export default class TableCharts extends React.Component {

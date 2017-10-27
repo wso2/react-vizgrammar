@@ -27,7 +27,7 @@ import {
     VictoryLabel
 } from 'victory';
 import PropTypes from 'prop-types';
-import {formatPrefix,scaleLinear, timeFormat} from 'd3';
+import { formatPrefix, scaleLinear, timeFormat } from 'd3';
 import { getDefaultColorScale } from './helper';
 
 
@@ -47,6 +47,7 @@ export default class ScatterCharts extends React.Component {
         };
 
         this._handleAndSortData = this._handleAndSortData.bind(this);
+        this._handleMouseEvent = this._handleMouseEvent.bind(this);
     }
 
     componentDidMount() {
@@ -60,6 +61,17 @@ export default class ScatterCharts extends React.Component {
     componentWillUnmount() {
         this.setState({});
     }
+
+
+    /* *************************[Start] Event Handlers****************************/
+
+    _handleMouseEvent(evt) {
+        const { onClick } = this.props;
+
+        return onClick && onClick(evt);
+    }
+
+    /* *************************[END] Event Handlers****************************/
 
     /**
      * Handles the sorting of data and populating the dataset
@@ -200,6 +212,19 @@ export default class ScatterCharts extends React.Component {
                                     orientation='bottom'
                                 />
                             }
+                            events={[{
+                                target: 'data',
+                                eventHandlers: {
+                                    onClick: () => {
+                                        return [
+                                            {
+                                                target: 'data',
+                                                mutation: this._handleMouseEvent
+                                            }
+                                        ];
+                                    }
+                                }
+                            }]}
 
                         />
                     );
@@ -220,6 +245,19 @@ export default class ScatterCharts extends React.Component {
                                     orientation='bottom'
                                 />
                             }
+                            events={[{
+                                target: 'data',
+                                eventHandlers: {
+                                    onClick: () => {
+                                        return [
+                                            {
+                                                target: 'data',
+                                                mutation: this._handleMouseEvent
+                                            }
+                                        ];
+                                    }
+                                }
+                            }]}
 
                         />
                     );
@@ -238,49 +276,47 @@ export default class ScatterCharts extends React.Component {
                         theme={VictoryTheme.material}
                         container={<VictoryVoronoiContainer />}
                     >
-                    <VictoryAxis crossAxis
-                    style={{ axisLabel: { padding: 35 }, fill: config.axisLabelColor || '#455A64' }}
-                    label={config.x}
-                    tickFormat={xScale === 'linear' ?
-                        (text) => {
-                            if(text.toString().match(/[a-z]/i)){
-                                if(text.length>5){
-                                    return text.subString(0,4)+'...';
-                                }else{
-                                    return text;
-                                }
-                            }else{
-                                return formatPrefix(',.0', Number(text));
+                        <VictoryAxis crossAxis
+                            style={{ axisLabel: { padding: 35 }, fill: config.axisLabelColor || '#455A64' }}
+                            label={config.x}
+                            tickFormat={xScale === 'linear' ?
+                                (text) => {
+                                    if (text.toString().match(/[a-z]/i)) {
+                                        if (text.length > 5) {
+                                            return text.subString(0, 4) + '...';
+                                        } else {
+                                            return text;
+                                        }
+                                    } else {
+                                        return formatPrefix(',.0', Number(text));
+                                    }
+                                } :
+                                config.timeFormat ?
+                                    (date) => {
+                                        return timeFormat(config.timeFormat)(new Date(date));
+                                    } : null}
+                            standalone={false}
+                            tickLabelComponent={
+                                <VictoryLabel
+                                    angle={config.xAxisTickAngle || 0}
+                                    style={{ fill: config.tickLabelColor || 'black' }}
+                                />
                             }
-                        } :
-                        config.timeFormat ?
-                            (date) => { 
-                                return timeFormat(config.timeFormat)(new Date(date));
-                             } : null}
-                    standalone={false}
-                    tickLabelComponent={
-                        <VictoryLabel
-                            angle={config.xAxisTickAngle || 0}
-                            style={{ fill: config.tickLabelColor || 'black' }}
-                        />
-                    }
-
-
-                />
-                <VictoryAxis dependentAxis crossAxis
-                    style={{ axisLabel: { padding: 35 }, fill: config.axisLabelColor || '#455A64' }}
-                    label={config.charts.length > 1 ? '' : config.charts[0].y}
-                    standalone={false}
-                    tickFormat={text => formatPrefix(',.0', Number(text))}
-                    tickLabelComponent={
-                        <VictoryLabel
-                            angle={config.yAxisTickAngle || 0}
-                            style={{ fill: config.tickLabelColor || 'black' }}
 
 
                         />
-                    }
-                />
+                        <VictoryAxis dependentAxis crossAxis
+                            style={{ axisLabel: { padding: 35 }, fill: config.axisLabelColor || '#455A64' }}
+                            label={config.charts.length > 1 ? '' : config.charts[0].y}
+                            standalone={false}
+                            tickFormat={text => formatPrefix(',.0', Number(text))}
+                            tickLabelComponent={
+                                <VictoryLabel
+                                    angle={config.yAxisTickAngle || 0}
+                                    style={{ fill: config.tickLabelColor || 'black' }}
+                                />
+                            }
+                        />
 
                         {chartComponents}
 
@@ -296,7 +332,7 @@ export default class ScatterCharts extends React.Component {
                                 height={this.state.height}
                                 width={300}
                                 title="Legend"
-                                style={{ title: { fontSize: 25 }, labels: { fontSize: 20 } }}
+                                style={{ title: { fontSize: 25, fill: config.axisLabelColor }, labels: { fontSize: 20, fill: config.axisLabelColor } }}
                                 data={legendItems.length > 0 ? legendItems : [{
                                     name: 'undefined',
                                     symbol: { fill: '#333' }
@@ -316,5 +352,6 @@ ScatterCharts.propTypes = {
     config: PropTypes.object.isRequired,
     metadata: PropTypes.object.isRequired,
     width: PropTypes.number,
-    height: PropTypes.number
+    height: PropTypes.number,
+    onClick: PropTypes.func
 };
