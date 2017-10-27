@@ -16,7 +16,7 @@ export default class LineChartConfigSample extends React.Component {
     }
 
 
-    interval_jd=null;
+    interval_jd = null;
 
     metadata = {
         names: ['rpm', 'torque', 'horsepower', 'EngineType', 'weight'],
@@ -32,28 +32,27 @@ export default class LineChartConfigSample extends React.Component {
     };
 
     configPie = {
-        charts : [{type: 'arc',  x : 'torque', color : 'EngineType', mode: 'pie'}],
+        charts: [{type: 'arc', x: 'torque', color: 'EngineType', mode: 'pie'}],
         width: 300,
         height: 300
     };
 
     configT = {
-        charts : [{type: 'arc',  x : 'torque', color : 'EngineType',colorScale:['steelblue', '#80ccff'],}],
+        charts: [{type: 'arc', x: 'torque', color: 'EngineType', colorScale: ['steelblue', '#80ccff'],}],
 
-        tooltip: {'enabled':false},
-        legend:false, percentage:true, colorScale:['steelblue', '#80ccff'],
+        tooltip: {'enabled': false},
+
+        legend: false, percentage: true, colorScale: ['steelblue', '#80ccff'],
         width: 300,
         height: 300
     };
-
-
 
 
     /*****************[END] Chart Config******************/
 
 
     componentDidMount() {
-        this.interval_jd=setInterval(() => {
+        this.interval_jd = setInterval(() => {
             this.setState({
                 data: [
                     [this.state.timer, this.state.timer === 20 ? null : Math.random() * 100, 10, 'piston'],
@@ -71,7 +70,7 @@ export default class LineChartConfigSample extends React.Component {
         }, 500);
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         clearInterval(this.interval_id);
     }
 
@@ -143,7 +142,7 @@ export default class LineChartConfigSample extends React.Component {
                     </div>
                 </Row>
 
-                
+
                 <Row title="API" chart="line">
                     <div>
                        <pre>

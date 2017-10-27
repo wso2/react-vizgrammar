@@ -202,7 +202,8 @@ export default class PieCharts extends React.Component {
                         labels={config.percentage === 'percentage' ? '' : (d) => `${d.x} : ${((d.y / total) * 100).toFixed(2)}%`}
                         style={{labels: {fontSize: 6}}}
                         labelRadius={height/4}
-                        innerRadius={chart.mode === 'donut' || config.percentage ? config.innerRadius || height>width ? width : height / 4: 0}
+                        innerRadius={chart.mode === 'donut' || config.percentage ? (height>width ? width : height / 4)+(config.innerRadius || 0): 0}
+
                         randomUpdater={randomUpdater}
                     />
                     {
