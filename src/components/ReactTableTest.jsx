@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import ReactTable from 'react-table';
 import PropTypes from 'prop-types';
 import { getDefaultColorScale } from './helper';
+import { scaleLinear } from 'd3';
+import 'react-table/react-table.css';
+import './resources/css/tableChart.css';
 
 class ReactTableTest extends Component {
 
@@ -53,7 +56,8 @@ class ReactTableTest extends Component {
             if (!initialized) {
                 columnArray.push({
                     datIndex: colIndex,
-                    title: tableConfig.columnTitles[i] || column
+                    title: tableConfig.columnTitles[i] || column,
+                    accessor: column
                 });
             }
 
@@ -91,6 +95,9 @@ class ReactTableTest extends Component {
 
         });
 
+
+
+
         data = data.map((d) => {
             let tmp = {};
             for (let i = 0; i < metadata.names.length; i++) {
@@ -123,9 +130,47 @@ class ReactTableTest extends Component {
     }
 
 
+    _getLinearColor(color, range, value) {
+
+        return scaleLinear().range(['#fff', color]).domain(range)(value);
+    }
+
 
 
     render() {
+
+        let { config, metadata } = this.props;
+        let { dataSet, columnArray } = this.state;
+        let chartConfig = [];
+
+
+        columnArray.map((column, i) => {
+            let columnConfig = {
+                Header: column.title,
+                accessor: column.accessor,
+            };
+
+            //TODO: update property in doc
+            if (config.colorBasedStyle) {
+                columnConfig['Cell'] = props => (
+                    <div
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            backgroundColor: column.range ? this._getLinearColor(column.color, column.range, props.value) : column.colorMap[props.value],
+                            margin: 0,
+                            textAlign: 'center'
+                        }}
+                    >
+                        <span>{props.value}</span>
+                    </div>);
+            }
+
+            chartConfig.push(
+                columnConfig
+            );
+        });
+
 
 
 
@@ -133,9 +178,12 @@ class ReactTableTest extends Component {
 
 
         return (
-            <div>
-
-            </div>
+            <ReactTable
+                data={dataSet}
+                columns={chartConfig}
+                showPagination={false}
+                minRows={config.maxLength}
+            />
         );
 
 
