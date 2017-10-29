@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactTable from 'react-table';
 import PropTypes from 'prop-types';
-import {getDefaultColorScale} from './helper';
+import { getDefaultColorScale } from './helper';
 
 class ReactTableTest extends Component {
 
@@ -17,18 +17,18 @@ class ReactTableTest extends Component {
             colorScale: []
         };
     }
-    
+
 
 
     componentDidMount() {
         this._handleData(this.props);
     }
-    
+
 
     componentWillReceiveProps(nextProps) {
         this._handleData(nextProps);
     }
-    
+
 
 
     /**
@@ -37,69 +37,69 @@ class ReactTableTest extends Component {
      * @private
      */
     _handleData(props) {
-        let {config, metadata, data} = props;
+        let { config, metadata, data } = props;
         let tableConfig = config.charts[0];
-        let {dataSet, columnArray, initialized, columnColorIndex, colorScale} = this.state;
+        let { dataSet, columnArray, initialized, columnColorIndex, colorScale } = this.state;
         colorScale = Array.isArray(tableConfig.colorScale) ? tableConfig.colorScale : getDefaultColorScale();
 
         if (columnColorIndex >= colorScale.length) {
             columnColorIndex = 0;
         }
 
-        if(config.colorBased){
-            tableConfig.columns.map((column, i) => {
-                let colIndex = metadata.names.indexOf(column);
 
-                if (!initialized) {
-                    columnArray.push({
-                        datIndex: colIndex,
-                        title: tableConfig.columnTitles[i] || column
-                    });
-                }
+        tableConfig.columns.map((column, i) => {
+            let colIndex = metadata.names.indexOf(column);
 
-                data.map((datum) => {
-                    if (metadata.types[colIndex] === 'linear') {
-                        if (!columnArray[i].hasOwnProperty('range')) {
-                            columnArray[i]['range'] = [datum[colIndex], datum[colIndex]];
-                            columnArray[i]['color'] = colorScale[columnColorIndex++];
-                        }
-
-                        if (datum[colIndex] > columnArray[i]['range'][1]) {
-                            columnArray[i]['range'][1] = datum[colIndex];
-                        }
-
-                        if (datum[colIndex] < columnArray[i]['range'][0]) {
-                            columnArray[i]['range'][0] = datum[colIndex];
-                        }
-
-                    } else {
-                        if (!columnArray[i].hasOwnProperty('colorMap')) {
-                            columnArray[i]['colorIndex'] = 0;
-                            columnArray[i]['colorMap'] = {};
-                        }
-
-                        if (columnArray[i]['colorIndex'] >= colorScale.length) {
-                            columnArray[i]['colorIndex'] = 0;
-                        }
-
-                        if (!columnArray[i]['colorMap'].hasOwnProperty(datum[colIndex])) {
-                            columnArray[i]['colorMap'][datum[colIndex]] = colorScale[columnArray[i]['colorIndex']++];
-                        }
-
-                    }
+            if (!initialized) {
+                columnArray.push({
+                    datIndex: colIndex,
+                    title: tableConfig.columnTitles[i] || column
                 });
+            }
 
+            data.map((datum) => {
+                if (metadata.types[colIndex] === 'linear') {
+                    if (!columnArray[i].hasOwnProperty('range')) {
+                        columnArray[i]['range'] = [datum[colIndex], datum[colIndex]];
+                        columnArray[i]['color'] = colorScale[columnColorIndex++];
+                    }
+
+                    if (datum[colIndex] > columnArray[i]['range'][1]) {
+                        columnArray[i]['range'][1] = datum[colIndex];
+                    }
+
+                    if (datum[colIndex] < columnArray[i]['range'][0]) {
+                        columnArray[i]['range'][0] = datum[colIndex];
+                    }
+
+                } else {
+                    if (!columnArray[i].hasOwnProperty('colorMap')) {
+                        columnArray[i]['colorIndex'] = 0;
+                        columnArray[i]['colorMap'] = {};
+                    }
+
+                    if (columnArray[i]['colorIndex'] >= colorScale.length) {
+                        columnArray[i]['colorIndex'] = 0;
+                    }
+
+                    if (!columnArray[i]['colorMap'].hasOwnProperty(datum[colIndex])) {
+                        columnArray[i]['colorMap'][datum[colIndex]] = colorScale[columnArray[i]['colorIndex']++];
+                    }
+
+                }
             });
-        }
 
-        data=data.map((d)=>{
-            let tmp={};
-            for(let i=0;i<metadata.names.length;i++){
-                tmp[metadata.names[i]]=d[i];
+        });
+
+        data = data.map((d) => {
+            let tmp = {};
+            for (let i = 0; i < metadata.names.length; i++) {
+                tmp[metadata.names[i]] = d[i];
             }
 
             return tmp;
         });
+        console.info(columnArray);
 
         initialized = true;
         console.info(data);
@@ -126,11 +126,17 @@ class ReactTableTest extends Component {
 
 
     render() {
+
+
+
+
+
+
         return (
             <div>
-                
+
             </div>
-    );
+        );
 
 
     }
