@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import TableCharts from '../../src/components/TableChart.jsx';
+import ReactTable from '../../src/components/ReactTableTest.jsx';
 import {Row} from './util';
 
 // import Map from '../components/MapComponents/App';
@@ -37,7 +38,8 @@ class TableChartConfigSample extends Component {
         ],
         maxLength: 7,
         width: 400,
-        height: 200
+        height: 200,
+        colorBasedStyle:true
     };
 
 
@@ -52,7 +54,7 @@ class TableChartConfigSample extends Component {
         return (
             <div>
                 <Row title="Table Chart Sample" chart="line" media={true} actionBar={false}>
-                    <TableCharts config={this.mapConfig} metadata={this.metadata} data={this.state.data}/>
+                    <ReactTable config={this.mapConfig} metadata={this.metadata} data={this.state.data}/>
                     <br/>
                     <br/>
                     <pre>

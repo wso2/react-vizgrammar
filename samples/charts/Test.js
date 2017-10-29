@@ -45,7 +45,9 @@ class Test extends Component {
         ],
         maxLength: 7,
         width: 400,
-        height: 200
+        height: 200,
+        colorBasedStyle:true
+
     };
 
 
@@ -157,13 +159,14 @@ class Test extends Component {
                 }} /> */}
                 {/* <VizG config={this.sparkLineConfig} metadata={this.metadata} data={this.state.staticDataSet} /> */}
 
-                {/* <TableTest config={this.mapConfig} metadata={this.metadata} data={this.staticDataSet}/> */}
+                <TableTest config={this.mapConfig} metadata={this.metadata} data={this.staticDataSet}/>
 
-                <ReactTable
+                {/* <ReactTable
                     data={this.tableDataSet}
                     columns={this.columns}
                     showPagination={false}
-                />
+                    minRows={7}
+                /> */}
 
             </div>
         );

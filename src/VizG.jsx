@@ -26,7 +26,7 @@ import MapGenerator from './components/MapChart.jsx';
 import TableCharts from './components/TableChart.jsx';
 import NumberCharts from './components/NumberChart.jsx';
 import InlineCharts from './components/InlineChart.jsx';
-
+import ReactTable from './components/ReactTableTest.jsx';
 class VizG extends Component {
 
     constructor(props) {
