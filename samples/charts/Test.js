@@ -16,7 +16,8 @@ class Test extends Component {
             data: [
                 [0, 10, 1, 'Piston']
             ],
-            timer: 1
+            timer: 1,
+            chartConfig:this.sparkLineConfig
         };
     }
 
@@ -61,6 +62,16 @@ class Test extends Component {
         // animation: true
     };
 
+    sparkLineConfig2 = {
+        x: 'rpm',
+        charts: [{ type: 'line', y: 'torque', color:'EngineType' }],
+        maxLength: 30,
+        width: 800,
+        height: 400,
+        brush: true
+        // animation: true
+    };
+
     metadataWithTime = {
         'names': ['rpm', 'torque', 'horsepower', 'EngineType'],
         'types': ['time', 'linear', 'ordinal', 'ordinal']
@@ -77,21 +88,21 @@ class Test extends Component {
     };
 
     staticDataSet = [
-        [10, 11, 12, 13],
-        [11, 15, 12, 13],
-        [12, 14, 12, 13],
-        [13, 24, 12, 13],
-        [14, -6, 12, 13],
-        [15, 11, 12, 13],
-        [16, 15, 12, 13],
-        [17, 14, 12, 13],
-        [18, 24, 12, 13],
-        [19, 6, 12, 13],
-        [20, 11, 12, 13],
-        [21, 15, 12, 13],
-        [22, 14, 12, 13],
-        [23, 24, 12, 13],
-        [24, 6, 12, 13],
+        [10, 11, 12, 'piston'],
+        [11, 15, 12, 'rotary'],
+        [12, 14, 12, 'piston'],
+        [13, 24, 12, 'rotary'],
+        [14, -6, 12, 'piston'],
+        [15, 11, 12, 'rotary'],
+        [16, 15, 12, 'piston'],
+        [17, 14, 12, 'rotary'],
+        [18, 24, 12, 'piston'],
+        [19, 6, 12, 'rotary'],
+        [20, 11, 12, 'piston'],
+        [21, 15, 12, 'rotary'],
+        [22, 14, 12, 'piston'],
+        [23, 24, 12, 'piston'],
+        [24, 6, 12, 'rotary'],
     ];
 
     tableDataSet = [
@@ -158,8 +169,8 @@ class Test extends Component {
                     console.log(data);
                 }} /> */}
                 {/* <VizG config={this.sparkLineConfig} metadata={this.metadata} data={this.state.staticDataSet} /> */}
-
-                <TableTest config={this.mapConfig} metadata={this.metadata} data={this.staticDataSet}/>
+                <button onClick={()=>{this.setState({chartConfig:this.sparkLineConfig2});}}>Change</button>
+                <VizG config={this.state.chartConfig} metadata={this.metadata} data={this.staticDataSet}/>
 
                 {/* <ReactTable
                     data={this.tableDataSet}

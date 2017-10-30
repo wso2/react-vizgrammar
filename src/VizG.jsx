@@ -15,6 +15,7 @@
  */
 
 
+//TODO:Fix dynamically changing config for other charts
 
 
 import React, { Component } from 'react';
@@ -41,6 +42,15 @@ class VizG extends Component {
 
 
     componentWillReceiveProps(nextProps) {
+
+        if(JSON.stringify(this.state.config)!==JSON.stringify(nextProps.config)){
+            this.setState({
+                config:nextProps.config,
+                metadata:nextProps.metadata
+            });
+        }
+
+
         this.setState({
             data: nextProps.data,
         });
@@ -78,7 +88,8 @@ class VizG extends Component {
 VizG.propTypes = {
     config: PropTypes.object.isRequired,
     data: PropTypes.array,
-    metadata: PropTypes.object.isRequired
+    metadata: PropTypes.object.isRequired,
+    onClick:PropTypes.func,
 };
 
 export default VizG;

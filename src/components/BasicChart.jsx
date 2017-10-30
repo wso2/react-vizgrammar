@@ -14,8 +14,6 @@
  *
  */
 
-//TODO: Time formatting
-//TODO: Browser test IE10 and above, chrome, safari
 
 import React from 'react';
 import {
@@ -45,10 +43,13 @@ import 'rc-slider/assets/index.css';
 export default class BasicCharts extends React.Component {
 
     xRange = [];
+    chartConfig=null;
 
     constructor(props) {
         super(props);
         this.state = {
+
+            dataBuffer:[],
             height: props.height || props.config.height || 450,
             width: props.width || props.config.width || 800,
             dataSets: {},
@@ -65,11 +66,29 @@ export default class BasicCharts extends React.Component {
     }
 
     componentDidMount() {
+        this.chartConfig=this.props.config;
         this.handleAndSortData(this.props);
     }
 
     componentWillReceiveProps(nextProps) {
-        this.handleAndSortData(nextProps);
+
+        if(JSON.stringify(this.chartConfig)!==JSON.stringify(nextProps.config)){
+            console.info('not similar');
+            this.chartConfig=nextProps.config;
+            this.setState({
+                chartArray:[],
+                dataSets:{},
+                initialized:false,
+
+            });
+
+            console.info(this.state.chartArray);
+        }
+
+
+
+
+
     }
 
     componentWillUnmount() {
@@ -185,12 +204,18 @@ export default class BasicCharts extends React.Component {
 
         initialized = true;
 
-        this.setState({ dataSets, chartArray, initialized, xScale, orientation, xDomain });
-
+        // this.setState({ dataSets, chartArray, initialized, xScale, orientation, xDomain });
+        this.state.dataSets=dataSets;
+        this.state.chartArray=chartArray;
+        this.state.initialized=initialized;
+        this.state.xScale=xScale;
+        this.state.orientation=orientation;
+        this.state.xDomain=xDomain;
     }
 
 
     render() {
+        this.handleAndSortData(this.props);
 
         let { config } = this.props;
         let { height, width, chartArray, dataSets, xScale } = this.state;
@@ -381,7 +406,7 @@ export default class BasicCharts extends React.Component {
                         container={<VictoryVoronoiContainer />}
                         
                         scale={{ x: xScale === 'linear' ? 'linear' : 'time', y: 'linear' }}
-                        domain={{ x: this.state.xDomain[0] ? this.state.xDomain : null }}
+                        domain={{ x: horizontal? null : this.state.xDomain[0] ? this.state.xDomain : null }}
                     >
                         <VictoryAxis crossAxis
                             style={{ axis:{ fill:'red' },axisLabel: { padding: 35 }, fill: config.axisLabelColor || '#455A64', }}
