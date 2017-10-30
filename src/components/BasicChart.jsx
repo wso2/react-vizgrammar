@@ -43,13 +43,13 @@ import 'rc-slider/assets/index.css';
 export default class BasicCharts extends React.Component {
 
     xRange = [];
-    chartConfig=null;
+    chartConfig = null;
 
     constructor(props) {
         super(props);
         this.state = {
 
-            dataBuffer:[],
+            dataBuffer: [],
             height: props.height || props.config.height || 450,
             width: props.width || props.config.width || 800,
             dataSets: {},
@@ -58,6 +58,7 @@ export default class BasicCharts extends React.Component {
             xScale: 'linear',
             orientation: 'bottom',
             xDomain: [null, null],
+            ignoreArray:[]
 
         };
 
@@ -66,27 +67,24 @@ export default class BasicCharts extends React.Component {
     }
 
     componentDidMount() {
-        this.chartConfig=this.props.config;
+        this.chartConfig = this.props.config;
         this.handleAndSortData(this.props);
     }
 
     componentWillReceiveProps(nextProps) {
 
-        if(JSON.stringify(this.chartConfig)!==JSON.stringify(nextProps.config)){
+        if (JSON.stringify(this.chartConfig) !== JSON.stringify(nextProps.config)) {
             console.info('not similar');
-            this.chartConfig=nextProps.config;
+            this.chartConfig = nextProps.config;
             this.setState({
-                chartArray:[],
-                dataSets:{},
-                initialized:false,
+                chartArray: [],
+                dataSets: {},
+                initialized: false,
 
             });
 
             console.info(this.state.chartArray);
         }
-
-
-
 
 
     }
@@ -144,8 +142,6 @@ export default class BasicCharts extends React.Component {
 
                 dataSets[dataSetName] = dataSets[dataSetName] || [];
 
-
-
                 if (xScale !== 'time') {
                     dataSets[dataSetName].push({ x: datum[xIndex], y: datum[yIndex] });
                 } else {
@@ -153,11 +149,8 @@ export default class BasicCharts extends React.Component {
                 }
 
 
-
                 if (dataSets[dataSetName].length > config.maxLength) {
                     dataSets[dataSetName].shift();
-
-
                 }
 
 
@@ -200,17 +193,15 @@ export default class BasicCharts extends React.Component {
         });
 
 
-
-
         initialized = true;
 
         // this.setState({ dataSets, chartArray, initialized, xScale, orientation, xDomain });
-        this.state.dataSets=dataSets;
-        this.state.chartArray=chartArray;
-        this.state.initialized=initialized;
-        this.state.xScale=xScale;
-        this.state.orientation=orientation;
-        this.state.xDomain=xDomain;
+        this.state.dataSets = dataSets;
+        this.state.chartArray = chartArray;
+        this.state.initialized = initialized;
+        this.state.xScale = xScale;
+        this.state.orientation = orientation;
+        this.state.xDomain = xDomain;
     }
 
 
@@ -230,7 +221,13 @@ export default class BasicCharts extends React.Component {
             switch (chart.type) {
                 case 'line':
                     Object.keys(chart.dataSetNames).map((dataSetName) => {
-                        legendItems.push({ name: dataSetName, symbol: { fill: chart.dataSetNames[dataSetName] } });
+                        legendItems.push({
+                            name: dataSetName,
+                            symbol: { fill: chart.dataSetNames[dataSetName] },
+                            chartIndex: chartIndex
+                        });
+
+                        
                         lineCharts.push(
                             <VictoryGroup
                                 key={`chart-${chartIndex}-${chart.type}-${dataSetName}`}
@@ -272,7 +269,11 @@ export default class BasicCharts extends React.Component {
                 case 'area': {
                     let areaLocal = [];
                     Object.keys(chart.dataSetNames).map((dataSetName) => {
-                        legendItems.push({ name: dataSetName, symbol: { fill: chart.dataSetNames[dataSetName] } });
+                        legendItems.push({
+                            name: dataSetName,
+                            symbol: { fill: chart.dataSetNames[dataSetName] },
+                            chartIndex: chartIndex
+                        });
 
                         areaLocal.push(
                             <VictoryGroup
@@ -331,7 +332,11 @@ export default class BasicCharts extends React.Component {
                     horizontal = horizontal ? horizontal : chart.orientation === 'left';
 
                     Object.keys(chart.dataSetNames).map((dataSetName) => {
-                        legendItems.push({ name: dataSetName, symbol: { fill: chart.dataSetNames[dataSetName] } });
+                        legendItems.push({
+                            name: dataSetName,
+                            symbol: { fill: chart.dataSetNames[dataSetName] },
+                            chartIndex: chartIndex
+                        });
                         localBar.push(
                             <VictoryBar
                                 labels={(d) => `${config.x}:${d.x}\n${config.charts[chartIndex].y}:${d.y}`}
@@ -404,16 +409,20 @@ export default class BasicCharts extends React.Component {
                         height={height}
                         theme={VictoryTheme.material}
                         container={<VictoryVoronoiContainer />}
-                        
+
                         scale={{ x: xScale === 'linear' ? 'linear' : 'time', y: 'linear' }}
-                        domain={{ x: horizontal? null : this.state.xDomain[0] ? this.state.xDomain : null }}
+                        domain={{ x: horizontal ? null : this.state.xDomain[0] ? this.state.xDomain : null, y:config.yDomain}}
                     >
                         <VictoryAxis crossAxis
-                            style={{ axis:{ fill:'red' },axisLabel: { padding: 35 }, fill: config.axisLabelColor || '#455A64', }}
+                            style={{
+                                axis: { fill: 'red' },
+                                axisLabel: { padding: 35 },
+                                fill: config.axisLabelColor || '#455A64',
+                            }}
                             label={config.x}
                             tickFormat={xScale === 'linear' ?
                                 (text) => {
-                                    if (text.toString().match(/[a-z]/i)) {
+                                    if (text.toString().match(/[a-z]/i)) { 
                                         if (text.length > 5) {
                                             return text.substring(0, 4) + '...';
                                         } else {
@@ -464,11 +473,42 @@ export default class BasicCharts extends React.Component {
                         height={this.state.height}
                         width={300}
                         title="Legend"
-                        style={{ title: { fontSize: 25,fill:config.tickLabelColor  }, labels: { fontSize: 20,fill:config.tickLabelColor } }}
+                        style={{
+                            title: { fontSize: 25, fill: config.tickLabelColor },
+                            labels: { fontSize: 20, fill: config.tickLabelColor }
+                        }}
                         data={legendItems.length > 0 ? legendItems : [{
                             name: 'undefined',
                             symbol: { fill: '#333' }
                         }]}
+
+                        events={[
+                            {
+                                target: 'data',
+                                eventHandlers: {
+                                    onClick: () => {
+                                        return [
+                                            {
+                                                target: 'data',
+                                                mutation: (props) => {
+                                                    const fill = props.style && props.style.fill;
+                                                    
+                                                    return fill === 'grey' ? { style: { fill: props.data[0].symbol.fill }} : { style: { fill: 'grey' }};
+                                                }
+                                            }, {
+                                                target: 'labels',
+                                                mutation: (props) => {
+                                                    
+                                                    const fill = props.style && props.style.fill;
+                                                    return fill === 'grey' ? null : { style: { fill: 'grey' }};
+                                                }
+                                            }
+                                        ];
+                                    }
+                                }
+                            }
+                        ]}
+
                     />
                 </div>
                 {config.brush ?
@@ -481,7 +521,8 @@ export default class BasicCharts extends React.Component {
                             <button onClick={() => {
                                 console.info(this.xRange);
                                 this.setState({ xDomain: this.xRange });
-                            }}>Reset</button>
+                            }}>Reset
+                            </button>
                         </div>
                         <div
                             style={{ width: '90%', display: 'inline', float: 'right' }}
