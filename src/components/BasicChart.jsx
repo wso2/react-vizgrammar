@@ -416,7 +416,7 @@ export default class BasicCharts extends React.Component {
                         <VictoryAxis crossAxis
                             style={{
                                 axis: { fill: 'red' },
-                                axisLabel: { padding: 35 },
+                                axisLabel: { padding: 35,fill: config.axisLabelColor},
                                 fill: config.axisLabelColor || '#455A64',
                             }}
                             label={config.x}
@@ -447,7 +447,7 @@ export default class BasicCharts extends React.Component {
 
                         />
                         <VictoryAxis dependentAxis crossAxis
-                            style={{ axisLabel: { padding: 35 }, fill: config.axisLabelColor || '#455A64' }}
+                            style={{ axisLabel: { padding: 35,fill: config.axisLabelColor }, fill: config.axisLabelColor || '#455A64' }}
                             label={config.charts.length > 1 ? '' : config.charts[0].y}
                             standalone={false}
                             tickFormat={text => formatPrefix(',.0', Number(text))}
