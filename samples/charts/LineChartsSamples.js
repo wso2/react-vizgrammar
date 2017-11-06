@@ -14,45 +14,47 @@ export default class LineChartConfigSample extends React.Component {
             data2: [[1, 10, 23, 'piston']],
             timer: 0
         };
+        this.interval_id = null;
+        this.metadata = {
+            names: ['rpm', 'torque', 'horsepower', 'EngineType', 'weight'],
+            types: ['linear', 'linear', 'linear', 'ordinal', 'linear'],
+        };
+
+        /** ***************[START] Chart Config******************/
+        this.lineChartConfig = {
+            x: 'rpm',
+            charts: [{ type: 'line', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston'] }],
+            maxLength: 7,
+            width: 700,
+            height: 450,
+            axisLabelColor: 'red',
+            tickLabelColor: 'red',
+            // animation: true
+        };
+
+        this.singleLineChartConfig = {
+            x: 'rpm',
+            charts: [
+                { type: 'line', y: 'horsepower', fill: '#2ca02c' },
+                { type: 'line', y: 'torque', fill: '#ff7f0e' },
+            ],
+            maxLength: 7,
+            width: 700,
+            height: 450,
+            // animation: true
+        };
+
+        this.sparkLineConfig = {
+            x: 'rpm',
+            charts: [{ type: 'spark-area', y: 'horsepower', fill: '#0fd8e2' }],
+            maxLength: 30,
+            width: 120,
+            height: 10,
+            // animation: true
+        };
+
+        /** ***************[END] Chart Config***************** */
     }
-
-    interval_id = null;
-
-    metadata = {
-        names: ['rpm', 'torque', 'horsepower', 'EngineType', 'weight'],
-        types: ['linear', 'linear', 'linear', 'ordinal', 'linear']
-    };
-
-
-    /*****************[START] Chart Config******************/
-    lineChartConfig = {
-        x: 'rpm',
-        charts: [{ type: 'line', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston'] }],
-        maxLength: 7,
-        width: 700,
-        height: 450,
-        // animation: true
-    };
-
-    singleLineChartConfig = {
-        x: 'rpm',
-        charts: [{ type: 'line', y: 'horsepower', fill: '#2ca02c' }, { type: 'line', y: 'torque', fill: '#ff7f0e' }],
-        maxLength: 7,
-        width: 700,
-        height: 450,
-        // animation: true
-    };
-
-    sparkLineConfig = {
-        x: 'rpm',
-        charts: [{ type: 'spark-line', y: 'horsepower', fill: '#0fd8e2' }],
-        maxLength: 7,
-        width: 120,
-        height: 10,
-        // animation: true
-    };
-
-    /*****************[END] Chart Config******************/
 
 
     componentDidMount() {
@@ -163,7 +165,7 @@ export default class LineChartConfigSample extends React.Component {
 
 
                                             <span>
-                                            <VizG config={this.sparkLineConfig} metadata={this.metadata} data={this.state.data2} />
+                                                <VizG config={this.sparkLineConfig} metadata={this.metadata} data={this.state.data2} />
                                             </span>
 
 
@@ -233,7 +235,7 @@ export default class LineChartConfigSample extends React.Component {
                                         <td>string</td>
                                         <td>dependent axis</td>
                                     </tr>
-                                    
+
                                     <tr>
                                         <td>color</td>
                                         <td>string</td>

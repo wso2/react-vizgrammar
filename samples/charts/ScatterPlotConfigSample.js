@@ -40,7 +40,7 @@ export default class ScatterChartConfigSample extends React.Component {
 
             }],
 
-        width: 400,
+        width: 800,
         height: 450
     };
 
