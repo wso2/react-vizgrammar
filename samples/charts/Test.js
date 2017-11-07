@@ -57,7 +57,8 @@ class Test extends Component {
         charts: [{ type: 'line', y: 'torque', fill: '#0fd8e2' }],
         maxLength: 30,
         width: 800,
-        height: 400
+        height: 400,
+        brush: true
         // animation: true
     };
 
