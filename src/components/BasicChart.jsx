@@ -81,15 +81,20 @@ export default class BasicCharts extends React.Component {
         if (JSON.stringify(this.chartConfig) !== JSON.stringify(nextProps.config)) {
             console.info('not similar');
             this.chartConfig = nextProps.config;
-            this.setState({
-                chartArray: [],
-                dataSets: {},
-                initialized: false,
+            // this.setState({
+            //     chartArray: [],
+            //     dataSets: {},
+            //     initialized: false,
 
-            });
+            // });
+            this.state.chartArray = [];
+            this.state.dataSets = [];
+            this.state.initialized = false;
 
             console.info(this.state.chartArray);
         }
+
+        this.handleAndSortData(nextProps);
     }
 
     componentWillUnmount() {
@@ -248,18 +253,18 @@ export default class BasicCharts extends React.Component {
 
         initialized = true;
 
-        // this.setState({ dataSets, chartArray, initialized, xScale, orientation, xDomain });
-        this.state.dataSets = dataSets;
-        this.state.chartArray = chartArray;
-        this.state.initialized = initialized;
-        this.state.xScale = xScale;
-        this.state.orientation = orientation;
-        this.state.xDomain = xDomain;
+        this.setState({ dataSets, chartArray, initialized, xScale, orientation, xDomain });
+        // this.state.dataSets = dataSets;
+        // this.state.chartArray = chartArray;
+        // this.state.initialized = initialized;
+        // this.state.xScale = xScale;
+        // this.state.orientation = orientation;
+        // this.state.xDomain = xDomain;
     }
 
 
     render() {
-        this.handleAndSortData(this.props);
+        // this.handleAndSortData(this.props);
 
         const { config } = this.props;
         const { height, width, chartArray, dataSets, xScale, ignoreArray } = this.state;
@@ -627,11 +632,10 @@ export default class BasicCharts extends React.Component {
                             style={{ width: '90%', display: 'inline', float: 'right' }}
                         >
                             <Range
-                                max={this.xRange[1] || 15}
-                                min={this.xRange[0] || 10}
-                                defaultValue={this.xRange}
+                                max={this.xRange[1]}
+                                min={this.xRange[0]}
+                                defaultValue={[this.xRange[0], this.xRange[1]]}
                                 value={this.state.xDomain}
-                                allowCross={false}
                                 onChange={(d) => {
                                     this.setState({
                                         xDomain: d,
@@ -678,3 +682,4 @@ BasicCharts.propTypes = {
         maxLength: PropTypes.number,
     }).isRequired,
 };
+
