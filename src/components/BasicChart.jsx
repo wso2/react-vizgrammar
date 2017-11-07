@@ -1,3 +1,4 @@
+/* eslint-disable comma-dangle */
 /**
  * Copyright (c) WSO2 Inc. (http://wso2.com) All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -34,12 +35,14 @@ import {
     VictoryVoronoiContainer,
 } from 'victory';
 import PropTypes from 'prop-types';
-import {formatPrefix, timeFormat} from 'd3';
-import {Range} from 'rc-slider';
+import { formatPrefix, timeFormat } from 'd3';
+import { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
-import {getDefaultColorScale} from './helper';
+import { getDefaultColorScale } from './helper';
 
-
+/**
+ * React component required to render Bar, Line and Area Charts.
+ */
 export default class BasicCharts extends React.Component {
 
 
@@ -57,8 +60,8 @@ export default class BasicCharts extends React.Component {
             orientation: 'bottom',
             xDomain: [null, null],
             ignoreArray: [],
-
-
+            seriesXMaxVal: null,
+            seriesXMinVal: null,
         };
 
         this.handleAndSortData = this.handleAndSortData.bind(this);
@@ -97,7 +100,7 @@ export default class BasicCharts extends React.Component {
     /* *************************[Start] Event Handlers*************************** */
 
     _handleMouseEvent(evt) {
-        const {onClick} = this.props;
+        const { onClick } = this.props;
 
         return onClick && onClick(evt);
     }
@@ -105,13 +108,15 @@ export default class BasicCharts extends React.Component {
     /* *************************[END] Event Handlers*************************** */
 
     /**
-     * Handles the sorting of data and populating the dataset
-     * @param props
+     * Handles the sorting of data and populating the dataset.
+     * @param {Object} props - Props object to be processed.
      */
     handleAndSortData(props) {
-        const {config, metadata, data} = props;
-        let {dataSets, chartArray, initialized, xScale, orientation, xDomain} = this.state;
+        const { config, metadata, data } = props;
+        const { dataSets, chartArray } = this.state;
+        let { initialized, xScale, orientation, xDomain, seriesXMaxVal, seriesXMinVal } = this.state;
         const xIndex = metadata.names.indexOf(config.x);
+        let hasMaxLength = false;
         xScale = metadata.types[xIndex] === 'time' ? 'time' : xScale;
         config.charts.map((chart, chartIndex) => {
             orientation = orientation === 'left' ? orientation : (chart.orientation || 'bottom');
@@ -141,13 +146,14 @@ export default class BasicCharts extends React.Component {
                 dataSets[dataSetName] = dataSets[dataSetName] || [];
 
                 if (xScale !== 'time') {
-                    dataSets[dataSetName].push({x: datum[xIndex], y: datum[yIndex]});
+                    dataSets[dataSetName].push({ x: datum[xIndex], y: datum[yIndex] });
                 } else {
-                    dataSets[dataSetName].push({x: new Date(datum[xIndex]), y: datum[yIndex]});
+                    dataSets[dataSetName].push({ x: new Date(datum[xIndex]), y: datum[yIndex] });
                 }
 
 
                 if (dataSets[dataSetName].length > config.maxLength) {
+                    hasMaxLength = true;
                     dataSets[dataSetName].shift();
                 }
 
@@ -170,6 +176,18 @@ export default class BasicCharts extends React.Component {
                     this.xRange = [min, max];
                 }
 
+                if (seriesXMaxVal === null) {
+                    seriesXMaxVal = max;
+                    seriesXMinVal = min;
+                } else {
+                    if (seriesXMaxVal < max) {
+                        seriesXMaxVal = max;
+                    }
+                    if (seriesXMinVal < min) {
+                        seriesXMinVal = min;
+                    }
+                }
+
                 if (!Object.prototype.hasOwnProperty.call(chartArray[chartIndex].dataSetNames, dataSetName)) {
                     if (chartArray[chartIndex].colorIndex >= chartArray[chartIndex].colorScale.length) {
                         chartArray[chartIndex].colorIndex = 0;
@@ -185,12 +203,12 @@ export default class BasicCharts extends React.Component {
                             } else {
                                 chartArray[chartIndex]
                                     .dataSetNames[dataSetName] = chartArray[chartIndex]
-                                    .colorScale[chartArray[chartIndex].colorIndex++];
+                                        .colorScale[chartArray[chartIndex].colorIndex++];
                             }
                         } else {
                             chartArray[chartIndex]
                                 .dataSetNames[dataSetName] = chartArray[chartIndex]
-                                .colorScale[chartArray[chartIndex].colorIndex++];
+                                    .colorScale[chartArray[chartIndex].colorIndex++];
                         }
 
 
@@ -211,6 +229,18 @@ export default class BasicCharts extends React.Component {
                 return null;
             });
 
+            if (hasMaxLength && xScale === 'linear') {
+                Object.keys(dataSets).map((dataSetName) => {
+                    dataSets[dataSetName].map((d, k) => {
+                        if (d.x < seriesXMinVal) {
+                            dataSets[dataSetName].splice(k, 1);
+                        }
+                        return null;
+                    });
+
+                    return null;
+                });
+            }
 
             return null;
         });
@@ -231,8 +261,8 @@ export default class BasicCharts extends React.Component {
     render() {
         this.handleAndSortData(this.props);
 
-        const {config} = this.props;
-        const {height, width, chartArray, dataSets, xScale, ignoreArray} = this.state;
+        const { config } = this.props;
+        const { height, width, chartArray, dataSets, xScale, ignoreArray } = this.state;
         let chartComponents = [];
         const legendItems = [];
         let horizontal = false;
@@ -246,7 +276,7 @@ export default class BasicCharts extends React.Component {
                     Object.keys(chart.dataSetNames).map((dataSetName) => {
                         legendItems.push({
                             name: dataSetName,
-                            symbol: {fill: chart.dataSetNames[dataSetName]},
+                            symbol: { fill: chart.dataSetNames[dataSetName] },
                             chartIndex,
                         });
 
@@ -257,7 +287,7 @@ export default class BasicCharts extends React.Component {
                                 data={dataSets[dataSetName]}
                                 color={chart.dataSetNames[dataSetName]}
                             >
-                                <VictoryLine/>
+                                <VictoryLine />
                                 <VictoryPortal>
                                     <VictoryScatter
                                         labels={
@@ -299,7 +329,7 @@ export default class BasicCharts extends React.Component {
                     Object.keys(chart.dataSetNames).map((dataSetName) => {
                         legendItems.push({
                             name: dataSetName,
-                            symbol: {fill: chart.dataSetNames[dataSetName]},
+                            symbol: { fill: chart.dataSetNames[dataSetName] },
                             chartIndex,
                         });
 
@@ -308,9 +338,9 @@ export default class BasicCharts extends React.Component {
                                 key={`chart-${chart.id}-${chart.type}-${dataSetName}`}
                                 data={dataSets[dataSetName]}
                                 color={chart.dataSetNames[dataSetName]}
-                                style={{data: {fillOpacity: 0.5}}}
+                                style={{ data: { fillOpacity: 0.5 } }}
                             >
-                                <VictoryArea/>
+                                <VictoryArea />
                                 <VictoryPortal>
                                     <VictoryScatter
                                         labels={d => `${config.x}:${Number(d.x).toFixed(2)}\n
@@ -365,7 +395,7 @@ export default class BasicCharts extends React.Component {
                     Object.keys(chart.dataSetNames).map((dataSetName) => {
                         legendItems.push({
                             name: dataSetName,
-                            symbol: {fill: chart.dataSetNames[dataSetName]},
+                            symbol: { fill: chart.dataSetNames[dataSetName] },
                             chartIndex,
                         });
                         localBar.push(
@@ -430,7 +460,7 @@ export default class BasicCharts extends React.Component {
                 <VictoryGroup
                     horizontal={horizontal}
                     offset={barWidth}
-                    style={{data: {width: barWidth}}}
+                    style={{ data: { width: barWidth } }}
                 >
                     {barcharts}
                 </VictoryGroup>
@@ -439,16 +469,16 @@ export default class BasicCharts extends React.Component {
 
         // console.info('xscale :',xScale);
         return (
-            <div style={{overflow: 'hidden', zIndex: 99999}}>
-                <div style={{float: 'left', width: '80%', display: 'inline'}}>
+            <div style={{ overflow: 'hidden', zIndex: 99999 }}>
+                <div style={{ float: 'left', width: '80%', display: 'inline' }}>
 
                     <VictoryChart
                         width={width}
                         height={height}
                         theme={VictoryTheme.material}
-                        container={<VictoryVoronoiContainer/>}
+                        container={<VictoryVoronoiContainer />}
 
-                        scale={{x: xScale === 'linear' ? 'linear' : 'time', y: 'linear'}}
+                        scale={{ x: xScale === 'linear' ? 'linear' : 'time', y: 'linear' }}
                         domain={{
                             x: (!horizontal && this.state.xDomain[0]) ? this.state.xDomain : null,
                             y: config.yDomain,
@@ -457,8 +487,8 @@ export default class BasicCharts extends React.Component {
                         <VictoryAxis
                             crossAxis
                             style={{
-                                axis: {stroke: config.axisColor},
-                                axisLabel: {padding: 35, fill: config.axisLabelColor},
+                                axis: { stroke: config.axisColor },
+                                axisLabel: { padding: 35, fill: config.axisLabelColor },
                                 fill: config.axisLabelColor || '#455A64',
                             }}
                             label={config.xAxisLabel || config.x}
@@ -487,7 +517,7 @@ export default class BasicCharts extends React.Component {
                             tickLabelComponent={
                                 <VictoryLabel
                                     angle={config.xAxisTickAngle || 0}
-                                    style={{fill: config.tickLabelColor || 'black'}}
+                                    style={{ fill: config.tickLabelColor || 'black' }}
                                 />
                             }
 
@@ -497,9 +527,9 @@ export default class BasicCharts extends React.Component {
                             dependentAxis
                             crossAxis
                             style={{
-                                axisLabel: {padding: 35, fill: config.axisLabelColor},
+                                axisLabel: { padding: 35, fill: config.axisLabelColor },
                                 fill: config.axisLabelColor || '#455A64',
-                                axis: {stroke: config.axisColor},
+                                axis: { stroke: config.axisColor },
                             }}
                             label={config.yAxisLabel || config.charts.length > 1 ? '' : config.charts[0].y}
                             standalone={false}
@@ -513,7 +543,7 @@ export default class BasicCharts extends React.Component {
                             tickLabelComponent={
                                 <VictoryLabel
                                     angle={config.yAxisTickAngle || 0}
-                                    style={{fill: config.tickLabelColor || 'black'}}
+                                    style={{ fill: config.tickLabelColor || 'black' }}
 
 
                                 />
@@ -526,19 +556,19 @@ export default class BasicCharts extends React.Component {
 
                 </div>
 
-                <div style={{width: '20%', display: 'inline', float: 'right'}}>
+                <div style={{ width: '20%', display: 'inline', float: 'right' }}>
                     <VictoryLegend
-                        containerComponent={<VictoryContainer responsive/>}
+                        containerComponent={<VictoryContainer responsive />}
                         height={this.state.height}
                         width={300}
                         title="Legend"
                         style={{
-                            title: {fontSize: 25, fill: config.legendTitleColor},
-                            labels: {fontSize: 20, fill: config.legendTextColor},
+                            title: { fontSize: 25, fill: config.legendTitleColor },
+                            labels: { fontSize: 20, fill: config.legendTextColor },
                         }}
                         data={legendItems.length > 0 ? legendItems : [{
                             name: 'undefined',
-                            symbol: {fill: '#333'},
+                            symbol: { fill: '#333' },
                         }]}
 
                         events={[
@@ -562,14 +592,14 @@ export default class BasicCharts extends React.Component {
                                                     this.state.ignoreArray = ignoreArray;
 
                                                     return fill === 'grey' ?
-                                                        {style: {fill: props.data[props.index].symbol.fill}} :
-                                                        {style: {fill: 'grey'}};
+                                                        { style: { fill: props.data[props.index].symbol.fill } } :
+                                                        { style: { fill: 'grey' } };
                                                 },
                                             }, {
                                                 target: 'labels',
                                                 mutation: (props) => {
                                                     const fill = props.style && props.style.fill;
-                                                    return fill === 'grey' ? null : {style: {fill: 'grey'}};
+                                                    return fill === 'grey' ? null : { style: { fill: 'grey' } };
                                                 },
                                             },
                                         ];
@@ -582,19 +612,19 @@ export default class BasicCharts extends React.Component {
                 </div>
                 {config.brush ?
                     <div
-                        style={{width: '80%', height: 40, display: 'inline', float: 'left', right: 10}}
+                        style={{ width: '80%', height: 40, display: 'inline', float: 'left', right: 10 }}
                     >
                         <div
-                            style={{width: '10%', display: 'inline', float: 'left', left: 20}}
+                            style={{ width: '10%', display: 'inline', float: 'left', left: 20 }}
                         >
                             <button onClick={() => {
-                                this.setState({xDomain: this.xRange});
+                                this.setState({ xDomain: this.xRange });
                             }}
                             >Reset
                             </button>
                         </div>
                         <div
-                            style={{width: '90%', display: 'inline', float: 'right'}}
+                            style={{ width: '90%', display: 'inline', float: 'right' }}
                         >
                             <Range
                                 max={this.xRange[1] || 15}
@@ -629,14 +659,22 @@ BasicCharts.propTypes = {
     height: PropTypes.number,
     onClick: PropTypes.func,
     config: PropTypes.shape({
-        x: PropTypes.string.isRequired,
+        x: PropTypes.string,
         charts: PropTypes.arrayOf(PropTypes.shape({
             type: PropTypes.string.isRequired,
             y: PropTypes.string.isRequired,
             fill: PropTypes.string,
             color: PropTypes.string,
             colorScale: PropTypes.arrayOf(PropTypes.string),
-            colorDomain: PropTypes.arrayOf(PropTypes.string)
+            colorDomain: PropTypes.arrayOf(PropTypes.string),
+            mode: PropTypes.string,
         })),
+        tickLabelColor: PropTypes.string,
+        legendTitleColor: PropTypes.string,
+        legendTextColor: PropTypes.string,
+        axisColor: PropTypes.string,
+        height: PropTypes.number,
+        width: PropTypes.number,
+        maxLength: PropTypes.number,
     }).isRequired,
 };
