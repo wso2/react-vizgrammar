@@ -58,16 +58,18 @@ class Test extends Component {
         maxLength: 30,
         width: 800,
         height: 400,
-        brush: true
+        brush: true,
+        interactiveLegend:true,
         // animation: true
     };
 
     sparkLineConfig2 = {
         x: 'rpm',
-        charts: [{ type: 'line', y: 'torque', color:'EngineType' }],
+        charts: [{ type: 'area', y: 'torque', color:'EngineType' }],
         maxLength: 30,
         width: 800,
-        height: 400
+        height: 400,
+        interactiveLegend:true,
         // animation: true
     };
 
