@@ -276,61 +276,69 @@ export default class BasicCharts extends React.Component {
         let barcharts = [];
 
         chartArray.map((chart, chartIndex) => {
+            let addChart = false;
             switch (chart.type) {
                 case 'line':
                     Object.keys(chart.dataSetNames).map((dataSetName) => {
+
+
                         legendItems.push({
                             name: dataSetName,
                             symbol: { fill: chart.dataSetNames[dataSetName] },
                             chartIndex,
                         });
 
-
-                        lineCharts.push(
-                            <VictoryGroup
-                                key={`chart-${chart.id}-${chart.type}-${dataSetName}`}
-                                data={dataSets[dataSetName]}
-                                color={chart.dataSetNames[dataSetName]}
-                            >
-                                <VictoryLine />
-                                <VictoryPortal>
-                                    <VictoryScatter
-                                        labels={
-                                            d => `${config.x}:${Number(d.x).toFixed(2)}\n
-                                            ${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}`
-                                        }
-                                        labelComponent={
-                                            <VictoryTooltip
-                                                orientation='bottom'
-                                            />
-                                        }
-                                        size={(d, a) => {
-                                            return a ? 20 : 6;
-                                        }}
-                                        events={[{
-                                            target: 'data',
-                                            eventHandlers: {
-                                                onClick: () => {
-                                                    return [
-                                                        {
-                                                            target: 'data',
-                                                            mutation: this._handleMouseEvent,
-                                                        },
-                                                    ];
+                        addChart = ignoreArray
+                            .filter(d => (d.name === dataSetName)).length > 0;
+                        if (!addChart) {
+                            lineCharts.push(
+                                <VictoryGroup
+                                    key={`chart-${chart.id}-${chart.type}-${dataSetName}`}
+                                    data={dataSets[dataSetName]}
+                                    color={chart.dataSetNames[dataSetName]}
+                                >
+                                    <VictoryLine />
+                                    <VictoryPortal>
+                                        <VictoryScatter
+                                            labels={
+                                                d => `${config.x}:${Number(d.x).toFixed(2)}\n
+                                                ${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}`
+                                            }
+                                            labelComponent={
+                                                <VictoryTooltip
+                                                    orientation='bottom'
+                                                />
+                                            }
+                                            size={(d, a) => {
+                                                return a ? 20 : 6;
+                                            }}
+                                            events={[{
+                                                target: 'data',
+                                                eventHandlers: {
+                                                    onClick: () => {
+                                                        return [
+                                                            {
+                                                                target: 'data',
+                                                                mutation: this._handleMouseEvent,
+                                                            },
+                                                        ];
+                                                    },
                                                 },
-                                            },
-                                        }]}
+                                            }]}
 
-                                    />
-                                </VictoryPortal>
-                            </VictoryGroup>
-                        );
+                                        />
+                                    </VictoryPortal>
+                                </VictoryGroup>
+                            );
+                        }
+
 
                         return null;
                     });
                     break;
                 case 'area': {
                     const areaLocal = [];
+
                     Object.keys(chart.dataSetNames).map((dataSetName) => {
                         legendItems.push({
                             name: dataSetName,
@@ -338,43 +346,48 @@ export default class BasicCharts extends React.Component {
                             chartIndex,
                         });
 
-                        areaLocal.push(
-                            <VictoryGroup
-                                key={`chart-${chart.id}-${chart.type}-${dataSetName}`}
-                                data={dataSets[dataSetName]}
-                                color={chart.dataSetNames[dataSetName]}
-                                style={{ data: { fillOpacity: 0.5 } }}
-                            >
-                                <VictoryArea />
-                                <VictoryPortal>
-                                    <VictoryScatter
-                                        labels={d => `${config.x}:${Number(d.x).toFixed(2)}\n
-                                                      ${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}`}
-                                        labelComponent={
-                                            <VictoryTooltip
-                                                orientation='bottom'
-                                            />
-                                        }
-                                        size={(d, a) => {
-                                            return a ? 20 : 6;
-                                        }}
-                                        events={[{
-                                            target: 'data',
-                                            eventHandlers: {
-                                                onClick: () => {
-                                                    return [
-                                                        {
-                                                            target: 'data',
-                                                            mutation: this._handleMouseEvent,
-                                                        },
-                                                    ];
+                        addChart = ignoreArray
+                            .filter(d => (d.name === dataSetName)).length > 0;
+
+                        if (!addChart) {
+                            areaLocal.push(
+                                <VictoryGroup
+                                    key={`chart-${chart.id}-${chart.type}-${dataSetName}`}
+                                    data={dataSets[dataSetName]}
+                                    color={chart.dataSetNames[dataSetName]}
+                                    style={{ data: { fillOpacity: 0.5 } }}
+                                >
+                                    <VictoryArea />
+                                    <VictoryPortal>
+                                        <VictoryScatter
+                                            labels={d => `${config.x}:${Number(d.x).toFixed(2)}\n
+                                                          ${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}`}
+                                            labelComponent={
+                                                <VictoryTooltip
+                                                    orientation='bottom'
+                                                />
+                                            }
+                                            size={(d, a) => {
+                                                return a ? 20 : 6;
+                                            }}
+                                            events={[{
+                                                target: 'data',
+                                                eventHandlers: {
+                                                    onClick: () => {
+                                                        return [
+                                                            {
+                                                                target: 'data',
+                                                                mutation: this._handleMouseEvent,
+                                                            },
+                                                        ];
+                                                    },
                                                 },
-                                            },
-                                        }]}
-                                    />
-                                </VictoryPortal>
-                            </VictoryGroup>
-                        );
+                                            }]}
+                                        />
+                                    </VictoryPortal>
+                                </VictoryGroup>
+                            );
+                        }
 
 
                         return null;
@@ -403,31 +416,36 @@ export default class BasicCharts extends React.Component {
                             symbol: { fill: chart.dataSetNames[dataSetName] },
                             chartIndex,
                         });
-                        localBar.push(
-                            <VictoryBar
-                                labels={d => `${config.x}:${d.x}\n${config.charts[chartIndex].y}:${d.y}`}
-                                labelComponent={
-                                    <VictoryTooltip
-                                        orientation='bottom'
-                                    />
-                                }
-                                data={dataSets[dataSetName]}
-                                color={chart.dataSetNames[dataSetName]}
-                                events={[{
-                                    target: 'data',
-                                    eventHandlers: {
-                                        onClick: () => {
-                                            return [
-                                                {
-                                                    target: 'data',
-                                                    mutation: this._handleMouseEvent,
-                                                },
-                                            ];
+                        addChart = ignoreArray
+                            .filter(d => (d.name === dataSetName)).length > 0;
+                        if (!addChart) {
+                            localBar.push(
+                                <VictoryBar
+                                    labels={d => `${config.x}:${d.x}\n${config.charts[chartIndex].y}:${d.y}`}
+                                    labelComponent={
+                                        <VictoryTooltip
+                                            orientation='bottom'
+                                        />
+                                    }
+                                    data={dataSets[dataSetName]}
+                                    color={chart.dataSetNames[dataSetName]}
+                                    events={[{
+                                        target: 'data',
+                                        eventHandlers: {
+                                            onClick: () => {
+                                                return [
+                                                    {
+                                                        target: 'data',
+                                                        mutation: this._handleMouseEvent,
+                                                    },
+                                                ];
+                                            },
                                         },
-                                    },
-                                }]}
-                            />
-                        );
+                                    }]}
+                                />
+                            );
+                        }
+
 
                         return null;
                     });
@@ -549,8 +567,6 @@ export default class BasicCharts extends React.Component {
                                 <VictoryLabel
                                     angle={config.yAxisTickAngle || 0}
                                     style={{ fill: config.tickLabelColor || 'black' }}
-
-
                                 />
                             }
                         />
@@ -585,20 +601,21 @@ export default class BasicCharts extends React.Component {
                                             {
                                                 target: 'data',
                                                 mutation: (props) => {
-                                                    const fill = props.style && props.style.fill;
-                                                    const ignoreIndex = ignoreArray.indexOf(props.index);
+                                                    // const fill = props.style && props.style.fill;
+                                                    console.info(props.index);
 
+                                                    const ignoreIndex = ignoreArray
+                                                        .map(d => d.name)
+                                                        .indexOf(props.datum.name);
                                                     if (ignoreIndex > -1) {
                                                         ignoreArray.splice(ignoreIndex, 1);
                                                     } else {
-                                                        ignoreArray.push(props.index);
+                                                        ignoreArray.push({ name: props.datum.name });
                                                     }
-
-                                                    this.state.ignoreArray = ignoreArray;
-
-                                                    return fill === 'grey' ?
-                                                        { style: { fill: props.data[props.index].symbol.fill } } :
-                                                        { style: { fill: 'grey' } };
+                                                    console.info(ignoreArray);
+                                                    this.setState({
+                                                        ignoreArray
+                                                    });
                                                 },
                                             }, {
                                                 target: 'labels',
