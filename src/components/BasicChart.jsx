@@ -122,6 +122,21 @@ export default class BasicCharts extends React.Component {
         let { initialized, xScale, orientation, xDomain, seriesXMaxVal, seriesXMinVal } = this.state;
         const xIndex = metadata.names.indexOf(config.x);
         let hasMaxLength = false;
+
+        switch (metadata.types[xIndex]) {
+            case 'linear':
+                xScale = 'linear';
+                break;
+            case 'time':
+                xScale = 'time';
+                break;
+            case 'ordinal':
+                xScale = 'ordinal';
+                break;
+            default:
+                console.error('unsupported data type on xAxis');
+        }
+
         xScale = metadata.types[xIndex] === 'time' ? 'time' : xScale;
         config.charts.map((chart, chartIndex) => {
             orientation = orientation === 'left' ? orientation : (chart.orientation || 'bottom');
@@ -166,20 +181,70 @@ export default class BasicCharts extends React.Component {
                 const max = Math.max.apply(null, dataSets[dataSetName].map(d => d.x));
                 const min = Math.min.apply(null, dataSets[dataSetName].map(d => d.x));
 
-                if (xDomain[0] !== null) {
-                    if (min > xDomain[0]) {
-                        xDomain[0] = min;
-                        this.xRange[0] = min;
-                    }
+                if (xScale === 'linear') {
+                    if (xScale === 'linear' && xDomain[0] !== null) {
+                        if (min > xDomain[0]) {
+                            xDomain[0] = min;
+                            this.xRange[0] = min;
+                        }
 
-                    if (max > xDomain[1]) {
-                        xDomain[1] = max;
-                        this.xRange[1] = max;
+                        if (max > xDomain[1]) {
+                            xDomain[1] = max;
+                            this.xRange[1] = max;
+                        }
+                    } else {
+                        xDomain = [min, max];
+                        this.xRange = [min, max];
                     }
-                } else {
-                    xDomain = [min, max];
-                    this.xRange = [min, max];
                 }
+
+                if (xScale === 'time') {
+                    if (xScale === 'time' && xDomain[0] !== null) {
+                        if (min > xDomain[0]) {
+                            xDomain[0] = new Date(min);
+                            this.xRange[0] = new Date(min);
+                        }
+
+                        if (max > xDomain[1]) {
+                            xDomain[1] = new Date(max);
+                            this.xRange[1] = new Date(max);
+                        }
+                    } else {
+                        xDomain = [new Date(min), new Date(max)];
+                        this.xRange = [new Date(min), new Date(max)];
+                    }
+                }
+
+                // if (xScale === 'linear' || xScale === 'time') {
+                //     if (xScale === 'linear') {
+                //         if (xDomain[0] !== null) {
+                //             if (min > xDomain[0]) {
+                //                 xDomain[0] = min;
+                //                 this.xRange[0] = min;
+                //             }
+                //
+                //             if (max > xDomain[1]) {
+                //                 xDomain[1] = max;
+                //                 this.xRange[1] = max;
+                //             }
+                //         } else {
+                //             xDomain = [min, max];
+                //             this.xRange = [min, max];
+                //         }
+                //     } else if (xDomain[0] !== null) {
+                //         if (min > xDomain[0]) {
+                //             xDomain[0] = new Date(min);
+                //             this.xRange[0] = new Date(min);
+                //         }
+                //
+                //         if (max > xDomain[1]) {
+                //             xDomain[1] = new Date(max);
+                //             this.xRange[1] = new Date(max);
+                //         }
+                //     } else {
+                //
+                //     }
+                // }
 
                 if (seriesXMaxVal === null) {
                     seriesXMaxVal = max;
@@ -208,12 +273,12 @@ export default class BasicCharts extends React.Component {
                             } else {
                                 chartArray[chartIndex]
                                     .dataSetNames[dataSetName] = chartArray[chartIndex]
-                                        .colorScale[chartArray[chartIndex].colorIndex++];
+                                    .colorScale[chartArray[chartIndex].colorIndex++];
                             }
                         } else {
                             chartArray[chartIndex]
                                 .dataSetNames[dataSetName] = chartArray[chartIndex]
-                                    .colorScale[chartArray[chartIndex].colorIndex++];
+                                .colorScale[chartArray[chartIndex].colorIndex++];
                         }
 
 
@@ -280,8 +345,6 @@ export default class BasicCharts extends React.Component {
             switch (chart.type) {
                 case 'line':
                     Object.keys(chart.dataSetNames).map((dataSetName) => {
-
-
                         legendItems.push({
                             name: dataSetName,
                             symbol: { fill: chart.dataSetNames[dataSetName] },
@@ -503,7 +566,7 @@ export default class BasicCharts extends React.Component {
 
                         scale={{ x: xScale === 'linear' ? 'linear' : 'time', y: 'linear' }}
                         domain={{
-                            x: (!horizontal && this.state.xDomain[0]) ? this.state.xDomain : null,
+                            x: config.brush && this.state.xDomain[0] ? this.state.xDomain : null,
                             y: config.yDomain,
                         }}
                     >
@@ -649,10 +712,15 @@ export default class BasicCharts extends React.Component {
                             style={{ width: '90%', display: 'inline', float: 'right' }}
                         >
                             <Range
-                                max={this.xRange[1]}
-                                min={this.xRange[0]}
-                                defaultValue={[this.xRange[0], this.xRange[1]]}
-                                value={this.state.xDomain}
+                                max={xScale === 'time' ? this.xRange[1].getDate() : this.xRange[1]}
+                                min={xScale === 'time' ? this.xRange[0].getDate() : this.xRange[0]}
+                                defaultValue={xScale === 'time' ?
+                                    [this.xRange[0].getDate(), this.xRange[1].getDate()] :
+                                    [this.xRange[0], this.xRange[1]]
+                                }
+                                value={xScale === 'time' ?
+                                    [this.state.xDomain[0].getDate(), this.state.xDomain[1].getDate()] :
+                                    this.state.xDomain}
                                 onChange={(d) => {
                                     this.setState({
                                         xDomain: d,
