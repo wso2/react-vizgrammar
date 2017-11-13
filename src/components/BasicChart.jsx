@@ -360,7 +360,9 @@ export default class BasicCharts extends React.Component {
                                     data={dataSets[dataSetName]}
                                     color={chart.dataSetNames[dataSetName]}
                                 >
-                                    <VictoryLine />
+                                    <VictoryLine
+                                        style={{ data: { strokeWidth: config.charts[chartIndex].strokeWidth || null } }}
+                                    />
                                     <VictoryPortal>
                                         <VictoryScatter
                                             labels={
@@ -373,7 +375,7 @@ export default class BasicCharts extends React.Component {
                                                 />
                                             }
                                             size={(d, a) => {
-                                                return a ? 20 : 6;
+                                                return a ? 20 : (config.charts[chartIndex].markRadius || 4);
                                             }}
                                             events={[{
                                                 target: 'data',
@@ -418,7 +420,7 @@ export default class BasicCharts extends React.Component {
                                     key={`chart-${chart.id}-${chart.type}-${dataSetName}`}
                                     data={dataSets[dataSetName]}
                                     color={chart.dataSetNames[dataSetName]}
-                                    style={{ data: { fillOpacity: 0.5 } }}
+                                    style={{ data: { fillOpacity: config.charts[chartIndex].fillOpacity || 0.5 } }}
                                 >
                                     <VictoryArea />
                                     <VictoryPortal>
@@ -431,7 +433,7 @@ export default class BasicCharts extends React.Component {
                                                 />
                                             }
                                             size={(d, a) => {
-                                                return a ? 20 : 6;
+                                                return a ? 20 : config.charts[chartIndex].markRadius || 4;
                                             }}
                                             events={[{
                                                 target: 'data',

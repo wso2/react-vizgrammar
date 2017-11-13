@@ -58,7 +58,7 @@ class Test extends Component {
         maxLength: 30,
         width: 800,
         height: 400,
-        brush: true,
+        // brush: true,
         interactiveLegend:true,
         // animation: true
     };
@@ -171,7 +171,7 @@ class Test extends Component {
                 }} /> */}
                 {/* <VizG config={this.sparkLineConfig} metadata={this.metadata} data={this.state.staticDataSet} /> */}
                 <button onClick={()=>{this.setState({chartConfig:this.sparkLineConfig2});}}>Change</button>
-                <VizG config={this.state.chartConfig} metadata={this.metadata} data={this.staticDataSet}/>
+                <VizG config={this.state.chartConfig} metadata={this.metadataWithTime} data={this.dataWithT}/>
 
                 {/* <ReactTable
                     data={this.tableDataSet}
