@@ -38,6 +38,7 @@ import PropTypes from 'prop-types';
 import { formatPrefix, timeFormat } from 'd3';
 import { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
+import ReactDOMServer from 'react-dom/server';
 import { getDefaultColorScale } from './helper';
 
 /**
@@ -168,6 +169,8 @@ export default class BasicCharts extends React.Component {
                 if (xScale !== 'time') {
                     dataSets[dataSetName].push({ x: datum[xIndex], y: datum[yIndex] });
                 } else {
+                    console.log(datum[xIndex].toString());
+                    console.info(new Date(datum[xIndex]).getTimezoneOffset());
                     dataSets[dataSetName].push({ x: new Date(datum[xIndex]), y: datum[yIndex] });
                 }
 
@@ -353,6 +356,9 @@ export default class BasicCharts extends React.Component {
 
                         addChart = ignoreArray
                             .filter(d => (d.name === dataSetName)).length > 0;
+
+                        console.log(dataSets[dataSetName].map(d => new Date(d.toString() + ' (+0530)')));
+
                         if (!addChart) {
                             lineCharts.push(
                                 <VictoryGroup
@@ -395,7 +401,10 @@ export default class BasicCharts extends React.Component {
                                     </VictoryPortal>
                                 </VictoryGroup>
                             );
+
                         }
+
+                        alert(ReactDOMServer.renderToString(lineCharts[0]));
 
 
                         return null;
