@@ -273,12 +273,12 @@ export default class BasicCharts extends React.Component {
                             } else {
                                 chartArray[chartIndex]
                                     .dataSetNames[dataSetName] = chartArray[chartIndex]
-                                    .colorScale[chartArray[chartIndex].colorIndex++];
+                                        .colorScale[chartArray[chartIndex].colorIndex++];
                             }
                         } else {
                             chartArray[chartIndex]
                                 .dataSetNames[dataSetName] = chartArray[chartIndex]
-                                .colorScale[chartArray[chartIndex].colorIndex++];
+                                    .colorScale[chartArray[chartIndex].colorIndex++];
                         }
 
 
@@ -579,6 +579,7 @@ export default class BasicCharts extends React.Component {
                                 axisLabel: { padding: 35, fill: config.axisLabelColor },
                                 fill: config.axisLabelColor || '#455A64',
                             }}
+                            gridComponent={config.disableVerticalGrid ? <g /> : <line />}
                             label={config.xAxisLabel || config.x}
                             tickFormat={(() => {
                                 if (xScale === 'linear') {
@@ -619,6 +620,7 @@ export default class BasicCharts extends React.Component {
                                 fill: config.axisLabelColor || '#455A64',
                                 axis: { stroke: config.axisColor },
                             }}
+                            gridComponent={config.disableHorizontalGrid ? <g /> : <line />}
                             label={config.yAxisLabel || config.charts.length > 1 ? '' : config.charts[0].y}
                             standalone={false}
                             tickFormat={(text) => {
