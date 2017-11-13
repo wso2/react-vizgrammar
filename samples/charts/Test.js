@@ -18,7 +18,7 @@ class Test extends Component {
                 [0, 10, 1, 'Piston']
             ],
             timer: 1,
-            chartConfig:this.sparkLineConfig
+            chartConfig: this.sparkLineConfig
         };
     }
 
@@ -48,7 +48,7 @@ class Test extends Component {
         maxLength: 7,
         width: 400,
         height: 200,
-        colorBasedStyle:true
+        colorBasedStyle: true
 
     };
 
@@ -60,17 +60,17 @@ class Test extends Component {
         width: 800,
         height: 400,
         // brush: true,
-        interactiveLegend:true,
+        interactiveLegend: true,
         // animation: true
     };
 
     sparkLineConfig2 = {
         x: 'rpm',
-        charts: [{ type: 'area', y: 'torque', color:'EngineType' }],
+        charts: [{ type: 'area', y: 'torque', color: 'EngineType' }],
         maxLength: 30,
         width: 800,
         height: 400,
-        interactiveLegend:true,
+        interactiveLegend: true,
         // animation: true
     };
 
@@ -80,16 +80,16 @@ class Test extends Component {
     };
 
     dataWithT = [
-        [new Date('2017-10-21 00:00:00'), 12, 12, 'piston'],
-        [new Date('2017-10-22 00:00:00'), 24, 12, 'piston'],
-        [new Date('2017-10-23 00:00:00'), 16, 12, 'piston']
+        [new Date('2017-11-22T00:00:00'), 12, 12, 'piston'],
+        [new Date('2017-11-23T00:00:00'), 24, 12, 'piston'],
+        [new Date('2017-11-24T00:00:00'), 16, 12, 'piston']
     ];
 
     dataWithTV = [
-        {x:new Date('2017-10-21 00:00:00'), y:12},
-        {x:new Date('2017-10-22 00:00:00'), y:24},
-        {x:new Date('2017-10-23 00:00:00'), y:16}
-    ];    
+        { x: new Date('2017-10-21 00:00:00'), y: 12 },
+        { x: new Date('2017-10-22 00:00:00'), y: 24 },
+        { x: new Date('2017-10-23 00:00:00'), y: 16 }
+    ];
 
 
     metadata = {
@@ -153,8 +153,8 @@ class Test extends Component {
                     width: '100%',
                     height: '100%',
                     backgroundColor: '#dadada',
-                    margin:0,
-                    textAlign:'center'
+                    margin: 0,
+                    textAlign: 'center'
                 }}
             >
                 <span>{props.value}</span>
@@ -179,9 +179,9 @@ class Test extends Component {
                     console.log(data);
                 }} /> */}
                 {/* <VizG config={this.sparkLineConfig} metadata={this.metadata} data={this.state.staticDataSet} /> */}
-                <button onClick={()=>{this.setState({chartConfig:this.sparkLineConfig2});}}>Change</button>
-                <VizG config={this.state.chartConfig} metadata={this.metadataWithTime} data={this.dataWithT}/>
-                {/* <VictoryChart
+                <button onClick={() => { this.setState({ chartConfig: this.sparkLineConfig2 }); }}>Change</button>
+                {/* <VizG config={this.state.chartConfig} metadata={this.metadataWithTime} data={this.dataWithT} /> */}
+                <VictoryChart
                     scale={{x:'time'}}
                     domain={{x:null}}
                 >
@@ -189,7 +189,7 @@ class Test extends Component {
                     <VictoryPortal>
                         <VictoryScatter data={this.dataWithTV} />
                     </VictoryPortal>
-                </VictoryChart> */}
+                </VictoryChart>
                 {/* <ReactTable
                     data={this.tableDataSet}
                     columns={this.columns}
