@@ -6,7 +6,7 @@ import ReactTable from 'react-table';
 import TableTest from '../../src/components/ReactTableTest.jsx';
 import 'react-table/react-table.css';
 import './css/testTablePadding.css';
-import { VictoryChart, VictoryLine, VictoryScatter, VictoryPortal } from 'victory';
+import { VictoryChart, VictoryLine, VictoryScatter, VictoryPortal, VictoryGroup, VictoryArea } from 'victory';
 // import Map from '../components/MapComponents/App';
 
 class Test extends Component {
@@ -80,15 +80,19 @@ class Test extends Component {
     };
 
     dataWithT = [
-        [new Date('2017-11-22T00:00:00'), 12, 12, 'piston'],
-        [new Date('2017-11-23T00:00:00'), 24, 12, 'piston'],
-        [new Date('2017-11-24T00:00:00'), 16, 12, 'piston']
+        [new Date(2017,21,11), 12, 12, 'piston'],
+        [new Date(2017,22,11), 24, 12, 'piston'],
+        [new Date(2017,23,11), 16, 12, 'piston'],
+
+        [new Date(2017,24,11), 12, 12, 'piston'],
+        [new Date(2017,25,11), 24, 12, 'piston'],
+        [new Date(2017,26,11), 16, 12, 'piston']
     ];
 
     dataWithTV = [
-        { x: new Date('2017-10-21 00:00:00'), y: 12 },
-        { x: new Date('2017-10-22 00:00:00'), y: 24 },
-        { x: new Date('2017-10-23 00:00:00'), y: 16 }
+        { x: new Date(2017, 10, 21), y: 12 },
+        { x: new Date(2017, 10, 22), y: 24 },
+        { x: new Date(2017, 10, 23), y: 16 }
     ];
 
 
@@ -180,22 +184,24 @@ class Test extends Component {
                 }} /> */}
                 {/* <VizG config={this.sparkLineConfig} metadata={this.metadata} data={this.state.staticDataSet} /> */}
                 <button onClick={() => { this.setState({ chartConfig: this.sparkLineConfig2 }); }}>Change</button>
-                {/* <VizG config={this.state.chartConfig} metadata={this.metadataWithTime} data={this.dataWithT} /> */}
-                <VictoryChart
-                    scale={{x:'time'}}
-                    domain={{x:null}}
+                <VizG config={this.state.chartConfig} metadata={this.metadataWithTime} data={this.dataWithT} />
+                {/* <VictoryChart
+                    scale={{ x: 'time' }}
+                    domain={{ x: null }}
                 >
-                    <VictoryLine data={this.dataWithTV} />
-                    <VictoryPortal>
-                        <VictoryScatter data={this.dataWithTV} />
-                    </VictoryPortal>
-                </VictoryChart>
-                {/* <ReactTable
-                    data={this.tableDataSet}
-                    columns={this.columns}
-                    showPagination={false}
-                    minRows={7}
-                /> */}
+                    <VictoryGroup
+                        data={[
+                            { x: new Date(2017, 21, 10), y: 12 },
+                            { x: new Date(2017, 22, 10), y: 24 },
+                            { x: new Date(2017, 23, 10), y: 16 }
+                        ]}
+                    >
+                        <VictoryArea />
+                        <VictoryPortal>
+                            <VictoryScatter />
+                        </VictoryPortal>
+                    </VictoryGroup>
+                </VictoryChart> */}
 
             </div>
         );
