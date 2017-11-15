@@ -36,6 +36,7 @@
     "eslint-plugin-jsx-a11y": "^5.0.3",
     "eslint-plugin-react": "^7.0.1",
     "json-loader": "^0.5.7",
+    "log4javascript": "^1.4.15",
     "material-ui": "^0.19.4",
     "node-sass": "^4.5.3",
     "nodemon": "^1.12.1",
