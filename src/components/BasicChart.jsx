@@ -53,8 +53,8 @@ export default class BasicCharts extends React.Component {
         this.state = {
 
             dataBuffer: [],
-            height: props.height || props.config.height || 450,
-            width: props.width || props.config.width || 800,
+            height: props.config.height || props.height || 450,
+            width: props.config.width || props.width || 800,
             dataSets: {},
             chartArray: [],
             initialized: false,
@@ -375,7 +375,7 @@ export default class BasicCharts extends React.Component {
                                             }
                                             labelComponent={
                                                 <VictoryTooltip
-                                                    orientation='bottom'
+                                                    orientation='right'
                                                 />
                                             }
                                             size={(d, a) => {
@@ -435,7 +435,7 @@ export default class BasicCharts extends React.Component {
                                                           ${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}`}
                                             labelComponent={
                                                 <VictoryTooltip
-                                                    orientation='bottom'
+                                                    orientation='right'
                                                 />
                                             }
                                             size={(d, a) => {
@@ -495,7 +495,7 @@ export default class BasicCharts extends React.Component {
                                     labels={d => `${config.x}:${d.x}\n${config.charts[chartIndex].y}:${d.y}`}
                                     labelComponent={
                                         <VictoryTooltip
-                                            orientation='bottom'
+                                            orientation='right'
                                         />
                                     }
                                     data={dataSets[dataSetName]}
@@ -610,7 +610,7 @@ export default class BasicCharts extends React.Component {
                                             }
                                             labelComponent={
                                                 <VictoryTooltip
-                                                    orientation='bottom'
+                                                    orientation='right'
                                                 />
                                             }
                                             size={(d, a) => {
@@ -670,7 +670,7 @@ export default class BasicCharts extends React.Component {
                                                           ${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}`}
                                             labelComponent={
                                                 <VictoryTooltip
-                                                    orientation='bottom'
+                                                    orientation='right'
                                                 />
                                             }
                                             size={(d, a) => {
@@ -730,7 +730,7 @@ export default class BasicCharts extends React.Component {
                                     labels={d => `${config.x}:${d.x}\n${config.charts[chartIndex].y}:${d.y}`}
                                     labelComponent={
                                         <VictoryTooltip
-                                            orientation='bottom'
+                                            orientation='right'
                                         />
                                     }
                                     data={dataSets[dataSetName]}
@@ -806,12 +806,13 @@ export default class BasicCharts extends React.Component {
                         height={height}
                         theme={VictoryTheme.material}
                         container={<VictoryVoronoiContainer />}
-
+                        padding={{ left: 100, top: 10, bottom: 50, right: 0 }}
                         scale={{ x: xScale === 'linear' ? 'linear' : 'time', y: 'linear' }}
                         domain={{
                             x: config.brush && this.state.xDomain[0] ? this.state.xDomain : null,
                             y: config.yDomain,
                         }}
+                        style={{ parent: { overflow: 'visible' } }}
                     >
                         <VictoryAxis
                             crossAxis
@@ -976,7 +977,7 @@ export default class BasicCharts extends React.Component {
                     </div> : null
                 }
 
-            </div>
+            </div >
 
         );
     }

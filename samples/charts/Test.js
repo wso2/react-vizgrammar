@@ -55,12 +55,12 @@ class Test extends Component {
 
     sparkLineConfig = {
         x: 'rpm',
-        charts: [{ type: 'line', y: 'torque', fill: '#0fd8e2' }],
+        charts: [{ type: 'area', y: 'torque', fill: '#0fd8e2' }],
         maxLength: 30,
         width: 800,
         height: 400,
         // brush: true,
-        interactiveLegend: true,
+        interactiveLegend: true
         // animation: true
     };
 
@@ -80,13 +80,13 @@ class Test extends Component {
     };
 
     dataWithT = [
-        [new Date(2017,21,11), 12, 12, 'piston'],
-        [new Date(2017,22,11), 24, 12, 'piston'],
-        [new Date(2017,23,11), 16, 12, 'piston'],
+        [new Date(2017, 21, 10), 0, 12, 'piston'],
+        [new Date(2017, 22, 10), 0, 12, 'piston'],
+        [new Date(2017, 23, 10), 0, 12, 'piston'],
 
-        [new Date(2017,24,11), 12, 12, 'piston'],
-        [new Date(2017,25,11), 24, 12, 'piston'],
-        [new Date(2017,26,11), 16, 12, 'piston']
+        [new Date(2017, 24, 10), 0, 12, 'piston'],
+        [new Date(2017, 25, 10), 0, 12, 'piston'],
+        [new Date(2017, 26, 10), 0, 12, 'piston']
     ];
 
     dataWithTV = [

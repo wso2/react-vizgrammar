@@ -12,7 +12,7 @@ export default class LineChartConfigSample extends React.Component {
         this.state = {
             data: [[1, 10, 23, 'piston'], [1, 20, 34, 'rotary']],
             data2: [[1, 10, 23, 'piston']],
-            timer: 0
+            timer: 0,
         };
         this.interval_id = null;
         this.metadata = {
@@ -62,13 +62,13 @@ export default class LineChartConfigSample extends React.Component {
             this.setState({
                 data: [
                     [this.state.timer, this.state.timer === 20 ? null : Math.random() * 100, 10, 'piston'],
-                    [this.state.timer, Math.random() * 100, 10, 'rotary']
+                    [this.state.timer, Math.random() * 100, 10, 'rotary'],
                 ],
                 data2: [
 
-                    [this.state.timer, Math.random() * 100, Math.random() * 100, 'rotary']
+                    [this.state.timer, Math.random() * 100, Math.random() * 100, 'rotary'],
                 ],
-                timer: this.state.timer + 1
+                timer: this.state.timer + 1,
             });
 
         }, 500);
@@ -98,7 +98,7 @@ export default class LineChartConfigSample extends React.Component {
         return (
             <div>
                 <center><h1>Line Chart Config Samples</h1></center>
-                <Row title="Group MultiLine Chart Sample" chart="line" media={true} actionBar={false}>
+                <Row title="Group MultiLine Chart Sample" chart="line" media actionBar={false}>
                     <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data} />
                     <br /><br />
                     <div style={{ display: 'block' }}>
@@ -115,7 +115,7 @@ export default class LineChartConfigSample extends React.Component {
                         </pre>
                     </div>
                 </Row>
-                <Row title="Multi Line Chart Sample" chart="line" media={true} actionBar={false}>
+                <Row title="Multi Line Chart Sample" chart="line" media actionBar={false}>
                     <VizG config={this.singleLineChartConfig} metadata={this.metadata} data={this.state.data2} />
                     <br />
                     <div>
@@ -165,11 +165,12 @@ export default class LineChartConfigSample extends React.Component {
 
 
                                             <span>
-                                                <VizG config={this.sparkLineConfig} metadata={this.metadata} data={this.state.data2} />
+                                                <VizG
+                                                    config={this.sparkLineConfig}
+                                                    metadata={this.metadata} 
+                                                    data={this.state.data2}
+                                                />
                                             </span>
-
-
-
                                         </td>
                                     </tr>
                                     <tr>
