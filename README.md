@@ -1,1 +1,1 @@
-# ReactVixGrammar
+# react-VizGrammar
