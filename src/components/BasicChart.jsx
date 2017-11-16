@@ -40,7 +40,6 @@ import { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import ReactDOMServer from 'react-dom/server';
 import { getDefaultColorScale } from './helper';
-// import log from 'log';
 
 /**
  * React component required to render Bar, Line and Area Charts.

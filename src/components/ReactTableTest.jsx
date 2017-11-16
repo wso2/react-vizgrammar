@@ -22,7 +22,6 @@ class ReactTableTest extends Component {
     }
 
 
-
     componentDidMount() {
         this._handleData(this.props);
     }
@@ -31,7 +30,6 @@ class ReactTableTest extends Component {
     componentWillReceiveProps(nextProps) {
         this._handleData(nextProps);
     }
-
 
 
     /**
@@ -96,8 +94,6 @@ class ReactTableTest extends Component {
         });
 
 
-
-
         data = data.map((d) => {
             let tmp = {};
             for (let i = 0; i < metadata.names.length; i++) {
@@ -136,7 +132,6 @@ class ReactTableTest extends Component {
     }
 
 
-
     render() {
 
         let { config, metadata } = this.props;
@@ -170,11 +165,6 @@ class ReactTableTest extends Component {
                 columnConfig
             );
         });
-
-
-
-
-
 
 
         return (

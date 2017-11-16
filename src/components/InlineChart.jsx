@@ -50,19 +50,7 @@ export default class InlineChart extends BasicChart {
                                 <VictoryLine
                                     domain={{ y: [0] }}
                                 />
-                                {/* <VictoryPortal>
-                                    <VictoryScatter
-                                        labels={(d) => `${config.x}:${d.x}\n${config.charts[chartIndex].y}:${d.y}`}
-                                        labelComponent={
-                                            <VictoryTooltip
-                                                orientation='bottom'
-                                            />
-                                        }
-                                        size={(d, a) => {
-                                            return a ? 20 : 6;
-                                        }}
-                                    />
-                                </VictoryPortal> */}
+
                             </VictoryGroup>
                         ));
                         return null;
@@ -85,19 +73,7 @@ export default class InlineChart extends BasicChart {
 
                             >
                                 <VictoryArea />
-                                {/* <VictoryPortal>
-                                    <VictoryScatter
-                                        labels={(d) => `${config.x}:${d.x}\n${config.charts[chartIndex].y}:${d.y}`}
-                                        labelComponent={
-                                            <VictoryTooltip
-                                                orientation='bottom'
-                                            />
-                                        }
-                                        size={(d, a) => {
-                                            return a ? 20 : 6;
-                                        }}
-                                    />
-                                </VictoryPortal> */}
+
                             </VictoryGroup>
                         ));
                         return null;

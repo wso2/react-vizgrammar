@@ -22,7 +22,6 @@ class ReactTableTest extends Component {
     }
 
 
-
     componentDidMount() {
         this._handleData(this.props);
     }
@@ -31,7 +30,6 @@ class ReactTableTest extends Component {
     componentWillReceiveProps(nextProps) {
         this._handleData(nextProps);
     }
-
 
 
     /**
@@ -75,7 +73,6 @@ class ReactTableTest extends Component {
                     if (datum[colIndex] < columnArray[i]['range'][0]) {
                         columnArray[i]['range'][0] = datum[colIndex];
                     }
-
                 } else {
                     if (!columnArray[i].hasOwnProperty('colorMap')) {
                         columnArray[i]['colorIndex'] = 0;
@@ -89,13 +86,9 @@ class ReactTableTest extends Component {
                     if (!columnArray[i]['colorMap'].hasOwnProperty(datum[colIndex])) {
                         columnArray[i]['colorMap'][datum[colIndex]] = colorScale[columnArray[i]['colorIndex']++];
                     }
-
                 }
             });
-
         });
-
-
 
 
         data = data.map((d) => {
@@ -113,11 +106,8 @@ class ReactTableTest extends Component {
         dataSet = dataSet.concat(data);
 
         while (dataSet.length > config.maxLength) {
-            // console.info('awa');
             dataSet.shift();
         }
-
-        // console.info(dataSet);
 
         this.setState({
             dataSet: dataSet,
@@ -126,19 +116,15 @@ class ReactTableTest extends Component {
             initialized: initialized,
             colorScale: colorScale
         });
-
     }
 
 
     _getLinearColor(color, range, value) {
-
         return scaleLinear().range(['#fff', color]).domain(range)(value);
     }
 
 
-
     render() {
-
         let { config, metadata } = this.props;
         let { dataSet, columnArray } = this.state;
         let chartConfig = [];
@@ -149,8 +135,6 @@ class ReactTableTest extends Component {
                 Header: column.title,
                 accessor: column.accessor,
             };
-
-            //TODO: update property in doc
             if (config.colorBasedStyle) {
                 columnConfig['Cell'] = props => (
                     <div
@@ -172,11 +156,6 @@ class ReactTableTest extends Component {
         });
 
 
-
-
-
-
-
         return (
             <ReactTable
                 data={dataSet}
@@ -185,8 +164,6 @@ class ReactTableTest extends Component {
                 minRows={config.maxLength}
             />
         );
-
-
     }
 }
 

@@ -1,7 +1,7 @@
 {
-  "name": "vizg",
-  "version": "1.0.0",
-  "description": "VizGrammar is a charting library that makes charting easy by adding required boilerplate code so that developers/designers can get started in few minutes.",
+  "name": "react-vizgrammar",
+  "version": "0.6.0",
+  "description": "React-VizGrammar is a charting library that makes charting easy by adding required boilerplate code so that developers/designers can get started in few minutes.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

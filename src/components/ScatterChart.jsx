@@ -63,7 +63,7 @@ export default class ScatterCharts extends React.Component {
     }
 
 
-    /* *************************[Start] Event Handlers****************************/
+    /* *************************[Start] Event Handlers*************************** */
 
     _handleMouseEvent(evt) {
         const { onClick } = this.props;
@@ -71,7 +71,7 @@ export default class ScatterCharts extends React.Component {
         return onClick && onClick(evt);
     }
 
-    /* *************************[END] Event Handlers****************************/
+    /* *************************[END] Event Handlers*************************** */
 
     /**
      * Handles the sorting of data and populating the dataset
@@ -103,7 +103,6 @@ export default class ScatterCharts extends React.Component {
             if (metadata.types[colorIndex] === 'linear') {
                 legend = false;
                 data.map((datum) => {
-
                     dataSets['scatterChart' + chartIndex] = dataSets['scatterChart' + chartIndex] || [];
                     dataSets['scatterChart' + chartIndex].push({
                         x: datum[xIndex],
@@ -113,11 +112,8 @@ export default class ScatterCharts extends React.Component {
                     });
 
                     if (dataSets['scatterChart' + chartIndex].length > chart.maxLength) {
-                        // console.info('check');
                         dataSets['scatterChart' + chartIndex].shift();
                     }
-
-                    // console.info(datum[sizeIndex]);
 
                     if (scatterPlotRange.length === 0) {
                         scatterPlotRange = [datum[colorIndex], datum[colorIndex]];
@@ -125,8 +121,6 @@ export default class ScatterCharts extends React.Component {
                         scatterPlotRange[0] = scatterPlotRange[0] > datum[colorIndex] ? datum[colorIndex] : scatterPlotRange[0];
                         scatterPlotRange[1] = scatterPlotRange[1] < datum[colorIndex] ? datum[colorIndex] : scatterPlotRange[1];
                     }
-
-
                     chartArray[chartIndex].dataSetNames['scatterChart' + chartIndex] = chartArray[chartIndex].dataSetNames['scatterChart' + chartIndex] || null;
                 });
             } else {
@@ -138,10 +132,10 @@ export default class ScatterCharts extends React.Component {
                     }
 
                     dataSets[dataSetName] = dataSets[dataSetName] || [];
-                    // console.info(yIndex);
+                    
                     dataSets[dataSetName].push({ x: datum[xIndex], y: datum[yIndex], amount: datum[sizeIndex] });
 
-                    // console.info(chart.maxLength);
+                    
                     if (dataSets[dataSetName].length > config.maxLength) {
                         // console.info('check');
                         dataSets[dataSetName].shift();
@@ -159,26 +153,16 @@ export default class ScatterCharts extends React.Component {
                         } else {
                             chartArray[chartIndex].dataSetNames[dataSetName] = chartArray[chartIndex].colorScale[chartArray[chartIndex].colorIndex++];
                         }
-
-                        // chartArray[chartIndex].dataSetNames[dataSetName]=chart.fill || chartArray[chartIndex].dataSetNames[dataSetName];
-
-
                     }
-
                 });
             }
-
         });
-
         initialized = true;
-
         this.setState({ dataSets, chartArray, initialized, xScale, orientation, legend, scatterPlotRange });
-
     }
 
 
     render() {
-
         let { config } = this.props;
         let { height, width, chartArray, dataSets, xScale, legend } = this.state;
         let chartComponents = [];
@@ -196,8 +180,6 @@ export default class ScatterCharts extends React.Component {
                             style={{
                                 data: {
                                     fill: (d) => {
-                                        // console.info(this.state.scatterPlotRange);
-                                        // console.info(d3.scaleLinear().range(['#FFFFDD', '#3E9583', '#1F2D86']).domain(this.state.scatterPlotRange)(d.color));
                                         return scaleLinear().range([chart.colorScale[0], chart.colorScale[1]]).domain(this.state.scatterPlotRange)(d.color);
                                     }
                                 }
@@ -231,7 +213,6 @@ export default class ScatterCharts extends React.Component {
                 });
             } else {
                 Object.keys(chart.dataSetNames).map((dataSetName) => {
-                    // legendItems.push({name: dataSetName, symbol: {fill: chart.dataSetNames[dataSetName]}});
                     chartComponents.push(
                         <VictoryScatter
                             bubbleProperty='amount'
