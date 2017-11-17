@@ -11,11 +11,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
  */
 
-
-//TODO:Fix dynamically changing config for other charts
+// TODO:Fix dynamically changing config for other charts
 
 
 import React, {Component} from 'react';
@@ -40,7 +38,6 @@ class VizG extends Component {
         };
     }
 
-
     componentWillReceiveProps(nextProps) {
 
         if (JSON.stringify(this.state.config) !== JSON.stringify(nextProps.config)) {
@@ -50,17 +47,14 @@ class VizG extends Component {
             });
         }
 
-
         this.setState({
             data: nextProps.data,
         });
     }
 
-
     componentWillUnmount() {
         this.setState({});
     }
-
 
     render() {
 

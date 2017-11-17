@@ -1,10 +1,22 @@
-import React from 'react';
+/**
+ * Copyright (c) WSO2 Inc. (http://wso2.com) All Rights Reserved.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *          http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
+import React from 'react';
 import {Row} from './util';
 import './css/Table.css';
 import VizG from '../../src/VizG.jsx';
-// import t from 'GridTest';
-
 
 export default class AreaChartConfigSample extends React.Component {
     constructor(props) {
@@ -21,10 +33,7 @@ export default class AreaChartConfigSample extends React.Component {
         types: ['linear', 'linear', 'linear', 'ordinal']
     };
 
-    //interval id
     interval_id=null;
-
-    /*****************[START] Chart Config******************/
     areaChartConfig = {
         x: 'rpm',
         charts: [{type: 'area', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston']}],
@@ -33,8 +42,6 @@ export default class AreaChartConfigSample extends React.Component {
         height: 450,
 
     };
-
-
 
     stackedAreaChartConfig = {
         x: 'rpm',
@@ -53,10 +60,6 @@ export default class AreaChartConfigSample extends React.Component {
         height: 450,
 
     };
-
-    /*****************[END] Chart Config******************/
-
-
     componentDidMount() {
         this.interval_id=setInterval(() => {
             this.setState({

@@ -1,6 +1,19 @@
+/**
+ * Copyright (c) WSO2 Inc. (http://wso2.com) All Rights Reserved.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *          http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 import React from 'react';
 import VizG from '../src/index';
-// import Perf from 'react-addons-perf';
 import {Row} from './charts/util';
 
 
@@ -39,17 +52,13 @@ export default class App extends React.Component {
         'types': ['ordinal', 'linear']
     };
 
-    //interval id
     interval_id=null;
-
-    /*****************[START] Chart Config******************/
     lineChartConfig = {
         x: 'rpm',
         charts: [{type: 'line', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston']}],
         maxLength: 30,
         width: 700,
         height: 450,
-        // animation:true
     };
 
     singleAreaChartConfig = {
@@ -130,30 +139,8 @@ export default class App extends React.Component {
         height: 200
     };
 
-    /*****************[END] Chart Config******************/
-
-
-
     componentDidMount() {
-        // Perf.start();
-        // setTimeout(() => {
-        //     // Perf.stop();
-        //     Perf.printWasted();
-        //     console.info('haha');
-        // }, 60000*5);
-        // setTimeout(() => {
-        //     // Perf.stop();
-        //     Perf.printWasted();
-        //     console.info('haha');
-        // }, 60000 * 10);
-        // setTimeout(() => {
-        //     Perf.stop();
-        //     Perf.printWasted();
-        //     console.info('haha');
-        // }, 60000 * 15);
-
         this.interval_id=setInterval(() => {
-            // Perf.start();
             let randomY = Math.random()*100;
             this.setState({
                 data: [
@@ -167,7 +154,6 @@ export default class App extends React.Component {
                 ],
                 scatterPlot: [[this.state.timer, randomY * 2, randomY * 3, 'rotary', randomY * 5], [this.state.timer, randomY * 5, randomY * 6, 'rotary', randomY * 9]],
                 timer: this.state.timer + 1,
-
             });
 
         }, 500);
@@ -176,16 +162,13 @@ export default class App extends React.Component {
     componentWillUnmount() {
         clearInterval(this.interval_id);
     }
-    //<ChartWrapper config={this.areaChartConfig} metadata={this.metadata} data={this.state.data}/>
     render() {
         return (
-
             <div>
                 <div className={'jumbotron'}>
                     <center><h1>VizG</h1></center>
                     <center><p>Charting Config Samples</p></center>
                 </div>
-
                 <Row media={true} chart={'line'} title={'Line Charts'} actionBar={true}>
                     <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data}/>
                 </Row>
@@ -212,9 +195,7 @@ export default class App extends React.Component {
                 <Row media={true} chart={'table'} title={'Table Charts'} actionBar={true}>
                     <VizG config={this.tableConfig} metadata={this.metadata} data={this.state.data}/>
                 </Row>
-
             </div>
-
         );
     }
 }

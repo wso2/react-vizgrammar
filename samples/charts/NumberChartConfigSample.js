@@ -1,9 +1,21 @@
-import React, {Component} from 'react';
+/**
+ * Copyright (c) WSO2 Inc. (http://wso2.com) All Rights Reserved.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *          http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
+import React, {Component} from 'react';
 import NumberCharts from '../../src/components/NumberChart.jsx';
 import {Row} from './util';
-
-// import Map from '../Components/MapComponents/App';
 
 class NumberChartConfigSample extends Component {
 
@@ -16,7 +28,6 @@ class NumberChartConfigSample extends Component {
             timer:1
         };
     }
-
 
     componentDidMount() {
         setInterval(()=>{
@@ -33,8 +44,6 @@ class NumberChartConfigSample extends Component {
         width: 400,
         height: 200
     };
-
-
 
     metadata = {
         'names' : ['rpm','torque','horsepower', 'EngineType'],
@@ -97,21 +106,16 @@ class NumberChartConfigSample extends Component {
                                 <td>maxLength</td>
                                 <td>int</td>
                                 <td>Maximum length of chart datatable</td>
-
                             </tr>
-
                             <tr>
                                 <td>height</td>
                                 <td>px</td>
                                 <td>height of the chart</td>
-
                             </tr>
-
                             <tr>
                                 <td>charts</td>
                                 <td>object</td>
                                 <td>Collection of charts</td>
-
                             </tr>
                             </tbody>
                         </table>
@@ -134,15 +138,11 @@ class NumberChartConfigSample extends Component {
                                 <td>y</td>
                                 <td>String</td>
                                 <td>Attribute name for Y-axis</td>
-
                             </tr>
-
-
                             </tbody>
                         </table>
                     </pre>
                 </Row>
-
             </div>
         );
     }
