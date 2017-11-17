@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
-
 import NumberCharts from '../../src/components/NumberChart.jsx';
 import {Row} from './util';
-
-// import Map from '../Components/MapComponents/App';
 
 class NumberChartConfigSample extends Component {
 
@@ -16,7 +13,6 @@ class NumberChartConfigSample extends Component {
             timer:1
         };
     }
-
 
     componentDidMount() {
         setInterval(()=>{
@@ -33,8 +29,6 @@ class NumberChartConfigSample extends Component {
         width: 400,
         height: 200
     };
-
-
 
     metadata = {
         'names' : ['rpm','torque','horsepower', 'EngineType'],
@@ -97,21 +91,16 @@ class NumberChartConfigSample extends Component {
                                 <td>maxLength</td>
                                 <td>int</td>
                                 <td>Maximum length of chart datatable</td>
-
                             </tr>
-
                             <tr>
                                 <td>height</td>
                                 <td>px</td>
                                 <td>height of the chart</td>
-
                             </tr>
-
                             <tr>
                                 <td>charts</td>
                                 <td>object</td>
                                 <td>Collection of charts</td>
-
                             </tr>
                             </tbody>
                         </table>
@@ -134,15 +123,11 @@ class NumberChartConfigSample extends Component {
                                 <td>y</td>
                                 <td>String</td>
                                 <td>Attribute name for Y-axis</td>
-
                             </tr>
-
-
                             </tbody>
                         </table>
                     </pre>
                 </Row>
-
             </div>
         );
     }

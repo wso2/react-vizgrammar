@@ -3,10 +3,9 @@ import React from 'react';
 import {Row} from './util';
 import './css/Table.css';
 import VizG from '../../src/VizG.jsx';
-// import t from 'GridTest';
-
 
 export default class ScatterChartConfigSample extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -17,15 +16,13 @@ export default class ScatterChartConfigSample extends React.Component {
         };
     }
 
-    interval_id=null;
+    interval_id = null;
 
     metadata = {
         names: ['rpm', 'torque', 'horsepower', 'weight', 'EngineType'],
         types: ['linear', 'linear', 'linear', 'linear', 'ordinal']
     };
 
-
-    /*****************[START] Chart Config******************/
     scatterPlotConfig = {
         type: 'scatter',
         charts: [
@@ -43,9 +40,6 @@ export default class ScatterChartConfigSample extends React.Component {
         width: 800,
         height: 450
     };
-
-    /*****************[END] Chart Config******************/
-
 
     componentDidMount() {
         this.interval_id=setInterval(() => {

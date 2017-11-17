@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
  */
 
 
@@ -38,7 +37,6 @@ import PropTypes from 'prop-types';
 import { formatPrefix, timeFormat } from 'd3';
 import { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
-import ReactDOMServer from 'react-dom/server';
 import { getDefaultColorScale } from './helper';
 
 /**
@@ -564,10 +562,8 @@ export default class BasicCharts extends React.Component {
     }
 
     render() {
-        // this.handleAndSortData(this.props);
-
         const { config } = this.props;
-        const { height, width, chartArray, dataSets, xScale, ignoreArray } = this.state;
+        const { height, width, chartArray, dataSets, xScale, ignoreArray, seriesXMaxVal, seriesXMinVal } = this.state;
         let chartComponents = [];
         const legendItems = [];
         let horizontal = false;
@@ -813,6 +809,7 @@ export default class BasicCharts extends React.Component {
                         }}
                         style={{ parent: { overflow: 'visible' } }}
                     >
+                        {chartComponents}
                         <VictoryAxis
                             crossAxis
                             style={{
@@ -850,8 +847,6 @@ export default class BasicCharts extends React.Component {
                                     style={{ fill: config.tickLabelColor || 'black' }}
                                 />
                             }
-
-
                         />
                         <VictoryAxis
                             dependentAxis
@@ -878,13 +873,8 @@ export default class BasicCharts extends React.Component {
                                 />
                             }
                         />
-                        {chartComponents}
-
                     </VictoryChart>
-
-
                 </div>
-
                 <div style={{ width: '20%', display: 'inline', float: 'right' }}>
                     <VictoryLegend
                         containerComponent={<VictoryContainer responsive />}
@@ -899,7 +889,6 @@ export default class BasicCharts extends React.Component {
                             name: 'undefined',
                             symbol: { fill: '#333' },
                         }]}
-
                         events={[
                             {
                                 target: 'data',
@@ -909,7 +898,6 @@ export default class BasicCharts extends React.Component {
                                             {
                                                 target: 'data',
                                                 mutation: (props) => {
-                                                    // const fill = props.style && props.style.fill;
                                                     console.info(props.index);
 
                                                     const ignoreIndex = ignoreArray
@@ -937,7 +925,6 @@ export default class BasicCharts extends React.Component {
                                 },
                             },
                         ]}
-
                     />
                 </div>
                 {config.brush ?
@@ -975,7 +962,6 @@ export default class BasicCharts extends React.Component {
                         </div>
                     </div> : null
                 }
-
             </div >
 
         );
@@ -1012,4 +998,3 @@ BasicCharts.propTypes = {
         maxLength: PropTypes.number,
     }).isRequired,
 };
-

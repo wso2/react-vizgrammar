@@ -2,8 +2,6 @@ import React from 'react';
 import {Row} from './util';
 import './css/Table.css';
 import VizG from '../../src/VizG.jsx';
-// import t from 'GridTest';
-
 
 export default class BarChartConfigSample extends React.Component {
     constructor(props) {

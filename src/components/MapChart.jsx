@@ -11,9 +11,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
  */
-
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -24,7 +22,6 @@ import * as d3 from 'd3';
 import feature from 'topojson-client/src/feature';
 import { getDefaultColorScale } from './helper';
 import { CountryInfo, EuropeMap, WorldMap, USAMap } from './resources/MapData';
-
 
 export default class MapGenerator extends React.Component {
     constructor(props) {
@@ -54,7 +51,6 @@ export default class MapGenerator extends React.Component {
         // console.info(CountryInfo.filter((x)=>x.name==='United States')[0]['alpha-3']);
     }
 
-
     componentWillReceiveProps(nextProps) {
         this._handleDataReceived(nextProps);
     }
@@ -63,16 +59,11 @@ export default class MapGenerator extends React.Component {
         this.setState({});
     }
 
-
-    /* *************************[Start] Event Handlers*************************** */
-
     _handleMouseEvent(evt) {
         const { onClick } = this.props;
 
         return onClick && onClick(evt);
     }
-
-    /* *************************[END] Event Handlers*************************** */
 
     /**
      * This function converts the country name into
@@ -124,17 +115,19 @@ export default class MapGenerator extends React.Component {
         mapType = mapConfig.mapType;
         switch (mapConfig.mapType) {
             case 'world':
-                projectionConfig['scale'] = 120;
+                projectionConfig.scale = 120;
                 break;
             case 'usa':
-                projectionConfig['scale'] = 600;
-                projectionConfig['yOffset'] = this.state.height / 1.2;
-                projectionConfig['xOffset'] = this.state.width / 0.75;
+                projectionConfig.scale = 600;
+                projectionConfig.yOffset = this.state.height / 1.2;
+                projectionConfig.xOffset = this.state.width / 0.75;
                 break;
             case 'europe':
-                projectionConfig['scale'] = 400;
-                projectionConfig['yOffset'] = this.state.height;
+                projectionConfig.scale = 400;
+                projectionConfig.yOffset = this.state.height;
                 break;
+            default:
+                console.error('unrecognized map type.');
         }
         colorType = metadata.types[yIndex];
         if (metadata.types[yIndex] === 'linear') {
@@ -232,13 +225,10 @@ export default class MapGenerator extends React.Component {
 
                         <Geographies
                             geographyPaths={feature(mapFeatureData, mapFeatureData.objects[Object.keys(mapFeatureData.objects)[0]]).features}
-                            disableOptimization={true}
+                            disableOptimization
                         >
                             {
                                 (geographies, projection) => {
-                                    // console.info(geographies);
-
-
                                     return geographies.map((geography, i) => {
                                         let dataTip = '';
                                         let toolTip = null;
@@ -251,12 +241,8 @@ export default class MapGenerator extends React.Component {
 
                                         if (dataTip.length > 0) {
                                             toolTip = '' + config.x + ' : ' + dataTip[0].givenName + ', ' + config.charts[0].y + ' : ' + dataTip[0].y;
-
-
-                                            // console.info(dataTip[0].color);
                                         }
 
-                                        // console.info(this._getLinearColor(8.23));
                                         return (
                                             <Geography
                                                 key={i}
@@ -297,13 +283,9 @@ export default class MapGenerator extends React.Component {
 
                             }
                         </Geographies>
-
-
                     </ComposableMap>
                     <ReactToolTip />
-
                 </div>
-
 
                 <div style={{ width: '15%', height: 'auto', display: 'inline', float: 'right' }}>
                     {
@@ -327,7 +309,7 @@ export default class MapGenerator extends React.Component {
 
                             </svg>
                             : <VictoryLegend
-                                containerComponent={<VictoryContainer responsive={true} />}
+                                containerComponent={<VictoryContainer responsive />}
                                 height={this.state.height}
                                 width={300}
                                 title="Legend"
@@ -336,12 +318,10 @@ export default class MapGenerator extends React.Component {
                                     return { name: name, symbol: { fill: ordinalColorMap[name] } };
                                 })}
                             />
-
                     }
 
                 </div>
             </div>
-
         );
     }
 }

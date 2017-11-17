@@ -44,7 +44,7 @@ export default class PieCharts extends React.Component {
         };
 
         this._handleAndSortData = this._handleAndSortData.bind(this);
-        this._handleMouseEvent=this._handleMouseEvent.bind(this);
+        this._handleMouseEvent = this._handleMouseEvent.bind(this);
     }
 
     componentDidMount() {
@@ -59,15 +59,11 @@ export default class PieCharts extends React.Component {
         this.setState({});
     }
 
-    /* *************************[Start] Event Handlers****************************/
-
     _handleMouseEvent(evt) {
         const { onClick } = this.props;
 
         return onClick && onClick(evt);
     }
-
-    /* *************************[END] Event Handlers****************************/
 
     /**
      * Handles the sorting of data and populating the dataset
@@ -77,8 +73,6 @@ export default class PieCharts extends React.Component {
     _handleAndSortData(props) {
         let { config, metadata, data } = props;
         let { dataSets, chartArray, initialized, xScale, orientation, legend, scatterPlotRange, randomUpdater } = this.state;
-
-
         config.charts.map(() => {
             let arcConfig = config.charts[0];
             let xIndex = metadata.names.indexOf(arcConfig.x);
@@ -95,7 +89,6 @@ export default class PieCharts extends React.Component {
 
                     });
                 }
-
                 data.map((datum) => {
                     randomUpdater++;
                     let dataSetName = datum[colorIndex];
@@ -138,21 +131,17 @@ export default class PieCharts extends React.Component {
                     }
                 });
             } else {
-
                 legend = false;
                 if (!initialized) {
                     chartArray.push({
                         type: arcConfig.type,
                         colorScale: Array.isArray(arcConfig.colorScale) ? arcConfig.colorScale : getDefaultColorScale(),
                     });
-
                 }
-
                 data.map((datum) => {
                     dataSets = this._getPercentDataForPieChart(datum[xIndex]);
                 });
             }
-
         });
 
         initialized = true;
@@ -165,9 +154,8 @@ export default class PieCharts extends React.Component {
             orientation,
             legend,
             scatterPlotRange,
-            randomUpdater
+            randomUpdater,
         });
-
     }
 
 
@@ -182,12 +170,10 @@ export default class PieCharts extends React.Component {
 
 
     render() {
-
         let { config } = this.props;
         let { height, width, chartArray, dataSets, xScale, legend, randomUpdater } = this.state;
         let chartComponents = [];
         let legendItems = [];
-
 
         chartArray.map((chart) => {
             let pieChartData = [];
@@ -201,7 +187,7 @@ export default class PieCharts extends React.Component {
                 });
             }
 
-            chartComponents.push(
+            chartComponents.push((
                 <svg width='100%' height={'100%'} viewBox={`0 0 ${height > width ? width : height} ${height > width ? width : height}`}>
                     <VictoryPie
                         height={height > width ? width : height}
@@ -222,10 +208,10 @@ export default class PieCharts extends React.Component {
                                         {
                                             target: 'data',
                                             mutation: this._handleMouseEvent
-                                        }
+                                        },
                                     ];
-                                }
-                            }
+                                },
+                            },
                         }]}
                         randomUpdater={randomUpdater}
                     />
@@ -239,7 +225,7 @@ export default class PieCharts extends React.Component {
                             /> : null
                     }
                 </svg>
-            );
+            ));
         });
 
         console.info(legend);
@@ -259,7 +245,7 @@ export default class PieCharts extends React.Component {
                                 style={{ title: { fontSize: 25, fill: config.axisLabelColor }, labels: { fontSize: 20, fill: config.axisLabelColor } }}
                                 data={legendItems.length > 0 ? legendItems : [{
                                     name: 'undefined',
-                                    symbol: { fill: '#333' }
+                                    symbol: { fill: '#333' },
                                 }]}
                             />
                         </div> :

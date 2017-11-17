@@ -11,7 +11,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
  */
 
 import React from 'react';
@@ -29,7 +28,6 @@ import {
 import PropTypes from 'prop-types';
 import { formatPrefix, scaleLinear, timeFormat } from 'd3';
 import { getDefaultColorScale } from './helper';
-
 
 export default class ScatterCharts extends React.Component {
     constructor(props) {
@@ -62,21 +60,14 @@ export default class ScatterCharts extends React.Component {
         this.setState({});
     }
 
-
-    /* *************************[Start] Event Handlers*************************** */
-
     _handleMouseEvent(evt) {
         const { onClick } = this.props;
-
         return onClick && onClick(evt);
     }
-
-    /* *************************[END] Event Handlers*************************** */
 
     /**
      * Handles the sorting of data and populating the dataset
      * @param props
-     * @private
      */
     _handleAndSortData(props) {
         let { config, metadata, data } = props;
@@ -95,7 +86,7 @@ export default class ScatterCharts extends React.Component {
                     dataSetNames: {},
                     colorType: metadata.types[colorIndex],
                     colorScale: Array.isArray(chart.colorScale) ? chart.colorScale : getDefaultColorScale(),
-                    colorIndex: 0
+                    colorIndex: 0,
                 });
             }
 
@@ -132,16 +123,11 @@ export default class ScatterCharts extends React.Component {
                     }
 
                     dataSets[dataSetName] = dataSets[dataSetName] || [];
-                    
                     dataSets[dataSetName].push({ x: datum[xIndex], y: datum[yIndex], amount: datum[sizeIndex] });
-
-                    
                     if (dataSets[dataSetName].length > config.maxLength) {
-                        // console.info('check');
                         dataSets[dataSetName].shift();
                     }
 
-                    // console.info(chartArray[chartIndex].dataSetNames);
                     if (!chartArray[chartIndex].dataSetNames.hasOwnProperty(dataSetName)) {
                         if (chartArray[chartIndex].colorIndex >= chartArray[chartIndex].colorScale.length) {
                             chartArray[chartIndex].colorIndex = 0;
@@ -161,18 +147,16 @@ export default class ScatterCharts extends React.Component {
         this.setState({ dataSets, chartArray, initialized, xScale, orientation, legend, scatterPlotRange });
     }
 
-
     render() {
         let { config } = this.props;
         let { height, width, chartArray, dataSets, xScale, legend } = this.state;
         let chartComponents = [];
         let legendItems = [];
 
-
         chartArray.map((chart, chartIndex) => {
             if (chart.colorType === 'linear') {
                 Object.keys(chart.dataSetNames).map((dataSetName) => {
-                    chartComponents.push(
+                    chartComponents.push((
                         <VictoryScatter
                             bubbleProperty='amount'
                             maxBubbleSize={15}
@@ -181,11 +165,11 @@ export default class ScatterCharts extends React.Component {
                                 data: {
                                     fill: (d) => {
                                         return scaleLinear().range([chart.colorScale[0], chart.colorScale[1]]).domain(this.state.scatterPlotRange)(d.color);
-                                    }
-                                }
+                                    },
+                                },
                             }}
                             data={dataSets[dataSetName]}
-                            labels={(d) => `${config.charts[chartIndex].x}:${d.x}\n
+                            labels={d => `${config.charts[chartIndex].x}:${d.x}\n
                                                    ${config.charts[chartIndex].y}:${d.y}\n
                                                    ${config.charts[chartIndex].size}:${d.amount}
                                                    ${config.charts[chartIndex].color}:${d.color}`}
@@ -202,25 +186,25 @@ export default class ScatterCharts extends React.Component {
                                             {
                                                 target: 'data',
                                                 mutation: this._handleMouseEvent
-                                            }
+                                            },
                                         ];
-                                    }
-                                }
+                                    },
+                                },
                             }]}
 
                         />
-                    );
+                    ));
                 });
             } else {
                 Object.keys(chart.dataSetNames).map((dataSetName) => {
-                    chartComponents.push(
+                    chartComponents.push((
                         <VictoryScatter
                             bubbleProperty='amount'
                             maxBubbleSize={20}
                             minBubbleSize={5}
                             style={{ data: { fill: chart.dataSetNames[dataSetName] } }}
                             data={dataSets[dataSetName]}
-                            labels={(d) => `${config.charts[chartIndex].x}:${Number(d.x).toFixed(2)}\n${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}\n${config.charts[chartIndex].size}:${Number(d.amount).toFixed}\n${config.charts[chartIndex].color}:${d.color}`}
+                            labels={d => `${config.charts[chartIndex].x}:${Number(d.x).toFixed(2)}\n${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}\n${config.charts[chartIndex].size}:${Number(d.amount).toFixed}\n${config.charts[chartIndex].color}:${d.color}`}
                             labelComponent={
                                 <VictoryTooltip
                                     orientation='bottom'
@@ -234,14 +218,13 @@ export default class ScatterCharts extends React.Component {
                                             {
                                                 target: 'data',
                                                 mutation: this._handleMouseEvent
-                                            }
+                                            },
                                         ];
-                                    }
-                                }
+                                    },
+                                },
                             }]}
-
                         />
-                    );
+                    ));
                 });
             }
         });
@@ -283,8 +266,6 @@ export default class ScatterCharts extends React.Component {
                                     style={{ fill: config.tickLabelColor || 'black' }}
                                 />
                             }
-
-
                         />
                         <VictoryAxis dependentAxis crossAxis
                             style={{ axisLabel: { padding: 35 }, fill: config.axisLabelColor || '#455A64' }}
