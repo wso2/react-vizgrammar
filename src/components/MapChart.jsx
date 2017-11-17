@@ -32,7 +32,6 @@ export default class MapGenerator extends React.Component {
             mapData: [],
             markerData: [],
             config: props.config,
-            // xIndex: props.metadata.names.indexOf(props.config.x),
             projectionConfig: {},
             mapType: props.config.charts[0].mapType || 'world',
             mapDataRange: [],
@@ -140,7 +139,6 @@ export default class MapGenerator extends React.Component {
                 }
 
                 const dataIndex = mapData.findIndex(obj => obj.x === this._convertCountryNamesToCode(datum[xIndex]));
-                console.info(dataIndex);
                 if (dataIndex >= 0) {
                     mapData[dataIndex].y = datum[yIndex];
                 } else {
@@ -196,9 +194,7 @@ export default class MapGenerator extends React.Component {
                 break;
         }
 
-
         return (
-
             <div style={{ overflow: 'hidden', zIndex: 9999 }}>
                 <div
                     style={{
