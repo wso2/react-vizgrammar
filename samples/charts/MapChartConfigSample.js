@@ -32,7 +32,6 @@ class Test extends Component {
                 ['Australia', 5],
                 ['Ireland', 1],
                 ['RUS', 15]
-
             ],
             data2: [
                 ['Alabama', 4.23],
@@ -69,8 +68,7 @@ class Test extends Component {
         width: 500,
         height: 300
     };
-
-
+    
     metadata = {
         'names': ['Country', 'Inflation'],
         'types': ['ordinal', 'linear']

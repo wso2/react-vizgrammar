@@ -16,7 +16,6 @@ import React from 'react';
 import VizG from '../src/index';
 import {Row} from './charts/util';
 
-
 export default class App extends React.Component {
     constructor(props) {
         super(props);
@@ -130,6 +129,7 @@ export default class App extends React.Component {
         charts : [{ type: 'table',
             y : 'torque',
             color: '*',
+
             columns:['EngineType',  'torque', 'rpm'],
             columnTitles:['Engine Type',  'Engine Torque', 'Engine RPM'],
         }

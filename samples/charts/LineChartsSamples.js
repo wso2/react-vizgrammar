@@ -31,8 +31,6 @@ export default class LineChartConfigSample extends React.Component {
             names: ['rpm', 'torque', 'horsepower', 'EngineType', 'weight'],
             types: ['linear', 'linear', 'linear', 'ordinal', 'linear'],
         };
-
-
         this.lineChartConfig = {
             x: 'rpm',
             charts: [{ type: 'line', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston'] }],
@@ -64,7 +62,6 @@ export default class LineChartConfigSample extends React.Component {
             height: 10,
             // animation: true
         };
-        
     }
 
 
@@ -76,12 +73,10 @@ export default class LineChartConfigSample extends React.Component {
                     [this.state.timer, Math.random() * 100, 10, 'rotary'],
                 ],
                 data2: [
-
                     [this.state.timer, Math.random() * 100, Math.random() * 100, 'rotary'],
                 ],
                 timer: this.state.timer + 1,
             });
-
         }, 500);
     }
 
@@ -105,7 +100,6 @@ export default class LineChartConfigSample extends React.Component {
                                 '\twidth: 700,\n' +
                                 '\theight: 450,\n' +
                                 '\tanimation:true\n}'
-
                             }
                         </pre>
                     </div>
@@ -122,13 +116,11 @@ export default class LineChartConfigSample extends React.Component {
                                 '\twidth: 700,\n' +
                                 '\theight: 450,\n' +
                                 '\tanimation:true\n}'
-
                             }
                         </pre>
                     </div>
                 </Row>
-
-
+                
                 <Row title="Sample Data Set" chart="line">
                     <div>
                         <pre>
@@ -157,12 +149,11 @@ export default class LineChartConfigSample extends React.Component {
                                         <td>blah</td>
                                         <td>blah</td>
                                         <td>
-
-
+                                            
                                             <span>
                                                 <VizG
                                                     config={this.sparkLineConfig}
-                                                    metadata={this.metadata} 
+                                                    metadata={this.metadata}
                                                     data={this.state.data2}
                                                 />
                                             </span>
@@ -183,7 +174,6 @@ export default class LineChartConfigSample extends React.Component {
                                         <td>int</td>
                                         <td>tick angle value of yAxis ticks | default : 0</td>
                                     </tr>
-
                                     <tr>
                                         <td>xAxisTickAngle</td>
                                         <td>int</td>
@@ -210,7 +200,6 @@ export default class LineChartConfigSample extends React.Component {
                                         <td>Height of the chart in pixels</td>
                                     </tr>
                                 </tbody>
-
                             </table>
                             <br />
                             <p>Chart Object Properties</p>

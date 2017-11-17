@@ -77,7 +77,6 @@ export default class AreaChartConfigSample extends React.Component {
         }, 500);
     }
 
-
     componentWillUnmount(){
         clearInterval(this.interval_id);
     }

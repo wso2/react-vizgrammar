@@ -15,7 +15,6 @@
 
 import React, {Component} from 'react';
 import TableCharts from '../../src/components/TableChart.jsx';
-import ReactTable from '../../src/components/ReactTableTest.jsx';
 import {Row} from './util';
 
 class TableChartConfigSample extends Component {

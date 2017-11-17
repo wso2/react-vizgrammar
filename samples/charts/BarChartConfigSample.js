@@ -33,7 +33,6 @@ export default class BarChartConfigSample extends React.Component {
         types: ['linear', 'linear', 'linear', 'ordinal']
     };
 
-
     interval_id=null;
 
     barChartConfig = {

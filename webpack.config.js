@@ -25,12 +25,10 @@ module.exports = {
                 test: /\.scss$/,
                 loaders: ['style-loader', 'css-loader', 'sass-loader'],
             },
-
         ],
     },
     devServer: {
         contentBase: './samples/public',
-
         historyApiFallback: true,
         inline: true,
         port: 8080,

@@ -42,7 +42,6 @@ import { getDefaultColorScale } from './helper';
  */
 export default class BasicCharts extends React.Component {
 
-
     constructor(props) {
         super(props);
         this.state = {
@@ -331,7 +330,6 @@ export default class BasicCharts extends React.Component {
                                 </VictoryGroup>
                             ));
                         }
-
                         return null;
                     });
                     break;

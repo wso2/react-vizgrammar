@@ -15,9 +15,7 @@
 
 import React, { Component } from 'react';
 import VizG from '../../src/VizG.jsx';
-import InlineCharts from '../../src/components/InlineChart.jsx';
 import ReactTable from 'react-table';
-import TableTest from '../../src/components/ReactTableTest.jsx';
 import 'react-table/react-table.css';
 import './css/testTablePadding.css';
 import { VictoryChart, VictoryLine, VictoryScatter, VictoryPortal, VictoryGroup, VictoryArea } from 'victory';
@@ -83,7 +81,6 @@ class Test extends Component {
         [new Date(2017, 21, 10), 0, 12, 'piston'],
         [new Date(2017, 22, 10), 0, 12, 'piston'],
         [new Date(2017, 23, 10), 0, 12, 'piston'],
-
         [new Date(2017, 24, 10), 0, 12, 'piston'],
         [new Date(2017, 25, 10), 0, 12, 'piston'],
         [new Date(2017, 26, 10), 0, 12, 'piston']
@@ -94,8 +91,6 @@ class Test extends Component {
         { x: new Date(2017, 10, 22), y: 24 },
         { x: new Date(2017, 10, 23), y: 16 }
     ];
-
-
     metadata = {
         'names': ['rpm', 'torque', 'horsepower', 'EngineType'],
         'types': ['linear', 'linear', 'ordinal', 'ordinal']
@@ -175,7 +170,6 @@ class Test extends Component {
         // console.log("AAAA"+this.state.data)
         return (
             <div>
-
                 {/* <VizG config={this.sparkLineConfig} metadata={this.metadata} data={this.staticDataSet} onClick={(data)=>{
                     console.log(data);
                 }} /> */}
