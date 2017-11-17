@@ -60,7 +60,7 @@ export default class InlineChart extends BasicChart {
 
                             >
                                 <VictoryLine
-                                    domain={{ y: [0] }}
+                                    domain={{ y: this.props.yDomain || null }}
                                 />
 
                             </VictoryGroup>
@@ -77,13 +77,14 @@ export default class InlineChart extends BasicChart {
                                 key={`chart-${chartIndex}-${chart.type}-${dataSetName}`}
                                 data={dataSets[dataSetName]}
                                 color={chart.dataSetNames[dataSetName]}
-                                style={{ data: { fillOpacity: 0.5, strokeWidth: 0.5 } }}
+                                style={{ data: { fillOpacity: config.charts[chartIndex].fillOpacity || 0.5, strokeWidth: 0.5 } }}
                                 height={height}
                                 width={width}
                                 padding={0}
-
                             >
-                                <VictoryArea />
+                                <VictoryArea
+                                    domain={{ y: this.props.yDomain || null }}
+                                />
                             </VictoryGroup>
                         ));
                         return null;
