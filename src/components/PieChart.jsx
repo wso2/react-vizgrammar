@@ -236,7 +236,10 @@ export default class PieCharts extends React.Component {
                                 height={this.state.height}
                                 width={300}
                                 title="Legend"
-                                style={{ title: { fontSize: 25, fill: config.axisLabelColor }, labels: { fontSize: 20, fill: config.axisLabelColor } }}
+                                style={{
+                                    title: { fontSize: 25, fill: config.axisLabelColor },
+                                    labels: { fontSize: 20, fill: config.axisLabelColor },
+                                }}
                                 data={legendItems.length > 0 ? legendItems : [{
                                     name: 'undefined',
                                     symbol: { fill: '#333' },
