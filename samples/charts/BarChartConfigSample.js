@@ -73,7 +73,6 @@ export default class BarChartConfigSample extends React.Component {
         // animation: true
     };
 
-
     componentDidMount() {
         this.interval_id=setInterval(() => {
             this.setState({

@@ -28,7 +28,6 @@ import BarChart from './charts/BarChartConfigSample';
 import AreaChart from './charts/AreaChartConfig';
 import ScatterPlot from './charts/ScatterPlotConfigSample';
 import PieChart from './charts/PieChartsConfigSample';
-import Test from './charts/Trials.js';
 import MapChartConfigSample from './charts/MapChartConfigSample';
 import NumberChartConfigSample from './charts/NumberChartConfigSample';
 import TableCharts from './charts/TableChartConfigSample';
@@ -37,7 +36,6 @@ ReactDOM.render(
     <Router>
         <div>
             <Route exact path="/" component={App} />
-            <Route exact path="/test" component={Test} />
             <Route exact path="/line-charts" component={LineChart} />
             <Route exact path="/bar-charts" component={BarChart} />
             <Route exact path="/area-charts/" component={AreaChart} />

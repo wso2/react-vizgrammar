@@ -165,6 +165,7 @@ export default class App extends React.Component {
     componentWillUnmount() {
         clearInterval(this.interval_id);
     }
+
     render() {
         return (
             <div>

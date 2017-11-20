@@ -20,7 +20,7 @@ import React, {Component} from 'react';
 import MapGenerator from '../../src/components/MapChart.jsx';
 import {Row} from './util';
 
-class Test extends Component {
+class MapChartConfigSample extends Component {
 
     constructor(props) {
         super(props);
@@ -205,4 +205,4 @@ class Test extends Component {
     }
 }
 
-export default Test;
+export default MapChartConfigSample;

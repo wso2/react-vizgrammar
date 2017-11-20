@@ -67,7 +67,6 @@ export default class LineChartConfigSample extends React.Component {
         };
     }
 
-
     componentDidMount() {
         this.interval_id = setInterval(() => {
             this.setState({
