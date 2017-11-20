@@ -1,16 +1,19 @@
-/**
- * Copyright (c) WSO2 Inc. (http://wso2.com) All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
+/*
+ * Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
  * You may obtain a copy of the License at
  *
- *          http://www.apache.org/licenses/LICENSE-2.0
+ *   http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
  */
 
 import React from 'react';
@@ -214,7 +217,10 @@ export default class MapGenerator extends React.Component {
                         }}
                     >
                         <Geographies
-                            geographyPaths={feature(mapFeatureData, mapFeatureData.objects[Object.keys(mapFeatureData.objects)[0]]).features}
+                            geographyPaths={
+                                feature(mapFeatureData, mapFeatureData.objects[Object.keys(mapFeatureData.objects)[0]])
+                                    .features
+                            }
                             disableOptimization
                         >
                             {
@@ -230,7 +236,9 @@ export default class MapGenerator extends React.Component {
                                         }
 
                                         if (dataTip.length > 0) {
-                                            toolTip = '' + config.x + ' : ' + dataTip[0].givenName + ', ' + config.charts[0].y + ' : ' + dataTip[0].y;
+                                            toolTip = '' +
+                                                config.x + ' : ' + dataTip[0].givenName + ', ' +
+                                                config.charts[0].y + ' : ' + dataTip[0].y;
                                         }
 
                                         return (
@@ -301,7 +309,12 @@ export default class MapGenerator extends React.Component {
                                 height={this.state.height}
                                 width={300}
                                 title="Legend"
-                                style={{ title: { fontSize: 25, fill: config.axisLabelColor }, labels: { fontSize: 20, fill: config.axisLabelColor } }}
+                                style={{
+                                    title: {
+                                        fontSize: 25, fill: config.axisLabelColor,
+                                    },
+                                    labels: { fontSize: 20, fill: config.axisLabelColor },
+                                }}
                                 data={Object.keys(ordinalColorMap).map((name) => {
                                     return { name, symbol: { fill: ordinalColorMap[name] } };
                                 })}

@@ -22,7 +22,6 @@ import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import './css/testTablePadding.css';
 import { VictoryChart, VictoryLine, VictoryScatter, VictoryPortal, VictoryGroup, VictoryArea } from 'victory';
-// import Map from '../components/MapComponents/App';
 
 class Test extends Component {
 
@@ -170,32 +169,12 @@ class Test extends Component {
     }];
 
     render() {
-        // console.log("AAAA"+this.state.data)
+
         return (
             <div>
-                {/* <VizG config={this.sparkLineConfig} metadata={this.metadata} data={this.staticDataSet} onClick={(data)=>{
-                    console.log(data);
-                }} /> */}
-                {/* <VizG config={this.sparkLineConfig} metadata={this.metadata} data={this.state.staticDataSet} /> */}
                 <button onClick={() => { this.setState({ chartConfig: this.sparkLineConfig2 }); }}>Change</button>
                 <VizG config={this.state.chartConfig} metadata={this.metadataWithTime} data={this.dataWithT} />
-                {/* <VictoryChart
-                    scale={{ x: 'time' }}
-                    domain={{ x: null }}
-                >
-                    <VictoryGroup
-                        data={[
-                            { x: new Date(2017, 21, 10), y: 12 },
-                            { x: new Date(2017, 22, 10), y: 24 },
-                            { x: new Date(2017, 23, 10), y: 16 }
-                        ]}
-                    >
-                        <VictoryArea />
-                        <VictoryPortal>
-                            <VictoryScatter />
-                        </VictoryPortal>
-                    </VictoryGroup>
-                </VictoryChart> */}
+
 
             </div>
         );

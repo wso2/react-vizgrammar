@@ -22,7 +22,6 @@
     "victory": "^0.22.2"
   },
   "devDependencies": {
-    "axios": "^0.17.0",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.0.1",
     "babel-loader": "^7.1.2",

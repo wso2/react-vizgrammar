@@ -47,7 +47,6 @@ export default class BasicCharts extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
             dataBuffer: [],
             height: props.config.height || props.height || 450,
             width: props.config.width || props.width || 800,
@@ -93,7 +92,6 @@ export default class BasicCharts extends React.Component {
 
     _handleMouseEvent(evt) {
         const { onClick } = this.props;
-
         return onClick && onClick(evt);
     }
 
