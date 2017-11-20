@@ -147,7 +147,6 @@ export default class AreaChartConfigSample extends React.Component {
                        </pre>
                     </div>
                 </Row>
-
                 <Row title="Sample Data Set" chart="line">
                     <div>
                        <pre>

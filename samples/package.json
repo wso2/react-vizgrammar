@@ -1,21 +1,23 @@
 {
-  "name": "react-vizgrammar",
-  "version": "0.6.0",
-  "description": "React-VizGrammar is a charting library that makes charting easy by adding required boilerplate code so that developers/designers can get started in few minutes.",
+  "name": "samples",
+  "version": "1.0.0",
+  "description": "Sample set for react-vizgrammar",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "samples": "webpack-dev-server --progress"
   },
   "author": "WSO2",
   "license": "Apache-2.0",
   "dependencies": {
     "d3": "^4.11.0",
+    "material-ui": "^0.19.4",
     "prop-types": "^15.6.0",
-    "rc-slider": "^8.3.4",
+    "rc-slider": "^8.4.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-simple-maps": "^0.9.0",
-    "react-table": "^6.6.0",
+    "react-table": "^6.7.4",
     "react-tooltip": "^3.4.0",
     "topojson-client": "^3.0.0",
     "victory": "^0.22.2"

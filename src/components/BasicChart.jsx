@@ -248,13 +248,9 @@ export default class BasicCharts extends React.Component {
                     return null;
                 });
             }
-
             return null;
         });
-
-
         initialized = true;
-
         this.setState({ dataSets, chartArray, initialized, xScale, orientation, xDomain });
     }
 
