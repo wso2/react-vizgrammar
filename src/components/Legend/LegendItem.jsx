@@ -17,13 +17,19 @@
  */
 
 import React, { Component } from 'react';
-import PropsTypes from 'prop-types';
-import classes from './LegendStyles.scss';
+import PropTypes from 'prop-types';
 
 export default class LegendItem extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            disabled: false,
+            itemColor: props.itemColor,
+            itemName: props.itemName,
+            itemTextColor: props.itemTextColor,
+            data: props.data,
+        };
         this._onMouseClick = this._onMouseClick.bind(this);
         this._onMouseOver = this._onMouseOver.bind(this);
         this.onMouseOver = this._onMouseOver.bind(this);
@@ -34,7 +40,9 @@ export default class LegendItem extends Component {
      * @param {*} evt Mouse Click event
      */
     _onMouseClick(evt) {
-        return this.props.onClick && this.props.onClick(evt);
+        evt.persist();
+        const { data } = this.state;
+        return this.props.onClick && this.props.onClick(data, evt);
     }
 
     _onMouseOver(evt) {
@@ -49,16 +57,32 @@ export default class LegendItem extends Component {
     render() {
         return (
             <div
-                onClick={this.props.onClick}
+                onClick={this._onMouseClick}
                 onMouseOver={this.props.onMouseOver}
                 onMouseOut={this.props.onMouseOut}
+                style={{
+                    paddingLeft: 9,
+                    paddingRight: 10,
+                    display: this.props.orientation === 'top' || this.props.orientation === 'bottom' ?
+                                                            'inline-block' : null,
+                }}
             >
                 <span
-                    className={classes.legendItemColor}
-                    style={this.state.disabled ? null : { background: this.state.itemColor }}
+                    style={{
+                        background: this.state.disabled ? '#dcdcdc' : this.state.itemColor,
+                        display: 'inline-block',
+                        height: 10,
+                        verticalAlign: 'middle',
+                        width: 14,
+                    }}
                 />
-                <span>
-                    LegendItem
+                <span
+                    style={{
+                        marginLeft: 10,
+                        color: this.state.itemTextColor,
+                    }}
+                >
+                    {this.state.itemName}
                 </span>
             </div>
         );
@@ -69,10 +93,16 @@ LegendItem.defaultProps = {
     onClick: null,
     onMouseOver: null,
     onMouseOut: null,
+    itemTextColor: '#000',
+    orientation: null,
 };
 
 LegendItem.propTypes = {
-    onClick: PropsTypes.func,
-    onMouseOver: PropsTypes.func,
-    onMouseOut: PropsTypes.func,
+    onClick: PropTypes.func,
+    onMouseOver: PropTypes.func,
+    onMouseOut: PropTypes.func,
+    itemName: PropTypes.string.isRequired,
+    itemColor: PropTypes.string.isRequired,
+    itemTextColor: PropTypes.string,
+    orientation: PropTypes.string,
 };

@@ -217,12 +217,12 @@ export default class BasicCharts extends React.Component {
                             } else {
                                 chartArray[chartIndex]
                                     .dataSetNames[dataSetName] = chartArray[chartIndex]
-                                    .colorScale[chartArray[chartIndex].colorIndex++];
+                                        .colorScale[chartArray[chartIndex].colorIndex++];
                             }
                         } else {
                             chartArray[chartIndex]
                                 .dataSetNames[dataSetName] = chartArray[chartIndex]
-                                .colorScale[chartArray[chartIndex].colorIndex++];
+                                    .colorScale[chartArray[chartIndex].colorIndex++];
                         }
                     } else {
                         chartArray[chartIndex].dataSetNames[dataSetName] =
@@ -557,58 +557,30 @@ export default class BasicCharts extends React.Component {
                         />
                     </VictoryChart>
                 </div>
-                <div style={{ width: '20%', display: 'inline', float: 'right' }}>
-                    <VictoryLegend
-                        containerComponent={<VictoryContainer responsive />}
-                        height={this.state.height}
-                        width={300}
-                        title="Legend"
-                        style={{
-                            title: { fontSize: 25, fill: config.legendTitleColor },
-                            labels: { fontSize: 20, fill: config.legendTextColor },
-                        }}
-                        data={legendItems.length > 0 ? legendItems : [{
-                            name: 'undefined',
-                            symbol: { fill: '#333' },
-                        }]}
-                        events={[
-                            {
-                                target: 'data',
-                                eventHandlers: {
-                                    onClick: config.interactiveLegend ? () => { // TODO: update doc with the attribute
-                                        return [
-                                            {
-                                                target: 'data',
-                                                mutation: (props) => {
-                                                    console.info(props.index);
-
-                                                    const ignoreIndex = ignoreArray
-                                                        .map(d => d.name)
-                                                        .indexOf(props.datum.name);
-                                                    if (ignoreIndex > -1) {
-                                                        ignoreArray.splice(ignoreIndex, 1);
-                                                    } else {
-                                                        ignoreArray.push({ name: props.datum.name });
-                                                    }
-                                                    console.info(ignoreArray);
-                                                    this.setState({
-                                                        ignoreArray,
-                                                    });
-                                                },
-                                            }, {
-                                                target: 'labels',
-                                                mutation: (props) => {
-                                                    const fill = props.style && props.style.fill;
-                                                    return fill === 'grey' ? null : { style: { fill: 'grey' } };
-                                                },
-                                            },
-                                        ];
-                                    } : null,
-                                },
-                            },
-                        ]}
-                    />
-                </div>
+                {
+                    ['bottom', 'left', 'right'].indexOf(config.legendOrientation) > 1 || !config.legendOrientation ?
+                        <div
+                            style={{
+                                width: !config.legendOrientation ? '20%' :
+                                    (() => {
+                                        if (config.legendOrientation === 'left' || config.legendOrientation === 'right') return '20%';
+                                        else return null;
+                                    })(),
+                                display: !config.legendOrientation ? 'inline' :
+                                    (() => {
+                                        if (config.legendOrientation === 'left' || config.legendOrientation === 'right') return 'inline';
+                                        else return null;
+                                    })(),
+                                float: !config.legendOrientation ? 'right' : (() => {
+                                    if (config.legendOrientation === 'left') return 'left';
+                                    else if (config.legendOrientation === 'right') return 'right';
+                                    else return null;
+                                })(),
+                            }}
+                        >
+                            {this.generateLegendVisualization(config, legendItems, ignoreArray)}
+                        </div> : null
+                }
                 {config.brush ?
                     <div
                         style={{ width: '80%', height: 40, display: 'inline', float: 'left', right: 10 }}
@@ -616,10 +588,12 @@ export default class BasicCharts extends React.Component {
                         <div
                             style={{ width: '10%', display: 'inline', float: 'left', left: 20 }}
                         >
-                            <button onClick={() => {
-                                this.setState({ xDomain: this.xRange });
-                            }}
-                            >Reset
+                            <button
+                                onClick={() => {
+                                    this.setState({ xDomain: this.xRange });
+                                }}
+                            >
+                                Reset
                             </button>
                         </div>
                         <div
@@ -646,6 +620,78 @@ export default class BasicCharts extends React.Component {
                 }
             </div >
 
+        );
+    }
+
+    /**
+     * Geerate a Legend component to be used in the Charts.
+     * @param {*} config Chart configuration.
+     * @param {*} legendItems Items in the legend.
+     * @param {*} ignoreArray legend items that are ignored in rendering.
+     */
+    generateLegendVisualization(config, legendItems, ignoreArray) {
+        return (
+            <VictoryLegend
+                containerComponent={<VictoryContainer responsive />}
+                height={this.state.height}
+                width={300}
+                orientation={
+                    !config.legendOrientation ?
+                        null :
+                        (() => {
+                            if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
+                                return 'vertical';
+                            } else {
+                                return 'horizontal';
+                            }
+                        })()
+                }
+                title="Legend"
+                style={{
+                    title: { fontSize: 25, fill: config.legendTitleColor },
+                    labels: { fontSize: 20, fill: config.legendTextColor },
+                }}
+                data={legendItems.length > 0 ? legendItems : [{
+                    name: 'undefined',
+                    symbol: { fill: '#333' },
+                }]}
+                events={[
+                    {
+                        target: 'data',
+                        eventHandlers: {
+                            onClick: config.interactiveLegend ? () => { // TODO: update doc with the attribute
+                                return [
+                                    {
+                                        target: 'data',
+                                        mutation: (props) => {
+                                            console.info(props.index);
+
+                                            const ignoreIndex = ignoreArray
+                                                .map(d => d.name)
+                                                .indexOf(props.datum.name);
+                                            if (ignoreIndex > -1) {
+                                                ignoreArray.splice(ignoreIndex, 1);
+                                            } else {
+                                                ignoreArray.push({ name: props.datum.name });
+                                            }
+                                            console.info(ignoreArray);
+                                            this.setState({
+                                                ignoreArray,
+                                            });
+                                        },
+                                    }, {
+                                        target: 'labels',
+                                        mutation: (props) => {
+                                            const fill = props.style && props.style.fill;
+                                            return fill === 'grey' ? null : { style: { fill: 'grey' } };
+                                        },
+                                    },
+                                ];
+                            } : null,
+                        },
+                    },
+                ]}
+            />
         );
     }
 }
