@@ -1,18 +1,20 @@
-/**
- * Copyright (c) WSO2 Inc. (http://wso2.com) All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
+/*
+ * Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
  * You may obtain a copy of the License at
  *
- *          http://www.apache.org/licenses/LICENSE-2.0
+ *   http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
  */
-
 import React from 'react';
 import {
     VictoryArea,
@@ -45,7 +47,6 @@ export default class BasicCharts extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
             dataBuffer: [],
             height: props.config.height || props.height || 450,
             width: props.config.width || props.width || 800,
@@ -91,7 +92,6 @@ export default class BasicCharts extends React.Component {
 
     _handleMouseEvent(evt) {
         const { onClick } = this.props;
-
         return onClick && onClick(evt);
     }
 
@@ -217,12 +217,12 @@ export default class BasicCharts extends React.Component {
                             } else {
                                 chartArray[chartIndex]
                                     .dataSetNames[dataSetName] = chartArray[chartIndex]
-                                        .colorScale[chartArray[chartIndex].colorIndex++];
+                                    .colorScale[chartArray[chartIndex].colorIndex++];
                             }
                         } else {
                             chartArray[chartIndex]
                                 .dataSetNames[dataSetName] = chartArray[chartIndex]
-                                    .colorScale[chartArray[chartIndex].colorIndex++];
+                                .colorScale[chartArray[chartIndex].colorIndex++];
                         }
                     } else {
                         chartArray[chartIndex].dataSetNames[dataSetName] =
@@ -248,246 +248,15 @@ export default class BasicCharts extends React.Component {
                     return null;
                 });
             }
-
             return null;
         });
-
-
         initialized = true;
-
         this.setState({ dataSets, chartArray, initialized, xScale, orientation, xDomain });
-    }
-
-    /**
-     * Generate visualization of the chart.
-     * @param props Current props of the component
-     * @param state Current state of the component
-     * @returns {Array} Array of chart elements to be displayed
-     */
-    generateVisualizations(props, state) {
-        const { config } = props;
-        const { height, width, chartArray, dataSets, xScale, ignoreArray } = state;
-        let chartComponents = [];
-        const legendItems = [];
-        let horizontal = false;
-        const lineCharts = [];
-        let areaCharts = [];
-        let barcharts = [];
-
-        chartArray.map((chart, chartIndex) => {
-            let addChart = false;
-            switch (chart.type) {
-                case 'line':
-                    Object.keys(chart.dataSetNames).map((dataSetName) => {
-                        legendItems.push({
-                            name: dataSetName,
-                            symbol: { fill: chart.dataSetNames[dataSetName] },
-                            chartIndex,
-                        });
-
-                        addChart = ignoreArray
-                            .filter(d => (d.name === dataSetName)).length > 0;
-
-                        if (!addChart) {
-                            lineCharts.push((
-                                <VictoryGroup
-                                    key={`chart-${chart.id}-${chart.type}-${dataSetName}`}
-                                    data={dataSets[dataSetName]}
-                                    color={chart.dataSetNames[dataSetName]}
-                                >
-                                    <VictoryLine
-                                        style={{ data: { strokeWidth: config.charts[chartIndex].strokeWidth || null } }}
-                                    />
-                                    <VictoryPortal>
-                                        <VictoryScatter
-                                            labels={
-                                                d => `${config.x}:${Number(d.x).toFixed(2)}\n
-                                                ${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}`
-                                            }
-                                            labelComponent={
-                                                <VictoryTooltip
-                                                    orientation='right'
-                                                />
-                                            }
-                                            size={(d, a) => {
-                                                return a ? 20 : (config.charts[chartIndex].markRadius || 4);
-                                            }}
-                                            events={[{
-                                                target: 'data',
-                                                eventHandlers: {
-                                                    onClick: () => {
-                                                        return [
-                                                            {
-                                                                target: 'data',
-                                                                mutation: this._handleMouseEvent,
-                                                            },
-                                                        ];
-                                                    },
-                                                },
-                                            }]}
-                                        />
-                                    </VictoryPortal>
-                                </VictoryGroup>
-                            ));
-                        }
-                        return null;
-                    });
-                    break;
-                case 'area': {
-                    const areaLocal = [];
-
-                    Object.keys(chart.dataSetNames).map((dataSetName) => {
-                        legendItems.push({
-                            name: dataSetName,
-                            symbol: { fill: chart.dataSetNames[dataSetName] },
-                            chartIndex,
-                        });
-
-                        addChart = ignoreArray
-                            .filter(d => (d.name === dataSetName)).length > 0;
-
-                        if (!addChart) {
-                            areaLocal.push((
-                                <VictoryGroup
-                                    key={`chart-${chart.id}-${chart.type}-${dataSetName}`}
-                                    data={dataSets[dataSetName]}
-                                    color={chart.dataSetNames[dataSetName]}
-                                    style={{ data: { fillOpacity: config.charts[chartIndex].fillOpacity || 0.5 } }}
-                                >
-                                    <VictoryArea />
-                                    <VictoryPortal>
-                                        <VictoryScatter
-                                            labels={d => `${config.x}:${Number(d.x).toFixed(2)}\n
-                                                          ${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}`}
-                                            labelComponent={
-                                                <VictoryTooltip
-                                                    orientation='right'
-                                                />
-                                            }
-                                            size={(d, a) => {
-                                                return a ? 20 : config.charts[chartIndex].markRadius || 4;
-                                            }}
-                                            events={[{
-                                                target: 'data',
-                                                eventHandlers: {
-                                                    onClick: () => {
-                                                        return [
-                                                            {
-                                                                target: 'data',
-                                                                mutation: this._handleMouseEvent,
-                                                            },
-                                                        ];
-                                                    },
-                                                },
-                                            }]}
-                                        />
-                                    </VictoryPortal>
-                                </VictoryGroup>
-                            ));
-                        }
-
-                        return null;
-                    });
-
-                    if (chart.mode === 'stacked') {
-                        areaCharts.push((
-                            <VictoryStack>
-                                {areaLocal}
-                            </VictoryStack>
-                        ));
-                    } else {
-                        areaCharts = areaCharts.concat(areaLocal);
-                    }
-
-                    break;
-                }
-                case 'bar': {
-                    const localBar = [];
-
-                    horizontal = horizontal || chart.orientation === 'left';
-
-                    Object.keys(chart.dataSetNames).map((dataSetName) => {
-                        legendItems.push({
-                            name: dataSetName,
-                            symbol: { fill: chart.dataSetNames[dataSetName] },
-                            chartIndex,
-                        });
-                        addChart = ignoreArray
-                            .filter(d => (d.name === dataSetName)).length > 0;
-                        if (!addChart) {
-                            localBar.push((
-                                <VictoryBar
-                                    labels={d => `${config.x}:${d.x}\n${config.charts[chartIndex].y}:${d.y}`}
-                                    labelComponent={
-                                        <VictoryTooltip
-                                            orientation='right'
-                                        />
-                                    }
-                                    data={dataSets[dataSetName]}
-                                    color={chart.dataSetNames[dataSetName]}
-                                    events={[{
-                                        target: 'data',
-                                        eventHandlers: {
-                                            onClick: () => {
-                                                return [
-                                                    {
-                                                        target: 'data',
-                                                        mutation: this._handleMouseEvent,
-                                                    },
-                                                ];
-                                            },
-                                        },
-                                    }]}
-                                />
-                            ));
-                        }
-
-                        return null;
-                    });
-
-                    if (chart.mode === 'stacked') {
-                        barcharts.push((
-                            <VictoryStack>
-                                {localBar}
-                            </VictoryStack>
-                        ));
-                    } else {
-                        barcharts = barcharts.concat(localBar);
-                    }
-
-                    break;
-                }
-                default:
-                    console.error('Error in rendering unknown chart type');
-            }
-
-            return null;
-        });
-
-        if (areaCharts.length > 0) chartComponents = chartComponents.concat(areaCharts);
-        if (lineCharts.length > 0) chartComponents = chartComponents.concat(lineCharts);
-        if (barcharts.length > 0) {
-            const barWidth =
-                ((horizontal ?
-                    height : width) / (config.maxLength * (barcharts.length > 1 ? barcharts.length : 2))) - 3;
-
-            chartComponents.push((
-                <VictoryGroup
-                    horizontal={horizontal}
-                    offset={barWidth}
-                    style={{ data: { width: barWidth } }}
-                >
-                    {barcharts}
-                </VictoryGroup>
-            ));
-        }
-
-        return chartComponents;
     }
 
     render() {
         const { config } = this.props;
-        const { height, width, chartArray, dataSets, xScale, ignoreArray, seriesXMaxVal, seriesXMinVal } = this.state;
+        const { height, width, chartArray, dataSets, xScale, ignoreArray } = this.state;
         let chartComponents = [];
         const legendItems = [];
         let horizontal = false;
@@ -718,7 +487,7 @@ export default class BasicCharts extends React.Component {
                         scale={{ x: xScale === 'linear' ? 'linear' : 'time', y: 'linear' }}
                         domain={{
                             x: config.brush && this.state.xDomain[0] ? this.state.xDomain : null,
-                            y: config.yDomain,
+                            y: this.props.yDomain || null,
                         }}
                         style={{ parent: { overflow: 'visible' } }}
                     >

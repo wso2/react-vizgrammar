@@ -1,8 +1,10 @@
+const path = require('path');
+
 module.exports = {
     devtool: 'source-map',
-    entry: './samples/index.js',
+    entry: './index.js',
     output: {
-        path: __dirname + 'samples/public',
+        path: path.resolve(__dirname, './public'),
         filename: 'app.js',
     },
     module: {
@@ -12,7 +14,7 @@ module.exports = {
                 loader: 'json-loader',
             },
             {
-                exclude: __dirname + '/node_modules',
+                exclude: path.resolve(__dirname, './node_modules'),
                 test: /\.(js|jsx)$/,
                 loader: 'babel-loader',
             },
@@ -28,7 +30,7 @@ module.exports = {
         ],
     },
     devServer: {
-        contentBase: './samples/public',
+        contentBase: './public',
         historyApiFallback: true,
         inline: true,
         port: 8080,
