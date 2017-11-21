@@ -126,7 +126,6 @@ export default class AreaChartConfigSample extends React.Component {
                        </pre>
                     </div>
                 </Row>
-
                 <Row title="Group Area Chart Sample stacked" chart="line" media={true} actionBar={false}>
                     <VizG config={this.stackedAreaChartConfig} metadata={this.metadata} data={this.state.data}/>
                     <br/>

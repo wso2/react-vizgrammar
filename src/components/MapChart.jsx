@@ -26,7 +26,14 @@ import feature from 'topojson-client/src/feature';
 import { getDefaultColorScale } from './helper';
 import { CountryInfo, EuropeMap, WorldMap, USAMap } from './resources/MapData';
 
+const USA_YOFFSET_FACTOR = 1.2;
+const USA_XOFFSET_FACTOR = 0.75;
+const USA_PROJECTION_SCALE = 600;
+const EUROPE_PROJECTION_SCALE = 400;
+const WORLD_PROJECTION_SCALE = 120;
+
 export default class MapGenerator extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -112,15 +119,15 @@ export default class MapGenerator extends React.Component {
         mapType = mapConfig.mapType;
         switch (mapConfig.mapType) {
             case 'world':
-                projectionConfig.scale = 120;
+                projectionConfig.scale = WORLD_PROJECTION_SCALE;
                 break;
             case 'usa':
-                projectionConfig.scale = 600;
-                projectionConfig.yOffset = this.state.height / 1.2;
-                projectionConfig.xOffset = this.state.width / 0.75;
+                projectionConfig.scale = USA_PROJECTION_SCALE;
+                projectionConfig.yOffset = this.state.height / USA_YOFFSET_FACTOR;
+                projectionConfig.xOffset = this.state.width / USA_XOFFSET_FACTOR;
                 break;
             case 'europe':
-                projectionConfig.scale = 400;
+                projectionConfig.scale = EUROPE_PROJECTION_SCALE;
                 projectionConfig.yOffset = this.state.height;
                 break;
             default:
