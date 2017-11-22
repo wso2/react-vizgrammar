@@ -31,13 +31,11 @@ import PieChart from './charts/PieChartsConfigSample';
 import MapChartConfigSample from './charts/MapChartConfigSample';
 import NumberChartConfigSample from './charts/NumberChartConfigSample';
 import TableCharts from './charts/TableChartConfigSample';
-import TestRuns from './charts/TestRuns';
 
 ReactDOM.render(
     <Router>
         <div>
             <Route exact path="/" component={App} />
-            <Route exact path={'/test'} component={TestRuns} />
             <Route exact path="/line-charts" component={LineChart} />
             <Route exact path="/bar-charts" component={BarChart} />
             <Route exact path="/area-charts/" component={AreaChart} />
