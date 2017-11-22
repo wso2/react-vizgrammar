@@ -17,7 +17,7 @@
  */
 // TODO:Fix dynamically changing config for other charts
 
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import BasicCharts from './components/BasicChart.jsx';
 import ScatterCharts from './components/ScatterChart.jsx';
@@ -26,6 +26,7 @@ import MapGenerator from './components/MapChart.jsx';
 import TableCharts from './components/TableChart.jsx';
 import NumberCharts from './components/NumberChart.jsx';
 import InlineCharts from './components/InlineChart.jsx';
+import logger from './utils/log';
 
 class VizG extends Component {
 
@@ -59,7 +60,7 @@ class VizG extends Component {
 
     render() {
 
-        let {config, data, metadata, onClick} = this.state;
+        let { config, data, metadata, onClick } = this.state;
         let chartType = config.charts[0].type;
 
         return (
@@ -92,16 +93,20 @@ class VizG extends Component {
                                                 onClick={onClick}
                                             /> :
                                             chartType === 'spark-line' ||
-                                            chartType === 'spark-bar' || chartType === 'spark-area' ?
+                                                chartType === 'spark-bar' || chartType === 'spark-area' ?
                                                 <InlineCharts
                                                     metadata={metadata}
                                                     config={config}
                                                     data={data}
                                                     yDomain={this.props.yDomain}
-                                                /> : null
+                                                /> : this.printChartError('Unknown chart type.')
                 }
             </div>
         );
+    }
+
+    printChartError(message) {
+        logger.error(message);
     }
 }
 
