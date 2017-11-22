@@ -16,7 +16,7 @@
  * under the License.
  */
 import React, { Component } from 'react';
-import TableCharts from '../../src/components/TableChart.jsx';
+import VizG from '../../src/VizG.jsx';
 import { Row } from './util';
 
 class TableChartConfigSample extends Component {
@@ -29,25 +29,17 @@ class TableChartConfigSample extends Component {
             ],
             timer: 1
         };
-    }
-
-    componentDidMount() {
-        setInterval(() => {
-            this.setState({
-                data: [[Math.round(Math.random() * 100), Math.round(Math.random() * 100), 1, 'Piston'], [Math.round(Math.random() * 100), Math.round(Math.random() * 100), 1, 'rotary']],
-                timer: this.state.timer + 1
-            });
-        }, 1000);
 
         this.mapConfig = {
             key: 'rpm',
-            charts: [{
-                type: 'table',
-                y: 'torque',
-                color: '*',
-                columns: ['EngineType', 'torque', 'rpm'],
-                columnTitles: ['Engine Type', 'Engine Torque', 'Engine RPM'],
-            }
+            charts: [
+                {
+                    type: 'table',
+                    y: 'torque',
+                    color: '*',
+                    columns: ['EngineType', 'torque', 'rpm'],
+                    columnTitles: ['Engine Type', 'Engine Torque', 'Engine RPM'],
+                },
             ],
             maxLength: 7,
             width: 400,
@@ -61,12 +53,42 @@ class TableChartConfigSample extends Component {
         };
     }
 
+    componentDidMount() {
+        setInterval(() => {
+            this.setState({
+                data: [[Math.round(Math.random() * 100), Math.round(Math.random() * 100), 1, 'Piston'], [Math.round(Math.random() * 100), Math.round(Math.random() * 100), 1, 'rotary']],
+                timer: this.state.timer + 1
+            });
+        }, 1000);
+
+        this.mapConfig = {
+            key: 'rpm',
+            charts: [
+                {
+                    type: 'table',
+                    y: 'torque',
+                    color: '*',
+                    columns: ['EngineType', 'torque', 'rpm'],
+                    columnTitles: ['Engine Type', 'Engine Torque', 'Engine RPM'],
+                },
+            ],
+            maxLength: 7,
+            width: 400,
+            height: 200,
+            colorBasedStyle: true
+        };
+
+        this.metadata = {
+            names: ['rpm', 'torque', 'horsepower', 'EngineType'],
+            types: ['linear', 'linear', 'ordinal', 'ordinal']
+        };
+    }
 
     render() {
         return (
             <div>
                 <Row title="Table Chart Sample" chart="line" media={true} actionBar={false}>
-                    <ReactTable config={this.mapConfig} metadata={this.metadata} data={this.state.data} />
+                    <VizG config={this.mapConfig} metadata={this.metadata} data={this.state.data} />
                     <br />
                     <br />
                     <pre>
