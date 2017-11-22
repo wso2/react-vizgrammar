@@ -38,28 +38,29 @@ class TableChartConfigSample extends Component {
                 timer: this.state.timer + 1
             });
         }, 1000);
+
+        this.mapConfig = {
+            key: 'rpm',
+            charts: [{
+                type: 'table',
+                y: 'torque',
+                color: '*',
+                columns: ['EngineType', 'torque', 'rpm'],
+                columnTitles: ['Engine Type', 'Engine Torque', 'Engine RPM'],
+            }
+            ],
+            maxLength: 7,
+            width: 400,
+            height: 200,
+            colorBasedStyle: true
+        };
+
+        this.metadata = {
+            names: ['rpm', 'torque', 'horsepower', 'EngineType'],
+            types: ['linear', 'linear', 'ordinal', 'ordinal']
+        };
     }
 
-    mapConfig = {
-        key: 'rpm',
-        charts: [{
-            type: 'table',
-            y: 'torque',
-            color: '*',
-            columns: ['EngineType', 'torque', 'rpm'],
-            columnTitles: ['Engine Type', 'Engine Torque', 'Engine RPM'],
-        }
-        ],
-        maxLength: 7,
-        width: 400,
-        height: 200,
-        colorBasedStyle: true
-    };
-
-    metadata = {
-        'names': ['rpm', 'torque', 'horsepower', 'EngineType'],
-        'types': ['linear', 'linear', 'ordinal', 'ordinal']
-    };
 
     render() {
         return (
