@@ -175,7 +175,6 @@ export default class PieCharts extends React.Component {
             let total = 0;
             if (!config.percentage) {
                 Object.keys(chart.dataSetNames).map((dataSetName) => {
-                    // console.info(chart.dataSetNames[dataSetName]);
                     legendItems.push({ name: dataSetName, symbol: { fill: chart.dataSetNames[dataSetName] } });
                     total += dataSets[dataSetName].y;
                     pieChartData.push(dataSets[dataSetName]);

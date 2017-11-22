@@ -20,7 +20,7 @@ import React from 'react';
 import { Row } from './util';
 import './css/Table.css';
 import VizG from '../../src/VizG.jsx';
-
+import logger from '../../src/utils/log';
 export default class LineChartConfigSample extends React.Component {
 
     constructor(props) {
@@ -89,7 +89,7 @@ export default class LineChartConfigSample extends React.Component {
             <div>
                 <center><h1>Line Chart Config Samples</h1></center>
                 <Row title="Donut Chart Sample" chart="line" media={true} actionBar={false}>
-                    <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data} onClick={(data) => { console.info(data) }} />
+                    <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data} onClick={(data) => { logger.info(data); }} />
                     <br /><br />
                     <div style={{ display: 'block' }}>
                         <pre>

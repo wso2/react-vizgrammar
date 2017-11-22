@@ -19,6 +19,7 @@
 import React, { Component } from 'react';
 import MapGenerator from '../../src/components/MapChart.jsx';
 import { Row } from './util';
+import logger from '../../src/utils/log';
 
 class MapChartConfigSample extends Component {
 
@@ -81,7 +82,7 @@ class MapChartConfigSample extends Component {
         return (
             <div>
                 <Row title="World Map Sample" chart="line" media={true} actionBar={false}>
-                    <MapGenerator config={this.mapConfig} metadata={this.metadata} data={this.state.data} onClick={(geo) => { console.info(geo); }} />
+                    <MapGenerator config={this.mapConfig} metadata={this.metadata} data={this.state.data} onClick={(geo) => { logger.info(geo); }} />
                     <pre>
                         {'{\n' +
                             '\tx : \'Country\',\n' +
@@ -92,7 +93,7 @@ class MapChartConfigSample extends Component {
                     </pre>
                 </Row>
                 <Row title="Europe Map Sample" chart="line" media={true} actionBar={false}>
-                    <MapGenerator config={this.europeConfig} metadata={this.metadata} data={this.state.data} onClick={(geo) => { console.info(geo); }} />
+                    <MapGenerator config={this.europeConfig} metadata={this.metadata} data={this.state.data} onClick={(geo) => { logger.info(geo); }} />
                     <pre>
                         {'{\n' +
                             '\tx : \'Country\',\n' +
@@ -103,7 +104,7 @@ class MapChartConfigSample extends Component {
                     </pre>
                 </Row>
                 <Row title="United States Map Sample" chart="line" media={true} actionBar={false}>
-                    <MapGenerator config={this.usaConfig} metadata={this.metadata} data={this.state.data2} onClick={(geo) => { console.info(geo); }} />
+                    <MapGenerator config={this.usaConfig} metadata={this.metadata} data={this.state.data2} onClick={(geo) => { logger.info(geo); }} />
                     <pre>
                         {'{\n' +
                             '\tx : \'County\',\n' +

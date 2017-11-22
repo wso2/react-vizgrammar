@@ -38,7 +38,7 @@ import { formatPrefix, timeFormat } from 'd3';
 import { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { getDefaultColorScale } from './helper';
-
+import logger from '../utils/log';
 /**
  * React component required to render Bar, Line and Area Charts.
  */
@@ -75,12 +75,10 @@ export default class BasicCharts extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if (JSON.stringify(this.chartConfig) !== JSON.stringify(nextProps.config)) {
-            console.info('not similar');
             this.chartConfig = nextProps.config;
             this.state.chartArray = [];
             this.state.dataSets = [];
             this.state.initialized = false;
-            console.info(this.state.chartArray);
         }
 
         this.handleAndSortData(nextProps);
@@ -117,7 +115,7 @@ export default class BasicCharts extends React.Component {
                 xScale = 'ordinal';
                 break;
             default:
-                console.error('unsupported data type on xAxis');
+                logger.error('unsupported data type on xAxis');
         }
 
         xScale = metadata.types[xIndex] === 'time' ? 'time' : xScale;
@@ -450,7 +448,7 @@ export default class BasicCharts extends React.Component {
                     break;
                 }
                 default:
-                    console.error('Error in rendering unknown chart type');
+                    logger.error('Error in rendering unknown chart type');
             }
 
             return null;

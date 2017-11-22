@@ -25,6 +25,7 @@ import * as d3 from 'd3';
 import feature from 'topojson-client/src/feature';
 import { getDefaultColorScale } from './helper';
 import { CountryInfo, EuropeMap, WorldMap, USAMap } from './resources/MapData';
+import logger from '../utils/log';
 
 const USA_YOFFSET_FACTOR = 1.2;
 const USA_XOFFSET_FACTOR = 0.75;
@@ -131,7 +132,7 @@ export default class MapGenerator extends React.Component {
                 projectionConfig.yOffset = this.state.height;
                 break;
             default:
-                console.error('unrecognized map type.');
+                logger.error('unrecognized map type.');
         }
         colorType = metadata.types[yIndex];
         if (metadata.types[yIndex] === 'linear') {

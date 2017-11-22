@@ -20,7 +20,8 @@
     "react-table": "^6.7.4",
     "react-tooltip": "^3.4.0",
     "topojson-client": "^3.0.0",
-    "victory": "^0.22.2"
+    "victory": "^0.22.2",
+    "log4javascript": "^1.4.15"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
