@@ -728,8 +728,6 @@ export default class BasicCharts extends React.Component {
                     ]}
                 />
             </div>
-
-
         );
     }
 }
