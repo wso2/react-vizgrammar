@@ -335,6 +335,7 @@ export default class ScatterCharts extends React.Component {
             </div>
         );
     }
+
     /**
      * Generate legend component for the scatter plot.
      * @param config chart configuration json.

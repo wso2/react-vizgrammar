@@ -699,8 +699,6 @@ export default class BasicCharts extends React.Component {
                                         {
                                             target: 'data',
                                             mutation: (props) => {
-                                                console.info(props.index);
-
                                                 const ignoreIndex = ignoreArray
                                                     .map(d => d.name)
                                                     .indexOf(props.datum.name);
@@ -709,7 +707,6 @@ export default class BasicCharts extends React.Component {
                                                 } else {
                                                     ignoreArray.push({ name: props.datum.name });
                                                 }
-                                                console.info(ignoreArray);
                                                 this.setState({
                                                     ignoreArray,
                                                 });
