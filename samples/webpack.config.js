@@ -29,6 +29,12 @@ module.exports = {
             },
         ],
     },
+    resolve: {
+        extensions: ['.js', '.json', '.jsx'],
+        alias: {
+            log: path.resolve(__dirname, '../src/utils/log.js'),
+        },
+    },
     devServer: {
         contentBase: './public',
         historyApiFallback: true,

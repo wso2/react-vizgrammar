@@ -100,8 +100,7 @@ export default class LineChartConfigSample extends React.Component {
                                 '\tcharts: [\n\t    { type: \'line\', y: \'torque\', color: \'EngineType\',colorDomain:[\'\',\'\',\'piston\']}\n\t],\n' +
                                 '\tmaxLength: 7,\n' +
                                 '\twidth: 700,\n' +
-                                '\theight: 450,\n' +
-                                '\tanimation:true\n}'
+                                '\theight: 450,\n'
                             }
                         </pre>
                     </div>
@@ -116,8 +115,7 @@ export default class LineChartConfigSample extends React.Component {
                                 '\tcharts: [\n\t    { type: \'line\', y: \'horsepower\', fill:\'#2ca02c\'}\n\t    { type: \'line\', y: \'torque\', fill:\'#ff7f0e\'}\n\t],\n' +
                                 '\tmaxLength: 7,\n' +
                                 '\twidth: 700,\n' +
-                                '\theight: 450,\n' +
-                                '\tanimation:true\n}'
+                                '\theight: 450,\n'
                             }
                         </pre>
                     </div>
