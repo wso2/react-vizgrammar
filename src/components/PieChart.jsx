@@ -264,6 +264,11 @@ export default class PieCharts extends React.Component {
         );
     }
 
+    /**
+     * Generate legend component for the scatter plot.
+     * @param config chart configuration json.
+     * @param legendItems legendItems array
+     */
     generateLegendComponent(config, legendItems) {
         return (
             <div

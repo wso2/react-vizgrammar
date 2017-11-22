@@ -628,9 +628,9 @@ export default class BasicCharts extends React.Component {
 
     /**
      * Geerate a Legend component to be used in the Charts.
-     * @param {*} config Chart configuration.
-     * @param {*} legendItems Items in the legend.
-     * @param {*} ignoreArray legend items that are ignored in rendering.
+     * @param config Chart configuration.
+     * @param legendItems Items in the legend.
+     * @param ignoreArray legend items that are ignored in rendering.
      */
     generateLegendVisualization(config, legendItems, ignoreArray) {
         return (
