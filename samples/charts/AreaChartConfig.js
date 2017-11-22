@@ -36,6 +36,7 @@ export default class AreaChartConfigSample extends React.Component {
         };
 
         this.interval_id = null;
+
         this.areaChartConfig = {
             x: 'rpm',
             charts: [{ type: 'area', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston'] }],
@@ -63,7 +64,6 @@ export default class AreaChartConfigSample extends React.Component {
 
         };
     }
-
 
     componentDidMount() {
         this.interval_id = setInterval(() => {
