@@ -490,7 +490,7 @@ export default class BasicCharts extends React.Component {
                                     return 'inline';
                                 } else return null;
                             })(),
-                        float: !config.legendOrientation ? 'right' : (() => {
+                        float: !config.legendOrientation ? 'left' : (() => {
                             if (config.legendOrientation === 'left') return 'right';
                             else if (config.legendOrientation === 'right') return 'left';
                             else return null;

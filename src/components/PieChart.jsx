@@ -15,7 +15,8 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
+// TODO: Implement interactive legend
+// TODO: Implement onClick events
 import React from 'react';
 import {
     VictoryTooltip,
@@ -189,7 +190,7 @@ export default class PieCharts extends React.Component {
                         colorScale={chart.colorScale}
                         data={config.percentage ? dataSets : pieChartData}
                         labelComponent={config.percentage ? <VictoryLabel text={''} /> :
-                        <VictoryTooltip width={50} height={25} />}
+                            <VictoryTooltip width={50} height={25} />}
                         labels={config.percentage === 'percentage' ? '' : d => `${d.x} : ${((d.y / total) * 100).toFixed(2)}%`}
                         style={{ labels: { fontSize: 6 } }}
                         labelRadius={height / 4}
@@ -225,29 +226,102 @@ export default class PieCharts extends React.Component {
         });
         return (
             <div style={{ overflow: 'hidden' }}>
-                <div style={{ float: 'left', width: legend ? '80%' : '100%', display: 'inline' }}>
+                {
+                    legend && (config.legendOrientation && config.legendOrientation === 'top') ?
+                        this.generateLegendComponent(config, legendItems) :
+                        null
+                }
+                <div
+                    style={{
+                        width: !legend ? '100%' :
+                            (() => {
+                                if (!config.legendOrientation) return '80%';
+                                else if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
+                                    return '80%';
+                                } else return '100%';
+                            })(),
+                        display: !config.legendOrientation ? 'inline' :
+                            (() => {
+                                if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
+                                    return 'inline';
+                                } else return null;
+                            })(),
+                        float: !config.legendOrientation ? 'left' : (() => {
+                            if (config.legendOrientation === 'left') return 'right';
+                            else if (config.legendOrientation === 'right') return 'left';
+                            else return null;
+                        })(),
+                    }}
+                >
                     {chartComponents}
                 </div>
                 {
-                    legend ?
-                        <div style={{ width: '20%', display: 'inline', float: 'right' }}>
-                            <VictoryLegend
-                                containerComponent={<VictoryContainer responsive />}
-                                height={this.state.height}
-                                width={300}
-                                title="Legend"
-                                style={{
-                                    title: { fontSize: 25, fill: config.axisLabelColor },
-                                    labels: { fontSize: 20, fill: config.axisLabelColor },
-                                }}
-                                data={legendItems.length > 0 ? legendItems : [{
-                                    name: 'undefined',
-                                    symbol: { fill: '#333' },
-                                }]}
-                            />
-                        </div> :
+                    legend && (!config.legendOrientation || config.legendOrientation !== 'top') ?
+                        this.generateLegendComponent(config, legendItems) :
                         null
                 }
+            </div>
+        );
+    }
+
+    generateLegendComponent(config, legendItems) {
+        return (
+            <div
+                style={{
+                    width: !config.legendOrientation ? '20%' :
+                        (() => {
+                            if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
+                                return '20%';
+                            } else return '100%';
+                        })(),
+                    display: !config.legendOrientation ? 'inline' :
+                        (() => {
+                            if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
+                                return 'inline';
+                            } else return null;
+                        })(),
+                    float: !config.legendOrientation ? 'right' : (() => {
+                        if (config.legendOrientation === 'left') return 'left';
+                        else if (config.legendOrientation === 'right') return 'right';
+                        else return null;
+                    })(),
+                }}
+            >
+                <VictoryLegend
+                    centerTitle
+                    containerComponent={<VictoryContainer responsive />}
+                    height={(() => {
+                        if (!config.legendOrientation) return this.state.height;
+                        else if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
+                            return this.state.height;
+                        } else return 100;
+                    })()}
+                    width={(() => {
+                        if (!config.legendOrientation) return 200;
+                        else if (config.legendOrientation === 'left' || config.legendOrientation === 'right') return 200;
+                        else return this.state.width;
+                    })()}
+                    orientation={
+                        !config.legendOrientation ?
+                            'vertical' :
+                            (() => {
+                                if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
+                                    return 'vertical';
+                                } else {
+                                    return 'horizontal';
+                                }
+                            })()
+                    }
+                    title="Legend"
+                    style={{
+                        title: { fontSize: 25, fill: config.axisLabelColor },
+                        labels: { fontSize: 20, fill: config.axisLabelColor },
+                    }}
+                    data={legendItems.length > 0 ? legendItems : [{
+                        name: 'undefined',
+                        symbol: { fill: '#333' },
+                    }]}
+                />
             </div>
         );
     }
