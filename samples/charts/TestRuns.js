@@ -61,7 +61,7 @@ class Test extends Component {
         height: 400,
         // brush: true,
         interactiveLegend: true,
-        legendOrientation: 'left'
+        legendOrientation: 'top'
         // animation: true
     };
 

@@ -25,6 +25,8 @@ export default class Legend extends React.Component {
     }
 
     render() {
+        const {config,legendItems,ignoreArray} = this.props;
+
         return (
             <div style={{ width: '20%', display: 'inline', float: 'right' }}>
                 <VictoryLegend
