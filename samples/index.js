@@ -31,9 +31,14 @@ import PieChart from './charts/PieChartsConfigSample';
 import MapChartConfigSample from './charts/MapChartConfigSample';
 import NumberChartConfigSample from './charts/NumberChartConfigSample';
 import TableCharts from './charts/TableChartConfigSample';
+import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 ReactDOM.render(
     <Router>
+        <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
         <div>
             <Route exact path="/" component={App} />
             <Route exact path="/line-charts" component={LineChart} />
@@ -45,4 +50,5 @@ ReactDOM.render(
             <Route exact path='/number-charts' component={NumberChartConfigSample} />
             <Route exact path='/table-charts' component={TableCharts} />
         </div>
+        </MuiThemeProvider>
     </Router>, document.getElementById('samples'));
