@@ -26,7 +26,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 
-export class Frame extends React.Component {
+export class ChartWrapper extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -99,12 +99,12 @@ export function getColorFromSchemaOrdinal(schema, index) {
         .domain(Array.apply(null, { length: length }).map(Number.call, Number))(index);
 }
 
-Frame.defaultProps = {
+ChartWrapper.defaultProps = {
     media: false,
     actionBar: false,
 };
 
-Frame.propTypes = {
+ChartWrapper.propTypes = {
     title: PropTypes.string.isRequired,
     subtitle: PropTypes.string,
     children: PropTypes.any.isRequired,

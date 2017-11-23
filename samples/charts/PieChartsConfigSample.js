@@ -17,7 +17,7 @@
  */
 
 import React from 'react';
-import { Frame } from './ChartWrapper';
+import { ChartWrapper } from './ChartWrapper';
 import './css/Table.css';
 import VizG from '../../src/VizG.jsx';
 import Logger from '../../src/utils/log';
@@ -90,7 +90,7 @@ colorScale: ['steelblue', '#80ccff'],
         return (
             <div>
                 <center><h1>Line Chart Config Samples</h1></center>
-                <Frame title="Donut Chart Sample" chart="line" media actionBar={false}>
+                <ChartWrapper title="Donut Chart Sample" chart="line" media actionBar={false}>
                     <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data} onClick={(data) => { Logger.info(data); }} />
                     <br /><br />
                     <div style={{ display: 'block' }}>
@@ -105,8 +105,8 @@ colorScale: ['steelblue', '#80ccff'],
                             }
                         </pre>
                     </div>
-                </Frame>
-                <Frame title="Pie Chart Sample" chart="line" media actionBar={false}>
+                </ChartWrapper>
+                <ChartWrapper title="Pie Chart Sample" chart="line" media actionBar={false}>
                     <VizG config={this.configPie} metadata={this.metadata} data={this.state.data} />
                     <br />
                     <div>
@@ -120,8 +120,8 @@ colorScale: ['steelblue', '#80ccff'],
                             }
                         </pre>
                     </div>
-                </Frame>
-                <Frame title="Donut Chart Sample" chart="line" media actionBar={false}>
+                </ChartWrapper>
+                <ChartWrapper title="Donut Chart Sample" chart="line" media actionBar={false}>
                     <VizG config={this.configT} metadata={this.metadata} data={this.state.data} />
                     <br /><br />
                     <div style={{ display: 'block' }}>
@@ -136,8 +136,8 @@ colorScale: ['steelblue', '#80ccff'],
                             }
                         </pre>
                     </div>
-                </Frame>
-                <Frame title="Sample Data Set" chart="line">
+                </ChartWrapper>
+                <ChartWrapper title="Sample Data Set" chart="line">
                     <div>
                         <pre>
                             {
@@ -149,8 +149,8 @@ colorScale: ['steelblue', '#80ccff'],
                             }
                         </pre>
                     </div>
-                </Frame>
-                <Frame title="API" chart="line">
+                </ChartWrapper>
+                <ChartWrapper title="API" chart="line">
                     <div>
                         <pre>
                             <p>Main Properties</p>
@@ -240,7 +240,7 @@ colorScale: ['steelblue', '#80ccff'],
                             </table>
                         </pre>
                     </div>
-                </Frame>
+                </ChartWrapper>
             </div>
         );
     }

@@ -18,7 +18,7 @@
 
 import React, { Component } from 'react';
 import NumberCharts from '../../src/components/NumberChart.jsx';
-import { Frame } from './ChartWrapper';
+import { ChartWrapper } from './ChartWrapper';
 
 class NumberChartConfigSample extends Component {
 
@@ -56,7 +56,7 @@ class NumberChartConfigSample extends Component {
     render() {
         return (
             <div>
-                <Frame title="Number Chart Sample" chart="chart" media={true} actionBar={false}>
+                <ChartWrapper title="Number Chart Sample" chart="chart" media={true} actionBar={false}>
                     <NumberCharts config={this.numConfig} metadata={this.metadata} data={this.state.data} />
                     <pre>
                         {
@@ -69,8 +69,8 @@ class NumberChartConfigSample extends Component {
                             '}'
                         }
                     </pre>
-                </Frame>
-                <Frame title="Sample DataSet" chart="chart" media={false} actionBar={false}>
+                </ChartWrapper>
+                <ChartWrapper title="Sample DataSet" chart="chart" media={false} actionBar={false}>
                     <pre>
                         {
                             '{\n' +
@@ -82,8 +82,8 @@ class NumberChartConfigSample extends Component {
                             '}'
                         }
                     </pre>
-                </Frame>
-                <Frame title="API" chart="chart" media={false} actionBar={false}>
+                </ChartWrapper>
+                <ChartWrapper title="API" chart="chart" media={false} actionBar={false}>
                     <pre>
                         <table>
                             <thead>
@@ -144,7 +144,7 @@ class NumberChartConfigSample extends Component {
                             </tbody>
                         </table>
                     </pre>
-                </Frame>
+                </ChartWrapper>
             </div>
         );
     }

@@ -17,7 +17,7 @@
  */
 import React from 'react';
 import VizG from '../src/index';
-import { Row } from './charts/ChartWrapper';
+import { ChartWrapper } from './charts/ChartWrapper';
 
 export default class App extends React.Component {
     constructor(props) {
@@ -175,32 +175,32 @@ export default class App extends React.Component {
                     <center><h1>VizG</h1></center>
                     <center><p>Charting Config Samples</p></center>
                 </div>
-                <Row media={true} chart={'line'} title={'Line Charts'} actionBar={true}>
+                <ChartWrapper media={true} chart={'line'} title={'Line Charts'} actionBar={true}>
                     <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data} />
-                </Row>
-                <Row media={true} chart={'bar'} title={'Bar Charts'} actionBar={true}>
+                </ChartWrapper>
+                <ChartWrapper media={true} chart={'bar'} title={'Bar Charts'} actionBar={true}>
                     <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data} />
-                </Row>
-                <Row media={true} chart={'area'} title={'Area Charts'} actionBar={true}>
+                </ChartWrapper>
+                <ChartWrapper media={true} chart={'area'} title={'Area Charts'} actionBar={true}>
                     <VizG config={this.singleAreaChartConfig} metadata={this.metadata} data={this.state.data2} />
-                </Row>
-                <Row media={true} chart={'scatter'} title={'Scatter Plots'} actionBar={true}>
+                </ChartWrapper>
+                <ChartWrapper media={true} chart={'scatter'} title={'Scatter Plots'} actionBar={true}>
                     <VizG config={this.scatterPlotConfig} metadata={this.metadata} data={this.state.scatterPlot} />
-                </Row>
-                <Row media={true} chart={'pie'} title={'Pie Charts'} actionBar={true}>
+                </ChartWrapper>
+                <ChartWrapper media={true} chart={'pie'} title={'Pie Charts'} actionBar={true}>
                     <VizG config={this.pieChartConfig} metadata={this.metadata} data={this.state.data} />
-                </Row>
-                <Row title="Number Charts" chart="number" media={true} actionBar={true}>
+                </ChartWrapper>
+                <ChartWrapper title="Number Charts" chart="number" media={true} actionBar={true}>
                     <VizG config={this.numConfig} metadata={this.metadata} data={this.state.data} />
 
-                </Row>
-                <Row title="Map Charts" chart="map" media={true} actionBar={true}>
+                </ChartWrapper>
+                <ChartWrapper title="Map Charts" chart="map" media={true} actionBar={true}>
                     <VizG config={this.mapConfig} metadata={this.mapMetadata} data={this.state.mapData} />
 
-                </Row>
-                <Row media={true} chart={'table'} title={'Table Charts'} actionBar={true}>
+                </ChartWrapper>
+                <ChartWrapper media={true} chart={'table'} title={'Table Charts'} actionBar={true}>
                     <VizG config={this.tableConfig} metadata={this.metadata} data={this.state.data} />
-                </Row>
+                </ChartWrapper>
             </div>
         );
     }
