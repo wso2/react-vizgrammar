@@ -31,6 +31,7 @@ import {
 import PropTypes from 'prop-types';
 import { formatPrefix, scaleLinear, timeFormat } from 'd3';
 import { getDefaultColorScale } from './helper';
+import VizGError from '../VizGError';
 
 export default class ScatterCharts extends React.Component {
     constructor(props) {
@@ -77,11 +78,24 @@ export default class ScatterCharts extends React.Component {
         let { dataSets, chartArray, initialized, xScale, orientation, legend, scatterPlotRange } = this.state;
 
         config.charts.map((chart, chartIndex) => {
+            if(!chart.x) throw new VizGError('ScatterChart', "Field 'x' is not defined in the Scatter Plot config");
+            if(!chart.y) throw new VizGError('ScatterChart', "Field 'y' is not defined in the Scatter Plot config");
             const xIndex = metadata.names.indexOf(chart.x);
             const yIndex = metadata.names.indexOf(chart.y);
             const colorIndex = metadata.names.indexOf(chart.color);
             const sizeIndex = metadata.names.indexOf(chart.size);
             xScale = metadata.types[xIndex] === 'time' ? 'time' : xScale;
+
+
+
+            if (xIndex === -1) {
+                throw new VizGError('ScatterChart', "Unknown 'x' field defined in the Scatter Plot config.");
+            }
+
+            if (yIndex === -1) {
+                throw new VizGError('ScatterChart', "Unknown 'y' field defined in the Scatter Plot config.");
+            }
+
             if (!initialized) {
                 chartArray.push({
                     type: chart.type,
@@ -250,25 +264,25 @@ export default class ScatterCharts extends React.Component {
                 <div
                     style={
                         legend ?
-                        {
-                            width: !config.legendOrientation ? '80%' :
+                            {
+                                width: !config.legendOrientation ? '80%' :
                                     (() => {
                                         if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
                                             return '80%';
                                         } else return '100%';
                                     })(),
-                            display: !config.legendOrientation ? 'inline' :
+                                display: !config.legendOrientation ? 'inline' :
                                     (() => {
                                         if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
                                             return 'inline';
                                         } else return null;
                                     })(),
-                            float: !config.legendOrientation ? 'right' : (() => {
-                                if (config.legendOrientation === 'left') return 'right';
-                                else if (config.legendOrientation === 'right') return 'left';
-                                else return null;
-                            })(),
-                        } : null
+                                float: !config.legendOrientation ? 'right' : (() => {
+                                    if (config.legendOrientation === 'left') return 'right';
+                                    else if (config.legendOrientation === 'right') return 'left';
+                                    else return null;
+                                })(),
+                            } : null
                     }
                 >
                     {

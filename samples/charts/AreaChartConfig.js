@@ -17,7 +17,7 @@
  */
 
 import React from 'react';
-import { Row } from './util';
+import { ChartWrapper } from './ChartWrapper';
 import './css/Table.css';
 import VizG from '../../src/VizG.jsx';
 
@@ -90,7 +90,7 @@ export default class AreaChartConfigSample extends React.Component {
         return (
             <div>
                 <center><h1>Area Chart Config Samples</h1></center>
-                <Row title="Group Area Chart Sample" chart="line" media={true} actionBar={false}>
+                <ChartWrapper title="Group Area Chart Sample" chart="line" media={true} actionBar={false}>
                     <VizG config={this.areaChartConfig} metadata={this.metadata} data={this.state.data} />
                     <br />
                     <div>
@@ -109,8 +109,8 @@ export default class AreaChartConfigSample extends React.Component {
                             }
                         </pre>
                     </div>
-                </Row>
-                <Row title="Multi Area Chart Sample" chart="line" media={true} actionBar={false}>
+                </ChartWrapper>
+                <ChartWrapper title="Multi Area Chart Sample" chart="line" media={true} actionBar={false}>
                     <VizG config={this.singleAreaChartConfig} metadata={this.metadata} data={this.state.data2} />
                     <br />
                     <div>
@@ -127,8 +127,8 @@ export default class AreaChartConfigSample extends React.Component {
                             }
                         </pre>
                     </div>
-                </Row>
-                <Row title="Group Area Chart Sample stacked" chart="line" media={true} actionBar={false}>
+                </ChartWrapper>
+                <ChartWrapper title="Group Area Chart Sample stacked" chart="line" media={true} actionBar={false}>
                     <VizG config={this.stackedAreaChartConfig} metadata={this.metadata} data={this.state.data} />
                     <br />
                     <div>
@@ -147,8 +147,8 @@ export default class AreaChartConfigSample extends React.Component {
                             }
                         </pre>
                     </div>
-                </Row>
-                <Row title="Sample Data Set" chart="line">
+                </ChartWrapper>
+                <ChartWrapper title="Sample Data Set" chart="line">
                     <div>
                         <pre>
                             {
@@ -160,8 +160,8 @@ export default class AreaChartConfigSample extends React.Component {
                             }
                         </pre>
                     </div>
-                </Row>
-                <Row title="API" chart="line">
+                </ChartWrapper>
+                <ChartWrapper title="API" chart="line">
                     <div>
                         <pre>
                             <p>Main Properties</p>
@@ -240,7 +240,7 @@ export default class AreaChartConfigSample extends React.Component {
                             </table>
                         </pre>
                     </div>
-                </Row>
+                </ChartWrapper>
             </div>
         );
     }

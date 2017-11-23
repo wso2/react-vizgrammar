@@ -16,8 +16,7 @@
  * under the License.
  */
 // TODO:Fix dynamically changing config for other charts
-
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import BasicCharts from './components/BasicChart.jsx';
 import ScatterCharts from './components/ScatterChart.jsx';
@@ -26,6 +25,7 @@ import MapGenerator from './components/MapChart.jsx';
 import TableCharts from './components/TableChart.jsx';
 import NumberCharts from './components/NumberChart.jsx';
 import InlineCharts from './components/InlineChart.jsx';
+import VizGError from './VizGError';
 
 class VizG extends Component {
 
@@ -40,14 +40,12 @@ class VizG extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-
         if (JSON.stringify(this.state.config) !== JSON.stringify(nextProps.config)) {
             this.setState({
                 config: nextProps.config,
                 metadata: nextProps.metadata,
             });
         }
-
         this.setState({
             data: nextProps.data,
         });
@@ -58,50 +56,77 @@ class VizG extends Component {
     }
 
     render() {
-
-        let {config, data, metadata, onClick} = this.state;
-        let chartType = config.charts[0].type;
+        const { config, data, metadata, onClick } = this.state;
+        const chartType = config.charts[0].type;
 
         return (
             <div>
                 {
-                    chartType === 'line' || chartType === 'area' || chartType === 'bar' ?
-                        <BasicCharts
-                            config={config} metadata={metadata}
-                            data={data} onClick={onClick}
-                            yDomain={this.props.yDomain}
-                        /> :
-                        chartType === 'scatter' ?
-                            <ScatterCharts config={config} metadata={metadata} data={data} onClick={onClick} /> :
-                            chartType === 'arc' ?
-                                <PieCharts config={config} metadata={metadata} data={data} onClick={onClick} /> :
-                                chartType === 'map' ?
-                                    <MapGenerator config={config} metadata={metadata} data={data} onClick={onClick} /> :
-                                    chartType === 'table' ?
-                                        <TableCharts
-                                            metadata={metadata}
-                                            config={config}
-                                            data={data}
-                                            onClick={onClick}
-                                        /> :
-                                        chartType === 'number' ?
-                                            <NumberCharts
-                                                metadata={metadata}
-                                                config={config}
-                                                data={data}
-                                                onClick={onClick}
-                                            /> :
-                                            chartType === 'spark-line' ||
-                                            chartType === 'spark-bar' || chartType === 'spark-area' ?
-                                                <InlineCharts
-                                                    metadata={metadata}
-                                                    config={config}
-                                                    data={data}
-                                                    yDomain={this.props.yDomain}
-                                                /> : null
+                    this._selectAndRenderChart(chartType, config, data, metadata, onClick)
                 }
             </div>
         );
+    }
+
+    /**
+     * Function will render a chart based on the given chart.
+     * @param {String} chartType Chart type of the chart.
+     * @param {Object} config Chart configuration provided by the user
+     * @param {Array} data Data provided by the user
+     * @param {Object} metadata Metadata related to the data provided
+     * @param {Function} onClick OnClick function provided by the user
+     * @private
+     */
+    _selectAndRenderChart(chartType, config, data, metadata, onClick) {
+        switch (chartType) {
+            case 'line':
+            case 'area':
+            case 'bar':
+                return (
+                    <BasicCharts
+                        config={config} metadata={metadata}
+                        data={data} onClick={onClick}
+                        yDomain={this.props.yDomain}
+                    />
+                );
+            case 'arc':
+                return (<PieCharts config={config} metadata={metadata} data={data} onClick={onClick} />);
+            case 'scatter':
+                return <ScatterCharts config={config} metadata={metadata} data={data} onClick={onClick} />;
+            case 'map':
+                return <MapGenerator config={config} metadata={metadata} data={data} onClick={onClick} />;
+            case 'table':
+                return (
+                    <TableCharts
+                        metadata={metadata}
+                        config={config}
+                        data={data}
+                        onClick={onClick}
+                    />
+                );
+            case 'number':
+                return (
+                    <NumberCharts
+                        metadata={metadata}
+                        config={config}
+                        data={data}
+                        onClick={onClick}
+                    />
+                );
+            case 'spark-line':
+            case 'spark-bar':
+            case 'spark-area':
+                return (
+                    <InlineCharts
+                        metadata={metadata}
+                        config={config}
+                        data={data}
+                        yDomain={this.props.yDomain}
+                    />
+                );
+            default:
+                throw new VizGError('VizG', 'Unknown chart ' + chartType + ' defined in the chart config.');
+        }
     }
 }
 

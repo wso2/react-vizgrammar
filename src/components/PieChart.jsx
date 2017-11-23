@@ -27,6 +27,7 @@ import {
 } from 'victory';
 import PropTypes from 'prop-types';
 import { getDefaultColorScale } from './helper';
+import VizGError from '../VizGError';
 
 export default class PieCharts extends React.Component {
     constructor(props) {
@@ -78,6 +79,15 @@ export default class PieCharts extends React.Component {
             const arcConfig = config.charts[0];
             const xIndex = metadata.names.indexOf(arcConfig.x);
             const colorIndex = metadata.names.indexOf(arcConfig.color);
+
+            if (xIndex === -1) {
+                throw new VizGError('PieChart', "Unknown 'x' field defined in the Pie Chart config.");
+            }
+
+            if (colorIndex === -1) {
+                throw new VizGError('PieChart', "Unknown 'x' field defined in the Pie Chart config.");
+            }
+
             if (!config.percentage) {
                 if (!initialized) {
                     chartArray.push({
@@ -175,7 +185,6 @@ export default class PieCharts extends React.Component {
             let total = 0;
             if (!config.percentage) {
                 Object.keys(chart.dataSetNames).map((dataSetName) => {
-                    // console.info(chart.dataSetNames[dataSetName]);
                     legendItems.push({ name: dataSetName, symbol: { fill: chart.dataSetNames[dataSetName] } });
                     total += dataSets[dataSetName].y;
                     pieChartData.push(dataSets[dataSetName]);
