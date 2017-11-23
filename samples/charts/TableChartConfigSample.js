@@ -16,8 +16,8 @@
  * under the License.
  */
 import React, { Component } from 'react';
-import TableCharts from '../../src/components/TableChart.jsx';
-import { Row } from './util';
+import VizG from '../../src/VizG.jsx';
+import { ChartWrapper } from './ChartWrapper';
 
 class TableChartConfigSample extends Component {
 
@@ -29,25 +29,17 @@ class TableChartConfigSample extends Component {
             ],
             timer: 1
         };
-    }
-
-    componentDidMount() {
-        setInterval(() => {
-            this.setState({
-                data: [[Math.round(Math.random() * 100), Math.round(Math.random() * 100), 1, 'Piston'], [Math.round(Math.random() * 100), Math.round(Math.random() * 100), 1, 'rotary']],
-                timer: this.state.timer + 1
-            });
-        }, 1000);
 
         this.mapConfig = {
             key: 'rpm',
-            charts: [{
-                type: 'table',
-                y: 'torque',
-                color: '*',
-                columns: ['EngineType', 'torque', 'rpm'],
-                columnTitles: ['Engine Type', 'Engine Torque', 'Engine RPM'],
-            }
+            charts: [
+                {
+                    type: 'table',
+                    y: 'torque',
+                    color: '*',
+                    columns: ['EngineType', 'torque', 'rpm'],
+                    columnTitles: ['Engine Type', 'Engine Torque', 'Engine RPM'],
+                },
             ],
             maxLength: 7,
             width: 400,
@@ -61,12 +53,42 @@ class TableChartConfigSample extends Component {
         };
     }
 
+    componentDidMount() {
+        setInterval(() => {
+            this.setState({
+                data: [[Math.round(Math.random() * 100), Math.round(Math.random() * 100), 1, 'Piston'], [Math.round(Math.random() * 100), Math.round(Math.random() * 100), 1, 'rotary']],
+                timer: this.state.timer + 1
+            });
+        }, 1000);
+
+        this.mapConfig = {
+            key: 'rpm',
+            charts: [
+                {
+                    type: 'table',
+                    y: 'torque',
+                    color: '*',
+                    columns: ['EngineType', 'torque', 'rpm'],
+                    columnTitles: ['Engine Type', 'Engine Torque', 'Engine RPM'],
+                },
+            ],
+            maxLength: 7,
+            width: 400,
+            height: 200,
+            colorBasedStyle: true
+        };
+
+        this.metadata = {
+            names: ['rpm', 'torque', 'horsepower', 'EngineType'],
+            types: ['linear', 'linear', 'ordinal', 'ordinal']
+        };
+    }
 
     render() {
         return (
             <div>
-                <Row title="Table Chart Sample" chart="line" media={true} actionBar={false}>
-                    <ReactTable config={this.mapConfig} metadata={this.metadata} data={this.state.data} />
+                <ChartWrapper title="Table Chart Sample" chart="line" media={true} actionBar={false}>
+                    <VizG config={this.mapConfig} metadata={this.metadata} data={this.state.data} />
                     <br />
                     <br />
                     <pre>
@@ -84,8 +106,8 @@ class TableChartConfigSample extends Component {
                             '}'
                         }
                     </pre>
-                </Row>
-                <Row title="Sample Data Set" chart="line">
+                </ChartWrapper>
+                <ChartWrapper title="Sample Data Set" chart="line">
                     <div>
                         <pre>
                             {
@@ -97,8 +119,8 @@ class TableChartConfigSample extends Component {
                             }
                         </pre>
                     </div>
-                </Row>
-                <Row title="Sample Data Set" chart="line">
+                </ChartWrapper>
+                <ChartWrapper title="Sample Data Set" chart="line">
                     <div>
                         <pre>
                             <p>Main Properties</p>
@@ -130,7 +152,7 @@ class TableChartConfigSample extends Component {
                             </table>
                         </pre>
                     </div>
-                </Row>
+                </ChartWrapper>
             </div>
         );
     }

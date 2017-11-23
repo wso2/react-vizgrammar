@@ -19,15 +19,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { VictoryLabel } from 'victory';
+import Logger from '../utils/log';
 
 export default class NumberCharts extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            height:props.config.height || 450,
-            width:props.config.width || 800,
-            value:null,
-            prevValue:null
+            height: props.config.height || 450,
+            width: props.config.width || 800,
+            value: null,
+            prevValue: null,
         };
     }
 
@@ -45,21 +46,27 @@ export default class NumberCharts extends React.Component {
      * @private
      */
     _handleData(props) {
-        let { config,data,metadata } = props;
-        let { prevValue,value } = this.state;
-        let xIndex = metadata.names.indexOf(config.x);
+        const { config, data, metadata } = props;
+        let { prevValue, value } = this.state;
+        const xIndex = metadata.names.indexOf(config.x);
+
+        if (xIndex === -1) {
+            if (process.env.APP_ENV && process.env.APP_ENV !== 'production') {
+                Logger.error("Unknown 'x' field defined in the Number Chart config.");
+            }
+        }
 
         if (data.length > 0) {
             prevValue = value;
             value = data[data.length - 1][xIndex];
         }
 
-        this.setState({ value,prevValue });
+        this.setState({ value, prevValue });
     }
 
     render() {
-        let { config } = this.props;
-        let { width,height,prevValue,value } = this.state;
+        const { config } = this.props;
+        const { width, height, prevValue, value } = this.state;
 
         return (
             <svg height={'100%'} width={'100%'} viewBox={`0 0 ${width} ${height}`}>
@@ -109,7 +116,7 @@ export default class NumberCharts extends React.Component {
 }
 
 NumberCharts.propTypes = {
-    config:PropTypes.object.isRequired,
-    metadata:PropTypes.object.isRequired,
-    data:PropTypes.array
+    config: PropTypes.object.isRequired,
+    metadata: PropTypes.object.isRequired,
+    data: PropTypes.array
 };

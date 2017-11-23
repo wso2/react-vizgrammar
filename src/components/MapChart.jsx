@@ -25,6 +25,7 @@ import * as d3 from 'd3';
 import feature from 'topojson-client/src/feature';
 import { getDefaultColorScale } from './helper';
 import { CountryInfo, EuropeMap, WorldMap, USAMap } from './resources/MapData';
+import Logger from '../utils/log';
 
 const USA_YOFFSET_FACTOR = 1.2;
 const USA_XOFFSET_FACTOR = 0.75;
@@ -115,6 +116,19 @@ export default class MapGenerator extends React.Component {
         const mapConfig = config.charts[0];
         const xIndex = metadata.names.indexOf(config.x);
         const yIndex = metadata.names.indexOf(mapConfig.y);
+
+        if (xIndex === -1) {
+            if (process.env.APP_ENV && process.env.APP_ENV !== 'production') {
+                Logger.error("Unknown 'x' field is defined in the Geographical chart configuration.");
+            }
+        }
+
+        if (yIndex === -1) {
+            if (process.env.APP_ENV && process.env.APP_ENV !== 'production') {
+                Logger.error("Unknown 'x' field is defined in the Geographical chart configuration.");
+            }
+        }
+
         colorScale = Array.isArray(mapConfig.colorScale) ? mapConfig.colorScale : getDefaultColorScale();
         mapType = mapConfig.mapType;
         switch (mapConfig.mapType) {
@@ -131,7 +145,9 @@ export default class MapGenerator extends React.Component {
                 projectionConfig.yOffset = this.state.height;
                 break;
             default:
-                console.error('unrecognized map type.');
+                if (process.env.APP_ENV && process.env.APP_ENV !== 'production') {
+                    Logger.error('Unknown chart type defined in the Geographical chart config.');
+                }
         }
         colorType = metadata.types[yIndex];
         if (metadata.types[yIndex] === 'linear') {
@@ -202,6 +218,10 @@ export default class MapGenerator extends React.Component {
             case 'europe':
                 mapFeatureData = EuropeMap;
                 break;
+            default:
+                if (process.env.APP_ENV && process.env.APP_ENV !== 'production') {
+                    Logger.error('Unknown maptype defined in the config');
+                }
         }
 
         return (

@@ -16,7 +16,7 @@
  * under the License.
  */
 import React from 'react';
-import { Row } from './util';
+import { ChartWrapper } from './ChartWrapper';
 import './css/Table.css';
 import VizG from '../../src/VizG.jsx';
 
@@ -98,7 +98,7 @@ export default class BarChartConfigSample extends React.Component {
         return (
             <div>
                 <center><h1>Bar Chart Config Samples</h1></center>
-                <Row title="Group MultiLine Chart Sample" chart="line" media={true} actionBar={false}>
+                <ChartWrapper title="Group MultiLine Chart Sample" chart="line" media={true} actionBar={false}>
                     <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data} />
                     <br />
                     <div>
@@ -117,8 +117,8 @@ export default class BarChartConfigSample extends React.Component {
                             }
                         </pre>
                     </div>
-                </Row>
-                <Row title="Multi Line Chart Sample" chart="line" media={true} actionBar={false}>
+                </ChartWrapper>
+                <ChartWrapper title="Multi Line Chart Sample" chart="line" media={true} actionBar={false}>
                     <VizG config={this.singleBarChartConfig} metadata={this.metadata} data={this.state.data2} />
                     <br />
                     <div>
@@ -135,8 +135,8 @@ export default class BarChartConfigSample extends React.Component {
                             }
                         </pre>
                     </div>
-                </Row>
-                <Row title="Group MultiLine Chart Sample Horizontal" chart="line" media={true} actionBar={false}>
+                </ChartWrapper>
+                <ChartWrapper title="Group MultiLine Chart Sample Horizontal" chart="line" media={true} actionBar={false}>
                     <VizG config={this.barHorizontalChartConfig} metadata={this.metadata} data={this.state.data} />
                     <br />
                     <div>
@@ -155,9 +155,9 @@ export default class BarChartConfigSample extends React.Component {
                             }
                         </pre>
                     </div>
-                </Row>
+                </ChartWrapper>
 
-                <Row title="Group MultiLine Chart Sample stacked" chart="line" media={true} actionBar={false}>
+                <ChartWrapper title="Group MultiLine Chart Sample stacked" chart="line" media={true} actionBar={false}>
                     <VizG config={this.stackedBarChartConfig} metadata={this.metadata} data={this.state.data} />
                     <br />
                     <div>
@@ -176,9 +176,9 @@ export default class BarChartConfigSample extends React.Component {
                             }
                         </pre>
                     </div>
-                </Row>
+                </ChartWrapper>
 
-                <Row title="Sample Data Set" chart="line">
+                <ChartWrapper title="Sample Data Set" chart="line">
                     <div>
                         <pre>
                             {
@@ -190,8 +190,8 @@ export default class BarChartConfigSample extends React.Component {
                             }
                         </pre>
                     </div>
-                </Row>
-                <Row title="API" chart="line">
+                </ChartWrapper>
+                <ChartWrapper title="API" chart="line">
                     <div>
                         <pre>
                             <p>Main Properties</p>
@@ -274,7 +274,7 @@ export default class BarChartConfigSample extends React.Component {
                             </table>
                         </pre>
                     </div>
-                </Row>
+                </ChartWrapper>
             </div>
         );
     }
