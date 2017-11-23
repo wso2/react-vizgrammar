@@ -195,13 +195,17 @@ export default class ScatterCharts extends React.Component {
                                 },
                             }}
                             data={dataSets[dataSetName]}
-                            labels={d => `${config.charts[chartIndex].x}:${d.x}\n
-                                                   ${config.charts[chartIndex].y}:${d.y}\n
-                                                   ${config.charts[chartIndex].size}:${d.amount}
-                                                   ${config.charts[chartIndex].color}:${d.color}`}
+                            labels={d => `${config.charts[chartIndex].x} : ${d.x}\n
+                                                   ${config.charts[chartIndex].y} : ${d.y}\n
+                                                   ${config.charts[chartIndex].size} : ${d.amount}
+                                                   ${config.charts[chartIndex].color} : ${d.color}`}
                             labelComponent={
                                 <VictoryTooltip
-                                    orientation='bottom'
+                                    orientation='top'
+                                    pointerLength={4}
+                                    cornerRadius={2}
+                                    flyoutStyle={{ fill: '#000', fillOpacity: '0.8', strokeWidth: 0 }}
+                                    style={{ fill: '#b0b0b0', textAlign: 'left'}}
                                 />
                             }
                             events={[{
@@ -237,7 +241,11 @@ export default class ScatterCharts extends React.Component {
                                 ${config.charts[chartIndex].color}:${d.color}`}
                             labelComponent={
                                 <VictoryTooltip
-                                    orientation='bottom'
+                                    orientation='top'
+                                    pointerLength={4}
+                                    cornerRadius={2}
+                                    flyoutStyle={{ fill: '#000', fillOpacity: '0.8', strokeWidth: 0 }}
+                                    style={{ fill: '#b0b0b0'}}
                                 />
                             }
                             events={[{
@@ -293,12 +301,17 @@ export default class ScatterCharts extends React.Component {
                     <VictoryChart
                         width={width}
                         height={height}
-                        theme={VictoryTheme.material}
                         container={<VictoryVoronoiContainer />}
+                        padding={{ left: 100, top: 30, bottom: 50, right: 80 }}
                     >
                         <VictoryAxis
                             crossAxis
-                            style={{ axisLabel: { padding: 35 }, fill: config.axisLabelColor || '#455A64' }}
+                            style={{
+                                axis: {stroke: '#000', strokeOpacity: 0.5},
+                                axisLabel: {fill: '#000', fillOpacity: 0.25, fontSize: 15, padding: 30},
+                                grid: {stroke: '#000', strokeOpacity: 0.1},
+                                ticks: {stroke: '#000', strokeOpacity: 0.1, size: 5},
+                            }}
                             label={config.charts[0].x}
                             tickFormat={xScale === 'linear' ?
                                 (text) => {
@@ -320,21 +333,26 @@ export default class ScatterCharts extends React.Component {
                             tickLabelComponent={
                                 <VictoryLabel
                                     angle={config.xAxisTickAngle || 0}
-                                    style={{ fill: config.tickLabelColor || 'black' }}
+                                    style={{ fill: config.tickLabelColor || '#000', fillOpacity: 0.5, fontSize: 10, padding: 0 }}
                                 />
                             }
                         />
                         <VictoryAxis
                             dependentAxis
                             crossAxis
-                            style={{ axisLabel: { padding: 35 }, fill: config.axisLabelColor || '#455A64' }}
+                            style={{
+                                axis: {stroke: '#000', strokeOpacity: 0.5},
+                                axisLabel: {fill: '#000', fillOpacity: 0.25, fontSize: 15, padding: 40},
+                                grid: {stroke: '#000', strokeOpacity: 0.1},
+                                ticks: {stroke: '#000', strokeOpacity: 0.1, size: 5},
+                            }}
                             label={config.charts.length > 1 ? '' : config.charts[0].y}
                             standalone={false}
                             tickFormat={text => formatPrefix(',.0', Number(text))}
                             tickLabelComponent={
                                 <VictoryLabel
                                     angle={config.yAxisTickAngle || 0}
-                                    style={{ fill: config.tickLabelColor || 'black' }}
+                                    style={{ fill: config.tickLabelColor || '#000', fillOpacity: 0.5, fontSize: 10, padding: 0 }}
                                 />
                             }
                         />
