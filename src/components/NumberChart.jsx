@@ -63,50 +63,50 @@ export default class NumberCharts extends React.Component {
     }
 
     render() {
+
         const { config } = this.props;
         const { width, height, prevValue, value } = this.state;
-
         return (
             <svg height={'100%'} width={'100%'} viewBox={`0 0 ${width} ${height}`}>
                 <VictoryLabel
                     textAnchor="middle"
                     verticalAnchor="middle"
                     x={width / 2}
-                    y={height / 5}
+                    y={(height / 2) - 50}
                     text={config.title}
-                    style={{ fontSize: 30 }}
+                    style={{ fill: '#4d4d4d', fontSize: width / 25}}
                 />
                 <VictoryLabel
                     textAnchor="middle"
                     verticalAnchor="middle"
                     x={width / 2}
-                    y={height / 2}
+                    y={(height / 2) - 10}
                     text={(value === null ? value : value.toFixed(3))}
-                    style={{ fontSize: 45 }}
+                    style={{ fill: '#919191', fontSize: width / 15}}
+                />
+                <VictoryLabel
+                    textAnchor="middle"
+                    verticalAnchor="middle"
+                    x={width / 2}
+                    y={(height / 2) + 10}
+                    text={(Math.abs(eval(prevValue - value))).toFixed(3)}
+                    style={{ fill: '#919191', fontSize: width / 15}}
                 />
                 <VictoryLabel
                     textAnchor="middle"
                     verticalAnchor="middle"
                     x={width / 2}
                     y={(height / 2) + 50}
-                    text={(Math.abs(eval(prevValue - value))).toFixed(3)}
-                    style={{ fontSize: 15 }}
-                />
-                <VictoryLabel
-                    textAnchor="middle"
-                    verticalAnchor="middle"
-                    x={width / 2}
-                    y={(height / 2) + 70}
-                    text={(Math.abs((100 * ((value - prevValue) / prevValue))).toFixed(3)) + '%'}
-                    style={{ fontSize: 15 }}
+                    text={(Math.abs((100 * ((value - prevValue) / prevValue))).toFixed(2)) + '%'}
+                    style={{ fill: prevValue < value ? '#109618' : '#B82E2E', fontSize: width / 20}}
                 />
                 <VictoryLabel
                     textAnchor="middle"
                     verticalAnchor="middle"
                     x={(width / 2) + 50}
-                    y={((height / 2) + 55)}
+                    y={((height / 2) + 50)}
                     text={prevValue < value ? '↑' : prevValue === value ? '' : '↓'}
-                    style={{ fontSize: 45 }}
+                    style={{ fill: prevValue < value ? '#109618' : '#B82E2E', fontSize: width / 20}}
                 />
             </svg>
         );
