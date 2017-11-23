@@ -125,7 +125,7 @@ class VizG extends Component {
                     />
                 );
             default:
-                throw new VizGError('VizG', 'Unknown chart ' + chartType + 'defined in the chart config.');
+                throw new VizGError('VizG', 'Unknown chart ' + chartType + ' defined in the chart config.');
         }
     }
 }

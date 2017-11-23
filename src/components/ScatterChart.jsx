@@ -78,18 +78,22 @@ export default class ScatterCharts extends React.Component {
         let { dataSets, chartArray, initialized, xScale, orientation, legend, scatterPlotRange } = this.state;
 
         config.charts.map((chart, chartIndex) => {
+            if(!chart.x) throw new VizGError('ScatterChart', "Field 'x' is not defined in the Scatter Plot config");
+            if(!chart.y) throw new VizGError('ScatterChart', "Field 'y' is not defined in the Scatter Plot config");
             const xIndex = metadata.names.indexOf(chart.x);
             const yIndex = metadata.names.indexOf(chart.y);
             const colorIndex = metadata.names.indexOf(chart.color);
             const sizeIndex = metadata.names.indexOf(chart.size);
             xScale = metadata.types[xIndex] === 'time' ? 'time' : xScale;
 
+
+
             if (xIndex === -1) {
-                throw new VizGError('ScatterChart', "Unknown 'x' field defined in the Scatter chart config.");
+                throw new VizGError('ScatterChart', "Unknown 'x' field defined in the Scatter Plot config.");
             }
 
             if (yIndex === -1) {
-                throw new VizGError('ScatterChart', "Unknown 'y' field defined in the Scatter chart config.");
+                throw new VizGError('ScatterChart', "Unknown 'y' field defined in the Scatter Plot config.");
             }
 
             if (!initialized) {
