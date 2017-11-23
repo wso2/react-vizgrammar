@@ -99,12 +99,12 @@ export function getColorFromSchemaOrdinal(schema, index) {
         .domain(Array.apply(null, { length: length }).map(Number.call, Number))(index);
 }
 
-Row.defaultProps = {
+Frame.defaultProps = {
     media: false,
     actionBar: false,
 };
 
-Row.propTypes = {
+Frame.propTypes = {
     title: PropTypes.string.isRequired,
     subtitle: PropTypes.string,
     children: PropTypes.any.isRequired,
