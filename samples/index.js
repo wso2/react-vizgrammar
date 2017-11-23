@@ -38,7 +38,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 ReactDOM.render(
     <Router>
-        <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+        <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
         <div>
             <Route exact path="/" component={App} />
             <Route exact path="/line-charts" component={LineChart} />
