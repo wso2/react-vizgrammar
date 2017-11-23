@@ -17,7 +17,7 @@
  */
 
 import React from 'react';
-import { ChartWrapper } from './ChartWrapper';
+import { Row } from './util';
 import './css/Table.css';
 import VizG from '../../src/VizG.jsx';
 
@@ -90,7 +90,7 @@ export default class LineChartConfigSample extends React.Component {
         return (
             <div>
                 <center><h1>Line Chart Config Samples</h1></center>
-                <ChartWrapper title="Group MultiLine Chart Sample" chart="line" media actionBar={false}>
+                <Row title="Group MultiLine Chart Sample" chart="line" media actionBar={false}>
                     <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data} />
                     <br /><br />
                     <div style={{ display: 'block' }}>
@@ -100,12 +100,13 @@ export default class LineChartConfigSample extends React.Component {
                                 '\tcharts: [\n\t    { type: \'line\', y: \'torque\', color: \'EngineType\',colorDomain:[\'\',\'\',\'piston\']}\n\t],\n' +
                                 '\tmaxLength: 7,\n' +
                                 '\twidth: 700,\n' +
-                                '\theight: 450,\n'
+                                '\theight: 450,\n' +
+                                '\tanimation:true\n}'
                             }
                         </pre>
                     </div>
-                </ChartWrapper>
-                <ChartWrapper title="Multi Line Chart Sample" chart="line" media actionBar={false}>
+                </Row>
+                <Row title="Multi Line Chart Sample" chart="line" media actionBar={false}>
                     <VizG config={this.singleLineChartConfig} metadata={this.metadata} data={this.state.data2} />
                     <br />
                     <div>
@@ -115,13 +116,14 @@ export default class LineChartConfigSample extends React.Component {
                                 '\tcharts: [\n\t    { type: \'line\', y: \'horsepower\', fill:\'#2ca02c\'}\n\t    { type: \'line\', y: \'torque\', fill:\'#ff7f0e\'}\n\t],\n' +
                                 '\tmaxLength: 7,\n' +
                                 '\twidth: 700,\n' +
-                                '\theight: 450,\n'
+                                '\theight: 450,\n' +
+                                '\tanimation:true\n}'
                             }
                         </pre>
                     </div>
-                </ChartWrapper>
+                </Row>
                 
-                <ChartWrapper title="Sample Data Set" chart="line">
+                <Row title="Sample Data Set" chart="line">
                     <div>
                         <pre>
                             {
@@ -133,8 +135,8 @@ export default class LineChartConfigSample extends React.Component {
                             }
                         </pre>
                     </div>
-                </ChartWrapper>
-                <ChartWrapper title="API" chart="line">
+                </Row>
+                <Row title="API" chart="line">
                     <div>
                         <pre>
                             <p>Main Properties</p>
@@ -245,7 +247,7 @@ export default class LineChartConfigSample extends React.Component {
                             </table>
                         </pre>
                     </div>
-                </ChartWrapper>
+                </Row>
             </div>
         );
     }
