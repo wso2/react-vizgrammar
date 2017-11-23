@@ -18,15 +18,49 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import AppBar from 'material-ui/AppBar';
-import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
+//import SyntaxHighlighter from 'react-syntax-highlighter';
+//import { androidstudio } from 'react-syntax-highlighter/dist/styles/hljs';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 
-export class Row extends React.Component {
+const styles = {
+    item: {
+        marginBottom: '50px',
+        background: '#0f1c26',
+    },
+    floatedButton: {
+        float: 'right',
+    },
+    cardHeader: {
+        background: '#162732',
+        fontSize: '16px',
+        color: '#535353',
+    },
+    cardAction: {
+        height: '40px',
+        padding: '8px',
+        borderTop: '1px solid #292929',
+        color: '#b0b0b0',
+        background: '#162732',
+    },
+    cardActionName: {
+        position: 'absolute',
+        top: '20px',
+        right: '45px',
+        marginLeft: '20px',
+        fontSize: '13px',
+    },
+    highlightContainer: {
+        padding: '20px',
+        paddingTop: '0px',
+        background: '#162732',
+    },
+    highlight: {
+        background: '#162732',
+    },
+};
+
+export class Util extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -39,37 +73,48 @@ export class Row extends React.Component {
     }
 
     componentWillReceiveProps(props) {
-        this.setState({ children: props.children });
+        this.setState({children: props.children});
     }
 
     render() {
+        const CODE = `lineChartConfig = {
+            x: 'rpm',
+            charts: [{type: 'line', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston']}],
+            maxLength: 30,
+            width: 700,
+            height: 450,
+        };`;
+
         return (
-            <div className="col-md-6 tile">
-                <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
-                    <Card style={{ marginTop: 50 }} >
-                        {
-                            this.props.media ?
-                                <AppBar style={{ marginBottom: 10 }} title={this.state.title} showMenuIconButton={false} /> :
-                                <CardTitle title={this.state.title} subtitle={this.state.subtitle} />
-                        }
-                        <CardMedia>
+            <Card style={styles.item}>
+                <CardHeader
+                    title={this.state.title}
+                    subtitle={this.state.subtitle}
+                    style={styles.cardHeader}
+                >
 
-                            <div>
-                                {this.props.children}
-                            </div>
-
-                        </CardMedia>
-                        <CardActions>
-                            <FlatButton label={this.state.actionBar ? 'View Usage' : ' '} onClick={() => {
-                                window.location.href = this.state.chart + '-charts';
-                            }}
-                            />
-                        </CardActions>
-                    </Card>
-                </MuiThemeProvider>
-
-
-            </div>
+                </CardHeader>
+                <CardMedia>
+                    {this.props.children}
+                </CardMedia>
+                <CardActions style={styles.cardAction} actAsExpander={true} showExpandableButton={true}>
+                    <div style={styles.cardActionName}>Show Code</div>
+                    <FlatButton style={styles.floatedButton} primary={false}
+                                label={this.state.actionBar ? 'View Usage' : ' '}
+                                onClick={() => { window.location.href = this.state.chart + '-charts';
+                    }}
+                    />
+                </CardActions>
+                <div style={styles.highlightContainer} expandable={true}>
+                    {/*<SyntaxHighlighter*/}
+                    {/*language='javascript'*/}
+                    {/*style={androidstudio}*/}
+                    {/*customStyle={styles.highlight}*/}
+                    {/*showLineNumbers={true}>*/}
+                    {/*{CODE}*/}
+                    {/*</SyntaxHighlighter>*/}
+                </div>
+            </Card>
 
         );
     }
@@ -96,15 +141,15 @@ export function getColorFromSchemaOrdinal(schema, index) {
 
     return d3.scaleOrdinal()
         .range(schemeCat)
-        .domain(Array.apply(null, { length: length }).map(Number.call, Number))(index);
+        .domain(Array.apply(null, {length: length}).map(Number.call, Number))(index);
 }
 
-Row.defaultProps = {
+Util.defaultProps = {
     media: false,
     actionBar: false,
 };
 
-Row.propTypes = {
+Util.propTypes = {
     title: PropTypes.string.isRequired,
     subtitle: PropTypes.string,
     children: PropTypes.any.isRequired,
