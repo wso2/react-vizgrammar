@@ -42,11 +42,12 @@ import 'rc-slider/assets/index.css';
 import { getDefaultColorScale } from './helper';
 import Logger from '../utils/log';
 
+const LEGEND_DISABLED_COLOR = 'grey';
+
 /**
  * React component required to render Bar, Line and Area Charts.
  */
 export default class BasicCharts extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -291,8 +292,8 @@ export default class BasicCharts extends React.Component {
                                         style={{
                                             data: {
                                                 strokeWidth: config.charts[chartIndex].style ?
-                                                    config.charts[chartIndex].style.strokeWidth || null : null
-                                            }
+                                                    config.charts[chartIndex].style.strokeWidth || null : null,
+                                            },
                                         }}
                                     />
                                     <VictoryPortal>
@@ -731,9 +732,9 @@ export default class BasicCharts extends React.Component {
                                             target: 'labels',
                                             mutation: (props) => {
                                                 const fill = props.style && props.style.fill;
-                                                return fill === 'grey' ?
+                                                return fill === LEGEND_DISABLED_COLOR ?
                                                     { style: { fill: config.style.legendTextColor } } :
-                                                    { style: { fill: 'grey' } };
+                                                    { style: { fill: LEGEND_DISABLED_COLOR } };
                                             },
                                         },
                                     ];
