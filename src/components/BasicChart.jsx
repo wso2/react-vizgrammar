@@ -492,6 +492,10 @@ export default class BasicCharts extends React.Component {
 
         return (
             <div>
+                {
+                    config.legendOrientation && config.legendOrientation === 'top' ?
+                        this.generateLegendVisualization(config, legendItems, ignoreArray) : null
+                }
                     <VictoryChart
                         width={width}
                         height={height}
