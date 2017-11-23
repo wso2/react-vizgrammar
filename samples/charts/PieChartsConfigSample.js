@@ -17,7 +17,7 @@
  */
 
 import React from 'react';
-import { Frame } from './Frame';
+import { Frame } from './ChartWrapper';
 import './css/Table.css';
 import VizG from '../../src/VizG.jsx';
 import Logger from '../../src/utils/log';

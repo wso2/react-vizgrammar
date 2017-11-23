@@ -17,7 +17,7 @@
  */
 import React, { Component } from 'react';
 import VizG from '../../src/VizG.jsx';
-import { Frame } from './Frame';
+import { Frame } from './ChartWrapper';
 
 class TableChartConfigSample extends Component {
 
