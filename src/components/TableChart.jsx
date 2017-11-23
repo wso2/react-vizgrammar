@@ -22,6 +22,7 @@ import { scaleLinear } from 'd3';
 import 'react-table/react-table.css';
 import './resources/css/tableChart.css';
 import { getDefaultColorScale } from './helper';
+import logger from '../utils/log';
 
 class ReactTableTest extends Component {
 
@@ -63,6 +64,10 @@ class ReactTableTest extends Component {
 
         tableConfig.columns.map((column, i) => {
             let colIndex = metadata.names.indexOf(column);
+
+            if (colIndex === -1) {
+                logger.error('Unknown data column defined in the configuration');
+            }
 
             if (!initialized) {
                 columnArray.push({
@@ -157,9 +162,7 @@ class ReactTableTest extends Component {
                     </div>);
             }
 
-            chartConfig.push(
-                columnConfig
-            );
+            chartConfig.push(columnConfig);
         });
 
         return (

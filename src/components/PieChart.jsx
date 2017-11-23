@@ -27,6 +27,7 @@ import {
 } from 'victory';
 import PropTypes from 'prop-types';
 import { getDefaultColorScale } from './helper';
+import logger from '../utils/log';
 
 export default class PieCharts extends React.Component {
     constructor(props) {
@@ -78,6 +79,15 @@ export default class PieCharts extends React.Component {
             const arcConfig = config.charts[0];
             const xIndex = metadata.names.indexOf(arcConfig.x);
             const colorIndex = metadata.names.indexOf(arcConfig.color);
+
+            if (xIndex === -1) {
+                logger.error('Unknown \'x\' defined in the configuration.');
+            }
+
+            if (colorIndex === -1) {
+                logger.error('Unknown color Index defined in the configuration');
+            }
+
             if (!config.percentage) {
                 if (!initialized) {
                     chartArray.push({

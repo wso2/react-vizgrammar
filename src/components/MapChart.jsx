@@ -116,6 +116,15 @@ export default class MapGenerator extends React.Component {
         const mapConfig = config.charts[0];
         const xIndex = metadata.names.indexOf(config.x);
         const yIndex = metadata.names.indexOf(mapConfig.y);
+
+        if (xIndex === -1) {
+            logger.error('Independant axis is not defined');
+        }
+
+        if (yIndex === -1) {
+            logger.error('Independant axis is not defined');
+        }
+
         colorScale = Array.isArray(mapConfig.colorScale) ? mapConfig.colorScale : getDefaultColorScale();
         mapType = mapConfig.mapType;
         switch (mapConfig.mapType) {
@@ -203,6 +212,8 @@ export default class MapGenerator extends React.Component {
             case 'europe':
                 mapFeatureData = EuropeMap;
                 break;
+            default:
+                logger.error('Unknown maptype defined in the config');
         }
 
         return (

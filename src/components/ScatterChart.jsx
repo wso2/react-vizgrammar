@@ -31,6 +31,7 @@ import {
 import PropTypes from 'prop-types';
 import { formatPrefix, scaleLinear, timeFormat } from 'd3';
 import { getDefaultColorScale } from './helper';
+import logger from '../utils/log';
 
 export default class ScatterCharts extends React.Component {
     constructor(props) {
@@ -82,6 +83,15 @@ export default class ScatterCharts extends React.Component {
             const colorIndex = metadata.names.indexOf(chart.color);
             const sizeIndex = metadata.names.indexOf(chart.size);
             xScale = metadata.types[xIndex] === 'time' ? 'time' : xScale;
+
+            if (xIndex === -1) {
+                logger.error('Unknown \'x\' defined in the configuration.');
+            }
+
+            if (yIndex === -1) {
+                logger.error('Unknown \'y\' defined in the configuration.');
+            }
+
             if (!initialized) {
                 chartArray.push({
                     type: chart.type,
@@ -250,25 +260,25 @@ export default class ScatterCharts extends React.Component {
                 <div
                     style={
                         legend ?
-                        {
-                            width: !config.legendOrientation ? '80%' :
+                            {
+                                width: !config.legendOrientation ? '80%' :
                                     (() => {
                                         if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
                                             return '80%';
                                         } else return '100%';
                                     })(),
-                            display: !config.legendOrientation ? 'inline' :
+                                display: !config.legendOrientation ? 'inline' :
                                     (() => {
                                         if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
                                             return 'inline';
                                         } else return null;
                                     })(),
-                            float: !config.legendOrientation ? 'right' : (() => {
-                                if (config.legendOrientation === 'left') return 'right';
-                                else if (config.legendOrientation === 'right') return 'left';
-                                else return null;
-                            })(),
-                        } : null
+                                float: !config.legendOrientation ? 'right' : (() => {
+                                    if (config.legendOrientation === 'left') return 'right';
+                                    else if (config.legendOrientation === 'right') return 'left';
+                                    else return null;
+                                })(),
+                            } : null
                     }
                 >
                     {
