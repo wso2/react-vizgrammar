@@ -109,7 +109,7 @@ export default class BasicCharts extends React.Component {
         const xIndex = metadata.names.indexOf(config.x);
         let hasMaxLength = false;
 
-        switch (metadata.types[xIndex]) {
+        switch (metadata.types[xIndex].toLowerCase()) {
             case 'linear':
                 xScale = 'linear';
                 break;
