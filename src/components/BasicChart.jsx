@@ -304,7 +304,11 @@ export default class BasicCharts extends React.Component {
                                             }
                                             labelComponent={
                                                 <VictoryTooltip
-                                                    orientation='right'
+                                                    orientation='top'
+                                                    pointerLength={4}
+                                                    cornerRadius={2}
+                                                    flyoutStyle={{fill: '#000', fillOpacity: '0.8', strokeWidth: 0}}
+                                                    style={{fill: '#b0b0b0'}}
                                                 />
                                             }
                                             size={(
@@ -357,7 +361,7 @@ export default class BasicCharts extends React.Component {
 
                                 >
                                     <VictoryArea
-                                        style={{ data: { fillOpacity: config.charts[chartIndex].style ? config.charts[chartIndex].style.fillOpacity || 0.5 : 0.5 } }}
+                                        style={{ data: { fillOpacity: config.charts[chartIndex].style ? config.charts[chartIndex].style.fillOpacity || 0.1 : 0.1 } }}
                                     />
                                     <VictoryPortal>
                                         <VictoryScatter
@@ -365,7 +369,11 @@ export default class BasicCharts extends React.Component {
                                                           ${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}`}
                                             labelComponent={
                                                 <VictoryTooltip
-                                                    orientation='right'
+                                                    orientation='top'
+                                                    pointerLength={4}
+                                                    cornerRadius={2}
+                                                    flyoutStyle={{fill: '#000', fillOpacity: '0.8', strokeWidth: 0}}
+                                                    style={{fill: '#b0b0b0'}}
                                                 />
                                             }
                                             style={{ data: { fillOpacity: config.charts[chartIndex].style ? config.charts[chartIndex].style.markOpacity || 0.5 : 0.5 } }}
@@ -427,7 +435,11 @@ export default class BasicCharts extends React.Component {
                                     labels={d => `${config.x}:${d.x}\n${config.charts[chartIndex].y}:${d.y}`}
                                     labelComponent={
                                         <VictoryTooltip
-                                            orientation='right'
+                                            orientation='top'
+                                            pointerLength={4}
+                                            cornerRadius={2}
+                                            flyoutStyle={{fill: '#000', fillOpacity: '0.8', strokeWidth: 0}}
+                                            style={{fill: '#b0b0b0'}}
                                         />
                                     }
                                     data={dataSets[dataSetName]}
@@ -519,9 +531,8 @@ export default class BasicCharts extends React.Component {
                     <VictoryChart
                         width={width}
                         height={height}
-                        theme={VictoryTheme.material}
                         container={<VictoryVoronoiContainer />}
-                        padding={{ left: 100, top: 10, bottom: 50, right: 20 }}
+                        padding={{ left: 100, top: 30, bottom: 50, right: 80 }}
                         scale={{ x: xScale === 'linear' ? 'linear' : 'time', y: 'linear' }}
                         domain={{
                             x: config.brush && this.state.xDomain[0] ? this.state.xDomain : null,
@@ -533,9 +544,15 @@ export default class BasicCharts extends React.Component {
                         <VictoryAxis
                             crossAxis
                             style={{
-                                axis: { stroke: config.style ? config.style.axisColor || 'black' : null },
-                                axisLabel: { padding: 35, fill: config.style ? config.style.axisLabelColor || 'black' : null },
-                                fill: config.style ? config.style.axisLabelColor || '#455A64' : '#455A64',
+                                axis: {
+                                    stroke: config.style ? config.style.axisColor || '#000' : null, strokeOpacity: 0.5,
+                                },
+                                axisLabel: {
+                                    fill: config.style ? config.style.axisLabelColor || '#000' : null,
+                                    fillOpacity: 0.25, fontSize: 15, padding: 30,
+                                },
+                                grid: {stroke: '#000', strokeOpacity: 0.1},
+                                ticks: {stroke: '#000', strokeOpacity: 0.1, size: 5},
                             }}
                             gridComponent={config.disableVerticalGrid ? <g /> : <line />}
                             label={config.xAxisLabel || config.x}
@@ -564,7 +581,10 @@ export default class BasicCharts extends React.Component {
                             tickLabelComponent={
                                 <VictoryLabel
                                     angle={config.style ? config.style.xAxisTickAngle || 0 : 0}
-                                    style={{ fill: config.style ? config.style.tickLabelColor || 'black' : null }}
+                                    style={{
+                                        fill: config.style ? config.style.tickLabelColor || '#000' : null,
+                                        fillOpacity: 0.5, fontSize: 10, padding: 0,
+                                    }}
                                 />
                             }
                         />
@@ -572,9 +592,15 @@ export default class BasicCharts extends React.Component {
                             dependentAxis
                             crossAxis
                             style={{
-                                axisLabel: { padding: 35, fill: config.style ? config.style.axisLabelColor : null },
-                                fill: config.style ? config.style.axisLabelColor || '#455A64' : '#455A64',
-                                axis: { stroke: config.style ? config.style.axisColor : null },
+                                axis: {
+                                    stroke: config.style ? config.style.axisColor || '#000' : null, strokeOpacity: 0.5,
+                                },
+                                axisLabel: {
+                                    fill: config.style ? config.style.axisLabelColor || '#000' : null,
+                                    fillOpacity: 0.25, fontSize: 15, padding: 30,
+                                },
+                                grid: {stroke: '#000', strokeOpacity: 0.1},
+                                ticks: {stroke: '#000', strokeOpacity: 0.1, size: 5},
                             }}
                             gridComponent={config.disableHorizontalGrid ? <g /> : <line />}
                             label={config.yAxisLabel || config.charts.length > 1 ? '' : config.charts[0].y}
@@ -589,7 +615,10 @@ export default class BasicCharts extends React.Component {
                             tickLabelComponent={
                                 <VictoryLabel
                                     angle={config.style ? config.style.yAxisTickAngle || 0 : 0}
-                                    style={{ fill: config.style ? config.style.tickLabelColor || 'black' : 'black' }}
+                                    style={{
+                                        fill: config.style ? config.style.tickLabelColor || '#000' : null,
+                                        fillOpacity: 0.5, fontSize: 10, padding: 0,
+                                    }}
                                 />
                             }
                         />
