@@ -20,7 +20,7 @@ export default class VizGError extends Error {
     constructor(context, ...params) {
         super(...params);
 
-        // only v8
+        // supported only in the V8 engine
         if (Error.captureStackTrace) {
             Error.captureStackTrace(this, VizGError);
         }

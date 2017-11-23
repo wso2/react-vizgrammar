@@ -16,8 +16,8 @@
  * under the License.
  */
 import React, { Component } from 'react';
-import VizG from '../../src/VizG.jsx';
 import { ChartWrapper } from './ChartWrapper';
+import VizG from '../../src/VizG.jsx';
 
 class TableChartConfigSample extends Component {
 
@@ -32,14 +32,13 @@ class TableChartConfigSample extends Component {
 
         this.mapConfig = {
             key: 'rpm',
-            charts: [
-                {
-                    type: 'table',
-                    y: 'torque',
-                    color: '*',
-                    columns: ['EngineType', 'torque', 'rpm'],
-                    columnTitles: ['Engine Type', 'Engine Torque', 'Engine RPM'],
-                },
+            charts: [{
+                type: 'table',
+                y: 'torque',
+                color: '*',
+                columns: ['EngineType', 'torque', 'rpm'],
+                columnTitles: ['Engine Type', 'Engine Torque', 'Engine RPM'],
+            }
             ],
             maxLength: 7,
             width: 400,
@@ -60,29 +59,8 @@ class TableChartConfigSample extends Component {
                 timer: this.state.timer + 1
             });
         }, 1000);
-
-        this.mapConfig = {
-            key: 'rpm',
-            charts: [
-                {
-                    type: 'table',
-                    y: 'torque',
-                    color: '*',
-                    columns: ['EngineType', 'torque', 'rpm'],
-                    columnTitles: ['Engine Type', 'Engine Torque', 'Engine RPM'],
-                },
-            ],
-            maxLength: 7,
-            width: 400,
-            height: 200,
-            colorBasedStyle: true
-        };
-
-        this.metadata = {
-            names: ['rpm', 'torque', 'horsepower', 'EngineType'],
-            types: ['linear', 'linear', 'ordinal', 'ordinal']
-        };
     }
+
 
     render() {
         return (
@@ -94,7 +72,6 @@ class TableChartConfigSample extends Component {
                     <pre>
                         {
                             '{\n' +
-
                             '\tcharts : [\n\t{\n\t\ttype: \'table\',\n' +
                             '\t\tcolumns:[\'EngineType\',  \'torque\', \'rpm\'],\n' +
                             '\t\tcolumnTitles:[\'Engine Type\',  \'Engine Torque\', \'Engine RPM\'],\n' +

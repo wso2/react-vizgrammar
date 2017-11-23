@@ -9,8 +9,12 @@
   "author": "WSO2",
   "license": "Apache-2.0",
   "dependencies": {
+<<<<<<< HEAD
     "babel-preset-stage-2": "^6.24.1",
     "d3": "^4.11.0",
+=======
+    "d3": "^4.12.0",
+>>>>>>> a5d98e29f2da1ecc5bdf6cb4a1319e5cd4a944d0
     "prop-types": "^15.6.0",
     "rc-slider": "^8.3.4",
     "react": "^16.0.0",
@@ -27,6 +31,7 @@
     "babel-loader": "^7.1.2",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
     "css-loader": "^0.28.7",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.0.1",

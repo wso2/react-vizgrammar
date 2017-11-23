@@ -19,10 +19,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import AppBar from 'material-ui/AppBar';
-import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 
@@ -45,30 +41,26 @@ export class ChartWrapper extends React.Component {
     render() {
         return (
             <div className="col-md-6 tile">
-                <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
-                    <Card style={{ marginTop: 50 }} >
-                        {
-                            this.props.media ?
-                                <AppBar style={{ marginBottom: 10 }} title={this.state.title} showMenuIconButton={false} /> :
-                                <CardTitle title={this.state.title} subtitle={this.state.subtitle} />
-                        }
-                        <CardMedia>
+                <Card style={{ marginTop: 50 }} >
+                    {
+                        this.props.media ?
+                            <AppBar style={{ marginBottom: 10 }} title={this.state.title} showMenuIconButton={false} /> :
+                            <CardTitle title={this.state.title} subtitle={this.state.subtitle} />
+                    }
+                    <CardMedia>
 
-                            <div>
-                                {this.props.children}
-                            </div>
+                        <div>
+                            {this.props.children}
+                        </div>
 
-                        </CardMedia>
-                        <CardActions>
-                            <FlatButton label={this.state.actionBar ? 'View Usage' : ' '} onClick={() => {
-                                window.location.href = this.state.chart + '-charts';
-                            }}
-                            />
-                        </CardActions>
-                    </Card>
-                </MuiThemeProvider>
-
-
+                    </CardMedia>
+                    <CardActions>
+                        <FlatButton label={this.state.actionBar ? 'View Usage' : ' '} onClick={() => {
+                            window.location.href = this.state.chart + '-charts';
+                        }}
+                        />
+                    </CardActions>
+                </Card>
             </div>
 
         );
