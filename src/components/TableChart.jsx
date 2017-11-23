@@ -66,7 +66,9 @@ class ReactTableTest extends Component {
             let colIndex = metadata.names.indexOf(column);
 
             if (colIndex === -1) {
-                Logger.error('Unknown data column defined in the table chart configuration');
+                if (process.env.APP_ENV && process.env.APP_ENV !== 'production') {
+                    Logger.error('Unknown data column defined in the table chart configuration');
+                }
             }
 
             if (!initialized) {

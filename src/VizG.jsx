@@ -16,7 +16,6 @@
  * under the License.
  */
 // TODO:Fix dynamically changing config for other charts
-
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import BasicCharts from './components/BasicChart.jsx';
@@ -47,7 +46,6 @@ class VizG extends Component {
                 metadata: nextProps.metadata,
             });
         }
-
         this.setState({
             data: nextProps.data,
         });
@@ -127,7 +125,9 @@ class VizG extends Component {
                     />
                 );
             default:
-                Logger.error('Unknown chart type defined in the chart config.');
+                if (process.env.APP_ENV && process.env.APP_ENV !== 'production') {
+                    Logger.error('Unknown chart type defined in the chart config.');
+                }
                 return null;
         }
     }

@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
     devtool: 'source-map',
@@ -29,6 +30,13 @@ module.exports = {
             },
         ],
     },
+    plugins: [
+        new webpack.DefinePlugin({
+            'process.env': {
+                APP_ENV: JSON.stringify('development'),
+            },
+        }),
+    ],
     resolve: {
         extensions: ['.js', '.json', '.jsx'],
         alias: {

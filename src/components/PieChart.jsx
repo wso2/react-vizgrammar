@@ -81,11 +81,15 @@ export default class PieCharts extends React.Component {
             const colorIndex = metadata.names.indexOf(arcConfig.color);
 
             if (xIndex === -1) {
-                Logger.error("Unknown 'x' field defined in the Pie Chart config.");
+                if (process.env.APP_ENV && process.env.APP_ENV !== 'production') {
+                    Logger.error("Unknown 'x' field defined in the Pie Chart config.");
+                }
             }
 
             if (colorIndex === -1) {
-                Logger.error("Unknown 'x' field defined in the Pie Chart config.");
+                if (process.env.APP_ENV && process.env.APP_ENV !== 'production') {
+                    Logger.error("Unknown 'x' field defined in the Pie Chart config.");
+                }
             }
 
             if (!config.percentage) {

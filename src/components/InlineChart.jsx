@@ -149,7 +149,9 @@ export default class InlineChart extends BasicChart {
                     break;
                 }
                 default:
-                    Logger.error('Unsupported chart type defined in the config.');
+                    if (process.env.APP_ENV && process.env.APP_ENV !== 'production') {
+                        Logger.error('Unsupported chart type defined in the config.');
+                    }
             }
             return null;
         });

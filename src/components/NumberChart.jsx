@@ -51,7 +51,9 @@ export default class NumberCharts extends React.Component {
         const xIndex = metadata.names.indexOf(config.x);
 
         if (xIndex === -1) {
-            Logger.error("Unknown 'x' field defined in the Number Chart config.");
+            if (process.env.APP_ENV && process.env.APP_ENV !== 'production') {
+                Logger.error("Unknown 'x' field defined in the Number Chart config.");
+            }
         }
 
         if (data.length > 0) {

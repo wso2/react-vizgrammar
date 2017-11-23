@@ -85,11 +85,15 @@ export default class ScatterCharts extends React.Component {
             xScale = metadata.types[xIndex] === 'time' ? 'time' : xScale;
 
             if (xIndex === -1) {
-                Logger.error("Unknown 'x' field defined in the Scatter chart config.");
+                if (process.env.APP_ENV && process.env.APP_ENV !== 'production') {
+                    Logger.error("Unknown 'x' field defined in the Scatter chart config.");
+                }
             }
 
             if (yIndex === -1) {
-                Logger.error("Unknown 'x' field defined in the Scatter chart config.");
+                if (process.env.APP_ENV && process.env.APP_ENV !== 'production') {
+                    Logger.error("Unknown 'x' field defined in the Scatter chart config.");
+                }
             }
 
             if (!initialized) {

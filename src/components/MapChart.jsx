@@ -118,11 +118,15 @@ export default class MapGenerator extends React.Component {
         const yIndex = metadata.names.indexOf(mapConfig.y);
 
         if (xIndex === -1) {
-            Logger.error("Unknown 'x' field is defined in the Geographical chart configuration.");
+            if (process.env.APP_ENV && process.env.APP_ENV !== 'production') {
+                Logger.error("Unknown 'x' field is defined in the Geographical chart configuration.");
+            }
         }
 
         if (yIndex === -1) {
-            Logger.error("Unknown 'x' field is defined in the Geographical chart configuration.");
+            if (process.env.APP_ENV && process.env.APP_ENV !== 'production') {
+                Logger.error("Unknown 'x' field is defined in the Geographical chart configuration.");
+            }
         }
 
         colorScale = Array.isArray(mapConfig.colorScale) ? mapConfig.colorScale : getDefaultColorScale();
@@ -141,7 +145,9 @@ export default class MapGenerator extends React.Component {
                 projectionConfig.yOffset = this.state.height;
                 break;
             default:
-                Logger.error('Unknown chart type defined in the Geographical chart config.');
+                if (process.env.APP_ENV && process.env.APP_ENV !== 'production') {
+                    Logger.error('Unknown chart type defined in the Geographical chart config.');
+                }
         }
         colorType = metadata.types[yIndex];
         if (metadata.types[yIndex] === 'linear') {
@@ -213,7 +219,9 @@ export default class MapGenerator extends React.Component {
                 mapFeatureData = EuropeMap;
                 break;
             default:
-                Logger.error('Unknown maptype defined in the config');
+                if (process.env.APP_ENV && process.env.APP_ENV !== 'production') {
+                    Logger.error('Unknown maptype defined in the config');
+                }
         }
 
         return (

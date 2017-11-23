@@ -118,7 +118,9 @@ export default class BasicCharts extends React.Component {
                 xScale = 'ordinal';
                 break;
             default:
-                Logger.error('unsupported data type on xAxis');
+                if (process.env.APP_ENV && process.env.APP_ENV !== 'production') {
+                    Logger.error('unsupported data type on xAxis');
+                }
         }
 
         xScale = metadata.types[xIndex] === 'time' ? 'time' : xScale;
@@ -462,7 +464,9 @@ export default class BasicCharts extends React.Component {
                     break;
                 }
                 default:
-                    Logger.error('Error in rendering unknown chart type');
+                    if (process.env.APP_ENV && process.env.APP_ENV !== 'production') {
+                        Logger.error('Error in rendering unknown chart type');
+                    }
             }
 
             return null;
