@@ -35,8 +35,6 @@ import {
 } from 'victory';
 import PropTypes from 'prop-types';
 import { formatPrefix, timeFormat } from 'd3';
-import { Range } from 'rc-slider';
-import 'rc-slider/assets/index.css';
 import { getDefaultColorScale } from './helper';
 
 /**
@@ -297,6 +295,12 @@ export default class BasicCharts extends React.Component {
                                             labelComponent={
                                                 <VictoryTooltip
                                                     orientation='right'
+                                                    pointerLength={4}
+                                                    cornerRadius={2}
+                                                    width={100}
+                                                    dy={-10}
+                                                    flyoutStyle={{ fill: '#000', fillOpacity: '0.8', strokeWidth: 0 }}
+                                                    style={{ fontSize: 10, fill: '#b0b0b0'}}
                                                 />
                                             }
                                             size={(d, a) => {
@@ -344,16 +348,22 @@ export default class BasicCharts extends React.Component {
                                     key={`chart-${chart.id}-${chart.type}-${dataSetName}`}
                                     data={dataSets[dataSetName]}
                                     color={chart.dataSetNames[dataSetName]}
-                                    style={{ data: { fillOpacity: config.charts[chartIndex].fillOpacity || 0.5 } }}
+
                                 >
-                                    <VictoryArea />
+                                    <VictoryArea style={{ data: { fillOpacity: config.charts[chartIndex].fillOpacity || 0.1 } }}/>
                                     <VictoryPortal>
                                         <VictoryScatter
                                             labels={d => `${config.x}:${Number(d.x).toFixed(2)}\n
                                                           ${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}`}
                                             labelComponent={
                                                 <VictoryTooltip
-                                                    orientation='right'
+                                                    orientation='top'
+                                                    pointerLength={4}
+                                                    cornerRadius={2}
+                                                    width={100}
+                                                    dy={-10}
+                                                    flyoutStyle={{ fill: '#000', fillOpacity: '0.8', strokeWidth: 0 }}
+                                                    style={{ fontSize: 10, fill: '#b0b0b0'}}
                                                 />
                                             }
                                             size={(d, a) => {
@@ -412,7 +422,13 @@ export default class BasicCharts extends React.Component {
                                     labels={d => `${config.x}:${d.x}\n${config.charts[chartIndex].y}:${d.y}`}
                                     labelComponent={
                                         <VictoryTooltip
-                                            orientation='right'
+                                            orientation='top'
+                                            pointerLength={4}
+                                            cornerRadius={2}
+                                            width={100}
+                                            dy={-10}
+                                            flyoutStyle={{ fill: '#000', fillOpacity: '0.8', strokeWidth: 0 }}
+                                            style={{ fontSize: 10, fill: '#b0b0b0'}}
                                         />
                                     }
                                     data={dataSets[dataSetName]}
@@ -475,38 +491,13 @@ export default class BasicCharts extends React.Component {
         }
 
         return (
-            <div style={{ overflow: 'hidden', zIndex: 99999 }}>
-                <div
-                    style={{
-                        width: !config.legendOrientation ? '80%' :
-                            (() => {
-                                if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
-                                    return '80%';
-                                } else return '100%';
-                            })(),
-                        display: !config.legendOrientation ? 'inline' :
-                            (() => {
-                                if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
-                                    return 'inline';
-                                } else return null;
-                            })(),
-                        float: !config.legendOrientation ? 'left' : (() => {
-                            if (config.legendOrientation === 'left') return 'right';
-                            else if (config.legendOrientation === 'right') return 'left';
-                            else return null;
-                        })(),
-                    }}
-                >
-                    {
-                        config.legendOrientation && config.legendOrientation === 'top' ?
-                            this.generateLegendVisualization(config, legendItems, ignoreArray) : null
-                    }
+            <div>
                     <VictoryChart
                         width={width}
                         height={height}
                         theme={VictoryTheme.material}
                         container={<VictoryVoronoiContainer />}
-                        padding={{ left: 100, top: 10, bottom: 50, right: 20 }}
+                        padding={{ left: 100, top: 10, bottom: 50, right: 0 }}
                         scale={{ x: xScale === 'linear' ? 'linear' : 'time', y: 'linear' }}
                         domain={{
                             x: config.brush && this.state.xDomain[0] ? this.state.xDomain : null,
@@ -579,152 +570,106 @@ export default class BasicCharts extends React.Component {
                             }
                         />
                     </VictoryChart>
-                </div>
+
                 {
-                    ['bottom', 'left', 'right'].indexOf(config.legendOrientation) > -1 || !config.legendOrientation ?
-                        this.generateLegendVisualization(config, legendItems, ignoreArray) : null
-                }
-                {config.brush ?
-                    <div
-                        style={{ width: '80%', height: 40, display: 'inline', float: 'left', right: 10 }}
-                    >
+                    ['bottom', 'left', 'right'].indexOf(config.legendOrientation) > 1 || !config.legendOrientation ?
                         <div
-                            style={{ width: '10%', display: 'inline', float: 'left', left: 20 }}
+                            style={{
+                                width: !config.legendOrientation ? '20%' :
+                                    (() => {
+                                        if (config.legendOrientation === 'left' || config.legendOrientation === 'right') return '20%';
+                                        else return null;
+                                    })(),
+                                display: !config.legendOrientation ? 'inline' :
+                                    (() => {
+                                        if (config.legendOrientation === 'left' || config.legendOrientation === 'right') return 'inline';
+                                        else return null;
+                                    })(),
+                                float: !config.legendOrientation ? 'right' : (() => {
+                                    if (config.legendOrientation === 'left') return 'left';
+                                    else if (config.legendOrientation === 'right') return 'right';
+                                    else return null;
+                                })(),
+                            }}
                         >
-                            <button
-                                onClick={() => {
-                                    this.setState({ xDomain: this.xRange });
-                                }}
-                            >
-                                Reset
-                            </button>
-                        </div>
-                        <div
-                            style={{ width: '90%', display: 'inline', float: 'right' }}
-                        >
-                            <Range
-                                max={xScale === 'time' ? this.xRange[1].getDate() : this.xRange[1]}
-                                min={xScale === 'time' ? this.xRange[0].getDate() : this.xRange[0]}
-                                defaultValue={xScale === 'time' ?
-                                    [this.xRange[0].getDate(), this.xRange[1].getDate()] :
-                                    [this.xRange[0], this.xRange[1]]
-                                }
-                                value={xScale === 'time' ?
-                                    [this.state.xDomain[0].getDate(), this.state.xDomain[1].getDate()] :
-                                    this.state.xDomain}
-                                onChange={(d) => {
-                                    this.setState({
-                                        xDomain: d,
-                                    });
-                                }}
-                            />
-                        </div>
-                    </div> : null
+                            {this.generateLegendVisualization(config, legendItems, ignoreArray)}
+                        </div> : null
                 }
-            </div >
+
+            </div>
 
         );
     }
 
     /**
-     * Generate a Legend component to be used in the Charts.
-     * @param config Chart configuration.
-     * @param legendItems Items in the legend.
-     * @param ignoreArray legend items that are ignored in rendering.
+     * Geerate a Legend component to be used in the Charts.
+     * @param {*} config Chart configuration.
+     * @param {*} legendItems Items in the legend.
+     * @param {*} ignoreArray legend items that are ignored in rendering.
      */
     generateLegendVisualization(config, legendItems, ignoreArray) {
         return (
-            <div
+            <VictoryLegend
+                containerComponent={<VictoryContainer responsive />}
+                height={this.state.height}
+                width={300}
+                orientation={
+                    !config.legendOrientation ?
+                        null :
+                        (() => {
+                            if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
+                                return 'vertical';
+                            } else {
+                                return 'horizontal';
+                            }
+                        })()
+                }
+                title="Legend"
                 style={{
-                    width: !config.legendOrientation ? '15%' :
-                        (() => {
-                            if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
-                                return '20%';
-                            } else return '100%';
-                        })(),
-                    display: !config.legendOrientation ? 'inline' :
-                        (() => {
-                            if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
-                                return 'inline';
-                            } else return null;
-                        })(),
-                    float: !config.legendOrientation ? 'right' : (() => {
-                        if (config.legendOrientation === 'left') return 'left';
-                        else if (config.legendOrientation === 'right') return 'right';
-                        else return null;
-                    })(),
+                    title: { fontSize: 25, fill: config.legendTitleColor },
+                    labels: { fontSize: 20, fill: config.legendTextColor },
                 }}
-            >
-                <VictoryLegend
-                    containerComponent={<VictoryContainer responsive />}
-                    centerTitle
-                    height={(() => {
-                        if (!config.legendOrientation) return this.state.height;
-                        else if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
-                            return this.state.height;
-                        } else return 100;
-                    })()}
-                    width={(() => {
-                        if (!config.legendOrientation) return 200;
-                        else if (config.legendOrientation === 'left' || config.legendOrientation === 'right') return 200;
-                        else return this.state.width;
-                    })()}
-                    orientation={
-                        !config.legendOrientation ?
-                            'vertical' :
-                            (() => {
-                                if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
-                                    return 'vertical';
-                                } else {
-                                    return 'horizontal';
-                                }
-                            })()
-                    }
-                    title="Legend"
-                    style={{
-                        title: { fontSize: 25, fill: config.legendTitleColor },
-                        labels: { fontSize: 20, fill: config.legendTextColor },
-                    }}
-                    data={legendItems.length > 0 ? legendItems : [{
-                        name: 'undefined',
-                        symbol: { fill: '#333' },
-                    }]}
-                    itemsPerRow={config.legendOrientation === 'top' || config.legendOrientation === 'bottom' ? 5 : null}
-                    events={[
-                        {
-                            target: 'data',
-                            eventHandlers: {
-                                onClick: config.interactiveLegend ? () => { // TODO: update doc with the attribute
-                                    return [
-                                        {
-                                            target: 'data',
-                                            mutation: (props) => {
-                                                const ignoreIndex = ignoreArray
-                                                    .map(d => d.name)
-                                                    .indexOf(props.datum.name);
-                                                if (ignoreIndex > -1) {
-                                                    ignoreArray.splice(ignoreIndex, 1);
-                                                } else {
-                                                    ignoreArray.push({ name: props.datum.name });
-                                                }
-                                                this.setState({
-                                                    ignoreArray,
-                                                });
-                                            },
-                                        }, {
-                                            target: 'labels',
-                                            mutation: (props) => {
-                                                const fill = props.style && props.style.fill;
-                                                return fill === 'grey' ? null : { style: { fill: 'grey' } };
-                                            },
+                data={legendItems.length > 0 ? legendItems : [{
+                    name: 'undefined',
+                    symbol: { fill: '#333' },
+                }]}
+                events={[
+                    {
+                        target: 'data',
+                        eventHandlers: {
+                            onClick: config.interactiveLegend ? () => { // TODO: update doc with the attribute
+                                return [
+                                    {
+                                        target: 'data',
+                                        mutation: (props) => {
+                                            console.info(props.index);
+
+                                            const ignoreIndex = ignoreArray
+                                                .map(d => d.name)
+                                                .indexOf(props.datum.name);
+                                            if (ignoreIndex > -1) {
+                                                ignoreArray.splice(ignoreIndex, 1);
+                                            } else {
+                                                ignoreArray.push({ name: props.datum.name });
+                                            }
+                                            console.info(ignoreArray);
+                                            this.setState({
+                                                ignoreArray,
+                                            });
                                         },
-                                    ];
-                                } : null,
-                            },
+                                    }, {
+                                        target: 'labels',
+                                        mutation: (props) => {
+                                            const fill = props.style && props.style.fill;
+                                            return fill === 'grey' ? null : { style: { fill: 'grey' } };
+                                        },
+                                    },
+                                ];
+                            } : null,
                         },
-                    ]}
-                />
-            </div>
+                    },
+                ]}
+            />
         );
     }
 }
