@@ -19,7 +19,7 @@
 import React, { Component } from 'react';
 import MapGenerator from '../../src/components/MapChart.jsx';
 import logger from 'log';
-import { Row } from './util';
+import { Row } from './Frame';
 
 class MapChartConfigSample extends Component {
 

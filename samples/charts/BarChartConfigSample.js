@@ -16,7 +16,7 @@
  * under the License.
  */
 import React from 'react';
-import { Row } from './util';
+import { Row } from './Frame';
 import './css/Table.css';
 import VizG from '../../src/VizG.jsx';
 

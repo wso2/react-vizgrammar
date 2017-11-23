@@ -17,7 +17,7 @@
  */
 import React from 'react';
 import VizG from '../src/index';
-import { Row } from './charts/util';
+import { Row } from './charts/Frame';
 
 export default class App extends React.Component {
     constructor(props) {

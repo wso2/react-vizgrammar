@@ -18,7 +18,7 @@
 
 import React, { Component } from 'react';
 import NumberCharts from '../../src/components/NumberChart.jsx';
-import { Row } from './util';
+import { Row } from './Frame';
 
 class NumberChartConfigSample extends Component {
 
