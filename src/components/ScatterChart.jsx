@@ -31,7 +31,7 @@ import {
 import PropTypes from 'prop-types';
 import { formatPrefix, scaleLinear, timeFormat } from 'd3';
 import { getDefaultColorScale } from './helper';
-import Logger from '../utils/log';
+import VizGError from '../VizGError';
 
 export default class ScatterCharts extends React.Component {
     constructor(props) {
@@ -85,15 +85,11 @@ export default class ScatterCharts extends React.Component {
             xScale = metadata.types[xIndex] === 'time' ? 'time' : xScale;
 
             if (xIndex === -1) {
-                if (process.env.APP_ENV && process.env.APP_ENV !== 'production') {
-                    Logger.error("Unknown 'x' field defined in the Scatter chart config.");
-                }
+                throw new VizGError('ScatterChart', "Unknown 'x' field defined in the Scatter chart config.");
             }
 
             if (yIndex === -1) {
-                if (process.env.APP_ENV && process.env.APP_ENV !== 'production') {
-                    Logger.error("Unknown 'x' field defined in the Scatter chart config.");
-                }
+                throw new VizGError('ScatterChart', "Unknown 'y' field defined in the Scatter chart config.");
             }
 
             if (!initialized) {

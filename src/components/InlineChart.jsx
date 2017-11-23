@@ -19,7 +19,7 @@
 import React from 'react';
 import BasicChart from './BasicChart.jsx';
 import { VictoryLine, VictoryArea, VictoryGroup, VictoryBar, VictoryTooltip, VictoryStack } from 'victory';
-import Logger from '../utils/log';
+import VizGError from '../VizGError';
 
 export default class InlineChart extends BasicChart {
 
@@ -149,9 +149,7 @@ export default class InlineChart extends BasicChart {
                     break;
                 }
                 default:
-                    if (process.env.APP_ENV && process.env.APP_ENV !== 'production') {
-                        Logger.error('Unsupported chart type defined in the config.');
-                    }
+                    throw new VizGError('InlineChart', 'Unsupported chart type defined in the config.');
             }
             return null;
         });

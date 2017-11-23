@@ -27,7 +27,7 @@ import {
 } from 'victory';
 import PropTypes from 'prop-types';
 import { getDefaultColorScale } from './helper';
-import Logger from '../utils/log';
+import VizGError from '../VizGError';
 
 export default class PieCharts extends React.Component {
     constructor(props) {
@@ -81,15 +81,11 @@ export default class PieCharts extends React.Component {
             const colorIndex = metadata.names.indexOf(arcConfig.color);
 
             if (xIndex === -1) {
-                if (process.env.APP_ENV && process.env.APP_ENV !== 'production') {
-                    Logger.error("Unknown 'x' field defined in the Pie Chart config.");
-                }
+                throw new VizGError('PieChart', "Unknown 'x' field defined in the Pie Chart config.");
             }
 
             if (colorIndex === -1) {
-                if (process.env.APP_ENV && process.env.APP_ENV !== 'production') {
-                    Logger.error("Unknown 'x' field defined in the Pie Chart config.");
-                }
+                throw new VizGError('PieChart', "Unknown 'x' field defined in the Pie Chart config.");
             }
 
             if (!config.percentage) {

@@ -18,7 +18,6 @@
 
 import React, { Component } from 'react';
 import MapGenerator from '../../src/components/MapChart.jsx';
-import Logger from 'log';
 import { ChartWrapper } from './ChartWrapper';
 
 class MapChartConfigSample extends Component {
@@ -82,7 +81,7 @@ class MapChartConfigSample extends Component {
         return (
             <div>
                 <ChartWrapper title="World Map Sample" chart="line" media={true} actionBar={false}>
-                    <MapGenerator config={this.mapConfig} metadata={this.metadata} data={this.state.data} onClick={(geo) => { Logger.info(geo); }} />
+                    <MapGenerator config={this.mapConfig} metadata={this.metadata} data={this.state.data} />
                     <pre>
                         {'{\n' +
                             '\tx : \'Country\',\n' +
@@ -93,7 +92,7 @@ class MapChartConfigSample extends Component {
                     </pre>
                 </ChartWrapper>
                 <ChartWrapper title="Europe Map Sample" chart="line" media={true} actionBar={false}>
-                    <MapGenerator config={this.europeConfig} metadata={this.metadata} data={this.state.data} onClick={(geo) => { Logger.info(geo); }} />
+                    <MapGenerator config={this.europeConfig} metadata={this.metadata} data={this.state.data} />
                     <pre>
                         {'{\n' +
                             '\tx : \'Country\',\n' +
@@ -104,7 +103,7 @@ class MapChartConfigSample extends Component {
                     </pre>
                 </ChartWrapper>
                 <ChartWrapper title="United States Map Sample" chart="line" media={true} actionBar={false}>
-                    <MapGenerator config={this.usaConfig} metadata={this.metadata} data={this.state.data2} onClick={(geo) => { Logger.info(geo); }} />
+                    <MapGenerator config={this.usaConfig} metadata={this.metadata} data={this.state.data2} />
                     <pre>
                         {'{\n' +
                             '\tx : \'County\',\n' +
