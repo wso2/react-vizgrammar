@@ -40,7 +40,7 @@ import { formatPrefix, timeFormat } from 'd3';
 import { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { getDefaultColorScale } from './helper';
-import logger from '../utils/log';
+import Logger from '../utils/log';
 
 /**
  * React component required to render Bar, Line and Area Charts.
@@ -118,7 +118,7 @@ export default class BasicCharts extends React.Component {
                 xScale = 'ordinal';
                 break;
             default:
-                logger.error('unsupported data type on xAxis');
+                Logger.error('unsupported data type on xAxis');
         }
 
         xScale = metadata.types[xIndex] === 'time' ? 'time' : xScale;
@@ -286,7 +286,12 @@ export default class BasicCharts extends React.Component {
                                     color={chart.dataSetNames[dataSetName]}
                                 >
                                     <VictoryLine
-                                        style={{ data: { strokeWidth: config.charts[chartIndex].style ? config.charts[chartIndex].style.strokeWidth || null : null } }}
+                                        style={{
+                                            data: {
+                                                strokeWidth: config.charts[chartIndex].style ?
+                                                    config.charts[chartIndex].style.strokeWidth || null : null
+                                            }
+                                        }}
                                     />
                                     <VictoryPortal>
                                         <VictoryScatter
@@ -299,9 +304,11 @@ export default class BasicCharts extends React.Component {
                                                     orientation='right'
                                                 />
                                             }
-                                            size={(d, a) => {
-                                                return a ? 20 : (config.charts[chartIndex].style ? config.charts[chartIndex].style.markRadius || 4 : 4);
-                                            }}
+                                            size={(
+                                                config.charts[chartIndex].style ?
+                                                    config.charts[chartIndex].style.markRadius || 4 :
+                                                    4
+                                            )}
                                             events={[{
                                                 target: 'data',
                                                 eventHandlers: {
@@ -359,9 +366,11 @@ export default class BasicCharts extends React.Component {
                                                 />
                                             }
                                             style={{ data: { fillOpacity: config.charts[chartIndex].style ? config.charts[chartIndex].style.markOpacity || 0.5 : 0.5 } }}
-                                            size={(d, a) => {
-                                                return a ? 20 : config.charts[chartIndex].style ? config.charts[chartIndex].style.markRadius || 4 : 4;
-                                            }}
+                                            size={(
+                                                config.charts[chartIndex].style ?
+                                                    config.charts[chartIndex].style.markRadius || 4 :
+                                                    4
+                                            )}
                                             events={[{
                                                 target: 'data',
                                                 eventHandlers: {
@@ -453,7 +462,7 @@ export default class BasicCharts extends React.Component {
                     break;
                 }
                 default:
-                    logger.error('Error in rendering unknown chart type');
+                    Logger.error('Error in rendering unknown chart type');
             }
 
             return null;

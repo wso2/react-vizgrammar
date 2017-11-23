@@ -19,7 +19,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { VictoryLabel } from 'victory';
-import logger from '../utils/log';
+import Logger from '../utils/log';
 
 export default class NumberCharts extends React.Component {
     constructor(props) {
@@ -51,7 +51,7 @@ export default class NumberCharts extends React.Component {
         const xIndex = metadata.names.indexOf(config.x);
 
         if (xIndex === -1) {
-            logger.error('Unknown X in the config');
+            Logger.error("Unknown 'x' field defined in the Number Chart config.");
         }
 
         if (data.length > 0) {

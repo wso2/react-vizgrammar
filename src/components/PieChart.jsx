@@ -27,7 +27,7 @@ import {
 } from 'victory';
 import PropTypes from 'prop-types';
 import { getDefaultColorScale } from './helper';
-import logger from '../utils/log';
+import Logger from '../utils/log';
 
 export default class PieCharts extends React.Component {
     constructor(props) {
@@ -81,11 +81,11 @@ export default class PieCharts extends React.Component {
             const colorIndex = metadata.names.indexOf(arcConfig.color);
 
             if (xIndex === -1) {
-                logger.error('Unknown \'x\' defined in the configuration.');
+                Logger.error("Unknown 'x' field defined in the Pie Chart config.");
             }
 
             if (colorIndex === -1) {
-                logger.error('Unknown color Index defined in the configuration');
+                Logger.error("Unknown 'x' field defined in the Pie Chart config.");
             }
 
             if (!config.percentage) {

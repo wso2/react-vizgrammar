@@ -31,7 +31,7 @@ import {
 import PropTypes from 'prop-types';
 import { formatPrefix, scaleLinear, timeFormat } from 'd3';
 import { getDefaultColorScale } from './helper';
-import logger from '../utils/log';
+import Logger from '../utils/log';
 
 export default class ScatterCharts extends React.Component {
     constructor(props) {
@@ -85,11 +85,11 @@ export default class ScatterCharts extends React.Component {
             xScale = metadata.types[xIndex] === 'time' ? 'time' : xScale;
 
             if (xIndex === -1) {
-                logger.error('Unknown \'x\' defined in the configuration.');
+                Logger.error("Unknown 'x' field defined in the Scatter chart config.");
             }
 
             if (yIndex === -1) {
-                logger.error('Unknown \'y\' defined in the configuration.');
+                Logger.error("Unknown 'x' field defined in the Scatter chart config.");
             }
 
             if (!initialized) {
