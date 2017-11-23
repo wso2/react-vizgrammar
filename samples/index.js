@@ -31,14 +31,14 @@ import PieChart from './charts/PieChartsConfigSample';
 import MapChartConfigSample from './charts/MapChartConfigSample';
 import NumberChartConfigSample from './charts/NumberChartConfigSample';
 import TableCharts from './charts/TableChartConfigSample';
-import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import LightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+import DarkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 ReactDOM.render(
     <Router>
-        <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
+        <MuiThemeProvider muiTheme={getMuiTheme(LightBaseTheme)}>
         <div>
             <Route exact path="/" component={App} />
             <Route exact path="/line-charts" component={LineChart} />
