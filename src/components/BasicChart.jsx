@@ -15,8 +15,6 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-// TODO: update documentation on chart configurations
-// TODO: rewrite brush and zoom with brush container
 import React from 'react';
 import {
     VictoryArea,
@@ -40,14 +38,12 @@ import { formatPrefix, timeFormat } from 'd3';
 import { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { getDefaultColorScale } from './helper';
-import Logger from '../utils/log';
-
-const LEGEND_DISABLED_COLOR = 'grey';
 
 /**
  * React component required to render Bar, Line and Area Charts.
  */
 export default class BasicCharts extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -79,10 +75,12 @@ export default class BasicCharts extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if (JSON.stringify(this.chartConfig) !== JSON.stringify(nextProps.config)) {
+            console.info('not similar');
             this.chartConfig = nextProps.config;
             this.state.chartArray = [];
             this.state.dataSets = [];
             this.state.initialized = false;
+            console.info(this.state.chartArray);
         }
 
         this.handleAndSortData(nextProps);
@@ -119,9 +117,7 @@ export default class BasicCharts extends React.Component {
                 xScale = 'ordinal';
                 break;
             default:
-                if (process.env.APP_ENV && process.env.APP_ENV !== 'production') {
-                    Logger.error('unsupported data type on xAxis');
-                }
+                console.error('unsupported data type on xAxis');
         }
 
         xScale = metadata.types[xIndex] === 'time' ? 'time' : xScale;
@@ -248,6 +244,7 @@ export default class BasicCharts extends React.Component {
                         }
                         return null;
                     });
+
                     return null;
                 });
             }
@@ -289,12 +286,7 @@ export default class BasicCharts extends React.Component {
                                     color={chart.dataSetNames[dataSetName]}
                                 >
                                     <VictoryLine
-                                        style={{
-                                            data: {
-                                                strokeWidth: config.charts[chartIndex].style ?
-                                                    config.charts[chartIndex].style.strokeWidth || null : null,
-                                            },
-                                        }}
+                                        style={{ data: { strokeWidth: config.charts[chartIndex].strokeWidth || null } }}
                                     />
                                     <VictoryPortal>
                                         <VictoryScatter
@@ -307,11 +299,9 @@ export default class BasicCharts extends React.Component {
                                                     orientation='right'
                                                 />
                                             }
-                                            size={(
-                                                config.charts[chartIndex].style ?
-                                                    config.charts[chartIndex].style.markRadius || 4 :
-                                                    4
-                                            )}
+                                            size={(d, a) => {
+                                                return a ? 20 : (config.charts[chartIndex].markRadius || 4);
+                                            }}
                                             events={[{
                                                 target: 'data',
                                                 eventHandlers: {
@@ -354,11 +344,9 @@ export default class BasicCharts extends React.Component {
                                     key={`chart-${chart.id}-${chart.type}-${dataSetName}`}
                                     data={dataSets[dataSetName]}
                                     color={chart.dataSetNames[dataSetName]}
-
+                                    style={{ data: { fillOpacity: config.charts[chartIndex].fillOpacity || 0.5 } }}
                                 >
-                                    <VictoryArea
-                                        style={{ data: { fillOpacity: config.charts[chartIndex].style ? config.charts[chartIndex].style.fillOpacity || 0.5 : 0.5 } }}
-                                    />
+                                    <VictoryArea />
                                     <VictoryPortal>
                                         <VictoryScatter
                                             labels={d => `${config.x}:${Number(d.x).toFixed(2)}\n
@@ -368,12 +356,9 @@ export default class BasicCharts extends React.Component {
                                                     orientation='right'
                                                 />
                                             }
-                                            style={{ data: { fillOpacity: config.charts[chartIndex].style ? config.charts[chartIndex].style.markOpacity || 0.5 : 0.5 } }}
-                                            size={(
-                                                config.charts[chartIndex].style ?
-                                                    config.charts[chartIndex].style.markRadius || 4 :
-                                                    4
-                                            )}
+                                            size={(d, a) => {
+                                                return a ? 20 : config.charts[chartIndex].markRadius || 4;
+                                            }}
                                             events={[{
                                                 target: 'data',
                                                 eventHandlers: {
@@ -465,9 +450,7 @@ export default class BasicCharts extends React.Component {
                     break;
                 }
                 default:
-                    if (process.env.APP_ENV && process.env.APP_ENV !== 'production') {
-                        Logger.error('Error in rendering unknown chart type');
-                    }
+                    console.error('Error in rendering unknown chart type');
             }
 
             return null;
@@ -535,9 +518,9 @@ export default class BasicCharts extends React.Component {
                         <VictoryAxis
                             crossAxis
                             style={{
-                                axis: { stroke: config.style ? config.style.axisColor || 'black' : null },
-                                axisLabel: { padding: 35, fill: config.style ? config.style.axisLabelColor || 'black' : null },
-                                fill: config.style ? config.style.axisLabelColor || '#455A64' : '#455A64',
+                                axis: { stroke: config.axisColor },
+                                axisLabel: { padding: 35, fill: config.axisLabelColor },
+                                fill: config.axisLabelColor || '#455A64',
                             }}
                             gridComponent={config.disableVerticalGrid ? <g /> : <line />}
                             label={config.xAxisLabel || config.x}
@@ -565,8 +548,8 @@ export default class BasicCharts extends React.Component {
                             standalone={false}
                             tickLabelComponent={
                                 <VictoryLabel
-                                    angle={config.style ? config.style.xAxisTickAngle || 0 : 0}
-                                    style={{ fill: config.style ? config.style.tickLabelColor || 'black' : null }}
+                                    angle={config.xAxisTickAngle || 0}
+                                    style={{ fill: config.tickLabelColor || 'black' }}
                                 />
                             }
                         />
@@ -574,9 +557,9 @@ export default class BasicCharts extends React.Component {
                             dependentAxis
                             crossAxis
                             style={{
-                                axisLabel: { padding: 35, fill: config.style ? config.style.axisLabelColor : null },
-                                fill: config.style ? config.style.axisLabelColor || '#455A64' : '#455A64',
-                                axis: { stroke: config.style ? config.style.axisColor : null },
+                                axisLabel: { padding: 35, fill: config.axisLabelColor },
+                                fill: config.axisLabelColor || '#455A64',
+                                axis: { stroke: config.axisColor },
                             }}
                             gridComponent={config.disableHorizontalGrid ? <g /> : <line />}
                             label={config.yAxisLabel || config.charts.length > 1 ? '' : config.charts[0].y}
@@ -590,8 +573,8 @@ export default class BasicCharts extends React.Component {
                             }}
                             tickLabelComponent={
                                 <VictoryLabel
-                                    angle={config.style ? config.style.yAxisTickAngle || 0 : 0}
-                                    style={{ fill: config.style ? config.style.tickLabelColor || 'black' : 'black' }}
+                                    angle={config.yAxisTickAngle || 0}
+                                    style={{ fill: config.tickLabelColor || 'black' }}
                                 />
                             }
                         />
@@ -699,8 +682,8 @@ export default class BasicCharts extends React.Component {
                     }
                     title="Legend"
                     style={{
-                        title: { fontSize: 25, fill: config.style ? config.style.legendTitleColor : null },
-                        labels: { fontSize: 20, fill: config.style ? config.style.legendTextColor : null },
+                        title: { fontSize: 25, fill: config.legendTitleColor },
+                        labels: { fontSize: 20, fill: config.legendTextColor },
                     }}
                     data={legendItems.length > 0 ? legendItems : [{
                         name: 'undefined',
@@ -732,9 +715,7 @@ export default class BasicCharts extends React.Component {
                                             target: 'labels',
                                             mutation: (props) => {
                                                 const fill = props.style && props.style.fill;
-                                                return fill === LEGEND_DISABLED_COLOR ?
-                                                    { style: { fill: config.style.legendTextColor } } :
-                                                    { style: { fill: LEGEND_DISABLED_COLOR } };
+                                                return fill === 'grey' ? null : { style: { fill: 'grey' } };
                                             },
                                         },
                                     ];

@@ -16,8 +16,8 @@
  * under the License.
  */
 import React, { Component } from 'react';
-import VizG from '../../src/VizG.jsx';
-import { ChartWrapper } from './ChartWrapper';
+import TableCharts from '../../src/components/TableChart.jsx';
+import { Row } from './util';
 
 class TableChartConfigSample extends Component {
 
@@ -28,28 +28,6 @@ class TableChartConfigSample extends Component {
                 [0, 10, 1, 'Piston']
             ],
             timer: 1
-        };
-
-        this.mapConfig = {
-            key: 'rpm',
-            charts: [
-                {
-                    type: 'table',
-                    y: 'torque',
-                    color: '*',
-                    columns: ['EngineType', 'torque', 'rpm'],
-                    columnTitles: ['Engine Type', 'Engine Torque', 'Engine RPM'],
-                },
-            ],
-            maxLength: 7,
-            width: 400,
-            height: 200,
-            colorBasedStyle: true
-        };
-
-        this.metadata = {
-            names: ['rpm', 'torque', 'horsepower', 'EngineType'],
-            types: ['linear', 'linear', 'ordinal', 'ordinal']
         };
     }
 
@@ -63,14 +41,13 @@ class TableChartConfigSample extends Component {
 
         this.mapConfig = {
             key: 'rpm',
-            charts: [
-                {
-                    type: 'table',
-                    y: 'torque',
-                    color: '*',
-                    columns: ['EngineType', 'torque', 'rpm'],
-                    columnTitles: ['Engine Type', 'Engine Torque', 'Engine RPM'],
-                },
+            charts: [{
+                type: 'table',
+                y: 'torque',
+                color: '*',
+                columns: ['EngineType', 'torque', 'rpm'],
+                columnTitles: ['Engine Type', 'Engine Torque', 'Engine RPM'],
+            }
             ],
             maxLength: 7,
             width: 400,
@@ -84,11 +61,12 @@ class TableChartConfigSample extends Component {
         };
     }
 
+
     render() {
         return (
             <div>
-                <ChartWrapper title="Table Chart Sample" chart="line" media={true} actionBar={false}>
-                    <VizG config={this.mapConfig} metadata={this.metadata} data={this.state.data} />
+                <Row title="Table Chart Sample" chart="line" media={true} actionBar={false}>
+                    <ReactTable config={this.mapConfig} metadata={this.metadata} data={this.state.data} />
                     <br />
                     <br />
                     <pre>
@@ -106,8 +84,8 @@ class TableChartConfigSample extends Component {
                             '}'
                         }
                     </pre>
-                </ChartWrapper>
-                <ChartWrapper title="Sample Data Set" chart="line">
+                </Row>
+                <Row title="Sample Data Set" chart="line">
                     <div>
                         <pre>
                             {
@@ -119,8 +97,8 @@ class TableChartConfigSample extends Component {
                             }
                         </pre>
                     </div>
-                </ChartWrapper>
-                <ChartWrapper title="Sample Data Set" chart="line">
+                </Row>
+                <Row title="Sample Data Set" chart="line">
                     <div>
                         <pre>
                             <p>Main Properties</p>
@@ -152,7 +130,7 @@ class TableChartConfigSample extends Component {
                             </table>
                         </pre>
                     </div>
-                </ChartWrapper>
+                </Row>
             </div>
         );
     }

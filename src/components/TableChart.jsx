@@ -22,7 +22,6 @@ import { scaleLinear } from 'd3';
 import 'react-table/react-table.css';
 import './resources/css/tableChart.css';
 import { getDefaultColorScale } from './helper';
-import Logger from '../utils/log';
 
 class ReactTableTest extends Component {
 
@@ -35,7 +34,7 @@ class ReactTableTest extends Component {
             dataSet: [],
             initialized: false,
             columnColorIndex: 0,
-            colorScale: [],
+            colorScale: []
         };
     }
 
@@ -64,12 +63,6 @@ class ReactTableTest extends Component {
 
         tableConfig.columns.map((column, i) => {
             let colIndex = metadata.names.indexOf(column);
-
-            if (colIndex === -1) {
-                if (process.env.APP_ENV && process.env.APP_ENV !== 'production') {
-                    Logger.error('Unknown data column defined in the table chart configuration');
-                }
-            }
 
             if (!initialized) {
                 columnArray.push({
@@ -155,19 +148,18 @@ class ReactTableTest extends Component {
                         style={{
                             width: '100%',
                             height: '100%',
-                            backgroundColor:
-                                column.range ?
-                                    this._getLinearColor(column.color, column.range, props.value) :
-                                    column.colorMap[props.value],
+                            backgroundColor: column.range ? this._getLinearColor(column.color, column.range, props.value) : column.colorMap[props.value],
                             margin: 0,
-                            textAlign: 'center',
+                            textAlign: 'center'
                         }}
                     >
                         <span>{props.value}</span>
                     </div>);
             }
 
-            chartConfig.push(columnConfig);
+            chartConfig.push(
+                columnConfig
+            );
         });
 
         return (

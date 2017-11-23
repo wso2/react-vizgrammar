@@ -18,8 +18,7 @@
 
 import React, { Component } from 'react';
 import MapGenerator from '../../src/components/MapChart.jsx';
-import Logger from 'log';
-import { ChartWrapper } from './ChartWrapper';
+import { Row } from './util';
 
 class MapChartConfigSample extends Component {
 
@@ -81,8 +80,8 @@ class MapChartConfigSample extends Component {
     render() {
         return (
             <div>
-                <ChartWrapper title="World Map Sample" chart="line" media={true} actionBar={false}>
-                    <MapGenerator config={this.mapConfig} metadata={this.metadata} data={this.state.data} onClick={(geo) => { Logger.info(geo); }} />
+                <Row title="World Map Sample" chart="line" media={true} actionBar={false}>
+                    <MapGenerator config={this.mapConfig} metadata={this.metadata} data={this.state.data} onClick={(geo) => { console.info(geo); }} />
                     <pre>
                         {'{\n' +
                             '\tx : \'Country\',\n' +
@@ -91,9 +90,9 @@ class MapChartConfigSample extends Component {
                             '\theight: 200\n' +
                             '}'}
                     </pre>
-                </ChartWrapper>
-                <ChartWrapper title="Europe Map Sample" chart="line" media={true} actionBar={false}>
-                    <MapGenerator config={this.europeConfig} metadata={this.metadata} data={this.state.data} onClick={(geo) => { Logger.info(geo); }} />
+                </Row>
+                <Row title="Europe Map Sample" chart="line" media={true} actionBar={false}>
+                    <MapGenerator config={this.europeConfig} metadata={this.metadata} data={this.state.data} onClick={(geo) => { console.info(geo); }} />
                     <pre>
                         {'{\n' +
                             '\tx : \'Country\',\n' +
@@ -102,9 +101,9 @@ class MapChartConfigSample extends Component {
                             '\theight: 200\n' +
                             '}'}
                     </pre>
-                </ChartWrapper>
-                <ChartWrapper title="United States Map Sample" chart="line" media={true} actionBar={false}>
-                    <MapGenerator config={this.usaConfig} metadata={this.metadata} data={this.state.data2} onClick={(geo) => { Logger.info(geo); }} />
+                </Row>
+                <Row title="United States Map Sample" chart="line" media={true} actionBar={false}>
+                    <MapGenerator config={this.usaConfig} metadata={this.metadata} data={this.state.data2} onClick={(geo) => { console.info(geo); }} />
                     <pre>
                         {'{\n' +
                             '\tx : \'County\',\n' +
@@ -113,8 +112,8 @@ class MapChartConfigSample extends Component {
                             '\theight: 200\n' +
                             '}'}
                     </pre>
-                </ChartWrapper>
-                <ChartWrapper title="Sample Data Set" chart="line" media={false} actionBar={false}>
+                </Row>
+                <Row title="Sample Data Set" chart="line" media={false} actionBar={false}>
                     {/*<MapGenerator config={this.usaConfig} metadata={this.metadata} data={this.state.data2}/>*/}
                     <pre>
                         {'data : [\n' +
@@ -137,8 +136,8 @@ class MapChartConfigSample extends Component {
                             '};'
                         }
                     </pre>
-                </ChartWrapper>
-                <ChartWrapper title="API" chart="line" media={false} actionBar={false}>
+                </Row>
+                <Row title="API" chart="line" media={false} actionBar={false}>
                     {/*<MapGenerator config={this.usaConfig} metadata={this.metadata} data={this.state.data2}/>*/}
                     <pre>
                         <p>Main Properties</p>
@@ -200,7 +199,7 @@ class MapChartConfigSample extends Component {
                             </tbody>
                         </table>
                     </pre>
-                </ChartWrapper>
+                </Row>
             </div>
         );
     }

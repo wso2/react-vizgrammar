@@ -17,10 +17,9 @@
  */
 
 import React from 'react';
-import { ChartWrapper } from './ChartWrapper';
+import { Row } from './util';
 import './css/Table.css';
 import VizG from '../../src/VizG.jsx';
-import Logger from '../../src/utils/log';
 
 export default class LineChartConfigSample extends React.Component {
 
@@ -29,38 +28,36 @@ export default class LineChartConfigSample extends React.Component {
         this.state = {
             data: [[1, 10, 23, 'piston'], [1, 20, 34, 'rotary']],
             data2: [[1, 10, 23, 'piston']],
-            timer: 0,
+            timer: 0
         };
 
         this.interval_jd = null;
 
         this.metadata = {
             names: ['rpm', 'torque', 'horsepower', 'EngineType', 'weight'],
-            types: ['linear', 'linear', 'linear', 'ordinal', 'linear'],
+            types: ['linear', 'linear', 'linear', 'ordinal', 'linear']
         };
 
         this.lineChartConfig = {
             charts: [{ type: 'arc', x: 'torque', color: 'EngineType', mode: 'donut' }],
             width: 300,
             height: 300,
-            legendOrientation: 'top',
+            legendOrientation: 'top'
         };
 
         this.configPie = {
             charts: [{ type: 'arc', x: 'torque', color: 'EngineType', mode: 'pie' }],
             width: 300,
-            height: 300,
+            height: 300
         };
 
         this.configT = {
-            charts: [{ type: 'arc', x: 'torque', color: 'EngineType', colorScale: ['steelblue', '#80ccff'] }],
+            charts: [{ type: 'arc', x: 'torque', color: 'EngineType', colorScale: ['steelblue', '#80ccff'], }],
 
             tooltip: { enabled: false },
-            legend: false,
-percentage: true,
-colorScale: ['steelblue', '#80ccff'],
+            legend: false, percentage: true, colorScale: ['steelblue', '#80ccff'],
             width: 300,
-            height: 300,
+            height: 300
         };
     }
 
@@ -71,14 +68,15 @@ colorScale: ['steelblue', '#80ccff'],
                     [this.state.timer, this.state.timer === 20 ? null : Math.random() * 100, 10, 'piston'],
                     [this.state.timer, Math.random() * 100, 10, 'rotary'],
                     [this.state.timer, this.state.timer === 20 ? null : Math.random() * 100, 10, 'piston2'],
-                    [this.state.timer, Math.random() * 100, 10, 'rotary2'],
+                    [this.state.timer, Math.random() * 100, 10, 'rotary2']
                 ],
                 data2: [
 
-                    [this.state.timer, Math.random() * 100, Math.random() * 100, 'rotary'],
+                    [this.state.timer, Math.random() * 100, Math.random() * 100, 'rotary']
                 ],
-                timer: this.state.timer + 1,
+                timer: this.state.timer + 1
             });
+
         }, 500);
     }
 
@@ -90,8 +88,8 @@ colorScale: ['steelblue', '#80ccff'],
         return (
             <div>
                 <center><h1>Line Chart Config Samples</h1></center>
-                <ChartWrapper title="Donut Chart Sample" chart="line" media actionBar={false}>
-                    <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data} onClick={(data) => { Logger.info(data); }} />
+                <Row title="Donut Chart Sample" chart="line" media={true} actionBar={false}>
+                    <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data} onClick={(data) => { console.info(data) }} />
                     <br /><br />
                     <div style={{ display: 'block' }}>
                         <pre>
@@ -105,8 +103,8 @@ colorScale: ['steelblue', '#80ccff'],
                             }
                         </pre>
                     </div>
-                </ChartWrapper>
-                <ChartWrapper title="Pie Chart Sample" chart="line" media actionBar={false}>
+                </Row>
+                <Row title="Pie Chart Sample" chart="line" media={true} actionBar={false}>
                     <VizG config={this.configPie} metadata={this.metadata} data={this.state.data} />
                     <br />
                     <div>
@@ -120,8 +118,8 @@ colorScale: ['steelblue', '#80ccff'],
                             }
                         </pre>
                     </div>
-                </ChartWrapper>
-                <ChartWrapper title="Donut Chart Sample" chart="line" media actionBar={false}>
+                </Row>
+                <Row title="Donut Chart Sample" chart="line" media={true} actionBar={false}>
                     <VizG config={this.configT} metadata={this.metadata} data={this.state.data} />
                     <br /><br />
                     <div style={{ display: 'block' }}>
@@ -136,8 +134,8 @@ colorScale: ['steelblue', '#80ccff'],
                             }
                         </pre>
                     </div>
-                </ChartWrapper>
-                <ChartWrapper title="Sample Data Set" chart="line">
+                </Row>
+                <Row title="Sample Data Set" chart="line">
                     <div>
                         <pre>
                             {
@@ -149,8 +147,8 @@ colorScale: ['steelblue', '#80ccff'],
                             }
                         </pre>
                     </div>
-                </ChartWrapper>
-                <ChartWrapper title="API" chart="line">
+                </Row>
+                <Row title="API" chart="line">
                     <div>
                         <pre>
                             <p>Main Properties</p>
@@ -228,8 +226,7 @@ colorScale: ['steelblue', '#80ccff'],
                                         <td>colorScale</td>
                                         <td>string | Array(string)</td>
                                         <td>color set to use in the charts for predefined colors check <a
-                                            href="https://github.com/d3/d3-3.x-api-reference/blob/master/Ordinal-Scales.md#categorical-colors"
-                                        >d3-documentation</a></td>
+                                            href="https://github.com/d3/d3-3.x-api-reference/blob/master/Ordinal-Scales.md#categorical-colors">d3-documentation</a></td>
                                     </tr>
                                     <tr>
                                         <td>colorDomain</td>
@@ -240,7 +237,7 @@ colorScale: ['steelblue', '#80ccff'],
                             </table>
                         </pre>
                     </div>
-                </ChartWrapper>
+                </Row>
             </div>
         );
     }
