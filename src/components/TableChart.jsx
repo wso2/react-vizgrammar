@@ -22,7 +22,7 @@ import { scaleLinear } from 'd3';
 import 'react-table/react-table.css';
 import './resources/css/tableChart.css';
 import { getDefaultColorScale } from './helper';
-import Logger from '../utils/log';
+import VizGError from '../VizGError';
 
 class ReactTableTest extends Component {
 
@@ -66,9 +66,7 @@ class ReactTableTest extends Component {
             let colIndex = metadata.names.indexOf(column);
 
             if (colIndex === -1) {
-                if (process.env.APP_ENV && process.env.APP_ENV !== 'production') {
-                    Logger.error('Unknown data column defined in the table chart configuration');
-                }
+                throw new VizGError('TableChart','Unknown data column defined in the table chart configuration');
             }
 
             if (!initialized) {
