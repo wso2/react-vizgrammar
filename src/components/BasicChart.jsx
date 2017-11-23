@@ -729,7 +729,7 @@ export default class BasicCharts extends React.Component {
                                         }, {
                                             target: 'labels',
                                             mutation: (props) => {
-                                                const fill = props.style && props.style.fill;
+                                                const fill = props.style ? props.style.fill : null;
                                                 return fill === LEGEND_DISABLED_COLOR ?
                                                     { style: { fill: config.style.legendTextColor } } :
                                                     { style: { fill: LEGEND_DISABLED_COLOR } };
