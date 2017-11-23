@@ -17,7 +17,7 @@
  */
 import React, { Component } from 'react';
 import VizG from '../../src/VizG.jsx';
-import { Frame } from './Frame';
+import { ChartWrapper } from './ChartWrapper';
 
 class TableChartConfigSample extends Component {
 
@@ -87,7 +87,7 @@ class TableChartConfigSample extends Component {
     render() {
         return (
             <div>
-                <Frame title="Table Chart Sample" chart="line" media={true} actionBar={false}>
+                <ChartWrapper title="Table Chart Sample" chart="line" media={true} actionBar={false}>
                     <VizG config={this.mapConfig} metadata={this.metadata} data={this.state.data} />
                     <br />
                     <br />
@@ -106,8 +106,8 @@ class TableChartConfigSample extends Component {
                             '}'
                         }
                     </pre>
-                </Frame>
-                <Frame title="Sample Data Set" chart="line">
+                </ChartWrapper>
+                <ChartWrapper title="Sample Data Set" chart="line">
                     <div>
                         <pre>
                             {
@@ -119,8 +119,8 @@ class TableChartConfigSample extends Component {
                             }
                         </pre>
                     </div>
-                </Frame>
-                <Frame title="Sample Data Set" chart="line">
+                </ChartWrapper>
+                <ChartWrapper title="Sample Data Set" chart="line">
                     <div>
                         <pre>
                             <p>Main Properties</p>
@@ -152,7 +152,7 @@ class TableChartConfigSample extends Component {
                             </table>
                         </pre>
                     </div>
-                </Frame>
+                </ChartWrapper>
             </div>
         );
     }

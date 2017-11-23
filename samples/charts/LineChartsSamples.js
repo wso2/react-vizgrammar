@@ -17,7 +17,7 @@
  */
 
 import React from 'react';
-import { Frame } from './Frame';
+import { ChartWrapper } from './ChartWrapper';
 import './css/Table.css';
 import VizG from '../../src/VizG.jsx';
 
@@ -90,7 +90,7 @@ export default class LineChartConfigSample extends React.Component {
         return (
             <div>
                 <center><h1>Line Chart Config Samples</h1></center>
-                <Frame title="Group MultiLine Chart Sample" chart="line" media actionBar={false}>
+                <ChartWrapper title="Group MultiLine Chart Sample" chart="line" media actionBar={false}>
                     <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data} />
                     <br /><br />
                     <div style={{ display: 'block' }}>
@@ -104,8 +104,8 @@ export default class LineChartConfigSample extends React.Component {
                             }
                         </pre>
                     </div>
-                </Frame>
-                <Frame title="Multi Line Chart Sample" chart="line" media actionBar={false}>
+                </ChartWrapper>
+                <ChartWrapper title="Multi Line Chart Sample" chart="line" media actionBar={false}>
                     <VizG config={this.singleLineChartConfig} metadata={this.metadata} data={this.state.data2} />
                     <br />
                     <div>
@@ -119,9 +119,9 @@ export default class LineChartConfigSample extends React.Component {
                             }
                         </pre>
                     </div>
-                </Frame>
+                </ChartWrapper>
                 
-                <Frame title="Sample Data Set" chart="line">
+                <ChartWrapper title="Sample Data Set" chart="line">
                     <div>
                         <pre>
                             {
@@ -133,8 +133,8 @@ export default class LineChartConfigSample extends React.Component {
                             }
                         </pre>
                     </div>
-                </Frame>
-                <Frame title="API" chart="line">
+                </ChartWrapper>
+                <ChartWrapper title="API" chart="line">
                     <div>
                         <pre>
                             <p>Main Properties</p>
@@ -245,7 +245,7 @@ export default class LineChartConfigSample extends React.Component {
                             </table>
                         </pre>
                     </div>
-                </Frame>
+                </ChartWrapper>
             </div>
         );
     }

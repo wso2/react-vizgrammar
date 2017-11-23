@@ -17,7 +17,7 @@
  */
 
 import React from 'react';
-import { Frame } from './Frame';
+import { ChartWrapper } from './ChartWrapper';
 import './css/Table.css';
 import VizG from '../../src/VizG.jsx';
 
@@ -75,7 +75,7 @@ export default class ScatterChartConfigSample extends React.Component {
         return (
             <div>
                 <center><h1>Scatter Config Samples</h1></center>
-                <Frame title="Group MultiLine Chart Sample" chart="line" media={true} actionBar={false}>
+                <ChartWrapper title="Group MultiLine Chart Sample" chart="line" media={true} actionBar={false}>
                     <VizG config={this.scatterPlotConfig} metadata={this.metadata} data={this.state.scatterPlot} />
                     <br />
                     <div>
@@ -95,8 +95,8 @@ export default class ScatterChartConfigSample extends React.Component {
                                 '}'}
                         </pre>
                     </div>
-                </Frame>
-                <Frame title="Sample Data Set" chart="line">
+                </ChartWrapper>
+                <ChartWrapper title="Sample Data Set" chart="line">
                     <div>
                         <pre>
                             {
@@ -108,8 +108,8 @@ export default class ScatterChartConfigSample extends React.Component {
                             }
                         </pre>
                     </div>
-                </Frame>
-                <Frame title="API" chart="line">
+                </ChartWrapper>
+                <ChartWrapper title="API" chart="line">
                     <div>
                         <pre>
                             <p>Main Properties</p>
@@ -184,7 +184,7 @@ export default class ScatterChartConfigSample extends React.Component {
                             </table>
                         </pre>
                     </div>
-                </Frame>
+                </ChartWrapper>
             </div>
         );
     }
