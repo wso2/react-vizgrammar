@@ -19,7 +19,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { VictoryLabel } from 'victory';
-import Logger from '../utils/log';
+import VizGError from '../VizGError';
 
 export default class NumberCharts extends React.Component {
     constructor(props) {
@@ -51,9 +51,7 @@ export default class NumberCharts extends React.Component {
         const xIndex = metadata.names.indexOf(config.x);
 
         if (xIndex === -1) {
-            if (process.env.APP_ENV && process.env.APP_ENV !== 'production') {
-                Logger.error("Unknown 'x' field defined in the Number Chart config.");
-            }
+            throw new VizGError('MapChart', "Unknown 'x' field defined in the Number Chart config.");
         }
 
         if (data.length > 0) {

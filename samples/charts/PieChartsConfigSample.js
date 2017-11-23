@@ -20,7 +20,6 @@ import React from 'react';
 import { ChartWrapper } from './ChartWrapper';
 import './css/Table.css';
 import VizG from '../../src/VizG.jsx';
-import Logger from '../../src/utils/log';
 
 export default class LineChartConfigSample extends React.Component {
 
@@ -91,7 +90,7 @@ colorScale: ['steelblue', '#80ccff'],
             <div>
                 <center><h1>Line Chart Config Samples</h1></center>
                 <ChartWrapper title="Donut Chart Sample" chart="line" media actionBar={false}>
-                    <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data} onClick={(data) => { Logger.info(data); }} />
+                    <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data} />
                     <br /><br />
                     <div style={{ display: 'block' }}>
                         <pre>

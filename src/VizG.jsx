@@ -25,7 +25,7 @@ import MapGenerator from './components/MapChart.jsx';
 import TableCharts from './components/TableChart.jsx';
 import NumberCharts from './components/NumberChart.jsx';
 import InlineCharts from './components/InlineChart.jsx';
-import Logger from './utils/log';
+import VizGError from './VizGError';
 
 class VizG extends Component {
 
@@ -125,10 +125,7 @@ class VizG extends Component {
                     />
                 );
             default:
-                if (process.env.APP_ENV && process.env.APP_ENV !== 'production') {
-                    Logger.error('Unknown chart type defined in the chart config.');
-                }
-                return null;
+                throw new VizGError('VizG', 'Unknown chart ' + chartType + 'defined in the chart config.');
         }
     }
 }

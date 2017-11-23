@@ -40,7 +40,7 @@ import { formatPrefix, timeFormat } from 'd3';
 import { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { getDefaultColorScale } from './helper';
-import Logger from '../utils/log';
+import VizGError from '../VizGError';
 
 const LEGEND_DISABLED_COLOR = 'grey';
 
@@ -70,6 +70,7 @@ export default class BasicCharts extends React.Component {
 
         this.xRange = [];
         this.chartConfig = null;
+        this.ClassContext = 'BasicChart';
     }
 
     componentDidMount() {
@@ -119,9 +120,7 @@ export default class BasicCharts extends React.Component {
                 xScale = 'ordinal';
                 break;
             default:
-                if (process.env.APP_ENV && process.env.APP_ENV !== 'production') {
-                    Logger.error('unsupported data type on xAxis');
-                }
+                throw new VizGError(this.ClassContext, 'Unsupported data type on xAxis');
         }
 
         xScale = metadata.types[xIndex] === 'time' ? 'time' : xScale;
@@ -465,9 +464,7 @@ export default class BasicCharts extends React.Component {
                     break;
                 }
                 default:
-                    if (process.env.APP_ENV && process.env.APP_ENV !== 'production') {
-                        Logger.error('Error in rendering unknown chart type');
-                    }
+                    throw new VizGError(this.ClassContext, 'Error in rendering unknown chart type');
             }
 
             return null;
