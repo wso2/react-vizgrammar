@@ -66,8 +66,8 @@ export default class NumberCharts extends React.Component {
 
         const { config } = this.props;
         const { width, height, prevValue, value } = this.state;
-        const HighValueColor = '#109618';
-        const LowValueColor = '#B82E2E';
+        const highValueColor = '#109618';
+        const lowValueColor = '#B82E2E';
 
         return (
             <svg height={'100%'} width={'100%'} viewBox={`0 0 ${width} ${height}`}>
@@ -101,7 +101,7 @@ export default class NumberCharts extends React.Component {
                     x={width / 2}
                     y={(height / 2) + 50}
                     text={(Math.abs((100 * ((value - prevValue) / prevValue))).toFixed(2)) + '%'}
-                    style={{ fill: prevValue < value ? HighValueColor : LowValueColor, fontSize: width / 20}}
+                    style={{ fill: prevValue < value ? highValueColor : lowValueColor, fontSize: width / 20}}
                 />
                 <VictoryLabel
                     textAnchor="middle"
@@ -109,7 +109,7 @@ export default class NumberCharts extends React.Component {
                     x={(width / 2) + 50}
                     y={((height / 2) + 50)}
                     text={prevValue < value ? '↑' : prevValue === value ? '' : '↓'}
-                    style={{ fill: prevValue < value ? HighValueColor : LowValueColor, fontSize: width / 20}}
+                    style={{ fill: prevValue < value ? highValueColor : lowValueColor, fontSize: width / 20}}
                 />
             </svg>
         );
