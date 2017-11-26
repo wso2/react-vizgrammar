@@ -19,6 +19,9 @@ import React from 'react';
 import VizG from '../src/index';
 import { ChartWrapper } from './charts/ChartWrapper.jsx';
 
+/**
+ * This class will render a Landing page for all the chart samples.
+ */
 export default class App extends React.Component {
     constructor(props) {
         super(props);

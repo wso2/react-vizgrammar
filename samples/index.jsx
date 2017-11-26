@@ -39,16 +39,16 @@ import TableCharts from './charts/TableChartConfigSample.jsx';
 ReactDOM.render(
     <Router>
         <MuiThemeProvider muiTheme={getMuiTheme(LightBaseTheme)}>
-        <div>
-            <Route exact path="/" component={App} />
-            <Route exact path="/line-charts" component={LineChart} />
-            <Route exact path="/bar-charts" component={BarChart} />
-            <Route exact path="/area-charts/" component={AreaChart} />
-            <Route exact path='/scatter-charts' component={ScatterPlot} />
-            <Route exact path='/pie-charts' component={PieChart} />
-            <Route exact path='/map-charts' component={MapChartConfigSample} />
-            <Route exact path='/number-charts' component={NumberChartConfigSample} />
-            <Route exact path='/table-charts' component={TableCharts} />
-        </div>
+            <div>
+                <Route exact path="/" component={App} />
+                <Route exact path="/line-charts" component={LineChart} />
+                <Route exact path="/bar-charts" component={BarChart} />
+                <Route exact path="/area-charts/" component={AreaChart} />
+                <Route exact path='/scatter-charts' component={ScatterPlot} />
+                <Route exact path='/pie-charts' component={PieChart} />
+                <Route exact path='/map-charts' component={MapChartConfigSample} />
+                <Route exact path='/number-charts' component={NumberChartConfigSample} />
+                <Route exact path='/table-charts' component={TableCharts} />
+            </div>
         </MuiThemeProvider>
     </Router>, document.getElementById('samples'));

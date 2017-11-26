@@ -20,6 +20,9 @@ import { ChartWrapper } from './ChartWrapper.jsx';
 import './css/Table.css';
 import VizG from '../../src/VizG.jsx';
 
+/**
+ * This class will render a page that contains samples on how to use Bar charts.
+ */
 export default class BarChartConfigSample extends React.Component {
     constructor(props) {
         super(props);
