@@ -16,23 +16,15 @@
  * under the License.
  */
 // TODO: update documentation on chart configurations
-// TODO: rewrite brush and zoom with brush container
 import React from 'react';
 import {
-    VictoryArea,
     VictoryAxis,
-    VictoryBar,
     VictoryChart,
     VictoryContainer,
     VictoryGroup,
     VictoryLabel,
     VictoryLegend,
-    VictoryLine,
-    VictoryPortal,
-    VictoryScatter,
     VictoryStack,
-    VictoryTheme,
-    VictoryTooltip,
     VictoryVoronoiContainer,
 } from 'victory';
 import PropTypes from 'prop-types';
