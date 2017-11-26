@@ -22,7 +22,6 @@ import AppBar from 'material-ui/AppBar';
 import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 
-
 /**
  * This class will render the card view that will be used to present Charts.
  */
