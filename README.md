@@ -19,7 +19,7 @@ To manually build React-VizGrammar you Node.js and npm installed in the PC. then
 
 In order to build and run the samples navigate to the samples directory in the main directory and run,
 ```bash
-    npm run
+    npm install
     npm run samples
 ```
 
