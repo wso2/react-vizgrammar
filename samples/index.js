@@ -31,19 +31,18 @@ import PieChart from './charts/PieChartsConfigSample';
 import MapChartConfigSample from './charts/MapChartConfigSample';
 import NumberChartConfigSample from './charts/NumberChartConfigSample';
 import TableCharts from './charts/TableChartConfigSample';
-import LightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
-import DarkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {
-    grey700, grey100, grey300, grey400, grey500, darkBlack, fullBlack, deepOrange500,
+    white, lightWhite, grey700, grey100, grey300, grey400, grey500, darkBlack, fullBlack, deepOrange500,
 } from 'material-ui/styles/colors';
 import {fade} from 'material-ui/utils/colorManipulator';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import './charts/css/default.css';
 
-const muiTheme = getMuiTheme({
+// TODO: implement switchable states for light and dark themes
+const muiLightTheme = getMuiTheme({
     fontFamily: 'Roboto, sans-serif',
     palette: {
         primary1Color: grey700,
@@ -63,9 +62,29 @@ const muiTheme = getMuiTheme({
     },
 });
 
+const muiDarkTheme = getMuiTheme({
+    fontFamily: 'Roboto, sans-serif',
+    palette: {
+        primary1Color: grey700,
+        primary2Color: grey500,
+        primary3Color: grey400,
+        accent1Color: deepOrange500,
+        accent2Color: grey100,
+        accent3Color: grey500,
+        textColor: lightWhite,
+        alternateTextColor: grey100,
+        canvasColor: darkBlack,
+        borderColor: grey700,
+        disabledColor: fade(white, 0.3),
+        pickerHeaderColor: grey700,
+        clockCircleColor: fade(white, 0.07),
+        shadowColor: fullBlack,
+    },
+});
+
 ReactDOM.render(
     <Router>
-        <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
+        <MuiThemeProvider muiTheme={getMuiTheme(muiLightTheme)}>
             <AppBar
                 title="react-vizgrammer"
                 iconStyleRight={{ color: '#ffffff',}}
