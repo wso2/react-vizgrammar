@@ -18,7 +18,7 @@
 
 import React, { Component } from 'react';
 import MapGenerator from '../../src/components/MapChart.jsx';
-import { ChartWrapper } from './ChartWrapper';
+import { ChartWrapper } from './ChartWrapper.jsx';
 
 class MapChartConfigSample extends Component {
 

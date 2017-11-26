@@ -16,7 +16,7 @@
  * under the License.
  */
 import React, { Component } from 'react';
-import { ChartWrapper } from './ChartWrapper';
+import { ChartWrapper } from './ChartWrapper.jsx';
 import VizG from '../../src/VizG.jsx';
 
 class TableChartConfigSample extends Component {

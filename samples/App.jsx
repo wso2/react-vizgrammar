@@ -17,7 +17,7 @@
  */
 import React from 'react';
 import VizG from '../src/index';
-import { ChartWrapper } from './charts/ChartWrapper';
+import { ChartWrapper } from './charts/ChartWrapper.jsx';
 
 export default class App extends React.Component {
     constructor(props) {

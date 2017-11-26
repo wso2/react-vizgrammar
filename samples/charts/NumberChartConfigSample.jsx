@@ -18,7 +18,7 @@
 
 import React, { Component } from 'react';
 import NumberCharts from '../../src/components/NumberChart.jsx';
-import { ChartWrapper } from './ChartWrapper';
+import { ChartWrapper } from './ChartWrapper.jsx';
 
 class NumberChartConfigSample extends Component {
 
