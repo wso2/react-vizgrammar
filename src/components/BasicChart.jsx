@@ -41,6 +41,7 @@ import { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { getDefaultColorScale } from './helper';
 import VizGError from '../VizGError';
+import { generateLineOrAreaChartComponent, generateBarChartComponent } from './BasicChartHelper.jsx';
 
 const LEGEND_DISABLED_COLOR = 'grey';
 
@@ -53,8 +54,8 @@ export default class BasicCharts extends React.Component {
         super(props);
         this.state = {
             dataBuffer: [],
-            height: props.config.height || props.height || 450,
-            width: props.config.width || props.width || 800,
+            height: props.config.height || props.height,
+            width: props.config.width || props.width,
             dataSets: {},
             chartArray: [],
             initialized: false,
@@ -124,7 +125,6 @@ export default class BasicCharts extends React.Component {
                 throw new VizGError(this.ClassContext, 'Unsupported data type on xAxis');
         }
 
-        xScale = metadata.types[xIndex] === 'time' ? 'time' : xScale;
         config.charts.map((chart, chartIndex) => {
             orientation = orientation === 'left' ? orientation : (chart.orientation || 'bottom');
 
@@ -288,50 +288,7 @@ export default class BasicCharts extends React.Component {
                                     data={dataSets[dataSetName]}
                                     color={chart.dataSetNames[dataSetName]}
                                 >
-                                    <VictoryLine
-                                        style={{
-                                            data: {
-                                                strokeWidth: config.charts[chartIndex].style ?
-                                                    config.charts[chartIndex].style.strokeWidth || null : null,
-                                            },
-                                        }}
-                                    />
-                                    <VictoryPortal>
-                                        <VictoryScatter
-                                            labels={
-                                                d => `${config.x}:${Number(d.x).toFixed(2)}\n
-                                                ${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}`
-                                            }
-                                            labelComponent={
-                                                <VictoryTooltip
-                                                    orientation='top'
-                                                    pointerLength={4}
-                                                    cornerRadius={2}
-                                                    flyoutStyle={{fill: '#000', fillOpacity: '0.8', strokeWidth: 0}}
-                                                    style={{fill: '#b0b0b0'}}
-                                                />
-                                            }
-                                            size={(
-                                                config.charts[chartIndex].style ?
-                                                    config.charts[chartIndex].style.markRadius || 4 :
-                                                    4
-                                            )}
-                                            events={[{
-                                                target: 'data',
-                                                eventHandlers: {
-                                                    onClick: () => {
-                                                        return [
-                                                            {
-                                                                target: 'data',
-                                                                mutation: this._handleMouseEvent,
-                                                            },
-                                                        ];
-                                                    },
-                                                },
-                                            }]}
-
-                                        />
-                                    </VictoryPortal>
+                                    {generateLineOrAreaChartComponent(config, chartIndex, this._handleMouseEvent)}
                                 </VictoryGroup>
                             ));
                         }
@@ -360,47 +317,10 @@ export default class BasicCharts extends React.Component {
                                     color={chart.dataSetNames[dataSetName]}
 
                                 >
-                                    <VictoryArea
-                                        style={{ data: { fillOpacity: config.charts[chartIndex].style ? config.charts[chartIndex].style.fillOpacity || 0.1 : 0.1 } }}
-                                    />
-                                    <VictoryPortal>
-                                        <VictoryScatter
-                                            labels={d => `${config.x}:${Number(d.x).toFixed(2)}\n
-                                                          ${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}`}
-                                            labelComponent={
-                                                <VictoryTooltip
-                                                    orientation='top'
-                                                    pointerLength={4}
-                                                    cornerRadius={2}
-                                                    flyoutStyle={{fill: '#000', fillOpacity: '0.8', strokeWidth: 0}}
-                                                    style={{fill: '#b0b0b0'}}
-                                                />
-                                            }
-                                            style={{ data: { fillOpacity: config.charts[chartIndex].style ? config.charts[chartIndex].style.markOpacity || 0.5 : 0.5 } }}
-                                            size={(
-                                                config.charts[chartIndex].style ?
-                                                    config.charts[chartIndex].style.markRadius || 4 :
-                                                    4
-                                            )}
-                                            events={[{
-                                                target: 'data',
-                                                eventHandlers: {
-                                                    onClick: () => {
-                                                        return [
-                                                            {
-                                                                target: 'data',
-                                                                mutation: this._handleMouseEvent,
-                                                            },
-                                                        ];
-                                                    },
-                                                },
-                                            }]}
-                                        />
-                                    </VictoryPortal>
+                                    {generateLineOrAreaChartComponent(config, chartIndex, this._handleMouseEvent)}
                                 </VictoryGroup>
                             ));
                         }
-
                         return null;
                     });
 
@@ -431,33 +351,8 @@ export default class BasicCharts extends React.Component {
                             .filter(d => (d.name === dataSetName)).length > 0;
                         if (!addChart) {
                             localBar.push((
-                                <VictoryBar
-                                    labels={d => `${config.x}:${d.x}\n${config.charts[chartIndex].y}:${d.y}`}
-                                    labelComponent={
-                                        <VictoryTooltip
-                                            orientation='top'
-                                            pointerLength={4}
-                                            cornerRadius={2}
-                                            flyoutStyle={{fill: '#000', fillOpacity: '0.8', strokeWidth: 0}}
-                                            style={{fill: '#b0b0b0'}}
-                                        />
-                                    }
-                                    data={dataSets[dataSetName]}
-                                    color={chart.dataSetNames[dataSetName]}
-                                    events={[{
-                                        target: 'data',
-                                        eventHandlers: {
-                                            onClick: () => {
-                                                return [
-                                                    {
-                                                        target: 'data',
-                                                        mutation: this._handleMouseEvent,
-                                                    },
-                                                ];
-                                            },
-                                        },
-                                    }]}
-                                />
+                                generateBarChartComponent(config, chartIndex,
+                                    dataSets[dataSetName], chart.dataSetNames[dataSetName])
                             ));
                         }
 
@@ -533,7 +428,7 @@ export default class BasicCharts extends React.Component {
                         height={height}
                         container={<VictoryVoronoiContainer />}
                         padding={{ left: 100, top: 30, bottom: 50, right: 80 }}
-                        scale={{ x: xScale === 'linear' ? 'linear' : 'time', y: 'linear' }}
+                        scale={{ x: xScale === 'ordinal' ? 'linear' : xScale, y: 'linear' }}
                         domain={{
                             x: config.brush && this.state.xDomain[0] ? this.state.xDomain : null,
                             y: this.props.yDomain || null,
@@ -551,8 +446,8 @@ export default class BasicCharts extends React.Component {
                                     fill: config.style ? config.style.axisLabelColor || '#000' : null,
                                     fillOpacity: 0.25, fontSize: 15, padding: 30,
                                 },
-                                grid: {stroke: '#000', strokeOpacity: 0.1},
-                                ticks: {stroke: '#000', strokeOpacity: 0.1, size: 5},
+                                grid: { stroke: '#000', strokeOpacity: 0.1 },
+                                ticks: { stroke: '#000', strokeOpacity: 0.1, size: 5 },
                             }}
                             gridComponent={config.disableVerticalGrid ? <g /> : <line />}
                             label={config.xAxisLabel || config.x}
@@ -599,8 +494,8 @@ export default class BasicCharts extends React.Component {
                                     fill: config.style ? config.style.axisLabelColor || '#000' : null,
                                     fillOpacity: 0.25, fontSize: 15, padding: 30,
                                 },
-                                grid: {stroke: '#000', strokeOpacity: 0.1},
-                                ticks: {stroke: '#000', strokeOpacity: 0.1, size: 5},
+                                grid: { stroke: '#000', strokeOpacity: 0.1 },
+                                ticks: { stroke: '#000', strokeOpacity: 0.1, size: 5 },
                             }}
                             gridComponent={config.disableHorizontalGrid ? <g /> : <line />}
                             label={config.yAxisLabel || config.charts.length > 1 ? '' : config.charts[0].y}
@@ -629,12 +524,8 @@ export default class BasicCharts extends React.Component {
                         this.generateLegendVisualization(config, legendItems, ignoreArray) : null
                 }
                 {config.brush ?
-                    <div
-                        style={{ width: '80%', height: 40, display: 'inline', float: 'left', right: 10 }}
-                    >
-                        <div
-                            style={{ width: '10%', display: 'inline', float: 'left', left: 20 }}
-                        >
+                    <div style={{ width: '80%', height: 40, display: 'inline', float: 'left', right: 10 }} >
+                        <div style={{ width: '10%', display: 'inline', float: 'left', left: 20 }} >
                             <button
                                 onClick={() => {
                                     this.setState({ xDomain: this.xRange });
