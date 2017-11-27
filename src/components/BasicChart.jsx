@@ -33,9 +33,10 @@ import { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { getDefaultColorScale } from './helper';
 import VizGError from '../VizGError';
-import { generateLineOrAreaChartComponent, generateBarChartComponent } from './BasicChartHelper.jsx';
+import { generateLineOrAreaChartComponent, generateBarChartComponent } from './ComponentGenerator.jsx';
+import ChartSkeleton from './core/ChartSkeleton.jsx';
 
-const LEGEND_DISABLED_COLOR = 'grey';
+const LEGEND_DISABLED_COLOR = '#d3d3d3';
 
 /**
  * React component required to render Bar, Line and Area Charts.
@@ -415,100 +416,16 @@ export default class BasicCharts extends React.Component {
                         config.legendOrientation && config.legendOrientation === 'top' ?
                             this.generateLegendVisualization(config, legendItems, ignoreArray) : null
                     }
-                    <VictoryChart
+                    <ChartSkeleton
                         width={width}
                         height={height}
-                        container={<VictoryVoronoiContainer dimension="x" />}
-                        padding={{ left: 100, top: 30, bottom: 50, right: 30 }}
-                        scale={{ x: xScale === 'ordinal' ? null : xScale, y: 'linear' }}
-                        domain={{
-                            x: config.brush && this.state.xDomain[0] ? this.state.xDomain : null,
-                            y: this.props.yDomain || null,
-                        }}
+                        config={config}
+                        xScale={xScale}
+                        yDomain={this.props.yDomain}
+                        xDomain={this.state.xDomain}
                     >
                         {chartComponents}
-                        <VictoryAxis
-                            crossAxis
-                            style={{
-                                axis: {
-                                    stroke: config.style ? config.style.axisColor || '#000' : null, strokeOpacity: 0.5,
-                                },
-                                axisLabel: {
-                                    fill: config.style ? config.style.axisLabelColor || '#000' : null,
-                                    fillOpacity: 0.25, fontSize: 15, padding: 30,
-                                },
-                                grid: { stroke: '#000', strokeOpacity: 0.1 },
-                                ticks: { stroke: '#000', strokeOpacity: 0.1, size: 5 },
-                            }}
-                            gridComponent={config.disableVerticalGrid ? <g /> : <line />}
-                            label={config.xAxisLabel || config.x}
-                            tickFormat={(() => {
-                                if (xScale === 'linear') {
-                                    return (text) => {
-                                        if (text.toString().match(/[a-z]/i)) {
-                                            if (text.length > 6) {
-                                                return text.substring(0, 4) + '...';
-                                            } else {
-                                                return text;
-                                            }
-                                        } else {
-                                            return formatPrefix(',.2', Number(text));
-                                        }
-                                    };
-                                } else if (config.timeFormat) {
-                                    return (date) => {
-                                        return timeFormat(config.timeFormat)(new Date(date));
-                                    };
-                                } else {
-                                    return null;
-                                }
-                            })()}
-                            standalone={false}
-                            tickLabelComponent={
-                                <VictoryLabel
-                                    angle={config.style ? config.style.xAxisTickAngle || 0 : 0}
-                                    style={{
-                                        fill: config.style ? config.style.tickLabelColor || '#000' : null,
-                                        fillOpacity: 0.5, fontSize: 10, padding: 0,
-                                    }}
-                                />
-                            }
-                        />
-                        <VictoryAxis
-                            dependentAxis
-                            crossAxis
-                            style={{
-                                axis: {
-                                    stroke: config.style ? config.style.axisColor || '#000' : null, strokeOpacity: 0.5,
-                                },
-                                axisLabel: {
-                                    fill: config.style ? config.style.axisLabelColor || '#000' : null,
-                                    fillOpacity: 0.25, fontSize: 15, padding: 30,
-                                },
-                                grid: { stroke: '#000', strokeOpacity: 0.1 },
-                                ticks: { stroke: '#000', strokeOpacity: 0.1, size: 5 },
-                            }}
-                            gridComponent={config.disableHorizontalGrid ? <g /> : <line />}
-                            label={config.yAxisLabel || config.charts.length > 1 ? '' : config.charts[0].y}
-                            standalone={false}
-                            tickFormat={(text) => {
-                                if (Number(text) < 999) {
-                                    return text;
-                                } else {
-                                    return formatPrefix(',.2', Number(text));
-                                }
-                            }}
-                            tickLabelComponent={
-                                <VictoryLabel
-                                    angle={config.style ? config.style.yAxisTickAngle || 0 : 0}
-                                    style={{
-                                        fill: config.style ? config.style.tickLabelColor || '#000' : null,
-                                        fillOpacity: 0.5, fontSize: 10, padding: 0,
-                                    }}
-                                />
-                            }
-                        />
-                    </VictoryChart>
+                    </ChartSkeleton>
                 </div>
                 {
                     ['bottom', 'left', 'right'].indexOf(config.legendOrientation) > -1 || !config.legendOrientation ?
@@ -636,13 +553,9 @@ export default class BasicCharts extends React.Component {
                                                 this.setState({
                                                     ignoreArray,
                                                 });
-                                            },
-                                        }, {
-                                            target: 'labels',
-                                            mutation: (props) => {
                                                 const fill = props.style ? props.style.fill : null;
                                                 return fill === LEGEND_DISABLED_COLOR ?
-                                                    { style: { fill: config.style.legendTextColor } } :
+                                                    null :
                                                     { style: { fill: LEGEND_DISABLED_COLOR } };
                                             },
                                         },
