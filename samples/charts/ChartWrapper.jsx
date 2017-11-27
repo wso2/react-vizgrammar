@@ -43,29 +43,26 @@ export class ChartWrapper extends React.Component {
 
     render() {
         return (
-            <div className="col-md-6 tile">
-                <Card style={{ marginTop: 50 }} >
-                    {
-                        this.props.media ?
-                            <AppBar style={{ marginBottom: 10 }} title={this.state.title} showMenuIconButton={false} /> :
-                            <CardTitle title={this.state.title} subtitle={this.state.subtitle} />
-                    }
-                    <CardMedia>
+            <Card style={{ marginTop: 50 }} >
+                {
+                    this.props.media ?
+                        <AppBar style={{ marginBottom: 10 }} title={this.state.title} showMenuIconButton={false} /> :
+                        <CardTitle title={this.state.title} subtitle={this.state.subtitle} />
+                }
+                <CardMedia>
 
-                        <div>
-                            {this.props.children}
-                        </div>
+                    <div>
+                        {this.props.children}
+                    </div>
 
-                    </CardMedia>
-                    <CardActions>
-                        <FlatButton label={this.state.actionBar ? 'View Usage' : ' '} onClick={() => {
-                            window.location.href = this.state.chart + '-charts';
-                        }}
-                        />
-                    </CardActions>
-                </Card>
-            </div>
-
+                </CardMedia>
+                <CardActions>
+                    <FlatButton label={this.state.actionBar ? 'View Usage' : ' '} onClick={() => {
+                        window.location.href = this.state.chart + '-charts';
+                    }}
+                    />
+                </CardActions>
+            </Card>
         );
     }
 }

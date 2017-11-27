@@ -19,6 +19,33 @@ import React from 'react';
 import VizG from '../src/index';
 import { ChartWrapper } from './charts/ChartWrapper.jsx';
 
+const styles = {
+    flexContainer: {
+        display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        flexWrap: 'wrap',
+        flexFlow: 'column wrap',
+        alignContent: 'flex-start',
+    },
+    flexItem:{
+        flex: 1,
+        margin: '0 auto',
+    },
+    sectionHeading:{
+        padding: '50px',
+        fontSize: '24px',
+        color: '#424242',
+        textAlign: 'center',
+    },
+    section:{
+        fontSize: '16px',
+        color: '#212121',
+        textAlign: 'center',
+    },
+};
+
 /**
  * This class will render a Landing page for all the chart samples.
  */
@@ -173,35 +200,34 @@ export default class App extends React.Component {
 
     render() {
         return (
-            <div>
-                <div className={'jumbotron'}>
-                    <center><h1>VizG</h1></center>
-                    <center><p>Charting Config Samples</p></center>
-                </div>
-                <ChartWrapper media={true} chart={'line'} title={'Line Charts'} actionBar={true}>
+            <div style={styles.flexContainer}>
+                <h2 style={styles.sectionHeading}>Charting Config Samples</h2>
+                <p style={styles.section}>
+                    VizGrammar is a wrapper around powerful d3.js and vega.js library. It makes charting easy by adding
+                    required boilerplate code so that developers/designers can get started in few minutes.
+                </p>
+                <ChartWrapper style={styles.flexItem} media={true} chart={'line'} title={'Line Charts'} actionBar={true}>
                     <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data} />
                 </ChartWrapper>
-                <ChartWrapper media={true} chart={'bar'} title={'Bar Charts'} actionBar={true}>
+                <ChartWrapper style={styles.flexItem} media={true} chart={'bar'} title={'Bar Charts'} actionBar={true}>
                     <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data} />
                 </ChartWrapper>
-                <ChartWrapper media={true} chart={'area'} title={'Area Charts'} actionBar={true}>
+                <ChartWrapper style={styles.flexItem} media={true} chart={'area'} title={'Area Charts'} actionBar={true}>
                     <VizG config={this.singleAreaChartConfig} metadata={this.metadata} data={this.state.data2} />
                 </ChartWrapper>
-                <ChartWrapper media={true} chart={'scatter'} title={'Scatter Plots'} actionBar={true}>
+                <ChartWrapper style={styles.flexItem} media={true} chart={'scatter'} title={'Scatter Plots'} actionBar={true}>
                     <VizG config={this.scatterPlotConfig} metadata={this.metadata} data={this.state.scatterPlot} />
                 </ChartWrapper>
-                <ChartWrapper media={true} chart={'pie'} title={'Pie Charts'} actionBar={true}>
+                <ChartWrapper style={styles.flexItem} media={true} chart={'pie'} title={'Pie Charts'} actionBar={true}>
                     <VizG config={this.pieChartConfig} metadata={this.metadata} data={this.state.data} />
                 </ChartWrapper>
-                <ChartWrapper title="Number Charts" chart="number" media={true} actionBar={true}>
+                <ChartWrapper style={styles.flexItem} title="Number Charts" chart="number" media={true} actionBar={true}>
                     <VizG config={this.numConfig} metadata={this.metadata} data={this.state.data} />
-
                 </ChartWrapper>
-                <ChartWrapper title="Map Charts" chart="map" media={true} actionBar={true}>
+                <ChartWrapper style={styles.flexItem} title="Map Charts" chart="map" media={true} actionBar={true}>
                     <VizG config={this.mapConfig} metadata={this.mapMetadata} data={this.state.mapData} />
-
                 </ChartWrapper>
-                <ChartWrapper media={true} chart={'table'} title={'Table Charts'} actionBar={true}>
+                <ChartWrapper style={styles.flexItem} media={true} chart={'table'} title={'Table Charts'} actionBar={true}>
                     <VizG config={this.tableConfig} metadata={this.metadata} data={this.state.data} />
                 </ChartWrapper>
             </div>

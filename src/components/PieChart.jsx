@@ -199,7 +199,13 @@ export default class PieCharts extends React.Component {
                         colorScale={chart.colorScale}
                         data={config.percentage ? dataSets : pieChartData}
                         labelComponent={config.percentage ? <VictoryLabel text={''} /> :
-                            <VictoryTooltip width={50} height={25} />}
+                            <VictoryTooltip
+                                orientation='top'
+                                pointerLength={4}
+                                cornerRadius={2}
+                                flyoutStyle={{ fill: '#000', fillOpacity: '0.8', strokeWidth: 0 }}
+                                style={{ fill: '#b0b0b0'}}
+                            />}
                         labels={config.percentage === 'percentage' ? '' : d => `${d.x} : ${((d.y / total) * 100).toFixed(2)}%`}
                         style={{ labels: { fontSize: 6 } }}
                         labelRadius={height / 4}
