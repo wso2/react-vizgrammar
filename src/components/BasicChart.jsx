@@ -17,6 +17,7 @@
  */
 // TODO: update documentation on chart configurations
 import React from 'react';
+import ReactDOMServer from 'react-dom/server';
 import {
     VictoryAxis,
     VictoryChart,
@@ -33,7 +34,9 @@ import { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { getDefaultColorScale } from './helper';
 import VizGError from '../VizGError';
-import { generateLineOrAreaChartComponent, generateBarChartComponent } from './BasicChartHelper.jsx';
+import { generateLineOrAreaChartComponent, generateBarChartComponent } from './ChartGenerator.jsx';
+import ChartSkeleton from './ChartSkeleton.jsx';
+import LineChart from './LineChart.jsx';
 
 const LEGEND_DISABLED_COLOR = 'grey';
 
@@ -100,7 +103,9 @@ export default class BasicCharts extends React.Component {
         const { config, metadata, data } = props;
         const { dataSets, chartArray } = this.state;
         let { initialized, xScale, orientation, xDomain, seriesXMaxVal, seriesXMinVal } = this.state;
+        if (!config.x) throw new VizGError('BasicChart', "Independent axis 'x' is not defined in the Configuration JSON.");
         const xIndex = metadata.names.indexOf(config.x);
+        if (xIndex === -1) throw new VizGError('BasicChart', `Defined independant axis ${config.x} is not found in metadata`);
         let hasMaxLength = false;
 
         switch (metadata.types[xIndex].toLowerCase()) {
@@ -272,7 +277,6 @@ export default class BasicCharts extends React.Component {
 
                         addChart = ignoreArray
                             .filter(d => (d.name === dataSetName)).length > 0;
-
                         if (!addChart) {
                             lineCharts.push((
                                 <VictoryGroup
@@ -280,7 +284,9 @@ export default class BasicCharts extends React.Component {
                                     data={dataSets[dataSetName]}
                                     color={chart.dataSetNames[dataSetName]}
                                 >
-                                    {generateLineOrAreaChartComponent(config, chartIndex, this._handleMouseEvent)}
+                                    {
+                                        generateLineOrAreaChartComponent(config, chartIndex, this._handleMouseEvent)
+                                    }
                                 </VictoryGroup>
                             ));
                         }
@@ -309,7 +315,9 @@ export default class BasicCharts extends React.Component {
                                     color={chart.dataSetNames[dataSetName]}
 
                                 >
-                                    {generateLineOrAreaChartComponent(config, chartIndex, this._handleMouseEvent)}
+                                    {
+                                        generateLineOrAreaChartComponent(config, chartIndex, this._handleMouseEvent)
+                                    }
                                 </VictoryGroup>
                             ));
                         }
@@ -360,7 +368,6 @@ export default class BasicCharts extends React.Component {
                     } else {
                         barcharts = barcharts.concat(localBar);
                     }
-
                     break;
                 }
                 default:
@@ -415,100 +422,16 @@ export default class BasicCharts extends React.Component {
                         config.legendOrientation && config.legendOrientation === 'top' ?
                             this.generateLegendVisualization(config, legendItems, ignoreArray) : null
                     }
-                    <VictoryChart
-                        width={width}
+                    <ChartSkeleton
+                        config={config}
                         height={height}
-                        container={<VictoryVoronoiContainer dimension="x" />}
-                        padding={{ left: 100, top: 30, bottom: 50, right: 30 }}
-                        scale={{ x: xScale === 'ordinal' ? null : xScale, y: 'linear' }}
-                        domain={{
-                            x: config.brush && this.state.xDomain[0] ? this.state.xDomain : null,
-                            y: this.props.yDomain || null,
-                        }}
+                        width={width}
+                        xScale={xScale}
+                        yDomain={this.props.yDomain}
+                        xDomain={this.state.xDomain}
                     >
                         {chartComponents}
-                        <VictoryAxis
-                            crossAxis
-                            style={{
-                                axis: {
-                                    stroke: config.style ? config.style.axisColor || '#000' : null, strokeOpacity: 0.5,
-                                },
-                                axisLabel: {
-                                    fill: config.style ? config.style.axisLabelColor || '#000' : null,
-                                    fillOpacity: 0.25, fontSize: 15, padding: 30,
-                                },
-                                grid: { stroke: '#000', strokeOpacity: 0.1 },
-                                ticks: { stroke: '#000', strokeOpacity: 0.1, size: 5 },
-                            }}
-                            gridComponent={config.disableVerticalGrid ? <g /> : <line />}
-                            label={config.xAxisLabel || config.x}
-                            tickFormat={(() => {
-                                if (xScale === 'linear') {
-                                    return (text) => {
-                                        if (text.toString().match(/[a-z]/i)) {
-                                            if (text.length > 6) {
-                                                return text.substring(0, 4) + '...';
-                                            } else {
-                                                return text;
-                                            }
-                                        } else {
-                                            return formatPrefix(',.2', Number(text));
-                                        }
-                                    };
-                                } else if (config.timeFormat) {
-                                    return (date) => {
-                                        return timeFormat(config.timeFormat)(new Date(date));
-                                    };
-                                } else {
-                                    return null;
-                                }
-                            })()}
-                            standalone={false}
-                            tickLabelComponent={
-                                <VictoryLabel
-                                    angle={config.style ? config.style.xAxisTickAngle || 0 : 0}
-                                    style={{
-                                        fill: config.style ? config.style.tickLabelColor || '#000' : null,
-                                        fillOpacity: 0.5, fontSize: 10, padding: 0,
-                                    }}
-                                />
-                            }
-                        />
-                        <VictoryAxis
-                            dependentAxis
-                            crossAxis
-                            style={{
-                                axis: {
-                                    stroke: config.style ? config.style.axisColor || '#000' : null, strokeOpacity: 0.5,
-                                },
-                                axisLabel: {
-                                    fill: config.style ? config.style.axisLabelColor || '#000' : null,
-                                    fillOpacity: 0.25, fontSize: 15, padding: 30,
-                                },
-                                grid: { stroke: '#000', strokeOpacity: 0.1 },
-                                ticks: { stroke: '#000', strokeOpacity: 0.1, size: 5 },
-                            }}
-                            gridComponent={config.disableHorizontalGrid ? <g /> : <line />}
-                            label={config.yAxisLabel || config.charts.length > 1 ? '' : config.charts[0].y}
-                            standalone={false}
-                            tickFormat={(text) => {
-                                if (Number(text) < 999) {
-                                    return text;
-                                } else {
-                                    return formatPrefix(',.2', Number(text));
-                                }
-                            }}
-                            tickLabelComponent={
-                                <VictoryLabel
-                                    angle={config.style ? config.style.yAxisTickAngle || 0 : 0}
-                                    style={{
-                                        fill: config.style ? config.style.tickLabelColor || '#000' : null,
-                                        fillOpacity: 0.5, fontSize: 10, padding: 0,
-                                    }}
-                                />
-                            }
-                        />
-                    </VictoryChart>
+                    </ChartSkeleton>
                 </div>
                 {
                     ['bottom', 'left', 'right'].indexOf(config.legendOrientation) > -1 || !config.legendOrientation ?
