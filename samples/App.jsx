@@ -191,7 +191,7 @@ export default class App extends React.Component {
                 timer: this.state.timer + 1,
             });
 
-        }, 500);
+        }, 5000);
     }
 
     componentWillUnmount() {
