@@ -418,14 +418,13 @@ export default class BasicCharts extends React.Component {
                     <VictoryChart
                         width={width}
                         height={height}
-                        container={<VictoryVoronoiContainer />}
-                        padding={{ left: 100, top: 30, bottom: 50, right: 80 }}
-                        scale={{ x: xScale === 'ordinal' ? 'linear' : xScale, y: 'linear' }}
+                        container={<VictoryVoronoiContainer dimension="x" />}
+                        padding={{ left: 100, top: 30, bottom: 50, right: 30 }}
+                        scale={{ x: xScale === 'ordinal' ? null : xScale, y: 'linear' }}
                         domain={{
                             x: config.brush && this.state.xDomain[0] ? this.state.xDomain : null,
                             y: this.props.yDomain || null,
                         }}
-                        style={{ parent: { overflow: 'visible' } }}
                     >
                         {chartComponents}
                         <VictoryAxis
@@ -616,7 +615,7 @@ export default class BasicCharts extends React.Component {
                         name: 'undefined',
                         symbol: { fill: '#333' },
                     }]}
-                    itemsPerRow={config.legendOrientation === 'top' || config.legendOrientation === 'bottom' ? 5 : null}
+                    itemsPerRow={config.legendOrientation === 'top' || config.legendOrientation === 'bottom' ? 5 : 4}
                     events={[
                         {
                             target: 'data',

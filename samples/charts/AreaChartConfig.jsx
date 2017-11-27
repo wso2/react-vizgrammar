@@ -75,7 +75,6 @@ export default class AreaChartConfigSample extends React.Component {
                     [this.state.timer, Math.random() * 100, 10, 'rotary']
                 ],
                 data2: [
-
                     [this.state.timer, Math.random() * 100, Math.random() * 100, 'rotary']
                 ],
                 timer: this.state.timer + 1

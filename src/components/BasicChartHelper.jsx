@@ -17,7 +17,10 @@
  */
 
 import React from 'react';
-import { VictoryLine, VictoryPortal, VictoryScatter, VictoryTooltip, VictoryArea, VictoryBar } from 'victory';
+import { VictoryLine, VictoryScatter, VictoryTooltip, VictoryArea, VictoryBar, VictoryPortal } from 'victory';
+
+const DEFAULT_MARK_RADIUS = 4;
+const DEFAULT_AREA_FILL_OPACITY = 0.1;
 
 export function generateLineOrAreaChartComponent(config, chartIndex, onClick) {
     const chartElement = config.charts[chartIndex].type === 'line' ?
@@ -33,14 +36,15 @@ export function generateLineOrAreaChartComponent(config, chartIndex, onClick) {
             style={{
                 data: {
                     fillOpacity: config.charts[chartIndex].style ?
-                        config.charts[chartIndex].style.fillOpacity || 0.1 : 0.1,
+                        config.charts[chartIndex].style.fillOpacity || DEFAULT_AREA_FILL_OPACITY :
+                        DEFAULT_AREA_FILL_OPACITY,
                 },
             }}
         />);
 
     return ([
         chartElement,
-        (<VictoryPortal>
+        (
             <VictoryScatter
                 labels={
                     d => `${config.x}:${Number(d.x).toFixed(2)}\n
@@ -48,17 +52,17 @@ export function generateLineOrAreaChartComponent(config, chartIndex, onClick) {
                 }
                 labelComponent={
                     <VictoryTooltip
-                        orientation='top'
+                        orientation='right'
                         pointerLength={4}
                         cornerRadius={2}
                         flyoutStyle={{ fill: '#000', fillOpacity: '0.8', strokeWidth: 0 }}
                         style={{ fill: '#b0b0b0' }}
                     />
                 }
+                padding={{ left: 100, top: 30, bottom: 50, right: 30 }}
                 size={(
                     config.charts[chartIndex].style ?
-                        config.charts[chartIndex].style.markRadius || 4 :
-                        4
+                        config.charts[chartIndex].style.markRadius || DEFAULT_MARK_RADIUS : DEFAULT_MARK_RADIUS
                 )}
                 events={[{
                     target: 'data',
@@ -74,8 +78,7 @@ export function generateLineOrAreaChartComponent(config, chartIndex, onClick) {
                     },
                 }]}
 
-            />
-        </VictoryPortal>),
+            />),
     ]);
 }
 
