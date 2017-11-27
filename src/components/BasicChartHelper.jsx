@@ -20,7 +20,6 @@ import React from 'react';
 import { VictoryLine, VictoryPortal, VictoryScatter, VictoryTooltip, VictoryArea, VictoryBar } from 'victory';
 
 export function generateLineOrAreaChartComponent(config, chartIndex, onClick) {
-
     const chartElement = config.charts[chartIndex].type === 'line' ?
         (<VictoryLine
             style={{
@@ -109,5 +108,5 @@ export function generateBarChartComponent(config, chartIndex, data, color, onCli
                 },
             }]}
         />
-    )
+    );
 }
