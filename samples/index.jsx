@@ -38,10 +38,11 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {
     white, lightWhite, grey700, grey100, grey300, grey400, grey500, darkBlack, fullBlack, deepOrange500,
 } from 'material-ui/styles/colors';
-import {fade} from 'material-ui/utils/colorManipulator';
+import { fade } from 'material-ui/utils/colorManipulator';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import './charts/css/default.css';
+import Trials from './charts/Trials';
 
 // TODO: implement switchable states for light and dark themes
 const muiLightTheme = getMuiTheme({
@@ -89,12 +90,15 @@ ReactDOM.render(
         <MuiThemeProvider muiTheme={getMuiTheme(muiLightTheme)}>
             <AppBar
                 title="react-vizgrammer"
-                iconStyleRight={{ color: '#ffffff',}}
+                iconStyleRight={{ color: '#ffffff' }}
                 iconElementRight={<IconButton
-                    iconClassName="muidocs-icon-custom-github" tooltip="bottom-center"
-                    tooltipPosition="top-center" href="https://github.com/wso2/react-vizgrammar"
+                    iconClassName="muidocs-icon-custom-github"
+                    tooltip="bottom-center"
+                    tooltipPosition="top-center"
+                    href="https://github.com/wso2/react-vizgrammar"
 
-                />}/>
+                />}
+            />
             <div className={'lightBaseTheme'}>
                 <Route exact path="/" component={App} />
                 <Route exact path="/line-charts" component={LineChart} />
@@ -105,7 +109,8 @@ ReactDOM.render(
                 <Route exact path='/map-charts' component={MapChartConfigSample} />
                 <Route exact path='/number-charts' component={NumberChartConfigSample} />
                 <Route exact path='/table-charts' component={TableCharts} />
+                <Route exact path='/test' component={Trials} />
+
             </div>
         </MuiThemeProvider>
-    </Router>,
-document.getElementById('samples'));
+    </Router>, document.getElementById('samples'));
