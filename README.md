@@ -51,13 +51,13 @@ Sample data table would be like following:
 
 
 ```metadata.names``` is an array consists of column names/fields of the table where metadata.types records their types 
-(ordinal, time or linear).
-names and types are aligned together in a way that "Column1" => 'ordinal' and "Column2" => 'linear' and so on.
+(ordinal, time or linear),
+```names``` and ```types``` are aligned together in a way that "Column1" => 'ordinal' and "Column2" => 'linear' and so on.
 
 data section is a collection of arrays of data rows. Single row is stored as an array and their element order follows 
 the order of ```metadata.names```.
 
-##Chart Config
+## Chart Config
 
 Once the data structure is ready, React VizGrammar will try to render a chart out of it.
 
