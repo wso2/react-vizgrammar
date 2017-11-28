@@ -12,63 +12,67 @@ where the props
 - ```data``` is the array of data sets fed to the charts.
 - ```metadata``` is the JSON object that contains information about the provided dataset.
 
-### Chart Config
-
-Once the data structure is ready, React VizGrammar will try to render a chart out of it.
-
-Users have to give additional parameters for the widget using config object. It is a JSON object that has well known configuration properties. For an example, user can plot a bar chart by simply giving the chart type in the object as 'bar' in the configuration.
+### Chart ```config``` prop
+Users have to provide parameters for the widget using config object inorder to create the chart type they require. It is a JSON object that has a well defined configuration attributes to customize the chart.
 
 Following is a basic configuration to plot a line chart,
 ```javascript
-let config = {
-    x : "rpm",
-    charts : [{type: "line",  y : "torque", color: "EngineType"}],
-    maxLength: 10,
-    width: 400,
-    height: 200
-}
+    let config = {
+        x : "rpm",
+        charts : [{type: "line",  y : "torque", color: "EngineType"}],
+        maxLength: 10,
+        width: 400,
+        height: 200
+    }
 ```
-### Data Prop and Metadata Prop
-React VizGrammar require you to arrange your source data-set in a tabular way similar to following format.
+### ```data``` prop and ```metadata``` prop
+Once the ```config``` is provided. User can provide a dataset to visualize the chart. For easy interpretation React-VizGrammar require this dataset to be arranged in a tabular way similar to the way explained below.
 ```javascript
-metadata = {
-  "names":["Column1","Column2",...],
-  "types":['ordinal', 'linear',]
-};
+    metadata = {
+        "names": ["Column1", "Column2",...],
+        "types": ['ordinal', 'linear',...]
+    };
 ```
 
-```metadata.names``` is an array consists of column names/fields of the table where metadata.types records their types 
-(ordinal, time or linear),
-```names``` and ```types``` are aligned together in a way that "Column1" => 'ordinal' and "Column2" => 'linear' and so on.
+```metadata.names``` is an array consists of column names/fields of the table and ```metadata.types``` contains their types 
+(ordinal, time or linear), ```names``` and ```types``` are aligned together in a way that "Column1" => 'ordinal' and "Column2" => 'linear' and so on.
 
 ```javascript
-data = [
-  ["value1",numericValue1,...],
-  ["value2",numericValue2,...],
-];
+    data = [
+        ["value1", numericValue1,...],
+        ["value2", numericValue2,...],
+    ];
 ```
-data section is a collection of arrays of data rows. Single row is stored as an array and their element order follows the order of ```metadata.names```.
-
+```data``` collection of arrays of data rows. Single row is stored as an array and their element order follows the order of ```metadata.names```.
 
 Sample data table would be like following:
 ```javascript
-metadata = {
-    "names" : ["rpm","torque","horsepower", "EngineType"],
-    "types" : ["linear","linear", "ordinal","ordinal"]
-};
-data = [
-  [8000, 75, 120, "Piston"], [9000, 81, 130, "Rotary"]
-];
+    metadata = {
+        "names" : ["rpm","torque","horsepower", "EngineType"],
+        "types" : ["linear","linear", "ordinal","ordinal"]
+    };
+
+    data = [
+        [8000, 75, 120, "Piston"], [9000, 81, 130, "Rotary"]
+    ];
 ```
 
 ## Build Process
-To manually build React-VizGrammar you need Node.js and npm installed in the PC. then navigate to the cloned directory 
-and run,
+
+#### Prerequisites
+- NPM
+- Node 
+
+These prerequisites must be installed before proceeding with the build process. 
+
+#### Build the Library
+In order build React-VizGrammar from the sources, Get a clone from this repository then run the following commands in the terminal from the react-vizgrammar directory.
 ```bash
     npm install
 ```
 
-In order to build and run the samples navigate to the samples directory in the main directory and run,
+#### Build and run samples
+To build and run samples navigate to the samples directory inside the main directory and run the following commands.
 ```bash
     npm install
     npm run samples
