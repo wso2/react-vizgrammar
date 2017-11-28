@@ -98,52 +98,29 @@ export default class BasicCharts extends React.Component {
      */
     handleAndSortData(props) {
         const { config, metadata, data } = props;
-        const { dataSets, chartArray } = this.state;
-        let { initialized, xScale, orientation, xDomain, seriesXMaxVal, seriesXMinVal } = this.state;
-
+        const { dataSets } = this.state;
+        let { initialized, chartArray, xScale, orientation, xDomain, seriesXMaxVal, seriesXMinVal } = this.state;
         if (!config.x) {
             throw new VizGError('BasicChart', "Independent axis 'x' is not defined in the Configuration JSON.");
         }
-
         const xIndex = metadata.names.indexOf(config.x);
-
         if (xIndex === -1) {
             throw new VizGError('BasicChart', `Defined independant axis ${config.x} is not found in metadata`);
         }
-
         let hasMaxLength = false;
 
-        switch (metadata.types[xIndex].toLowerCase()) {
-            case 'linear':
-                xScale = 'linear';
-                break;
-            case 'time':
-                xScale = 'time';
-                break;
-            case 'ordinal':
-                xScale = 'ordinal';
-                break;
-            default:
-                throw new VizGError(this.ClassContext, 'Unsupported data type on xAxis');
+        if (['linear', 'time', 'ordinal'].indexOf(metadata.types[xIndex].toLowerCase()) === -1) {
+            throw new VizGError(this.ClassContext, 'Unsupported data type on xAxis');
+        } else {
+            xScale = metadata.types[xIndex].toLowerCase();
+        }
+
+        if (!initialized) {
+            chartArray = this.generateChartArray(config.charts);
         }
 
         config.charts.map((chart, chartIndex) => {
-            orientation = orientation === 'left' ? orientation : (chart.orientation || 'bottom');
-
             const yIndex = metadata.names.indexOf(chart.y);
-            if (!initialized) {
-                chartArray.push({
-                    type: chart.type,
-                    dataSetNames: {},
-                    mode: chart.mode,
-                    orientation: chart.orientation,
-                    colorScale: Array.isArray(chart.colorScale) ? chart.colorScale :
-                        getDefaultColorScale(),
-                    colorIndex: 0,
-                    id: chartArray.length,
-                });
-            }
-
             data.map((datum) => {
                 let dataSetName = metadata.names[yIndex];
                 if (chart.color) {
@@ -152,61 +129,17 @@ export default class BasicCharts extends React.Component {
                 }
 
                 dataSets[dataSetName] = dataSets[dataSetName] || [];
-
+                
                 dataSets[dataSetName].push({ x: datum[xIndex], y: datum[yIndex] });
                 if (dataSets[dataSetName].length > config.maxLength) {
                     hasMaxLength = true;
                     dataSets[dataSetName].shift();
                 }
-
-                const max = Math.max.apply(null, dataSets[dataSetName].map(d => d.x));
+                c
+                onst max = Math.max.apply(null, dataSets[dataSetName].map(d => d.x));
                 const min = Math.min.apply(null, dataSets[dataSetName].map(d => d.x));
 
-                if (xScale === 'linear') {
-                    if (xScale === 'linear' && xDomain[0] !== null) {
-                        if (min > xDomain[0]) {
-                            xDomain[0] = min;
-                            this.xRange[0] = min;
-                        }
-
-                        if (max > xDomain[1]) {
-                            xDomain[1] = max;
-                            this.xRange[1] = max;
-                        }
-                    } else {
-                        xDomain = [min, max];
-                        this.xRange = [min, max];
-                    }
-                }
-
-                if (xScale === 'time') {
-                    if (xScale === 'time' && xDomain[0] !== null) {
-                        if (min > xDomain[0]) {
-                            xDomain[0] = new Date(min);
-                            this.xRange[0] = new Date(min);
-                        }
-
-                        if (max > xDomain[1]) {
-                            xDomain[1] = new Date(max);
-                            this.xRange[1] = new Date(max);
-                        }
-                    } else {
-                        xDomain = [new Date(min), new Date(max)];
-                        this.xRange = [new Date(min), new Date(max)];
-                    }
-                }
-
-                if (seriesXMaxVal === null) {
-                    seriesXMaxVal = max;
-                    seriesXMinVal = min;
-                } else {
-                    if (seriesXMaxVal < max) {
-                        seriesXMaxVal = max;
-                    }
-                    if (seriesXMinVal < min) {
-                        seriesXMinVal = min;
-                    }
-                }
+                this.xRange = xDomain = this.getXDomain(xDomain, [min, max]);
 
                 if (!Object.prototype.hasOwnProperty.call(chartArray[chartIndex].dataSetNames, dataSetName)) {
                     if (chartArray[chartIndex].colorIndex >= chartArray[chartIndex].colorScale.length) {
@@ -242,10 +175,10 @@ export default class BasicCharts extends React.Component {
                 return null;
             });
 
-            if (hasMaxLength && xScale === 'linear') {
+            if (hasMaxLength && (xScale === 'linear' || xScale === 'time')) {
                 Object.keys(dataSets).map((dataSetName) => {
                     dataSets[dataSetName].map((d, k) => {
-                        if (d.x < seriesXMinVal) {
+                        if (d.x < xDomain[0]) {
                             dataSets[dataSetName].splice(k, 1);
                         }
                         return null;
@@ -257,6 +190,45 @@ export default class BasicCharts extends React.Component {
         });
         initialized = true;
         this.setState({ dataSets, chartArray, initialized, xScale, orientation, xDomain });
+    }
+
+    /**
+     * Define xDomain to be used when brushing data
+     * @param domain array containing maximum and minimum of the current dataset
+     */
+    getXDomain(xDomain, domain) {
+        if (xDomain[0] !== null) {
+            if (domain[0] > xDomain[0]) {
+                xDomain[0] = domain[0];
+            }
+
+            if (domain[1] > xDomain[1]) {
+                xDomain[1] = domain[1];
+            }
+        } else {
+            xDomain = [domain[0], domain[1]];
+        }
+
+        return xDomain;
+    }
+
+    /**
+     * Generate the chart array that contains the information on visualization of the charts in config
+     * @param config chart configuration provided
+     * @private
+     */
+    generateChartArray(charts) {
+        return charts.map((chart, chartIndex) => {
+            return {
+                type: chart.type,
+                dataSetNames: {},
+                mode: chart.mode,
+                orientation: chart.orientation,
+                colorScale: Array.isArray(chart.colorScale) ? chart.colorScale : getDefaultColorScale(),
+                colorIndex: 0,
+                id: chartIndex,
+            };
+        });
     }
 
     render() {

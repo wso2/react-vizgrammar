@@ -26,6 +26,7 @@ import TableCharts from './components/TableChart.jsx';
 import NumberCharts from './components/NumberChart.jsx';
 import InlineCharts from './components/InlineChart.jsx';
 import VizGError from './VizGError';
+import BR from './components/BasicChartRefactor';
 
 class VizG extends Component {
 
@@ -83,7 +84,7 @@ class VizG extends Component {
             case 'area':
             case 'bar':
                 return (
-                    <BasicCharts
+                    <BR
                         config={config} metadata={metadata}
                         data={data} onClick={onClick}
                         yDomain={this.props.yDomain}

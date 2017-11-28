@@ -5,6 +5,8 @@ designers and developers can get started and set it up in a few minutes.
 
 A chart can be embedded in a React environment simply by using the VizG react component.
 ```jsx
+    import VizG extend
+
     <VizG config={config} data={data} metadata={metadata} />
 ``` 
 where the props
@@ -25,7 +27,7 @@ Following is a basic configuration to plot a line chart,
         height: 200
     }
 ```
-### ```data``` prop and ```metadata``` prop
+### ```metadata``` prop and ```data``` prop
 Once the ```config``` is provided. User can provide a dataset to visualize the chart. For easy interpretation React-VizGrammar require this dataset to be arranged in a tabular way similar to the way explained below.
 ```javascript
     metadata = {

@@ -43,6 +43,7 @@ import NumberChartConfigSample from './charts/NumberChartConfigSample.jsx';
 import TableCharts from './charts/TableChartConfigSample.jsx';
 import './charts/css/default.css';
 import ScrollToTop from './charts/ScrollToTop';
+import Trials from './charts/Trials';
 
 // TODO: implement switchable states for light and dark themes
 const muiLightTheme = getMuiTheme({
@@ -126,6 +127,9 @@ ReactDOM.render(
                 </ScrollToTop>
                 <ScrollToTop>
                     <Route exact path='/table-charts' component={TableCharts} />
+                </ScrollToTop>
+                <ScrollToTop>
+                    <Route exact path='/test' component={Trials} />
                 </ScrollToTop>
             </div>
         </MuiThemeProvider>
