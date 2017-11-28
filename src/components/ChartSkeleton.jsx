@@ -15,15 +15,18 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import { VictoryChart, VictoryVoronoiContainer, VictoryAxis, VictoryLabel } from 'victory';
-import { formatPrefix, timeFormat } from 'd3';
+import { VictoryChart, VictoryAxis, VictoryVoronoiContainer, VictoryLabel } from 'victory';
+import { timeFormat, formatPrefix } from 'd3';
 
+/**
+ * This class will render a skeleton that's required for a Line, Area or Bar Chart
+ */
 export default class ChartSkeleton extends React.Component {
     render() {
-        const { width, height, xScale, config, yDomain,xDomain } = this.props;
+        const { width, height, xScale, config, yDomain, xDomain } = this.props;
+
         return (
             <VictoryChart
                 width={width}
@@ -158,6 +161,7 @@ ChartSkeleton.propTypes = {
         width: PropTypes.number,
         maxLength: PropTypes.number,
     }).isRequired,
-    yDomain: PropTypes.arrayOf(PropTypes.number),
+    yDomain: PropTypes.number,
     children: PropTypes.element.isRequired,
 };
+

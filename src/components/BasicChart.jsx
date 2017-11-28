@@ -17,25 +17,20 @@
  */
 // TODO: update documentation on chart configurations
 import React from 'react';
-import ReactDOMServer from 'react-dom/server';
 import {
-    VictoryAxis,
-    VictoryChart,
-    VictoryContainer,
     VictoryGroup,
-    VictoryLabel,
-    VictoryLegend,
     VictoryStack,
-    VictoryVoronoiContainer,
 } from 'victory';
 import PropTypes from 'prop-types';
-import { formatPrefix, timeFormat } from 'd3';
-import { Range } from 'rc-slider';
-import 'rc-slider/assets/index.css';
 import { getDefaultColorScale } from './helper';
 import VizGError from '../VizGError';
-import { generateLineOrAreaChartComponent, generateBarChartComponent } from './ComponentGenerator.jsx';
-import ChartSkeleton from './core/ChartSkeleton.jsx';
+import {
+    getLineOrAreaComponent,
+    getBarComponent,
+    getLegendComponent,
+    getBrushComponent,
+} from './ComponentGenerator.jsx';
+import ChartSkeleton from './ChartSkeleton.jsx';
 
 const LEGEND_DISABLED_COLOR = '#d3d3d3';
 
@@ -63,6 +58,9 @@ export default class BasicCharts extends React.Component {
 
         this.handleAndSortData = this.handleAndSortData.bind(this);
         this._handleMouseEvent = this._handleMouseEvent.bind(this);
+        this._legendInteraction = this._legendInteraction.bind(this);
+        this._brushOnChange = this._brushOnChange.bind(this);
+        this._brushReset = this._brushReset.bind(this);
 
         this.xRange = [];
         this.chartConfig = null;
@@ -102,9 +100,13 @@ export default class BasicCharts extends React.Component {
         const { config, metadata, data } = props;
         const { dataSets, chartArray } = this.state;
         let { initialized, xScale, orientation, xDomain, seriesXMaxVal, seriesXMinVal } = this.state;
-        if (!config.x) throw new VizGError('BasicChart', "Independent axis 'x' is not defined in the Configuration JSON.");
+        if (!config.x) {
+            throw new VizGError('BasicChart', "Independent axis 'x' is not defined in the Configuration JSON.");
+        }
         const xIndex = metadata.names.indexOf(config.x);
-        if (xIndex === -1) throw new VizGError('BasicChart', `Defined independant axis ${config.x} is not found in metadata`);
+        if (xIndex === -1) {
+            throw new VizGError('BasicChart', `Defined independant axis ${config.x} is not found in metadata`);
+        }
         let hasMaxLength = false;
 
         switch (metadata.types[xIndex].toLowerCase()) {
@@ -283,7 +285,7 @@ export default class BasicCharts extends React.Component {
                                     data={dataSets[dataSetName]}
                                     color={chart.dataSetNames[dataSetName]}
                                 >
-                                    {generateLineOrAreaChartComponent(config, chartIndex, this._handleMouseEvent)}
+                                    {getLineOrAreaComponent(config, chartIndex, this._handleMouseEvent)}
                                 </VictoryGroup>
                             ));
                         }
@@ -312,7 +314,7 @@ export default class BasicCharts extends React.Component {
                                     color={chart.dataSetNames[dataSetName]}
 
                                 >
-                                    {generateLineOrAreaChartComponent(config, chartIndex, this._handleMouseEvent)}
+                                    {getLineOrAreaComponent(config, chartIndex, this._handleMouseEvent)}
                                 </VictoryGroup>
                             ));
                         }
@@ -346,7 +348,7 @@ export default class BasicCharts extends React.Component {
                             .filter(d => (d.name === dataSetName)).length > 0;
                         if (!addChart) {
                             localBar.push((
-                                generateBarChartComponent(config, chartIndex,
+                                getBarComponent(config, chartIndex,
                                     dataSets[dataSetName], chart.dataSetNames[dataSetName])
                             ));
                         }
@@ -415,7 +417,7 @@ export default class BasicCharts extends React.Component {
                 >
                     {
                         config.legendOrientation && config.legendOrientation === 'top' ?
-                            this.generateLegendVisualization(config, legendItems, ignoreArray) : null
+                            getLegendComponent(config, legendItems, ignoreArray, this._legendInteraction, height, width) : null
                     }
                     <ChartSkeleton
                         width={width}
@@ -430,40 +432,12 @@ export default class BasicCharts extends React.Component {
                 </div>
                 {
                     ['bottom', 'left', 'right'].indexOf(config.legendOrientation) > -1 || !config.legendOrientation ?
-                        this.generateLegendVisualization(config, legendItems, ignoreArray) : null
+                        getLegendComponent(config, legendItems, ignoreArray, this._legendInteraction, height, width) :
+                        null
                 }
                 {config.brush ?
-                    <div style={{ width: '80%', height: 40, display: 'inline', float: 'left', right: 10 }} >
-                        <div style={{ width: '10%', display: 'inline', float: 'left', left: 20 }} >
-                            <button
-                                onClick={() => {
-                                    this.setState({ xDomain: this.xRange });
-                                }}
-                            >
-                                Reset
-                            </button>
-                        </div>
-                        <div
-                            style={{ width: '90%', display: 'inline', float: 'right' }}
-                        >
-                            <Range
-                                max={xScale === 'time' ? this.xRange[1].getDate() : this.xRange[1]}
-                                min={xScale === 'time' ? this.xRange[0].getDate() : this.xRange[0]}
-                                defaultValue={xScale === 'time' ?
-                                    [this.xRange[0].getDate(), this.xRange[1].getDate()] :
-                                    [this.xRange[0], this.xRange[1]]
-                                }
-                                value={xScale === 'time' ?
-                                    [this.state.xDomain[0].getDate(), this.state.xDomain[1].getDate()] :
-                                    this.state.xDomain}
-                                onChange={(d) => {
-                                    this.setState({
-                                        xDomain: d,
-                                    });
-                                }}
-                            />
-                        </div>
-                    </div> : null
+                    getBrushComponent(xScale, this.xRange, this.state.xDomain, this._brushReset, this._brushOnChange) :
+                    null
                 }
             </div >
 
@@ -471,103 +445,42 @@ export default class BasicCharts extends React.Component {
     }
 
     /**
-     * Generate a Legend component to be used in the Charts.
-     * @param config Chart configuration.
-     * @param legendItems Items in the legend.
-     * @param ignoreArray legend items that are ignored in rendering.
+     * function to reset domain of the chart when zoomed in.
+     * @param {Array} xDomain domain range of the x Axis.
      */
-    generateLegendVisualization(config, legendItems, ignoreArray) {
-        return (
-            <div
-                style={{
-                    width: !config.legendOrientation ? '15%' :
-                        (() => {
-                            if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
-                                return '20%';
-                            } else return '100%';
-                        })(),
-                    display: !config.legendOrientation ? 'inline' :
-                        (() => {
-                            if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
-                                return 'inline';
-                            } else return null;
-                        })(),
-                    float: !config.legendOrientation ? 'right' : (() => {
-                        if (config.legendOrientation === 'left') return 'left';
-                        else if (config.legendOrientation === 'right') return 'right';
-                        else return null;
-                    })(),
-                }}
-            >
-                <VictoryLegend
-                    containerComponent={<VictoryContainer responsive />}
-                    centerTitle
-                    height={(() => {
-                        if (!config.legendOrientation) return this.state.height;
-                        else if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
-                            return this.state.height;
-                        } else return 100;
-                    })()}
-                    width={(() => {
-                        if (!config.legendOrientation) return 200;
-                        else if (config.legendOrientation === 'left' || config.legendOrientation === 'right') return 200;
-                        else return this.state.width;
-                    })()}
-                    orientation={
-                        !config.legendOrientation ?
-                            'vertical' :
-                            (() => {
-                                if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
-                                    return 'vertical';
-                                } else {
-                                    return 'horizontal';
-                                }
-                            })()
-                    }
-                    title="Legend"
-                    style={{
-                        title: { fontSize: 25, fill: config.style ? config.style.legendTitleColor : null },
-                        labels: { fontSize: 20, fill: config.style ? config.style.legendTextColor : null },
-                    }}
-                    data={legendItems.length > 0 ? legendItems : [{
-                        name: 'undefined',
-                        symbol: { fill: '#333' },
-                    }]}
-                    itemsPerRow={config.legendOrientation === 'top' || config.legendOrientation === 'bottom' ? 5 : 4}
-                    events={[
-                        {
-                            target: 'data',
-                            eventHandlers: {
-                                onClick: config.interactiveLegend ? () => { // TODO: update doc with the attribute
-                                    return [
-                                        {
-                                            target: 'data',
-                                            mutation: (props) => {
-                                                const ignoreIndex = ignoreArray
-                                                    .map(d => d.name)
-                                                    .indexOf(props.datum.name);
-                                                if (ignoreIndex > -1) {
-                                                    ignoreArray.splice(ignoreIndex, 1);
-                                                } else {
-                                                    ignoreArray.push({ name: props.datum.name });
-                                                }
-                                                this.setState({
-                                                    ignoreArray,
-                                                });
-                                                const fill = props.style ? props.style.fill : null;
-                                                return fill === LEGEND_DISABLED_COLOR ?
-                                                    null :
-                                                    { style: { fill: LEGEND_DISABLED_COLOR } };
-                                            },
-                                        },
-                                    ];
-                                } : null,
-                            },
-                        },
-                    ]}
-                />
-            </div>
-        );
+    _brushReset(xRange) {
+        this.setState({ xDomain: xRange });
+    }
+
+    /**
+     * Function to handle onChange in brush slider
+     * @param {Array} xDomain New Domain of the x-axis
+     */
+    _brushOnChange(xDomain) {
+        this.setState({ xDomain });
+    }
+
+    /**
+     * Function used to disable a chart component when clicked on it's name in the legend.
+     * @param {Object} props parameters recieved from the legend component
+     */
+    _legendInteraction(props) {
+        const { ignoreArray } = this.state;
+        const ignoreIndex = ignoreArray
+            .map(d => d.name)
+            .indexOf(props.datum.name);
+        if (ignoreIndex > -1) {
+            ignoreArray.splice(ignoreIndex, 1);
+        } else {
+            ignoreArray.push({ name: props.datum.name });
+        }
+        this.setState({
+            ignoreArray,
+        });
+        const fill = props.style ? props.style.fill : null;
+        return fill === LEGEND_DISABLED_COLOR ?
+            null :
+            { style: { fill: LEGEND_DISABLED_COLOR } };
     }
 }
 
@@ -575,6 +488,7 @@ BasicCharts.defaultProps = {
     width: 800,
     height: 450,
     onClick: null,
+    yDomain: null,
 };
 
 BasicCharts.propTypes = {
@@ -600,4 +514,5 @@ BasicCharts.propTypes = {
         width: PropTypes.number,
         maxLength: PropTypes.number,
     }).isRequired,
+    yDomain: PropTypes.arrayOf(PropTypes.number),
 };

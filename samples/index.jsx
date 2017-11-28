@@ -42,7 +42,6 @@ import { fade } from 'material-ui/utils/colorManipulator';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import './charts/css/default.css';
-import Trials from './charts/Trials';
 
 // TODO: implement switchable states for light and dark themes
 const muiLightTheme = getMuiTheme({
@@ -109,7 +108,6 @@ ReactDOM.render(
                 <Route exact path='/map-charts' component={MapChartConfigSample} />
                 <Route exact path='/number-charts' component={NumberChartConfigSample} />
                 <Route exact path='/table-charts' component={TableCharts} />
-                <Route exact path='/test' component={Trials} />
             </div>
         </MuiThemeProvider>
     </Router>, document.getElementById('samples'));
