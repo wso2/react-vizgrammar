@@ -24,6 +24,14 @@ import {
 } from 'react-router-dom';
 import LightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import DarkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import {
+    white, lightWhite, grey700, grey100, grey300, grey400, grey500, darkBlack, fullBlack, deepOrange500,
+} from 'material-ui/styles/colors';
+import { fade } from 'material-ui/utils/colorManipulator';
+import AppBar from 'material-ui/AppBar';
+import IconButton from 'material-ui/IconButton';
 import App from './App.jsx';
 import LineChart from './charts/LineChartsSamples.jsx';
 import BarChart from './charts/BarChartConfigSample.jsx';
@@ -33,15 +41,8 @@ import PieChart from './charts/PieChartsConfigSample.jsx';
 import MapChartConfigSample from './charts/MapChartConfigSample.jsx';
 import NumberChartConfigSample from './charts/NumberChartConfigSample.jsx';
 import TableCharts from './charts/TableChartConfigSample.jsx';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import {
-    white, lightWhite, grey700, grey100, grey300, grey400, grey500, darkBlack, fullBlack, deepOrange500,
-} from 'material-ui/styles/colors';
-import { fade } from 'material-ui/utils/colorManipulator';
-import AppBar from 'material-ui/AppBar';
-import IconButton from 'material-ui/IconButton';
 import './charts/css/default.css';
+import ScrollToTop from './charts/ScrollToTop';
 
 // TODO: implement switchable states for light and dark themes
 const muiLightTheme = getMuiTheme({
@@ -99,15 +100,33 @@ ReactDOM.render(
                 />}
             />
             <div className={'lightBaseTheme'}>
-                <Route exact path="/" component={App} />
-                <Route exact path="/line-charts" component={LineChart} />
-                <Route exact path="/bar-charts" component={BarChart} />
-                <Route exact path="/area-charts/" component={AreaChart} />
-                <Route exact path='/scatter-charts' component={ScatterPlot} />
-                <Route exact path='/pie-charts' component={PieChart} />
-                <Route exact path='/map-charts' component={MapChartConfigSample} />
-                <Route exact path='/number-charts' component={NumberChartConfigSample} />
-                <Route exact path='/table-charts' component={TableCharts} />
+                <ScrollToTop>
+                    <Route exact path="/" component={App} />
+                </ScrollToTop>
+                <ScrollToTop>
+                    <Route exact path="/line-charts" component={LineChart} />
+                </ScrollToTop>
+                <ScrollToTop>
+                    <Route exact path="/bar-charts" component={BarChart} />
+                </ScrollToTop>
+                <ScrollToTop>
+                    <Route exact path="/area-charts/" component={AreaChart} />
+                </ScrollToTop>
+                <ScrollToTop>
+                    <Route exact path='/scatter-charts' component={ScatterPlot} />
+                </ScrollToTop>
+                <ScrollToTop>
+                    <Route exact path='/pie-charts' component={PieChart} />
+                </ScrollToTop>
+                <ScrollToTop>
+                    <Route exact path='/map-charts' component={MapChartConfigSample} />
+                </ScrollToTop>
+                <ScrollToTop>
+                    <Route exact path='/number-charts' component={NumberChartConfigSample} />
+                </ScrollToTop>
+                <ScrollToTop>
+                    <Route exact path='/table-charts' component={TableCharts} />
+                </ScrollToTop>
             </div>
         </MuiThemeProvider>
     </Router>, document.getElementById('samples'));

@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import AppBar from 'material-ui/AppBar';
 import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
-
+import { Link } from 'react-router-dom';
 /**
  * This class will render the card view that will be used to present Charts.
  */
@@ -57,10 +57,9 @@ export class ChartWrapper extends React.Component {
 
                 </CardMedia>
                 <CardActions>
-                    <FlatButton label={this.state.actionBar ? 'View Usage' : ' '} onClick={() => {
-                        window.location.href = this.state.chart + '-charts';
-                    }}
-                    />
+                    <Link to={'/' + this.state.chart + '-charts'}>
+                        <FlatButton label={this.state.actionBar ? 'View Usage' : ' '} />
+                    </Link>
                 </CardActions>
             </Card>
         );
