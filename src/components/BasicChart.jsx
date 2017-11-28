@@ -34,11 +34,10 @@ import { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { getDefaultColorScale } from './helper';
 import VizGError from '../VizGError';
-import { generateLineOrAreaChartComponent, generateBarChartComponent } from './ChartGenerator.jsx';
-import ChartSkeleton from './ChartSkeleton.jsx';
-import LineChart from './LineChart.jsx';
+import { generateLineOrAreaChartComponent, generateBarChartComponent } from './ComponentGenerator.jsx';
+import ChartSkeleton from './core/ChartSkeleton.jsx';
 
-const LEGEND_DISABLED_COLOR = 'grey';
+const LEGEND_DISABLED_COLOR = '#d3d3d3';
 
 /**
  * React component required to render Bar, Line and Area Charts.
@@ -284,9 +283,7 @@ export default class BasicCharts extends React.Component {
                                     data={dataSets[dataSetName]}
                                     color={chart.dataSetNames[dataSetName]}
                                 >
-                                    {
-                                        generateLineOrAreaChartComponent(config, chartIndex, this._handleMouseEvent)
-                                    }
+                                    {generateLineOrAreaChartComponent(config, chartIndex, this._handleMouseEvent)}
                                 </VictoryGroup>
                             ));
                         }
@@ -315,9 +312,7 @@ export default class BasicCharts extends React.Component {
                                     color={chart.dataSetNames[dataSetName]}
 
                                 >
-                                    {
-                                        generateLineOrAreaChartComponent(config, chartIndex, this._handleMouseEvent)
-                                    }
+                                    {generateLineOrAreaChartComponent(config, chartIndex, this._handleMouseEvent)}
                                 </VictoryGroup>
                             ));
                         }
@@ -423,9 +418,9 @@ export default class BasicCharts extends React.Component {
                             this.generateLegendVisualization(config, legendItems, ignoreArray) : null
                     }
                     <ChartSkeleton
-                        config={config}
-                        height={height}
                         width={width}
+                        height={height}
+                        config={config}
                         xScale={xScale}
                         yDomain={this.props.yDomain}
                         xDomain={this.state.xDomain}
@@ -559,13 +554,9 @@ export default class BasicCharts extends React.Component {
                                                 this.setState({
                                                     ignoreArray,
                                                 });
-                                            },
-                                        }, {
-                                            target: 'labels',
-                                            mutation: (props) => {
                                                 const fill = props.style ? props.style.fill : null;
                                                 return fill === LEGEND_DISABLED_COLOR ?
-                                                    { style: { fill: config.style.legendTextColor } } :
+                                                    null :
                                                     { style: { fill: LEGEND_DISABLED_COLOR } };
                                             },
                                         },
