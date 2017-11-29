@@ -58,19 +58,7 @@ export default class ChartSkeleton extends React.Component {
                     gridComponent={config.disableVerticalGrid ? <g /> : <line />}
                     label={config.xAxisLabel || config.x}
                     tickFormat={(() => {
-                        if (xScale === 'linear') {
-                            return (text) => {
-                                if (text.toString().match(/[a-z]/i)) {
-                                    if (text.length > 6) {
-                                        return text.substring(0, 4) + '...';
-                                    } else {
-                                        return text;
-                                    }
-                                } else {
-                                    return formatPrefix(',.2', Number(text));
-                                }
-                            };
-                        } else if (config.timeFormat) {
+                        if (xScale === 'time' && config.timeFormat) {
                             return (date) => {
                                 return timeFormat(config.timeFormat)(new Date(date));
                             };
@@ -90,6 +78,7 @@ export default class ChartSkeleton extends React.Component {
                             }}
                         />
                     }
+                    tickCount={config.xAxisTickCount}
                 />
                 <VictoryAxis
                     dependentAxis
@@ -110,13 +99,6 @@ export default class ChartSkeleton extends React.Component {
                     gridComponent={config.disableHorizontalGrid ? <g /> : <line />}
                     label={config.yAxisLabel || config.charts.length > 1 ? '' : config.charts[0].y}
                     standalone={false}
-                    tickFormat={(text) => {
-                        if (Number(text) < 999) {
-                            return text;
-                        } else {
-                            return formatPrefix(',.2', Number(text));
-                        }
-                    }}
                     tickLabelComponent={
                         <VictoryLabel
                             angle={config.style ? config.style.yAxisTickAngle || 0 : 0}
@@ -128,6 +110,7 @@ export default class ChartSkeleton extends React.Component {
                             }}
                         />
                     }
+                    tickCount={config.yAxisTickCount}
                 />
             </VictoryChart>
         );

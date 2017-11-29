@@ -25,15 +25,15 @@ export default class InlineChart extends BasicChart {
 
     constructor(props) {
         super(props);
-        this.handleAndSortData = this.handleAndSortData.bind(this);
+        this.visualizeData = this.visualizeData.bind(this);
     }
 
     componentDidMount() {
-        this.handleAndSortData(this.props);
+        this.visualizeData(this.props);
     }
 
     componentWillReceiveProps(nextProps) {
-        this.handleAndSortData(nextProps);
+        this.visualizeData(nextProps);
     }
 
     render() {
@@ -65,7 +65,6 @@ export default class InlineChart extends BasicChart {
                                 <VictoryLine
                                     domain={{ y: this.props.yDomain || null }}
                                 />
-
                             </VictoryGroup>
                         ));
                         return null;

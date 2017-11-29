@@ -69,12 +69,14 @@ export default class BasicChart extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (JSON.stringify(this.chartConfig) !== JSON.stringify(nextProps.config)) {
+        if ((JSON.stringify(this.chartConfig) !== JSON.stringify(nextProps.config)) || !this.props.append) {
             this.chartConfig = nextProps.config;
             this.state.chartArray = [];
             this.state.dataSets = [];
             this.state.initialized = false;
         }
+
+
 
         this.visualizeData(nextProps);
     }
@@ -531,6 +533,7 @@ BasicChart.defaultProps = {
     height: 450,
     onClick: null,
     yDomain: null,
+    append: true,
 };
 
 BasicChart.propTypes = {
@@ -557,4 +560,5 @@ BasicChart.propTypes = {
         maxLength: PropTypes.number,
     }).isRequired,
     yDomain: PropTypes.arrayOf(PropTypes.number),
+    append: PropTypes.bool,
 };

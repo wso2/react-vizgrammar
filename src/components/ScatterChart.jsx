@@ -18,20 +18,19 @@
 
 import React from 'react';
 import {
-    VictoryChart,
-    VictoryTheme,
     VictoryTooltip,
     VictoryContainer,
-    VictoryVoronoiContainer,
     VictoryLegend,
     VictoryScatter,
-    VictoryAxis,
-    VictoryLabel,
 } from 'victory';
 import PropTypes from 'prop-types';
-import { formatPrefix, scaleLinear, timeFormat } from 'd3';
+import { scaleLinear } from 'd3';
 import { getDefaultColorScale } from './helper';
 import VizGError from '../VizGError';
+import ChartSkeleton from './ChartSkeleton.jsx';
+import { getLegendComponent } from './ComponentGenerator.jsx';
+
+const LEGEND_DISABLED_COLOR = '#d3d3d3';
 
 export default class ScatterCharts extends React.Component {
     constructor(props) {
@@ -46,10 +45,12 @@ export default class ScatterCharts extends React.Component {
             orientation: 'bottom',
             legend: false,
             scatterPlotRange: [],
+            ignoreArray: [],
         };
 
         this._handleAndSortData = this._handleAndSortData.bind(this);
         this._handleMouseEvent = this._handleMouseEvent.bind(this);
+        this._legendInteraction = this._legendInteraction.bind(this);
     }
 
     componentDidMount() {
@@ -78,14 +79,13 @@ export default class ScatterCharts extends React.Component {
         let { dataSets, chartArray, initialized, xScale, orientation, legend, scatterPlotRange } = this.state;
 
         config.charts.map((chart, chartIndex) => {
-            if(!chart.x) throw new VizGError('ScatterChart', "Field 'x' is not defined in the Scatter Plot config");
-            if(!chart.y) throw new VizGError('ScatterChart', "Field 'y' is not defined in the Scatter Plot config");
+            if (!chart.x) throw new VizGError('ScatterChart', "Field 'x' is not defined in the Scatter Plot config");
+            if (!chart.y) throw new VizGError('ScatterChart', "Field 'y' is not defined in the Scatter Plot config");
             const xIndex = metadata.names.indexOf(chart.x);
             const yIndex = metadata.names.indexOf(chart.y);
-            const colorIndex = metadata.names.indexOf(chart.color);
+            let colorIndex = metadata.names.indexOf(chart.color);
             const sizeIndex = metadata.names.indexOf(chart.size);
             xScale = metadata.types[xIndex] === 'time' ? 'time' : xScale;
-
 
 
             if (xIndex === -1) {
@@ -136,7 +136,7 @@ export default class ScatterCharts extends React.Component {
                 data.map((datum) => {
                     let dataSetName = 'scatterChart' + chartIndex;
                     if (chart.color) {
-                        const colorIndex = metadata.names.indexOf(chart.color);
+                        colorIndex = metadata.names.indexOf(chart.color);
                         dataSetName = colorIndex > -1 ? datum[colorIndex] : dataSetName;
                     }
 
@@ -171,9 +171,32 @@ export default class ScatterCharts extends React.Component {
         this.setState({ dataSets, chartArray, initialized, xScale, orientation, legend, scatterPlotRange });
     }
 
+    /**
+     * Function used to disable a chart component when clicked on it's name in the legend.
+     * @param {Object} props parameters recieved from the legend component
+     */
+    _legendInteraction(props) {
+        const { ignoreArray } = this.state;
+        const ignoreIndex = ignoreArray
+            .map(d => d.name)
+            .indexOf(props.datum.name);
+        if (ignoreIndex > -1) {
+            ignoreArray.splice(ignoreIndex, 1);
+        } else {
+            ignoreArray.push({ name: props.datum.name });
+        }
+        this.setState({
+            ignoreArray,
+        });
+        const fill = props.style ? props.style.fill : null;
+        return fill === LEGEND_DISABLED_COLOR ?
+            null :
+            { style: { fill: LEGEND_DISABLED_COLOR } };
+    }
+
     render() {
         const { config } = this.props;
-        const { height, width, chartArray, dataSets, xScale, legend } = this.state;
+        const { height, width, chartArray, dataSets, xScale, legend, ignoreArray } = this.state;
         const chartComponents = [];
         const legendItems = [];
 
@@ -205,7 +228,7 @@ export default class ScatterCharts extends React.Component {
                                     pointerLength={4}
                                     cornerRadius={2}
                                     flyoutStyle={{ fill: '#000', fillOpacity: '0.8', strokeWidth: 0 }}
-                                    style={{ fill: '#b0b0b0', textAlign: 'left'}}
+                                    style={{ fill: '#b0b0b0', textAlign: 'left' }}
                                 />
                             }
                             events={[{
@@ -245,7 +268,7 @@ export default class ScatterCharts extends React.Component {
                                     pointerLength={4}
                                     cornerRadius={2}
                                     flyoutStyle={{ fill: '#000', fillOpacity: '0.8', strokeWidth: 0 }}
-                                    style={{ fill: '#b0b0b0'}}
+                                    style={{ fill: '#b0b0b0' }}
                                 />
                             }
                             events={[{
@@ -275,13 +298,15 @@ export default class ScatterCharts extends React.Component {
                             {
                                 width: !config.legendOrientation ? '80%' :
                                     (() => {
-                                        if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
+                                        if (config.legendOrientation === 'left' ||
+                                            config.legendOrientation === 'right') {
                                             return '80%';
                                         } else return '100%';
                                     })(),
                                 display: !config.legendOrientation ? 'inline' :
                                     (() => {
-                                        if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
+                                        if (config.legendOrientation === 'left' ||
+                                            config.legendOrientation === 'right') {
                                             return 'inline';
                                         } else return null;
                                     })(),
@@ -295,142 +320,18 @@ export default class ScatterCharts extends React.Component {
                 >
                     {
                         legend && (config.legendOrientation && config.legendOrientation === 'top') ?
-                            this.generateLegendComponent(config, legendItems) :
-                            null
+                            getLegendComponent(config, legendItems, ignoreArray, this._legendInteraction, height, width)
+                            : null
                     }
-                    <VictoryChart
-                        width={width}
-                        height={height}
-                        container={<VictoryVoronoiContainer />}
-                        padding={{ left: 100, top: 30, bottom: 50, right: 80 }}
-                    >
-                        <VictoryAxis
-                            crossAxis
-                            style={{
-                                axis: {stroke: '#000', strokeOpacity: 0.5},
-                                axisLabel: {fill: '#000', fillOpacity: 0.25, fontSize: 15, padding: 30},
-                                grid: {stroke: '#000', strokeOpacity: 0.1},
-                                ticks: {stroke: '#000', strokeOpacity: 0.1, size: 5},
-                            }}
-                            label={config.charts[0].x}
-                            tickFormat={xScale === 'linear' ?
-                                (text) => {
-                                    if (text.toString().match(/[a-z]/i)) {
-                                        if (text.length > 5) {
-                                            return text.subString(0, 4) + '...';
-                                        } else {
-                                            return text;
-                                        }
-                                    } else {
-                                        return formatPrefix(',.0', Number(text));
-                                    }
-                                } :
-                                config.timeFormat ?
-                                    (date) => {
-                                        return timeFormat(config.timeFormat)(new Date(date));
-                                    } : null}
-                            standalone={false}
-                            tickLabelComponent={
-                                <VictoryLabel
-                                    angle={config.xAxisTickAngle || 0}
-                                    style={{ fill: config.tickLabelColor || '#000', fillOpacity: 0.5, fontSize: 10, padding: 0 }}
-                                />
-                            }
-                        />
-                        <VictoryAxis
-                            dependentAxis
-                            crossAxis
-                            style={{
-                                axis: {stroke: '#000', strokeOpacity: 0.5},
-                                axisLabel: {fill: '#000', fillOpacity: 0.25, fontSize: 15, padding: 40},
-                                grid: {stroke: '#000', strokeOpacity: 0.1},
-                                ticks: {stroke: '#000', strokeOpacity: 0.1, size: 5},
-                            }}
-                            label={config.charts.length > 1 ? '' : config.charts[0].y}
-                            standalone={false}
-                            tickFormat={text => formatPrefix(',.0', Number(text))}
-                            tickLabelComponent={
-                                <VictoryLabel
-                                    angle={config.yAxisTickAngle || 0}
-                                    style={{ fill: config.tickLabelColor || '#000', fillOpacity: 0.5, fontSize: 10, padding: 0 }}
-                                />
-                            }
-                        />
+                    <ChartSkeleton width={width} height={height} xScale={xScale} config={config}>
                         {chartComponents}
-                    </VictoryChart>
-                </div>
-                {
-                    legend && (!config.legendOrientation || config.legendOrientation !== 'top') ?
-                        this.generateLegendComponent(config, legendItems) :
-                        null
-                }
-            </div>
-        );
-    }
-
-    /**
-     * Generate legend component for the scatter plot.
-     * @param config chart configuration json.
-     * @param legendItems legendItems array
-     */
-    generateLegendComponent(config, legendItems) {
-        return (
-            <div
-                style={{
-                    width: !config.legendOrientation ? '15%' :
-                        (() => {
-                            if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
-                                return '20%';
-                            } else return '100%';
-                        })(),
-                    display: !config.legendOrientation ? 'inline' :
-                        (() => {
-                            if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
-                                return 'inline';
-                            } else return null;
-                        })(),
-                    float: !config.legendOrientation ? 'right' : (() => {
-                        if (config.legendOrientation === 'left') return 'left';
-                        else if (config.legendOrientation === 'right') return 'right';
-                        else return null;
-                    })(),
-                }}
-            >
-                <VictoryLegend
-                    containerComponent={<VictoryContainer responsive />}
-                    height={(() => {
-                        if (!config.legendOrientation) return this.state.height;
-                        else if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
-                            return this.state.height;
-                        } else return 100;
-                    })()}
-                    width={(() => {
-                        if (!config.legendOrientation) return 200;
-                        else if (config.legendOrientation === 'left' || config.legendOrientation === 'right') return 200;
-                        else return this.state.width;
-                    })()}
-                    orientation={
-                        !config.legendOrientation ?
-                            'vertical' :
-                            (() => {
-                                if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
-                                    return 'vertical';
-                                } else {
-                                    return 'horizontal';
-                                }
-                            })()
+                    </ChartSkeleton>
+                    {
+                        legend && (!config.legendOrientation || config.legendOrientation !== 'top') ?
+                            getLegendComponent(config, legendItems, ignoreArray, this._legendInteraction, height, width)
+                            : null
                     }
-                    centerTitle
-                    title="Legend"
-                    style={{
-                        title: { fontSize: 25, fill: config.legendTitleColor },
-                        labels: { fontSize: 20, fill: config.legendTextColor },
-                    }}
-                    data={legendItems.length > 0 ? legendItems : [{
-                        name: 'undefined',
-                        symbol: { fill: '#333' },
-                    }]}
-                />
+                </div>
             </div>
         );
     }
