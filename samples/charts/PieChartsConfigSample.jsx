@@ -17,10 +17,13 @@
  */
 
 import React from 'react';
-import { ChartWrapper } from './ChartWrapper';
+import { ChartWrapper } from './ChartWrapper.jsx';
 import './css/Table.css';
 import VizG from '../../src/VizG.jsx';
 
+/**
+ * This class will render a page that contains samples on how to use Pie charts.
+ */
 export default class LineChartConfigSample extends React.Component {
 
     constructor(props) {

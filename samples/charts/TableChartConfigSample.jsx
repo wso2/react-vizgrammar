@@ -16,9 +16,12 @@
  * under the License.
  */
 import React, { Component } from 'react';
-import { ChartWrapper } from './ChartWrapper';
+import { ChartWrapper } from './ChartWrapper.jsx';
 import VizG from '../../src/VizG.jsx';
 
+/**
+ * This class will render a page that contains samples on how to use Table charts.
+ */
 class TableChartConfigSample extends Component {
 
     constructor(props) {

@@ -15,54 +15,63 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
 import React from 'react';
-import { ChartWrapper } from './ChartWrapper';
+import { ChartWrapper } from './ChartWrapper.jsx';
 import './css/Table.css';
 import VizG from '../../src/VizG.jsx';
 
-export default class LineChartConfigSample extends React.Component {
+/**
+ * This class will render a page that contains samples on how to use Bar charts.
+ */
+export default class BarChartConfigSample extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             data: [[1, 10, 23, 'piston'], [1, 20, 34, 'rotary']],
             data2: [[1, 10, 23, 'piston']],
-            timer: 0,
+            timer: 0
         };
-        this.interval_id = null;
+
         this.metadata = {
-            names: ['rpm', 'torque', 'horsepower', 'EngineType', 'weight'],
-            types: ['linear', 'linear', 'linear', 'ordinal', 'linear'],
+            names: ['rpm', 'torque', 'horsepower', 'EngineType'],
+            types: ['linear', 'linear', 'linear', 'ordinal']
         };
-        this.lineChartConfig = {
+
+        this.interval_id = null;
+
+        this.barChartConfig = {
             x: 'rpm',
-            charts: [{ type: 'line', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston'] }],
-            maxLength: 7,
+            charts: [{ type: 'bar', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston'] }],
+            maxLength: 20,
             width: 700,
             height: 450,
-            axisLabelColor: 'red',
-            tickLabelColor: 'red',
+
+        };
+
+        this.barHorizontalChartConfig = {
+            x: 'rpm',
+            charts: [{ type: 'bar', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston'], orientation: 'left' }],
+            maxLength: 20,
+            width: 700,
+            height: 450,
+            // animation: false
+        };
+
+        this.stackedBarChartConfig = {
+            x: 'rpm',
+            charts: [{ type: 'bar', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston'], mode: 'stacked' }],
+            maxLength: 20,
+            width: 700,
+            height: 450,
             // animation: true
         };
 
-        this.singleLineChartConfig = {
+        this.singleBarChartConfig = {
             x: 'rpm',
-            charts: [
-                { type: 'line', y: 'horsepower', fill: '#2ca02c' },
-                { type: 'line', y: 'torque', fill: '#ff7f0e' },
-            ],
-            maxLength: 7,
+            charts: [{ type: 'bar', y: 'horsepower', fill: '#2ca02c' }, { type: 'bar', y: 'torque', fill: '#ff7f0e' }],
+            maxLength: 20,
             width: 700,
             height: 450,
-            // animation: true
-        };
-
-        this.sparkLineConfig = {
-            x: 'rpm',
-            charts: [{ type: 'spark-area', y: 'horsepower', fill: '#0fd8e2' }],
-            maxLength: 30,
-            width: 120,
-            height: 10,
             // animation: true
         };
     }
@@ -72,13 +81,15 @@ export default class LineChartConfigSample extends React.Component {
             this.setState({
                 data: [
                     [this.state.timer, this.state.timer === 20 ? null : Math.random() * 100, 10, 'piston'],
-                    [this.state.timer, Math.random() * 100, 10, 'rotary'],
+                    [this.state.timer, Math.random() * 100, 10, 'rotary']
                 ],
                 data2: [
-                    [this.state.timer, Math.random() * 100, Math.random() * 100, 'rotary'],
+
+                    [this.state.timer, Math.random() * 100, Math.random() * 100, 'rotary']
                 ],
-                timer: this.state.timer + 1,
+                timer: this.state.timer + 1
             });
+
         }, 500);
     }
 
@@ -89,40 +100,87 @@ export default class LineChartConfigSample extends React.Component {
     render() {
         return (
             <div>
-                <center><h1>Line Chart Config Samples</h1></center>
-                <ChartWrapper title="Group MultiLine Chart Sample" chart="line" media actionBar={false}>
-                    <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data} />
-                    <br /><br />
-                    <div style={{ display: 'block' }}>
+                <center><h1>Bar Chart Config Samples</h1></center>
+                <ChartWrapper title="Group MultiLine Chart Sample" chart="line" media={true} actionBar={false}>
+                    <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data} />
+                    <br />
+                    <div>
+
                         <pre>
+                            <p>Configuration: </p>
+
                             {'{\n' +
                                 '\tx: \'rpm\',\n' +
-                                '\tcharts: [\n\t    { type: \'line\', y: \'torque\', color: \'EngineType\',colorDomain:[\'\',\'\',\'piston\']}\n\t],\n' +
+                                '\tcharts: [\n\t    { type: \'bar\', y: \'torque\', color: \'EngineType\',colorDomain:[\'\',\'\',\'piston\']}\n\t],\n' +
                                 '\tmaxLength: 7,\n' +
                                 '\twidth: 700,\n' +
                                 '\theight: 450,\n' +
                                 '\tanimation:true\n}'
+
                             }
                         </pre>
                     </div>
                 </ChartWrapper>
-                <ChartWrapper title="Multi Line Chart Sample" chart="line" media actionBar={false}>
-                    <VizG config={this.singleLineChartConfig} metadata={this.metadata} data={this.state.data2} />
+                <ChartWrapper title="Multi Line Chart Sample" chart="line" media={true} actionBar={false}>
+                    <VizG config={this.singleBarChartConfig} metadata={this.metadata} data={this.state.data2} />
                     <br />
                     <div>
                         <pre>
+                            <p>Configuration: </p>
                             {'{\n' +
                                 '\tx: \'rpm\',\n' +
-                                '\tcharts: [\n\t    { type: \'line\', y: \'horsepower\', fill:\'#2ca02c\'}\n\t    { type: \'line\', y: \'torque\', fill:\'#ff7f0e\'}\n\t],\n' +
+                                '\tcharts: [\n\t    { type: \'bar\', y: \'horsepower\', fill:\'#2ca02c\'}\n\t    { type: \'bar\', y: \'torque\', fill:\'#ff7f0e\'}\n\t],\n' +
                                 '\tmaxLength: 7,\n' +
                                 '\twidth: 700,\n' +
                                 '\theight: 450,\n' +
                                 '\tanimation:true\n}'
+
                             }
                         </pre>
                     </div>
                 </ChartWrapper>
-                
+                <ChartWrapper title="Group MultiLine Chart Sample Horizontal" chart="line" media={true} actionBar={false}>
+                    <VizG config={this.barHorizontalChartConfig} metadata={this.metadata} data={this.state.data} />
+                    <br />
+                    <div>
+
+                        <pre>
+                            <p>Configuration: </p>
+
+                            {'{\n' +
+                                '\tx: \'rpm\',\n' +
+                                '\tcharts: [\n\t    { type: \'bar\', y: \'torque\', color: \'EngineType\',orientation:\'left\',colorDomain:[\'\',\'\',\'piston\']}\n\t],\n' +
+                                '\tmaxLength: 7,\n' +
+                                '\twidth: 700,\n' +
+                                '\theight: 450,\n' +
+                                '\tanimation:true\n}'
+
+                            }
+                        </pre>
+                    </div>
+                </ChartWrapper>
+
+                <ChartWrapper title="Group MultiLine Chart Sample stacked" chart="line" media={true} actionBar={false}>
+                    <VizG config={this.stackedBarChartConfig} metadata={this.metadata} data={this.state.data} />
+                    <br />
+                    <div>
+
+                        <pre>
+                            <p>Configuration: </p>
+
+                            {'{\n' +
+                                '\tx: \'rpm\',\n' +
+                                '\tcharts: [\n\t    { type: \'bar\', y: \'torque\', color: \'EngineType\',mode:\'stacked\',colorDomain:[\'\',\'\',\'piston\']}\n\t],\n' +
+                                '\tmaxLength: 7,\n' +
+                                '\twidth: 700,\n' +
+                                '\theight: 450,\n' +
+                                '\tanimation:true\n}'
+
+                            }
+                        </pre>
+                    </div>
+                </ChartWrapper>
+
                 <ChartWrapper title="Sample Data Set" chart="line">
                     <div>
                         <pre>
@@ -148,20 +206,6 @@ export default class LineChartConfigSample extends React.Component {
                                         <th>Description</th>
                                     </tr>
                                     <tr>
-                                        <td>blah</td>
-                                        <td>blah</td>
-                                        <td>
-                                            
-                                            <span>
-                                                <VizG
-                                                    config={this.sparkLineConfig}
-                                                    metadata={this.metadata}
-                                                    data={this.state.data2}
-                                                />
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    <tr>
                                         <td>x</td>
                                         <td>string</td>
                                         <td>independent axis</td>
@@ -170,26 +214,6 @@ export default class LineChartConfigSample extends React.Component {
                                         <td>charts</td>
                                         <td>array(Object)</td>
                                         <td>Charts to be plotted</td>
-                                    </tr>
-                                    <tr>
-                                        <td>yAxisTickAngle</td>
-                                        <td>int</td>
-                                        <td>tick angle value of yAxis ticks | default : 0</td>
-                                    </tr>
-                                    <tr>
-                                        <td>xAxisTickAngle</td>
-                                        <td>int</td>
-                                        <td>tick angle value of xAxis ticks | default : 0</td>
-                                    </tr>
-                                    <tr>
-                                        <td>axisLabelColor</td>
-                                        <td>String(color)</td>
-                                        <td>Label Color of the axis label</td>
-                                    </tr>
-                                    <tr>
-                                        <td>tickLabelColor</td>
-                                        <td>String(color)</td>
-                                        <td>Label Color of the tick label</td>
                                     </tr>
                                     <tr>
                                         <td>maxLength</td>
@@ -201,6 +225,7 @@ export default class LineChartConfigSample extends React.Component {
                                         <td>int</td>
                                         <td>Height of the chart in pixels</td>
                                     </tr>
+
                                 </tbody>
                             </table>
                             <br />
@@ -230,7 +255,12 @@ export default class LineChartConfigSample extends React.Component {
                                     <tr>
                                         <td>mode</td>
                                         <td>string</td>
-                                        <td>type of the line curve (see <a href="https://github.com/d3/d3-shape#curves">d3-documentation</a> for possible curve types)</td>
+                                        <td>whether the chart should be stacked or not (default:null)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>orientation</td>
+                                        <td>string</td>
+                                        <td>orientation of the chart (default:vertical)</td>
                                     </tr>
                                     <tr>
                                         <td>colorScale</td>

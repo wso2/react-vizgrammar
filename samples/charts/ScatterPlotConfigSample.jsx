@@ -17,10 +17,13 @@
  */
 
 import React from 'react';
-import { ChartWrapper } from './ChartWrapper';
+import { ChartWrapper } from './ChartWrapper.jsx';
 import './css/Table.css';
 import VizG from '../../src/VizG.jsx';
 
+/**
+ * This class will render a page that contains samples on how to use Scatter plots.
+ */
 export default class ScatterChartConfigSample extends React.Component {
 
     constructor(props) {

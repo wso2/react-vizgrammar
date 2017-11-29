@@ -122,6 +122,7 @@ class VizG extends Component {
                         config={config}
                         data={data}
                         yDomain={this.props.yDomain}
+                        append={this.props.append}
                     />
                 );
             default:
@@ -130,11 +131,16 @@ class VizG extends Component {
     }
 }
 
+VizG.defaultProps = {
+    append: true,
+}
+
 VizG.propTypes = {
     config: PropTypes.object.isRequired,
     data: PropTypes.array,
     metadata: PropTypes.object.isRequired,
     onClick: PropTypes.func,
+    append: PropTypes.bool,
 };
 
 export default VizG;

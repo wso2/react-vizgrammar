@@ -17,10 +17,13 @@
  */
 
 import React from 'react';
-import { ChartWrapper } from './ChartWrapper';
+import { ChartWrapper } from './ChartWrapper.jsx';
 import './css/Table.css';
 import VizG from '../../src/VizG.jsx';
 
+/**
+ * This class will render a page that contains samples on how to use Area charts.
+ */
 export default class AreaChartConfigSample extends React.Component {
     constructor(props) {
         super(props);
@@ -29,24 +32,6 @@ export default class AreaChartConfigSample extends React.Component {
             data2: [[1, 10, 23, 'piston']],
             timer: 0
         };
-    }
-
-
-    componentDidMount() {
-        this.interval_id = setInterval(() => {
-            this.setState({
-                data: [
-                    [this.state.timer, this.state.timer === 20 ? null : Math.random() * 100, 10, 'piston'],
-                    [this.state.timer, Math.random() * 100, 10, 'rotary']
-                ],
-                data2: [
-
-                    [this.state.timer, Math.random() * 100, Math.random() * 100, 'rotary']
-                ],
-                timer: this.state.timer + 1
-            });
-
-        }, 500);
 
         this.metadata = {
             names: ['rpm', 'torque', 'horsepower', 'EngineType'],
@@ -80,6 +65,22 @@ export default class AreaChartConfigSample extends React.Component {
             height: 450,
 
         };
+    }
+
+    componentDidMount() {
+        this.interval_id = setInterval(() => {
+            this.setState({
+                data: [
+                    [this.state.timer, this.state.timer === 20 ? null : Math.random() * 100, 10, 'piston'],
+                    [this.state.timer, Math.random() * 100, 10, 'rotary']
+                ],
+                data2: [
+                    [this.state.timer, Math.random() * 100, Math.random() * 100, 'rotary']
+                ],
+                timer: this.state.timer + 1
+            });
+
+        }, 500);
     }
 
     componentWillUnmount() {

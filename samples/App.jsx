@@ -17,7 +17,7 @@
  */
 import React from 'react';
 import VizG from '../src/index';
-import { ChartWrapper } from './charts/ChartWrapper';
+import { ChartWrapper } from './charts/ChartWrapper.jsx';
 
 const styles = {
     flexContainer: {
@@ -46,6 +46,9 @@ const styles = {
     },
 };
 
+/**
+ * This class will render a Landing page for all the chart samples.
+ */
 export default class App extends React.Component {
     constructor(props) {
         super(props);
@@ -188,7 +191,7 @@ export default class App extends React.Component {
                 timer: this.state.timer + 1,
             });
 
-        }, 500);
+        }, 5000);
     }
 
     componentWillUnmount() {

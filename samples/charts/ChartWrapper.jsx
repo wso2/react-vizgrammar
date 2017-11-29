@@ -21,7 +21,11 @@ import PropTypes from 'prop-types';
 import AppBar from 'material-ui/AppBar';
 import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
+import { Link } from 'react-router-dom';
 
+/**
+ * This class will render the card view that will be used to present Charts.
+ */
 export class ChartWrapper extends React.Component {
     constructor(props) {
         super(props);
@@ -54,38 +58,13 @@ export class ChartWrapper extends React.Component {
 
                 </CardMedia>
                 <CardActions>
-                    <FlatButton label={this.state.actionBar ? 'View Usage' : ' '} onClick={() => {
-                        window.location.href = this.state.chart + '-charts';
-                    }}
-                    />
+                    <Link to={'/' + this.state.chart + '-charts'}>
+                        <FlatButton label={this.state.actionBar ? 'View Usage' : ' '} />
+                    </Link>
                 </CardActions>
             </Card>
         );
     }
-}
-
-export function getColorFromSchemaOrdinal(schema, index) {
-    let length = 20, schemeCat;
-
-    switch (schema) {
-        case 'category10':
-            schemeCat = d3.schemeCategory10;
-            length = 10;
-            break;
-        case 'category20':
-            schemeCat = d3.schemeCategory20;
-            break;
-        case 'category20b':
-            schemeCat = d3.schemeCategory20b;
-            break;
-        case 'category20c':
-            schemeCat = d3.schemeCategory20c;
-            break;
-    }
-
-    return d3.scaleOrdinal()
-        .range(schemeCat)
-        .domain(Array.apply(null, { length: length }).map(Number.call, Number))(index);
 }
 
 ChartWrapper.defaultProps = {
