@@ -19,9 +19,19 @@ import { VictoryGroup, VictoryStack } from 'victory';
 import VizGError from '../VizGError';
 import { getDefaultColorScale } from './helper';
 import ChartSkeleton from './ChartSkeleton.jsx';
-import { getBarComponent, getBrushComponent, getLegendComponent, getLineOrAreaComponent } from './ComponentGenerator.jsx';
+import {
+    getBarComponent,
+    getBrushComponent,
+    getLegendComponent,
+    getLineOrAreaComponent,
+} from './ComponentGenerator.jsx';
 
-export default class BasicChartRef extends React.Component {
+const LEGEND_DISABLED_COLOR = '#d3d3d3';
+
+/**
+ * Generate Line, Area or Bar Chart
+ */
+export default class BasicChart extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -161,8 +171,6 @@ export default class BasicChartRef extends React.Component {
         plotData.xScale = xScale;
 
         this.setState(plotData);
-
-        console.info(this.state);
     }
 
     /**
@@ -438,7 +446,7 @@ export default class BasicChartRef extends React.Component {
                     break;
                 }
                 default:
-                    throw new VizGError(this.ClassContext, 'Error in rendering unknown chart type');
+                    throw new VizGError('BasicChart', 'Error in rendering unknown chart type');
             }
 
             return null;
@@ -518,14 +526,14 @@ export default class BasicChartRef extends React.Component {
 }
 
 
-BasicChartRef.defaultProps = {
+BasicChart.defaultProps = {
     width: 800,
     height: 450,
     onClick: null,
     yDomain: null,
 };
 
-BasicChartRef.propTypes = {
+BasicChart.propTypes = {
     width: PropTypes.number,
     height: PropTypes.number,
     onClick: PropTypes.func,
