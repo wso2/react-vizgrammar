@@ -22,6 +22,7 @@ import AppBar from 'material-ui/AppBar';
 import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import { Link } from 'react-router-dom';
+
 /**
  * This class will render the card view that will be used to present Charts.
  */
