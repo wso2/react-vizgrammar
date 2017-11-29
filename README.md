@@ -5,7 +5,7 @@ designers and developers can get started and set it up in a few minutes.
 
 A chart can be embedded in a React environment simply by using the VizG react component.
 ```jsx
-    import VizG extend
+    import VizG from 'react-vizgrammar';
 
     <VizG config={config} data={data} metadata={metadata} />
 ``` 
