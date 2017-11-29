@@ -225,9 +225,7 @@ export function getBrushComponent(xScale, xRange, xDomain, reset, onChange) {
                     Reset
                 </button>
             </div>
-            <div
-                style={{ width: '90%', display: 'inline', float: 'right' }}
-            >
+            <div style={{ width: '90%', display: 'inline', float: 'right' }} >
                 <Range
                     max={xScale === 'time' ? xRange[1].getDate() : xRange[1]}
                     min={xScale === 'time' ? xRange[0].getDate() : xRange[0]}
