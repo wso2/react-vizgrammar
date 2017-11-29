@@ -10,11 +10,11 @@ A chart can be embedded in a React environment simply by using the VizG react co
     <VizG config={config} data={data} metadata={metadata} />
 ``` 
 where the props
-- ```config``` is the widget configurations specified as a JSON object.
-- ```data``` is the array of data sets fed to the charts.
-- ```metadata``` is the JSON object that contains information about the provided dataset.
+- `config` is the widget configurations specified as a JSON object.
+- `data` is the array of data sets fed to the charts.
+- `metadata` is the JSON object that contains information about the provided dataset.
 
-### Chart ```config``` prop
+### Chart `config` prop
 Users have to provide parameters for the widget using config object inorder to create the chart type they require. It is a JSON object that has a well defined configuration attributes to customize the chart.
 
 Following is a basic configuration to plot a line chart,
@@ -27,8 +27,8 @@ Following is a basic configuration to plot a line chart,
         height: 200
     }
 ```
-### ```metadata``` prop and ```data``` prop
-Once the ```config``` is provided. User can provide a dataset to visualize the chart. For easy interpretation React-VizGrammar require this dataset to be arranged in a tabular way similar to the way explained below.
+### `metadata` prop and `data` prop
+Once the `config` is provided. User can provide a dataset to visualize the chart. For easy interpretation React-VizGrammar require this dataset to be arranged in a tabular way similar to the way explained below.
 ```javascript
     metadata = {
         "names": ["Column1", "Column2",...],
@@ -36,8 +36,8 @@ Once the ```config``` is provided. User can provide a dataset to visualize the c
     };
 ```
 
-```metadata.names``` is an array consists of column names/fields of the table and ```metadata.types``` contains their types 
-(ordinal, time or linear), ```names``` and ```types``` are aligned together in a way that "Column1" => 'ordinal' and "Column2" => 'linear' and so on.
+`metadata.names` is an array consists of column names/fields of the table and `metadata.types` contains their types 
+(ordinal, time or linear), `names` and `types` are aligned together in a way that "Column1" => 'ordinal' and "Column2" => 'linear' and so on.
 
 ```javascript
     data = [
@@ -45,7 +45,7 @@ Once the ```config``` is provided. User can provide a dataset to visualize the c
         ["value2", numericValue2,...],
     ];
 ```
-```data``` collection of arrays of data rows. Single row is stored as an array and their element order follows the order of ```metadata.names```.
+`data` collection of arrays of data rows. Single row is stored as an array and their element order follows the order of `metadata.names`.
 
 Sample data table would be like following:
 ```javascript
