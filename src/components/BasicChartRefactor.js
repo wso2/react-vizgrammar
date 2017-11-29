@@ -47,6 +47,9 @@ export default class BasicChartRef extends React.Component {
         this.setXRange = this.setXRange.bind(this);
         this.getDataSetDomain = this.getDataSetDomain.bind(this);
         this.maintainArrayLength = this.maintainArrayLength.bind(this);
+        this._legendInteraction = this._legendInteraction.bind(this);
+        this._brushOnChange = this._brushOnChange.bind(this);
+        this._brushReset = this._brushReset.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -192,8 +195,8 @@ export default class BasicChartRef extends React.Component {
                 dataSets[dataSetName].push({ x: datum[xIndex], y: datum[yIndex] });
                 if (maxLength) dataSets[dataSetName] = this.maintainArrayLength(dataSets[dataSetName], maxLength);
                 if (xScale !== 'ordinal') {
-                    this.setXDomain(xDomain, this.getDataSetDomain(dataSets[dataSetName]));
-                    this.setXRange(this.getDataSetDomain(dataSets[dataSetName]));
+                    this.state.xDomain = this.setXDomain(xDomain, this.getDataSetDomain(dataSets[dataSetName]));
+                    this.xRange = this.setXRange(this.getDataSetDomain(dataSets[dataSetName]));
                 }
 
                 if (!Object.prototype.hasOwnProperty.call(chartArray[index].dataSetNames, dataSetName)) {
@@ -451,6 +454,45 @@ export default class BasicChartRef extends React.Component {
             </div >
 
         );
+    }
+
+    /**
+     * function to reset domain of the chart when zoomed in.
+     * @param {Array} xDomain domain range of the x Axis.
+     */
+    _brushReset(xRange) {
+        this.setState({ xDomain: xRange });
+    }
+
+    /**
+     * Function to handle onChange in brush slider
+     * @param {Array} xDomain New Domain of the x-axis
+     */
+    _brushOnChange(xDomain) {
+        this.setState({ xDomain });
+    }
+
+    /**
+     * Function used to disable a chart component when clicked on it's name in the legend.
+     * @param {Object} props parameters recieved from the legend component
+     */
+    _legendInteraction(props) {
+        const { ignoreArray } = this.state;
+        const ignoreIndex = ignoreArray
+            .map(d => d.name)
+            .indexOf(props.datum.name);
+        if (ignoreIndex > -1) {
+            ignoreArray.splice(ignoreIndex, 1);
+        } else {
+            ignoreArray.push({ name: props.datum.name });
+        }
+        this.setState({
+            ignoreArray,
+        });
+        const fill = props.style ? props.style.fill : null;
+        return fill === LEGEND_DISABLED_COLOR ?
+            null :
+            { style: { fill: LEGEND_DISABLED_COLOR } };
     }
 }
 

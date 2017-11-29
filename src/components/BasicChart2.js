@@ -135,12 +135,11 @@ export default class BasicCharts extends React.Component {
                     hasMaxLength = true;
                     dataSets[dataSetName].shift();
                 }
-                c
-                onst max = Math.max.apply(null, dataSets[dataSetName].map(d => d.x));
+                const max = Math.max.apply(null, dataSets[dataSetName].map(d => d.x));
                 const min = Math.min.apply(null, dataSets[dataSetName].map(d => d.x));
 
-                this.xRange = xDomain = this.getXDomain(xDomain, [min, max]);
-
+                this.xRange = this.getXDomain(xDomain, [min, max]);
+                this.state.xDomain = this.getXDomain(xDomain, [min, max]);
                 if (!Object.prototype.hasOwnProperty.call(chartArray[chartIndex].dataSetNames, dataSetName)) {
                     if (chartArray[chartIndex].colorIndex >= chartArray[chartIndex].colorScale.length) {
                         chartArray[chartIndex].colorIndex = 0;
