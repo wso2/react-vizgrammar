@@ -75,7 +75,7 @@ export default class PieCharts extends React.Component {
     _handleAndSortData(props) {
         const { config, metadata, data } = props;
         let { dataSets, chartArray, initialized, xScale, orientation, legend, scatterPlotRange, randomUpdater } = this.state;
-        config.charts.map(() => {
+        config.charts.forEach(() => {
             const arcConfig = config.charts[0];
             const xIndex = metadata.names.indexOf(arcConfig.x);
             const colorIndex = metadata.names.indexOf(arcConfig.color);
@@ -99,7 +99,7 @@ export default class PieCharts extends React.Component {
 
                     });
                 }
-                data.map((datum) => {
+                data.forEach((datum) => {
                     randomUpdater++;
                     const dataSetName = datum[colorIndex];
 

@@ -84,8 +84,10 @@ class VizG extends Component {
             case 'bar':
                 return (
                     <BasicCharts
-                        config={config} metadata={metadata}
-                        data={data} onClick={onClick}
+                        config={config}
+                        metadata={metadata}
+                        data={data}
+                        onClick={onClick}
                         yDomain={this.props.yDomain}
                     />
                 );
@@ -133,7 +135,7 @@ class VizG extends Component {
 
 VizG.defaultProps = {
     append: true,
-}
+};
 
 VizG.propTypes = {
     config: PropTypes.object.isRequired,

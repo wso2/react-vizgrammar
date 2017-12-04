@@ -19,8 +19,6 @@
 import React from 'react';
 import {
     VictoryTooltip,
-    VictoryContainer,
-    VictoryLegend,
     VictoryScatter,
 } from 'victory';
 import PropTypes from 'prop-types';
@@ -108,7 +106,7 @@ export default class ScatterCharts extends React.Component {
 
             if (metadata.types[colorIndex] === 'linear') {
                 legend = false;
-                data.map((datum) => {
+                data.forEach((datum) => {
                     dataSets['scatterChart' + chartIndex] = dataSets['scatterChart' + chartIndex] || [];
                     dataSets['scatterChart' + chartIndex].push({
                         x: datum[xIndex],
@@ -202,7 +200,7 @@ export default class ScatterCharts extends React.Component {
 
         chartArray.map((chart, chartIndex) => {
             if (chart.colorType === 'linear') {
-                Object.keys(chart.dataSetNames).map((dataSetName) => {
+                Object.keys(chart.dataSetNames).forEach((dataSetName) => {
                     chartComponents.push((
                         <VictoryScatter
                             bubbleProperty='amount'
@@ -249,7 +247,7 @@ export default class ScatterCharts extends React.Component {
                     ));
                 });
             } else {
-                Object.keys(chart.dataSetNames).map((dataSetName) => {
+                Object.keys(chart.dataSetNames).forEach((dataSetName) => {
                     chartComponents.push((
                         <VictoryScatter
                             bubbleProperty='amount'
@@ -295,27 +293,27 @@ export default class ScatterCharts extends React.Component {
                 <div
                     style={
                         legend ?
-                            {
-                                width: !config.legendOrientation ? '80%' :
+                        {
+                            width: !config.legendOrientation ? '80%' :
                                     (() => {
                                         if (config.legendOrientation === 'left' ||
                                             config.legendOrientation === 'right') {
                                             return '80%';
                                         } else return '100%';
                                     })(),
-                                display: !config.legendOrientation ? 'inline' :
+                            display: !config.legendOrientation ? 'inline' :
                                     (() => {
                                         if (config.legendOrientation === 'left' ||
                                             config.legendOrientation === 'right') {
                                             return 'inline';
                                         } else return null;
                                     })(),
-                                float: !config.legendOrientation ? 'right' : (() => {
-                                    if (config.legendOrientation === 'left') return 'right';
-                                    else if (config.legendOrientation === 'right') return 'left';
-                                    else return null;
-                                })(),
-                            } : null
+                            float: !config.legendOrientation ? 'right' : (() => {
+                                if (config.legendOrientation === 'left') return 'right';
+                                else if (config.legendOrientation === 'right') return 'left';
+                                else return null;
+                            })(),
+                        } : null
                     }
                 >
                     {

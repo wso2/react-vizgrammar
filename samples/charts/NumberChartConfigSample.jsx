@@ -38,13 +38,15 @@ class NumberChartConfigSample extends Component {
             x: 'torque',
             title: 'Torque of Engine',
             charts: [{ type: 'number' }],
+            showDifference: true,
+            showPercentage: true,
             width: 400,
-            height: 200
+            height: 200,
         };
 
         this.metadata = {
-            'names': ['rpm', 'torque', 'horsepower', 'EngineType'],
-            'types': ['linear', 'linear', 'ordinal', 'ordinal']
+            names: ['rpm', 'torque', 'horsepower', 'EngineType'],
+            types: ['linear', 'linear', 'ordinal', 'ordinal']
         };
     }
 

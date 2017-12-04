@@ -252,7 +252,7 @@ export default class MapGenerator extends React.Component {
                                             dataTip = mapData.filter(x => x.x === geography.properties.name);
                                         } else {
                                             dataTip = mapData.filter(x => x.x === geography.id);
-                                        }
+                                        }   
 
                                         if (dataTip.length > 0) {
                                             toolTip = '' +
