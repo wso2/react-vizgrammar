@@ -163,6 +163,11 @@ class ReactTableTest extends Component {
                     >
                         <span>{props.value}</span>
                     </div>);
+            } else {
+                columnConfig.Cell = props => (
+                    <div>
+                        <span>{props.value}</span>
+                    </div>);
             }
 
             chartConfig.push(columnConfig);
