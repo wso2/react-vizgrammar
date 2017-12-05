@@ -17,7 +17,7 @@
  */
 
 import React from 'react';
-import {ChartWrapper} from './ChartWrapper.jsx';
+import { ChartWrapper } from './ChartWrapper.jsx';
 import './css/Table.css';
 import VizG from '../../src/VizG.jsx';
 
@@ -42,7 +42,7 @@ export default class LineChartConfigSample extends React.Component {
         };
 
         this.lineChartConfig = {
-            charts: [{type: 'arc', x: 'torque', color: 'EngineType', mode: 'donut'}],
+            charts: [{ type: 'arc', x: 'torque', color: 'EngineType', mode: 'donut' }],
             width: 300,
             height: 300,
             legendOrientation: 'top',
@@ -50,14 +50,14 @@ export default class LineChartConfigSample extends React.Component {
         };
 
         this.configPie = {
-            charts: [{type: 'arc', x: 'torque', color: 'EngineType', mode: 'pie'}],
+            charts: [{ type: 'arc', x: 'torque', color: 'EngineType', mode: 'pie' }],
             width: 300,
             height: 300,
         };
 
         this.configT = {
-            charts: [{type: 'arc', x: 'torque', color: 'EngineType', colorScale: ['steelblue', '#80ccff']}],
-            tooltip: {enabled: false},
+            charts: [{ type: 'arc', x: 'torque', color: 'EngineType', colorScale: ['steelblue', '#80ccff'] }],
+            tooltip: { enabled: false },
             legend: false,
             percentage: true,
             colorScale: ['steelblue', '#80ccff'],
@@ -95,7 +95,7 @@ export default class LineChartConfigSample extends React.Component {
                 <ChartWrapper title="Donut Chart Sample" chart="line" media actionBar={false}>
                     <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data}/>
                     <br/><br/>
-                    <div style={{display: 'block'}}>
+                    <div style={{ display: 'block' }}>
                         <pre>
                             {
                                 '{\n' +
@@ -126,7 +126,7 @@ export default class LineChartConfigSample extends React.Component {
                 <ChartWrapper title="Donut Chart Sample" chart="line" media actionBar={false}>
                     <VizG config={this.configT} metadata={this.metadata} data={this.state.data}/>
                     <br/><br/>
-                    <div style={{display: 'block'}}>
+                    <div style={{ display: 'block' }}>
                         <pre>
                             {
                                 '{\n' +
