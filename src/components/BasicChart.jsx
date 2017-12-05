@@ -15,9 +15,9 @@
 */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { VictoryGroup, VictoryStack } from 'victory';
+import {VictoryGroup, VictoryStack} from 'victory';
 import VizGError from '../VizGError';
-import { getDefaultColorScale } from './helper';
+import {getDefaultColorScale} from './helper';
 import ChartSkeleton from './ChartSkeleton.jsx';
 import {
     getBarComponent,
@@ -77,7 +77,6 @@ export default class BasicChart extends React.Component {
         }
 
 
-
         this.visualizeData(nextProps);
     }
 
@@ -134,7 +133,7 @@ export default class BasicChart extends React.Component {
             }
         }
 
-        return { seriesMinXVal, seriesMaxXVal };
+        return {seriesMinXVal, seriesMaxXVal};
     }
 
     /**
@@ -142,8 +141,8 @@ export default class BasicChart extends React.Component {
      * @param {Object} props Props received by the element.
      */
     visualizeData(props) {
-        const { config, metadata, data } = props;
-        let { initialized, xScale, chartArray, dataSets, xDomain, seriesMaxXVal, seriesMinXVal } = this.state;
+        const {config, metadata, data} = props;
+        let {initialized, xScale, chartArray, dataSets, xDomain, seriesMaxXVal, seriesMinXVal} = this.state;
 
         if (!config.x) {
             throw new VizGError('BasicChart', "Independent axis 'x' is not defined in the Configuration JSON.");
@@ -214,7 +213,7 @@ export default class BasicChart extends React.Component {
                 }
 
                 dataSets[dataSetName] = dataSets[dataSetName] || [];
-                dataSets[dataSetName].push({ x: datum[xIndex], y: datum[yIndex] });
+                dataSets[dataSetName].push({x: datum[xIndex], y: datum[yIndex]});
                 if (maxLength) dataSets[dataSetName] = this.maintainArrayLength(dataSets[dataSetName], maxLength);
                 if (xScale !== 'ordinal') {
                     this.xRange = xDomain = this.getXDomain(xDomain, this.getDataSetDomain(dataSets[dataSetName]));
@@ -257,7 +256,7 @@ export default class BasicChart extends React.Component {
             });
         });
 
-        return { chartArray, dataSets, xDomain, seriesMaxXVal, seriesMinXVal };
+        return {chartArray, dataSets, xDomain, seriesMaxXVal, seriesMinXVal};
     }
 
     /**
@@ -296,7 +295,7 @@ export default class BasicChart extends React.Component {
      * @param {Array} xDomain domain range of the x Axis.
      */
     _brushReset(xRange) {
-        this.setState({ xDomain: xRange });
+        this.setState({xDomain: xRange});
     }
 
     /**
@@ -304,7 +303,7 @@ export default class BasicChart extends React.Component {
      * @param {Array} xDomain New Domain of the x-axis
      */
     _brushOnChange(xDomain) {
-        this.setState({ xDomain });
+        this.setState({xDomain});
     }
 
     /**
@@ -312,14 +311,14 @@ export default class BasicChart extends React.Component {
      * @param {Object} props parameters recieved from the legend component
      */
     _legendInteraction(props) {
-        const { ignoreArray } = this.state;
+        const {ignoreArray} = this.state;
         const ignoreIndex = ignoreArray
             .map(d => d.name)
             .indexOf(props.datum.name);
         if (ignoreIndex > -1) {
             ignoreArray.splice(ignoreIndex, 1);
         } else {
-            ignoreArray.push({ name: props.datum.name });
+            ignoreArray.push({name: props.datum.name});
         }
         this.setState({
             ignoreArray,
@@ -327,17 +326,17 @@ export default class BasicChart extends React.Component {
         const fill = props.style ? props.style.fill : null;
         return fill === LEGEND_DISABLED_COLOR ?
             null :
-            { style: { fill: LEGEND_DISABLED_COLOR } };
+            {style: {fill: LEGEND_DISABLED_COLOR}};
     }
 
     _handleMouseEvent(evt) {
-        const { onClick } = this.props;
+        const {onClick} = this.props;
         return onClick && onClick(evt);
     }
 
     render() {
-        const { config } = this.props;
-        const { height, width, chartArray, dataSets, xScale, ignoreArray } = this.state;
+        const {config} = this.props;
+        const {height, width, chartArray, dataSets, xScale, ignoreArray} = this.state;
         let chartComponents = [];
         const legendItems = [];
         let horizontal = false;
@@ -352,7 +351,7 @@ export default class BasicChart extends React.Component {
                     Object.keys(chart.dataSetNames).map((dataSetName) => {
                         legendItems.push({
                             name: dataSetName,
-                            symbol: { fill: chart.dataSetNames[dataSetName] },
+                            symbol: {fill: chart.dataSetNames[dataSetName]},
                             chartIndex,
                         });
 
@@ -379,7 +378,7 @@ export default class BasicChart extends React.Component {
                     Object.keys(chart.dataSetNames).map((dataSetName) => {
                         legendItems.push({
                             name: dataSetName,
-                            symbol: { fill: chart.dataSetNames[dataSetName] },
+                            symbol: {fill: chart.dataSetNames[dataSetName]},
                             chartIndex,
                         });
 
@@ -421,7 +420,7 @@ export default class BasicChart extends React.Component {
                     Object.keys(chart.dataSetNames).map((dataSetName) => {
                         legendItems.push({
                             name: dataSetName,
-                            symbol: { fill: chart.dataSetNames[dataSetName] },
+                            symbol: {fill: chart.dataSetNames[dataSetName]},
                             chartIndex,
                         });
                         addChart = ignoreArray
@@ -465,7 +464,7 @@ export default class BasicChart extends React.Component {
                 <VictoryGroup
                     horizontal={horizontal}
                     offset={barWidth}
-                    style={{ data: { width: barWidth } }}
+                    style={{data: {width: barWidth}}}
                 >
                     {barcharts}
                 </VictoryGroup>
@@ -473,30 +472,32 @@ export default class BasicChart extends React.Component {
         }
 
         return (
-            <div style={{ overflow: 'hidden', zIndex: 99999 }}>
+            <div style={{overflow: 'hidden', zIndex: 99999}}>
                 <div
-                    style={{
-                        width: !config.legendOrientation ? '80%' :
-                            (() => {
-                                if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
-                                    return '80%';
-                                } else return '100%';
+                    style={
+                        config.legend ? {
+                            width: !config.legendOrientation ? '80%' :
+                                (() => {
+                                    if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
+                                        return '80%';
+                                    } else return '100%';
+                                })(),
+                            display: !config.legendOrientation ? 'inline' :
+                                (() => {
+                                    if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
+                                        return 'inline';
+                                    } else return null;
+                                })(),
+                            float: !config.legendOrientation ? 'left' : (() => {
+                                if (config.legendOrientation === 'left') return 'right';
+                                else if (config.legendOrientation === 'right') return 'left';
+                                else return null;
                             })(),
-                        display: !config.legendOrientation ? 'inline' :
-                            (() => {
-                                if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
-                                    return 'inline';
-                                } else return null;
-                            })(),
-                        float: !config.legendOrientation ? 'left' : (() => {
-                            if (config.legendOrientation === 'left') return 'right';
-                            else if (config.legendOrientation === 'right') return 'left';
-                            else return null;
-                        })(),
-                    }}
+                        } : {width: '100%'}
+                    }
                 >
                     {
-                        config.legendOrientation && config.legendOrientation === 'top' ?
+                        config.legend && config.legendOrientation && config.legendOrientation === 'top' ?
                             getLegendComponent(config, legendItems, ignoreArray, this._legendInteraction, height, width)
                             : null
                     }
@@ -513,7 +514,7 @@ export default class BasicChart extends React.Component {
                     </ChartSkeleton>
                 </div>
                 {
-                    ['bottom', 'left', 'right'].indexOf(config.legendOrientation) > -1 || !config.legendOrientation ?
+                    config.legend && (!config.legendOrientation || ['bottom', 'left', 'right'].indexOf(config.legendOrientation) > -1) ?
                         getLegendComponent(config, legendItems, ignoreArray, this._legendInteraction, height, width) :
                         null
                 }
