@@ -103,9 +103,17 @@ class VizG extends Component {
                     />
                 );
             case 'scatter':
-                return <ScatterCharts config={config} metadata={metadata} data={data} onClick={onClick} />;
+                return (
+                    <ScatterCharts
+                        config={config}
+                        metadata={metadata}
+                        data={data}
+                        onClick={onClick}
+                        append={this.props.append}
+                    />
+                );
             case 'map':
-                return <MapGenerator config={config} metadata={metadata} data={data} onClick={onClick} />;
+                return <MapGenerator config={config} metadata={metadata} data={data} onClick={onClick}/>;
             case 'table':
                 return (
                     <TableCharts

@@ -56,6 +56,11 @@ export default class ScatterCharts extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        if(!this.props.append) {
+            this.state.dataSets = {};
+            this.state.chartArray = [];
+            this.state.initialized = false;
+        }
         this._handleAndSortData(nextProps);
     }
 
