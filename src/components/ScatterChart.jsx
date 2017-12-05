@@ -292,7 +292,7 @@ export default class ScatterCharts extends React.Component {
             <div style={{ overflow: 'hidden' }}>
                 <div
                     style={
-                        legend ?
+                        config.legend && legend ?
                         {
                             width: !config.legendOrientation ? '80%' :
                                     (() => {
@@ -317,7 +317,7 @@ export default class ScatterCharts extends React.Component {
                     }
                 >
                     {
-                        legend && (config.legendOrientation && config.legendOrientation === 'top') ?
+                        config.legend && legend && (config.legendOrientation && config.legendOrientation === 'top') ?
                             getLegendComponent(config, legendItems, ignoreArray, this._legendInteraction, height, width)
                             : null
                     }
@@ -325,7 +325,7 @@ export default class ScatterCharts extends React.Component {
                         {chartComponents}
                     </ChartSkeleton>
                     {
-                        legend && (!config.legendOrientation || config.legendOrientation !== 'top') ?
+                        config.legend && legend && (!config.legendOrientation || config.legendOrientation !== 'top') ?
                             getLegendComponent(config, legendItems, ignoreArray, this._legendInteraction, height, width)
                             : null
                     }
