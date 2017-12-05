@@ -16,9 +16,9 @@
  * under the License.
  */
 
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import MapGenerator from '../../src/components/MapChart.jsx';
-import { ChartWrapper } from './ChartWrapper.jsx';
+import {ChartWrapper} from './ChartWrapper.jsx';
 
 /**
  * This class will render a page that contains samples on how to use Geographical charts.
@@ -51,7 +51,7 @@ class MapChartConfigSample extends Component {
 
         this.mapConfig = {
             x: 'Country',
-            charts: [{ type: 'map', y: 'Inflation', mapType: 'world', colorScale: ['#1958ff', '#1eff36'] }],
+            charts: [{type: 'map', y: 'Inflation', mapType: 'world', colorScale: ['#1958ff', '#1eff36']}],
             width: 400,
             height: 200
         };
@@ -60,7 +60,7 @@ class MapChartConfigSample extends Component {
             type: 'map',
             x: 'Country',
             renderer: 'canvas',
-            charts: [{ type: 'map', y: 'Inflation', mapType: 'europe', colorScale: ['#1958ff', '#1eff36'] }],
+            charts: [{type: 'map', y: 'Inflation', mapType: 'europe', colorScale: ['#1958ff', '#1eff36']}],
             width: 500,
             height: 300
         };
@@ -69,7 +69,7 @@ class MapChartConfigSample extends Component {
             type: 'map',
             x: 'Country',
             renderer: 'canvas',
-            charts: [{ type: 'map', y: 'Inflation', mapType: 'usa', colorScale: ['#1958ff', '#1eff36'] }],
+            charts: [{type: 'map', y: 'Inflation', mapType: 'usa', colorScale: ['#1958ff', '#1eff36']}],
             width: 500,
             height: 300
         };
@@ -84,54 +84,61 @@ class MapChartConfigSample extends Component {
         return (
             <div>
                 <ChartWrapper title="World Map Sample" chart="line" media={true} actionBar={false}>
-                    <MapGenerator config={this.mapConfig} metadata={this.metadata} data={this.state.data} />
+                    <MapGenerator config={this.mapConfig} metadata={this.metadata} data={this.state.data}/>
                     <pre>
                         {'{\n' +
-                            '\tx : \'Country\',\n' +
-                            '\tcharts : [{type: \'map\',  y : \'Inflation\',mapType:\'world\'}],\n' +
-                            '\twidth: 400,\n' +
-                            '\theight: 200\n' +
-                            '}'}
+                        '\tx : \'Country\',\n' +
+                        '\tcharts : [{type: \'map\',  y : \'Inflation\',mapType:\'world\'}],\n' +
+                        '\twidth: 400,\n' +
+                        '\theight: 200\n' +
+                        '}'}
                     </pre>
                 </ChartWrapper>
                 <ChartWrapper title="Europe Map Sample" chart="line" media={true} actionBar={false}>
-                    <MapGenerator config={this.europeConfig} metadata={this.metadata} data={this.state.data} />
+                    <MapGenerator
+                        config={this.europeConfig}
+                        metadata={this.metadata}
+                        data={this.state.data}
+                        onClick={(e) => {
+                            console.log(e);
+                        }}
+                    />
                     <pre>
                         {'{\n' +
-                            '\tx : \'Country\',\n' +
-                            '\tcharts : [{type: \'map\',  y : \'Inflation\',mapType:\'europe\'}],\n' +
-                            '\twidth: 400,\n' +
-                            '\theight: 200\n' +
-                            '}'}
+                        '\tx : \'Country\',\n' +
+                        '\tcharts : [{type: \'map\',  y : \'Inflation\',mapType:\'europe\'}],\n' +
+                        '\twidth: 400,\n' +
+                        '\theight: 200\n' +
+                        '}'}
                     </pre>
                 </ChartWrapper>
                 <ChartWrapper title="United States Map Sample" chart="line" media={true} actionBar={false}>
-                    <MapGenerator config={this.usaConfig} metadata={this.metadata} data={this.state.data2} />
+                    <MapGenerator config={this.usaConfig} metadata={this.metadata} data={this.state.data2}/>
                     <pre>
                         {'{\n' +
-                            '\tx : \'County\',\n' +
-                            '\tcharts : [{type: \'map\',  y : \'Inflation\',mapType:\'usa\'}],\n' +
-                            '\twidth: 400,\n' +
-                            '\theight: 200\n' +
-                            '}'}
+                        '\tx : \'County\',\n' +
+                        '\tcharts : [{type: \'map\',  y : \'Inflation\',mapType:\'usa\'}],\n' +
+                        '\twidth: 400,\n' +
+                        '\theight: 200\n' +
+                        '}'}
                     </pre>
                 </ChartWrapper>
                 <ChartWrapper title="Sample Data Set" chart="line" media={false} actionBar={false}>
                     {/*<MapGenerator config={this.usaConfig} metadata={this.metadata} data={this.state.data2}/>*/}
                     <pre>
                         {'data : [\n' +
-                            '                [\'Afghanistan\',4.23],\n' +
-                            '                [\'EGY\',1.23],\n' +
-                            '                [\'Afghanistan\',2.23],\n' +
-                            '                [\'United States\',10.23],\n' +
-                            '                [\'Albania\',3.23],\n' +
-                            '                [\'United Kingdom\',7],\n' +
-                            '                [\'Australia\',5],\n' +
-                            '                [\'Ireland\',1],\n' +
-                            '                [\'RUS\',15]\n' +
-                            '\n' +
-                            '];'}
-                        <br />
+                        '                [\'Afghanistan\',4.23],\n' +
+                        '                [\'EGY\',1.23],\n' +
+                        '                [\'Afghanistan\',2.23],\n' +
+                        '                [\'United States\',10.23],\n' +
+                        '                [\'Albania\',3.23],\n' +
+                        '                [\'United Kingdom\',7],\n' +
+                        '                [\'Australia\',5],\n' +
+                        '                [\'Ireland\',1],\n' +
+                        '                [\'RUS\',15]\n' +
+                        '\n' +
+                        '];'}
+                        <br/>
                         {
                             '\n\nmetadata = {\n' +
                             '        \'names\' : [\'Country\',\'Inflation\'],\n' +
@@ -173,7 +180,7 @@ class MapChartConfigSample extends Component {
                                 </tr>
                             </tbody>
                         </table>
-                        <br />
+                        <br/>
                         <p>Chart Properties</p>
                         <table>
                             <thead>

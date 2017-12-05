@@ -507,6 +507,7 @@ export default class BasicChart extends React.Component {
                         xScale={xScale}
                         yDomain={this.props.yDomain}
                         xDomain={this.state.xDomain}
+                        xRange={this.xRange}
                     >
                         {chartComponents}
                     </ChartSkeleton>

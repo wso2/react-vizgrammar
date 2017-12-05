@@ -29,7 +29,7 @@ class NumberChartConfigSample extends Component {
         super(props);
         this.state = {
             data: [
-                [0, 10, 1, 'Piston']
+                [10]
             ],
             timer: 1
         };
@@ -45,15 +45,15 @@ class NumberChartConfigSample extends Component {
         };
 
         this.metadata = {
-            names: ['rpm', 'torque', 'horsepower', 'EngineType'],
-            types: ['linear', 'linear', 'ordinal', 'ordinal']
+            names: ['torque'],
+            types: ['linear']
         };
     }
 
     componentDidMount() {
         setInterval(() => {
             this.setState({
-                data: this.state.data.concat([[0, Math.round(Math.random() * 100), 1, 'Piston'], [0, Math.round(Math.random() * 100), 1, 'rotary']])
+                data: this.state.data.concat([[Math.round(Math.random() * 100)], [Math.round(Math.random() * 100)]])
             });
         }, 1000);
     }

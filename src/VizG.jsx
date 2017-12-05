@@ -16,7 +16,7 @@
  * under the License.
  */
 // TODO:Fix dynamically changing config for other charts
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import BasicCharts from './components/BasicChart.jsx';
 import ScatterCharts from './components/ScatterChart.jsx';
@@ -56,7 +56,7 @@ class VizG extends Component {
     }
 
     render() {
-        const { config, data, metadata, onClick } = this.state;
+        const {config, data, metadata, onClick} = this.state;
         const chartType = config.charts[0].type;
 
         return (
@@ -89,10 +89,19 @@ class VizG extends Component {
                         data={data}
                         onClick={onClick}
                         yDomain={this.props.yDomain}
+                        append={this.props.append}
                     />
                 );
             case 'arc':
-                return (<PieCharts config={config} metadata={metadata} data={data} onClick={onClick} />);
+                return (
+                    <PieCharts
+                        config={config}
+                        metadata={metadata}
+                        data={data}
+                        onClick={onClick}
+                        append={this.props.append}
+                    />
+                );
             case 'scatter':
                 return <ScatterCharts config={config} metadata={metadata} data={data} onClick={onClick} />;
             case 'map':
