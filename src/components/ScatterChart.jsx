@@ -56,7 +56,7 @@ export default class ScatterCharts extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if(!this.props.append) {
+        if (!this.props.append) {
             this.state.dataSets = {};
             this.state.chartArray = [];
             this.state.initialized = false;
@@ -89,7 +89,6 @@ export default class ScatterCharts extends React.Component {
             let colorIndex = metadata.names.indexOf(chart.color);
             const sizeIndex = metadata.names.indexOf(chart.size);
             xScale = metadata.types[xIndex] === 'time' ? 'time' : xScale;
-
 
             if (xIndex === -1) {
                 throw new VizGError('ScatterChart', "Unknown 'x' field defined in the Scatter Plot config.");
@@ -164,7 +163,7 @@ export default class ScatterCharts extends React.Component {
                         } else {
                             chartArray[chartIndex]
                                 .dataSetNames[dataSetName] = chartArray[chartIndex]
-                                    .colorScale[chartArray[chartIndex].colorIndex++];
+                                .colorScale[chartArray[chartIndex].colorIndex++];
                         }
                     }
                 });
@@ -305,27 +304,27 @@ export default class ScatterCharts extends React.Component {
                 <div
                     style={
                         config.legend && legend ?
-                        {
-                            width: !config.legendOrientation ? '80%' :
+                            {
+                                width: !config.legendOrientation ? '80%' :
                                     (() => {
                                         if (config.legendOrientation === 'left' ||
                                             config.legendOrientation === 'right') {
                                             return '80%';
                                         } else return '100%';
                                     })(),
-                            display: !config.legendOrientation ? 'inline' :
+                                display: !config.legendOrientation ? 'inline' :
                                     (() => {
                                         if (config.legendOrientation === 'left' ||
                                             config.legendOrientation === 'right') {
                                             return 'inline';
                                         } else return null;
                                     })(),
-                            float: !config.legendOrientation ? 'right' : (() => {
-                                if (config.legendOrientation === 'left') return 'right';
-                                else if (config.legendOrientation === 'right') return 'left';
-                                else return null;
-                            })(),
-                        } : null
+                                float: !config.legendOrientation ? 'right' : (() => {
+                                    if (config.legendOrientation === 'left') return 'right';
+                                    else if (config.legendOrientation === 'right') return 'left';
+                                    else return null;
+                                })(),
+                            } : null
                     }
                 >
                     {

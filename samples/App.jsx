@@ -17,7 +17,7 @@
  */
 import React from 'react';
 import VizG from '../src/index';
-import {ChartWrapper} from './charts/ChartWrapper.jsx';
+import { ChartWrapper } from './charts/ChartWrapper.jsx';
 
 const styles = {
     flexContainer: {
@@ -86,7 +86,7 @@ export default class App extends React.Component {
         this.interval_id = null;
         this.lineChartConfig = {
             x: 'rpm',
-            charts: [{type: 'line', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston']}],
+            charts: [{ type: 'line', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston'] }],
             maxLength: 30,
             width: 700,
             height: 450,
@@ -94,7 +94,7 @@ export default class App extends React.Component {
 
         this.singleAreaChartConfig = {
             x: 'rpm',
-            charts: [{type: 'area', y: 'horsepower', fill: '#2ca02c'}],
+            charts: [{ type: 'area', y: 'horsepower', fill: '#2ca02c' }],
             maxLength: 30,
             width: 700,
             height: 450,
@@ -103,7 +103,7 @@ export default class App extends React.Component {
 
         this.singleAreaChartConfig2 = {
             x: 'rpm',
-            charts: [{type: 'area', y: 'torque', color: 'EngineType'}],
+            charts: [{ type: 'area', y: 'torque', color: 'EngineType' }],
             maxLength: 30,
             width: 700,
             height: 450,
@@ -112,7 +112,7 @@ export default class App extends React.Component {
 
         this.barChartConfig = {
             x: 'rpm',
-            charts: [{type: 'bar', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston']}],
+            charts: [{ type: 'bar', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston'] }],
             maxLength: 30,
             width: 700,
             height: 450,
@@ -136,7 +136,7 @@ export default class App extends React.Component {
         };
 
         this.pieChartConfig = {
-            charts: [{type: 'arc', x: 'torque', color: 'EngineType', mode: 'donut'}],
+            charts: [{ type: 'arc', x: 'torque', color: 'EngineType', mode: 'donut' }],
             width: 300,
             height: 300
         };
@@ -144,14 +144,14 @@ export default class App extends React.Component {
         this.numConfig = {
             x: 'torque',
             title: 'Torque of Engine',
-            charts: [{type: 'number'}],
+            charts: [{ type: 'number' }],
             width: 400,
             height: 200
         };
 
         this.mapConfig = {
             x: 'Country',
-            charts: [{type: 'map', y: 'Inflation', mapType: 'world'}],
+            charts: [{ type: 'map', y: 'Inflation', mapType: 'world' }],
             width: 400,
             height: 200
         };

@@ -15,8 +15,8 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import React, {Component} from 'react';
-import {ChartWrapper} from './ChartWrapper.jsx';
+import React, { Component } from 'react';
+import { ChartWrapper } from './ChartWrapper.jsx';
 import VizG from '../../src/VizG.jsx';
 
 /**
@@ -59,7 +59,6 @@ class TableChartConfigSample extends Component {
             });
         }, 1000);
     }
-
 
     render() {
         return (

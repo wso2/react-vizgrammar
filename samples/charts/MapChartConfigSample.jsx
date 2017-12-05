@@ -16,9 +16,9 @@
  * under the License.
  */
 
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import MapGenerator from '../../src/components/MapChart.jsx';
-import {ChartWrapper} from './ChartWrapper.jsx';
+import { ChartWrapper } from './ChartWrapper.jsx';
 
 /**
  * This class will render a page that contains samples on how to use Geographical charts.
@@ -51,7 +51,7 @@ class MapChartConfigSample extends Component {
 
         this.mapConfig = {
             x: 'Country',
-            charts: [{type: 'map', y: 'Inflation', mapType: 'world', colorScale: ['#1958ff', '#1eff36']}],
+            charts: [{ type: 'map', y: 'Inflation', mapType: 'world', colorScale: ['#1958ff', '#1eff36'] }],
             width: 400,
             height: 200
         };
@@ -60,7 +60,7 @@ class MapChartConfigSample extends Component {
             type: 'map',
             x: 'Country',
             renderer: 'canvas',
-            charts: [{type: 'map', y: 'Inflation', mapType: 'europe', colorScale: ['#1958ff', '#1eff36']}],
+            charts: [{ type: 'map', y: 'Inflation', mapType: 'europe', colorScale: ['#1958ff', '#1eff36'] }],
             width: 500,
             height: 300
         };
@@ -69,7 +69,7 @@ class MapChartConfigSample extends Component {
             type: 'map',
             x: 'Country',
             renderer: 'canvas',
-            charts: [{type: 'map', y: 'Inflation', mapType: 'usa', colorScale: ['#1958ff', '#1eff36']}],
+            charts: [{ type: 'map', y: 'Inflation', mapType: 'usa', colorScale: ['#1958ff', '#1eff36'] }],
             width: 500,
             height: 300
         };

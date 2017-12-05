@@ -67,8 +67,8 @@ export default class MapGenerator extends React.Component {
     }
 
     _handleMouseEvent(evt) {
-        const {onClick} = this.props;
-        const {mapData} = this.state;
+        const { onClick } = this.props;
+        const { mapData } = this.state;
         let data = mapData.filter(d => d.x === evt.id);
         return onClick && onClick(data[0]);
     }

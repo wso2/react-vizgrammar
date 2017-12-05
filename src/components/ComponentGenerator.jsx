@@ -26,7 +26,7 @@ import {
     VictoryLegend,
     VictoryContainer,
 } from 'victory';
-import {Range} from 'rc-slider';
+import { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
 const DEFAULT_MARK_RADIUS = 4;
@@ -81,11 +81,11 @@ export function getLineOrAreaComponent(config, chartIndex, onClick) {
                         orientation='right'
                         pointerLength={4}
                         cornerRadius={2}
-                        flyoutStyle={{fill: '#000', fillOpacity: '0.8', strokeWidth: 0}}
-                        style={{fill: '#b0b0b0'}}
+                        flyoutStyle={{ fill: '#000', fillOpacity: '0.8', strokeWidth: 0 }}
+                        style={{ fill: '#b0b0b0' }}
                     />
                 }
-                padding={{left: 100, top: 30, bottom: 50, right: 30}}
+                padding={{ left: 100, top: 30, bottom: 50, right: 30 }}
                 size={(
                     config.charts[chartIndex].style ?
                         config.charts[chartIndex].style.markRadius || DEFAULT_MARK_RADIUS : DEFAULT_MARK_RADIUS
@@ -128,8 +128,8 @@ export function getBarComponent(config, chartIndex, data, color, onClick) {
                     orientation='top'
                     pointerLength={4}
                     cornerRadius={2}
-                    flyoutStyle={{fill: '#000', fillOpacity: '0.8', strokeWidth: 0}}
-                    style={{fill: '#b0b0b0'}}
+                    flyoutStyle={{ fill: '#000', fillOpacity: '0.8', strokeWidth: 0 }}
+                    style={{ fill: '#b0b0b0' }}
                 />
             }
             data={data}
@@ -219,12 +219,12 @@ export function getLegendComponent(config, legendItems, ignoreArray, interaction
                 }
                 title="Legend"
                 style={{
-                    title: {fontSize: 25, fill: config.style ? config.style.legendTitleColor : null},
-                    labels: {fontSize: 20, fill: config.style ? config.style.legendTextColor : null},
+                    title: { fontSize: 25, fill: config.style ? config.style.legendTitleColor : null },
+                    labels: { fontSize: 20, fill: config.style ? config.style.legendTextColor : null },
                 }}
                 data={legendItems.length > 0 ? legendItems : [{
                     name: 'undefined',
-                    symbol: {fill: '#333'},
+                    symbol: { fill: '#333' },
                 }]}
                 itemsPerRow={config.legendOrientation === 'top' || config.legendOrientation === 'bottom' ? 5 : 4}
                 events={[
@@ -249,8 +249,8 @@ export function getLegendComponent(config, legendItems, ignoreArray, interaction
 
 export function getBrushComponent(xScale, xRange, xDomain, reset, onChange) {
     return (
-        <div style={{width: '80%', height: 40, display: 'inline', float: 'left', right: 10}}>
-            <div style={{width: '10%', display: 'inline', float: 'left', left: 20}}>
+        <div style={{ width: '80%', height: 40, display: 'inline', float: 'left', right: 10 }}>
+            <div style={{ width: '10%', display: 'inline', float: 'left', left: 20 }}>
                 <button
                     onClick={() => {
                         reset(xRange);
@@ -259,7 +259,7 @@ export function getBrushComponent(xScale, xRange, xDomain, reset, onChange) {
                     Reset
                 </button>
             </div>
-            <div style={{width: '90%', display: 'inline', float: 'right'}}>
+            <div style={{ width: '90%', display: 'inline', float: 'right' }}>
                 <Range
                     max={xScale === 'time' ? xRange[1].getDate() : xRange[1]}
                     min={xScale === 'time' ? xRange[0].getDate() : xRange[0]}

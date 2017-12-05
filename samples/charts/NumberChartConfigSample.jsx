@@ -62,7 +62,7 @@ class NumberChartConfigSample extends Component {
         return (
             <div>
                 <ChartWrapper title="Number Chart Sample" chart="chart" media={true} actionBar={false}>
-                    <NumberCharts config={this.numConfig} metadata={this.metadata} data={this.state.data} />
+                    <NumberCharts config={this.numConfig} metadata={this.metadata} data={this.state.data}/>
                     <pre>
                         {
                             '{\n' +
@@ -126,7 +126,7 @@ class NumberChartConfigSample extends Component {
                                 </tr>
                             </tbody>
                         </table>
-                        <br /><br />
+                        <br/><br/>
                         <table>
                             <thead>
                                 <tr>
