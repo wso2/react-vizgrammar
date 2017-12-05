@@ -41,11 +41,14 @@ export function getLineOrAreaComponent(config, chartIndex, onClick) {
                         config.charts[chartIndex].style.strokeWidth || null : null,
                 },
             }}
-            animate={{
-                onEnter: {
-                    duration: 100,
-                },
-            }}
+            animate={
+                config.animate ?
+                    {
+                        onEnter: {
+                            duration: 100,
+                        },
+                    } : null
+            }
         />) :
         (<VictoryArea
             style={{
@@ -55,11 +58,14 @@ export function getLineOrAreaComponent(config, chartIndex, onClick) {
                         DEFAULT_AREA_FILL_OPACITY,
                 },
             }}
-            animate={{
-                onEnter: {
-                    duration: 100,
-                },
-            }}
+            animate={
+                config.animate ?
+                    {
+                        onEnter: {
+                            duration: 100,
+                        },
+                    } : null
+            }
         />);
 
     return ([
@@ -97,12 +103,14 @@ export function getLineOrAreaComponent(config, chartIndex, onClick) {
                         },
                     },
                 }]}
-                animate={{
-                    onEnter: {
-                        duration: 100,
-                        before: () => ({_y: 0}),
-                    },
-                }}
+                animate={
+                    config.animate ?
+                        {
+                            onEnter: {
+                                duration: 100,
+                            },
+                        } : null
+                }
 
             />
         </VictoryPortal>),
@@ -139,6 +147,14 @@ export function getBarComponent(config, chartIndex, data, color, onClick) {
                     },
                 },
             }]}
+            animate={
+                config.animate ?
+                    {
+                        onEnter: {
+                            duration: 100,
+                        },
+                    } : null
+            }
         />
     );
 }

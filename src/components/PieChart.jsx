@@ -54,7 +54,7 @@ export default class PieCharts extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.append) {
+        if (!this.props.append) {
             this.state.dataSets = {};
             this.state.chartArray = [];
             this.state.initialized = false;
@@ -230,6 +230,14 @@ export default class PieCharts extends React.Component {
                             },
                         }]}
                         randomUpdater={randomUpdater}
+                        animate={
+                            config.animate ?
+                                {
+                                    onEnter: {
+                                        duration: 100,
+                                    },
+                                } : null
+                        }
                     />
                     {
                         config.percentage ?
