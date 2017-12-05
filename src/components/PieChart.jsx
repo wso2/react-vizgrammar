@@ -248,13 +248,13 @@ export default class PieCharts extends React.Component {
         return (
             <div style={{overflow: 'hidden'}}>
                 {
-                    legend && (config.legendOrientation && config.legendOrientation === 'top') ?
+                    (config.legend || legend) && (config.legendOrientation && config.legendOrientation === 'top') ?
                         this.generateLegendComponent(config, legendItems) :
                         null
                 }
                 <div
                     style={{
-                        width: !legend ? '100%' :
+                        width: !(config.legend || legend) ? '100%' :
                             (() => {
                                 if (!config.legendOrientation) return '80%';
                                 else if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
@@ -277,7 +277,7 @@ export default class PieCharts extends React.Component {
                     {chartComponents}
                 </div>
                 {
-                    legend && (!config.legendOrientation || config.legendOrientation !== 'top') ?
+                    (config.legend || legend) && (!config.legendOrientation || config.legendOrientation !== 'top') ?
                         this.generateLegendComponent(config, legendItems) :
                         null
                 }
