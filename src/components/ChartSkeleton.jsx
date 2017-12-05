@@ -55,7 +55,16 @@ export default class ChartSkeleton extends React.Component {
                         grid: { stroke: '#000', strokeOpacity: 0.1 },
                         ticks: { stroke: '#000', strokeOpacity: 0.1, size: 5 },
                     }}
-                    gridComponent={config.disableVerticalGrid ? <g /> : <line />}
+                    gridComponent={config.disableVerticalGrid ?
+                        <g /> :
+                        <line
+                            style={{
+                                stroke: config.gridColor || 'rgb(0, 0, 0)',
+                                strokeOpacity: 0.1,
+                                fill: 'transparent',
+                            }}
+                        />
+                    }
                     label={config.xAxisLabel || config.x}
                     tickFormat={(() => {
                         if (xScale === 'time' && config.timeFormat) {
@@ -82,7 +91,7 @@ export default class ChartSkeleton extends React.Component {
                             }}
                         />
                     }
-                    tickCount={(xScale==='ordinal'&& config.charts[0].type === 'bar') ? arr.length : config.xAxisTickCount}
+                    tickCount={(xScale === 'ordinal' && config.charts[0].type === 'bar') ? arr.length : config.xAxisTickCount}
                 />
                 <VictoryAxis
                     dependentAxis
@@ -100,7 +109,14 @@ export default class ChartSkeleton extends React.Component {
                         grid: { stroke: '#000', strokeOpacity: 0.1 },
                         ticks: { stroke: '#000', strokeOpacity: 0.1, size: 5 },
                     }}
-                    gridComponent={config.disableHorizontalGrid ? <g /> : <line />}
+                    gridComponent={config.disableHorizontalGrid ? <g /> :
+                    <line
+                        style={{
+                            stroke: config.gridColor || 'rgb(0, 0, 0)',
+                            strokeOpacity: 0.1,
+                            fill: 'transparent',
+                        }}
+                    />}
                     label={config.yAxisLabel || config.charts.length > 1 ? '' : config.charts[0].y}
                     standalone={false}
                     tickLabelComponent={
