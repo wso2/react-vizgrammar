@@ -167,23 +167,23 @@
 }
 
 .ReactTable .rt-tbody .rt-tr-group {
-	border-bottom: solid 1px rgba(0, 0, 0, 0.05);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.02);
 }
 
 .ReactTable .rt-tbody .rt-tr-group:last-child {
-	border-bottom: 0
+	border-bottom: 0;
 }
 
 .ReactTable .rt-tbody .rt-td {
-	border-right: 1px solid rgba(0, 0, 0, 0.02);
+	border-right: 0;
 }
 
 .ReactTable .rt-tbody .rt-td:last-child {
-	border-right: 0
+	border-right: 0;
 }
 
 .ReactTable .rt-tbody .rt-expandable {
-	cursor: pointer
+	cursor: pointer;
 }
 
 .ReactTable .rt-tr-group {
