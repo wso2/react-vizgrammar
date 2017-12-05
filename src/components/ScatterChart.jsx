@@ -248,11 +248,11 @@ export default class ScatterCharts extends React.Component {
                             }]}
                             animate={
                                 config.animate ?
-                                    {
-                                        onEnter: {
-                                            duration: 100,
-                                        },
-                                    } : null
+                                {
+                                    onEnter: {
+                                        duration: 100,
+                                    },
+                                } : null
                             }
                         />
                     ));
@@ -304,27 +304,27 @@ export default class ScatterCharts extends React.Component {
                 <div
                     style={
                         config.legend && legend ?
-                            {
-                                width: !config.legendOrientation ? '80%' :
+                        {
+                            width: !config.legendOrientation ? '80%' :
                                     (() => {
                                         if (config.legendOrientation === 'left' ||
                                             config.legendOrientation === 'right') {
                                             return '80%';
                                         } else return '100%';
                                     })(),
-                                display: !config.legendOrientation ? 'inline' :
+                            display: !config.legendOrientation ? 'inline' :
                                     (() => {
                                         if (config.legendOrientation === 'left' ||
                                             config.legendOrientation === 'right') {
                                             return 'inline';
                                         } else return null;
                                     })(),
-                                float: !config.legendOrientation ? 'right' : (() => {
-                                    if (config.legendOrientation === 'left') return 'right';
-                                    else if (config.legendOrientation === 'right') return 'left';
-                                    else return null;
-                                })(),
-                            } : null
+                            float: !config.legendOrientation ? 'right' : (() => {
+                                if (config.legendOrientation === 'left') return 'right';
+                                else if (config.legendOrientation === 'right') return 'left';
+                                else return null;
+                            })(),
+                        } : null
                     }
                 >
                     {

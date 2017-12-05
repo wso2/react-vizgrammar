@@ -43,11 +43,11 @@ export function getLineOrAreaComponent(config, chartIndex, onClick) {
             }}
             animate={
                 config.animate ?
-                    {
-                        onEnter: {
-                            duration: 100,
-                        },
-                    } : null
+                {
+                    onEnter: {
+                        duration: 100,
+                    },
+                } : null
             }
         />) :
         (<VictoryArea
@@ -60,11 +60,11 @@ export function getLineOrAreaComponent(config, chartIndex, onClick) {
             }}
             animate={
                 config.animate ?
-                    {
-                        onEnter: {
-                            duration: 100,
-                        },
-                    } : null
+                {
+                    onEnter: {
+                        duration: 100,
+                    },
+                } : null
             }
         />);
 
@@ -105,11 +105,11 @@ export function getLineOrAreaComponent(config, chartIndex, onClick) {
                 }]}
                 animate={
                     config.animate ?
-                        {
-                            onEnter: {
-                                duration: 100,
-                            },
-                        } : null
+                    {
+                        onEnter: {
+                            duration: 100,
+                        },
+                    } : null
                 }
 
             />
@@ -118,7 +118,6 @@ export function getLineOrAreaComponent(config, chartIndex, onClick) {
 }
 
 export function getBarComponent(config, chartIndex, data, color, onClick) {
-
     return (
 
         <VictoryBar
@@ -149,11 +148,11 @@ export function getBarComponent(config, chartIndex, data, color, onClick) {
             }]}
             animate={
                 config.animate ?
-                    {
-                        onEnter: {
-                            duration: 100,
-                        },
-                    } : null
+                {
+                    onEnter: {
+                        duration: 100,
+                    },
+                } : null
             }
         />
     );
@@ -193,7 +192,7 @@ export function getLegendComponent(config, legendItems, ignoreArray, interaction
             }}
         >
             <VictoryLegend
-                containerComponent={<VictoryContainer responsive/>}
+                containerComponent={<VictoryContainer responsive />}
                 centerTitle
                 height={(() => {
                     if (!config.legendOrientation) return height;

@@ -68,19 +68,19 @@ export default class App extends React.Component {
                 ['United Kingdom', 7],
                 ['Australia', 5],
                 ['Ireland', 1],
-                ['RUS', 15]
+                ['RUS', 15],
 
-            ]
+            ],
         };
 
         this.metadata = {
             names: ['rpm', 'torque', 'horsepower', 'EngineType', 'weight'],
-            types: ['linear', 'linear', 'linear', 'ordinal', 'linear']
+            types: ['linear', 'linear', 'linear', 'ordinal', 'linear'],
         };
 
         this.mapMetadata = {
             names: ['Country', 'Inflation'],
-            types: ['ordinal', 'linear']
+            types: ['ordinal', 'linear'],
         };
 
         this.interval_id = null;
@@ -128,17 +128,17 @@ export default class App extends React.Component {
                     y: 'torque',
                     color: 'horsepower',
                     size: 'weight',
-                    maxLength: 30
+                    maxLength: 30,
                 }],
 
             width: 800,
-            height: 450
+            height: 450,
         };
 
         this.pieChartConfig = {
             charts: [{ type: 'arc', x: 'torque', color: 'EngineType', mode: 'donut' }],
             width: 300,
-            height: 300
+            height: 300,
         };
 
         this.numConfig = {
@@ -146,14 +146,14 @@ export default class App extends React.Component {
             title: 'Torque of Engine',
             charts: [{ type: 'number' }],
             width: 400,
-            height: 200
+            height: 200,
         };
 
         this.mapConfig = {
             x: 'Country',
             charts: [{ type: 'map', y: 'Inflation', mapType: 'world' }],
             width: 400,
-            height: 200
+            height: 200,
         };
 
         this.tableConfig = {
@@ -166,17 +166,17 @@ export default class App extends React.Component {
 
                     columns: ['EngineType', 'torque', 'rpm'],
                     columnTitles: ['Engine Type', 'Engine Torque', 'Engine RPM'],
-                }
+                },
             ],
             maxLength: 7,
             width: 400,
-            height: 200
+            height: 200,
         };
     }
 
     componentDidMount() {
         this.interval_id = setInterval(() => {
-            let randomY = Math.random() * 100;
+            const randomY = Math.random() * 100;
             this.setState({
                 data: [
                     [this.state.timer, this.state.timer === 20 ? null : randomY * 2, 10, 'piston'],
@@ -185,12 +185,11 @@ export default class App extends React.Component {
                 ],
                 data2: [
 
-                    [this.state.timer, randomY * 8, randomY, 'rotary']
+                    [this.state.timer, randomY * 8, randomY, 'rotary'],
                 ],
                 scatterPlot: [[this.state.timer, randomY * 2, randomY * 3, 'rotary', randomY * 5], [this.state.timer, randomY * 5, randomY * 6, 'rotary', randomY * 9]],
                 timer: this.state.timer + 1,
             });
-
         }, 5000);
     }
 
@@ -206,34 +205,59 @@ export default class App extends React.Component {
                     VizGrammar is a wrapper around powerful d3.js and vega.js library. It makes charting easy by adding
                     required boilerplate code so that developers/designers can get started in few minutes.
                 </p>
-                <ChartWrapper style={styles.flexItem} media={true} chart={'line'} title={'Line Charts'}
-                              actionBar={true}>
-                    <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data}/>
+                <ChartWrapper
+                    style={styles.flexItem}
+                    media
+                    chart={'line'}
+                    title={'Line Charts'}
+                    actionBar
+                >
+                    <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data} />
                 </ChartWrapper>
-                <ChartWrapper style={styles.flexItem} media={true} chart={'bar'} title={'Bar Charts'} actionBar={true}>
-                    <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data}/>
+                <ChartWrapper style={styles.flexItem} media chart={'bar'} title={'Bar Charts'} actionBar>
+                    <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data} />
                 </ChartWrapper>
-                <ChartWrapper style={styles.flexItem} media={true} chart={'area'} title={'Area Charts'}
-                              actionBar={true}>
-                    <VizG config={this.singleAreaChartConfig} metadata={this.metadata} data={this.state.data2}/>
+                <ChartWrapper
+                    style={styles.flexItem}
+                    media
+                    chart={'area'}
+                    title={'Area Charts'}
+                    actionBar
+                >
+                    <VizG config={this.singleAreaChartConfig} metadata={this.metadata} data={this.state.data2} />
                 </ChartWrapper>
-                <ChartWrapper style={styles.flexItem} media={true} chart={'scatter'} title={'Scatter Plots'}
-                              actionBar={true}>
-                    <VizG config={this.scatterPlotConfig} metadata={this.metadata} data={this.state.scatterPlot}/>
+                <ChartWrapper
+                    style={styles.flexItem}
+                    media
+                    chart={'scatter'}
+                    title={'Scatter Plots'}
+                    actionBar
+                >
+                    <VizG config={this.scatterPlotConfig} metadata={this.metadata} data={this.state.scatterPlot} />
                 </ChartWrapper>
-                <ChartWrapper style={styles.flexItem} media={true} chart={'pie'} title={'Pie Charts'} actionBar={true}>
-                    <VizG config={this.pieChartConfig} metadata={this.metadata} data={this.state.data}/>
+                <ChartWrapper style={styles.flexItem} media chart={'pie'} title={'Pie Charts'} actionBar>
+                    <VizG config={this.pieChartConfig} metadata={this.metadata} data={this.state.data} />
                 </ChartWrapper>
-                <ChartWrapper style={styles.flexItem} title="Number Charts" chart="number" media={true}
-                              actionBar={true}>
-                    <VizG config={this.numConfig} metadata={this.metadata} data={this.state.data}/>
+                <ChartWrapper
+                    style={styles.flexItem}
+                    title="Number Charts"
+                    chart="number"
+                    media
+                    actionBar
+                >
+                    <VizG config={this.numConfig} metadata={this.metadata} data={this.state.data} />
                 </ChartWrapper>
-                <ChartWrapper style={styles.flexItem} title="Map Charts" chart="map" media={true} actionBar={true}>
-                    <VizG config={this.mapConfig} metadata={this.mapMetadata} data={this.state.mapData}/>
+                <ChartWrapper style={styles.flexItem} title="Map Charts" chart="map" media actionBar>
+                    <VizG config={this.mapConfig} metadata={this.mapMetadata} data={this.state.mapData} />
                 </ChartWrapper>
-                <ChartWrapper style={styles.flexItem} media={true} chart={'table'} title={'Table Charts'}
-                              actionBar={true}>
-                    <VizG config={this.tableConfig} metadata={this.metadata} data={this.state.data}/>
+                <ChartWrapper
+                    style={styles.flexItem}
+                    media
+                    chart={'table'}
+                    title={'Table Charts'}
+                    actionBar
+                >
+                    <VizG config={this.tableConfig} metadata={this.metadata} data={this.state.data} />
                 </ChartWrapper>
             </div>
         );

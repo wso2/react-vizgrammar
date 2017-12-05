@@ -29,9 +29,9 @@ class NumberChartConfigSample extends Component {
         super(props);
         this.state = {
             data: [
-                [10]
+                [10],
             ],
-            timer: 1
+            timer: 1,
         };
 
         this.numConfig = {
@@ -46,14 +46,14 @@ class NumberChartConfigSample extends Component {
 
         this.metadata = {
             names: ['torque'],
-            types: ['linear']
+            types: ['linear'],
         };
     }
 
     componentDidMount() {
         setInterval(() => {
             this.setState({
-                data: this.state.data.concat([[Math.round(Math.random() * 100)], [Math.round(Math.random() * 100)]])
+                data: this.state.data.concat([[Math.round(Math.random() * 100)], [Math.round(Math.random() * 100)]]),
             });
         }, 1000);
     }
@@ -61,8 +61,8 @@ class NumberChartConfigSample extends Component {
     render() {
         return (
             <div>
-                <ChartWrapper title="Number Chart Sample" chart="chart" media={true} actionBar={false}>
-                    <NumberCharts config={this.numConfig} metadata={this.metadata} data={this.state.data}/>
+                <ChartWrapper title="Number Chart Sample" chart="chart" media actionBar={false}>
+                    <NumberCharts config={this.numConfig} metadata={this.metadata} data={this.state.data} />
                     <pre>
                         {
                             '{\n' +
@@ -126,7 +126,7 @@ class NumberChartConfigSample extends Component {
                                 </tr>
                             </tbody>
                         </table>
-                        <br/><br/>
+                        <br /><br />
                         <table>
                             <thead>
                                 <tr>

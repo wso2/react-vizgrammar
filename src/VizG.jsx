@@ -35,7 +35,7 @@ class VizG extends Component {
             config: props.config,
             data: props.data,
             metadata: props.metadata,
-            onClick: props.onClick
+            onClick: props.onClick,
         };
     }
 
@@ -113,7 +113,7 @@ class VizG extends Component {
                     />
                 );
             case 'map':
-                return <MapGenerator config={config} metadata={metadata} data={data} onClick={onClick}/>;
+                return <MapGenerator config={config} metadata={metadata} data={data} onClick={onClick} />;
             case 'table':
                 return (
                     <TableCharts

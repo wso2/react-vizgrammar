@@ -125,7 +125,7 @@ export default class LineChartConfigSample extends React.Component {
                         </pre>
                     </div>
                 </ChartWrapper>
-                
+
                 <ChartWrapper title="Sample Data Set" chart="line">
                     <div>
                         <pre>
@@ -154,7 +154,7 @@ export default class LineChartConfigSample extends React.Component {
                                         <td>blah</td>
                                         <td>blah</td>
                                         <td>
-                                            
+
                                             <span>
                                                 <VizG
                                                     config={this.sparkLineConfig}
@@ -239,7 +239,8 @@ export default class LineChartConfigSample extends React.Component {
                                         <td>colorScale</td>
                                         <td>string | Array(string)</td>
                                         <td>color set to use in the charts for predefined colors check <a
-                                            href="https://github.com/d3/d3-3.x-api-reference/blob/master/Ordinal-Scales.md#categorical-colors">d3-documentation</a></td>
+                                            href="https://github.com/d3/d3-3.x-api-reference/blob/master/Ordinal-Scales.md#categorical-colors"
+                                        >d3-documentation</a></td>
                                     </tr>
                                     <tr>
                                         <td>colorDomain</td>

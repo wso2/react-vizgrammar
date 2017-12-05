@@ -18,13 +18,13 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import {ComposableMap, Geographies, Geography} from 'react-simple-maps';
-import {VictoryLegend, VictoryContainer} from 'victory';
+import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
+import { VictoryLegend, VictoryContainer } from 'victory';
 import ReactToolTip from 'react-tooltip';
 import * as d3 from 'd3';
 import feature from 'topojson-client/src/feature';
-import {getDefaultColorScale} from './helper';
-import {CountryInfo, EuropeMap, WorldMap, USAMap} from './resources/MapData';
+import { getDefaultColorScale } from './helper';
+import { CountryInfo, EuropeMap, WorldMap, USAMap } from './resources/MapData';
 import VizGError from '../VizGError';
 
 const USA_YOFFSET_FACTOR = 1.2;
@@ -69,7 +69,7 @@ export default class MapGenerator extends React.Component {
     _handleMouseEvent(evt) {
         const { onClick } = this.props;
         const { mapData } = this.state;
-        let data = mapData.filter(d => d.x === evt.id);
+        const data = mapData.filter(d => d.x === evt.id);
         return onClick && onClick(data[0]);
     }
 
@@ -105,7 +105,7 @@ export default class MapGenerator extends React.Component {
      * @private
      */
     _handleDataReceived(props) {
-        const {metadata, data, config} = props;
+        const { metadata, data, config } = props;
         let {
             projectionConfig,
             mapType,
@@ -114,7 +114,7 @@ export default class MapGenerator extends React.Component {
             colorType,
             ordinalColorMap,
             colorIndex,
-            colorScale
+            colorScale,
         } = this.state;
         const mapConfig = config.charts[0];
         const xIndex = metadata.names.indexOf(config.x);
@@ -202,8 +202,8 @@ export default class MapGenerator extends React.Component {
     }
 
     render() {
-        const {config} = this.props;
-        const {mapType, mapData, mapDataRange, colorType, ordinalColorMap} = this.state;
+        const { config } = this.props;
+        const { mapType, mapData, mapDataRange, colorType, ordinalColorMap } = this.state;
         let mapFeatureData = null;
         switch (mapType) {
             case 'world':
@@ -220,7 +220,7 @@ export default class MapGenerator extends React.Component {
         }
 
         return (
-            <div style={{overflow: 'hidden', zIndex: 9999}}>
+            <div style={{ overflow: 'hidden', zIndex: 9999 }}>
                 <div
                     style={{
                         float: 'left',
@@ -304,18 +304,18 @@ export default class MapGenerator extends React.Component {
                             }
                         </Geographies>
                     </ComposableMap>
-                    <ReactToolTip/>
+                    <ReactToolTip />
                 </div>
 
-                <div style={{width: '15%', height: '100%', display: 'inline', float: 'right'}}>
+                <div style={{ width: '15%', height: '100%', display: 'inline', float: 'right' }}>
                     {
                         colorType === 'linear' ?
                             <svg width={'100%'} height={'100%'}>
                                 <defs>
                                     <linearGradient id="grad1" x1="0%" y1="100%" x2="0%" y2="0%">
-                                        <stop offset={'0%'} stopColor={this.state.colorScale[0]} stopOpacity={1}/>
+                                        <stop offset={'0%'} stopColor={this.state.colorScale[0]} stopOpacity={1} />
 
-                                        <stop offset={'100%'} stopColor={this.state.colorScale[1]} stopOpacity={1}/>
+                                        <stop offset={'100%'} stopColor={this.state.colorScale[1]} stopOpacity={1} />
                                     </linearGradient>
                                 </defs>
                                 <g className='legend'>
@@ -323,11 +323,11 @@ export default class MapGenerator extends React.Component {
                                     <text x={20} y={20}>{config.charts[0].y}</text>
                                     <text x={37} y={37}>{this.state.mapDataRange[1]}</text>
                                     <text x={37} y={132}>{this.state.mapDataRange[0]}</text>
-                                    <rect x={20} y={30} fill='url(#grad1)' height={100} width={15}/>
+                                    <rect x={20} y={30} fill='url(#grad1)' height={100} width={15} />
                                 </g>
                             </svg>
                             : <VictoryLegend
-                                containerComponent={<VictoryContainer responsive/>}
+                                containerComponent={<VictoryContainer responsive />}
                                 height={this.state.height}
                                 width={300}
                                 title="Legend"
@@ -335,10 +335,10 @@ export default class MapGenerator extends React.Component {
                                     title: {
                                         fontSize: 25, fill: config.axisLabelColor,
                                     },
-                                    labels: {fontSize: 20, fill: config.axisLabelColor},
+                                    labels: { fontSize: 20, fill: config.axisLabelColor },
                                 }}
                                 data={Object.keys(ordinalColorMap).map((name) => {
-                                    return {name, symbol: {fill: ordinalColorMap[name]}};
+                                    return { name, symbol: { fill: ordinalColorMap[name] } };
                                 })}
                             />
                     }
