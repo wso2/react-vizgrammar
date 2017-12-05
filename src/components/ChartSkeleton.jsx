@@ -63,9 +63,7 @@ export default class ChartSkeleton extends React.Component {
                                 return timeFormat(config.timeFormat)(new Date(date));
                             };
                         } else if (xScale === 'ordinal' && config.charts[0].type === 'bar') {
-                            console.info('shit in');
                             return (data) => {
-                                console.info(arr);
                                 return arr[Number(data) - 1].x;
                             };
                         } else {

@@ -155,8 +155,6 @@ export default class BasicChart extends React.Component {
         if (['linear', 'time', 'ordinal'].indexOf(metadata.types[xIndex].toLowerCase()) === -1) {
             throw new VizGError('BasicChart', 'Unknown metadata type is defined for x axis in the chart configuration');
         }
-        console.info(xIndex);
-        console.info(this.state.xScale)
         if (!initialized) {
             chartArray = this.generateChartArray(config.charts);
             initialized = true;
