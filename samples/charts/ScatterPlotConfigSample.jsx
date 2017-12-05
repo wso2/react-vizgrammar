@@ -32,14 +32,14 @@ export default class ScatterChartConfigSample extends React.Component {
             scatterPlot: [
                 [1, 4, 3.5, 79.91, 0.8, 0.03, 'piston'],
                 [2, 3, 3.5, 79.65, 1.3, 0.06, 'rotary']],
-            timer: 0
+            timer: 0,
         };
 
         this.interval_id = null;
 
         this.metadata = {
             names: ['rpm', 'torque', 'horsepower', 'weight', 'EngineType'],
-            types: ['linear', 'linear', 'linear', 'linear', 'ordinal']
+            types: ['linear', 'linear', 'linear', 'linear', 'ordinal'],
         };
 
         this.scatterPlotConfig = {
@@ -52,11 +52,11 @@ export default class ScatterChartConfigSample extends React.Component {
                     color: 'horsepower',
                     size: 'weight',
                     maxLength: 30,
-                    colorScale: ['#1f77b4', '#ebff3b']
+                    colorScale: ['#1f77b4', '#ebff3b'],
 
                 }],
             width: 800,
-            height: 450
+            height: 450,
         };
     }
 
@@ -64,9 +64,8 @@ export default class ScatterChartConfigSample extends React.Component {
         this.interval_id = setInterval(() => {
             this.setState({
                 scatterPlot: [[this.state.timer, Math.random() * 100, Math.random() * 10, Math.random() * 100, 'piston'], [this.state.timer, Math.random() * 100, Math.random() * 10, Math.random() * 100, 'rotary']],
-                timer: this.state.timer + 1
+                timer: this.state.timer + 1,
             });
-
         }, 500);
     }
 
@@ -78,7 +77,7 @@ export default class ScatterChartConfigSample extends React.Component {
         return (
             <div>
                 <center><h1>Scatter Config Samples</h1></center>
-                <ChartWrapper title="Group MultiLine Chart Sample" chart="line" media={true} actionBar={false}>
+                <ChartWrapper title="Group MultiLine Chart Sample" chart="line" media actionBar={false}>
                     <VizG config={this.scatterPlotConfig} metadata={this.metadata} data={this.state.scatterPlot} />
                     <br />
                     <div>
@@ -181,7 +180,8 @@ export default class ScatterChartConfigSample extends React.Component {
                                         <td>colorScale</td>
                                         <td>string | Array(string)</td>
                                         <td>color set to use in the charts for predefined colors check <a
-                                            href="https://github.com/d3/d3-3.x-api-reference/blob/master/Ordinal-Scales.md#categorical-colors">d3-documentation</a></td>
+                                            href="https://github.com/d3/d3-3.x-api-reference/blob/master/Ordinal-Scales.md#categorical-colors"
+                                        >d3-documentation</a></td>
                                     </tr>
                                 </tbody>
                             </table>

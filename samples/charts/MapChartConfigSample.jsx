@@ -37,23 +37,23 @@ class MapChartConfigSample extends Component {
                 ['United Kingdom', 7],
                 ['Australia', 5],
                 ['Ireland', 1],
-                ['RUS', 15]
+                ['RUS', 15],
             ],
             data2: [
                 ['Alabama', 4.23],
                 ['Michigan', 1.23],
                 ['Georgia', 8.23],
                 ['Texas', 3.23],
-                ['Hawaii', 2.23]
+                ['Hawaii', 2.23],
             ],
-            timer: 1
+            timer: 1,
         };
 
         this.mapConfig = {
             x: 'Country',
             charts: [{ type: 'map', y: 'Inflation', mapType: 'world', colorScale: ['#1958ff', '#1eff36'] }],
             width: 400,
-            height: 200
+            height: 200,
         };
 
         this.europeConfig = {
@@ -62,7 +62,7 @@ class MapChartConfigSample extends Component {
             renderer: 'canvas',
             charts: [{ type: 'map', y: 'Inflation', mapType: 'europe', colorScale: ['#1958ff', '#1eff36'] }],
             width: 500,
-            height: 300
+            height: 300,
         };
 
         this.usaConfig = {
@@ -71,20 +71,20 @@ class MapChartConfigSample extends Component {
             renderer: 'canvas',
             charts: [{ type: 'map', y: 'Inflation', mapType: 'usa', colorScale: ['#1958ff', '#1eff36'] }],
             width: 500,
-            height: 300
+            height: 300,
         };
 
         this.metadata = {
             names: ['Country', 'Inflation'],
-            types: ['ordinal', 'linear']
+            types: ['ordinal', 'linear'],
         };
     }
 
     render() {
         return (
             <div>
-                <ChartWrapper title="World Map Sample" chart="line" media={true} actionBar={false}>
-                    <MapGenerator config={this.mapConfig} metadata={this.metadata} data={this.state.data}/>
+                <ChartWrapper title="World Map Sample" chart="line" media actionBar={false}>
+                    <MapGenerator config={this.mapConfig} metadata={this.metadata} data={this.state.data} />
                     <pre>
                         {'{\n' +
                         '\tx : \'Country\',\n' +
@@ -94,7 +94,7 @@ class MapChartConfigSample extends Component {
                         '}'}
                     </pre>
                 </ChartWrapper>
-                <ChartWrapper title="Europe Map Sample" chart="line" media={true} actionBar={false}>
+                <ChartWrapper title="Europe Map Sample" chart="line" media actionBar={false}>
                     <MapGenerator
                         config={this.europeConfig}
                         metadata={this.metadata}
@@ -112,8 +112,8 @@ class MapChartConfigSample extends Component {
                         '}'}
                     </pre>
                 </ChartWrapper>
-                <ChartWrapper title="United States Map Sample" chart="line" media={true} actionBar={false}>
-                    <MapGenerator config={this.usaConfig} metadata={this.metadata} data={this.state.data2}/>
+                <ChartWrapper title="United States Map Sample" chart="line" media actionBar={false}>
+                    <MapGenerator config={this.usaConfig} metadata={this.metadata} data={this.state.data2} />
                     <pre>
                         {'{\n' +
                         '\tx : \'County\',\n' +
@@ -124,7 +124,7 @@ class MapChartConfigSample extends Component {
                     </pre>
                 </ChartWrapper>
                 <ChartWrapper title="Sample Data Set" chart="line" media={false} actionBar={false}>
-                    {/*<MapGenerator config={this.usaConfig} metadata={this.metadata} data={this.state.data2}/>*/}
+                    {/* <MapGenerator config={this.usaConfig} metadata={this.metadata} data={this.state.data2}/> */}
                     <pre>
                         {'data : [\n' +
                         '                [\'Afghanistan\',4.23],\n' +
@@ -138,7 +138,7 @@ class MapChartConfigSample extends Component {
                         '                [\'RUS\',15]\n' +
                         '\n' +
                         '];'}
-                        <br/>
+                        <br />
                         {
                             '\n\nmetadata = {\n' +
                             '        \'names\' : [\'Country\',\'Inflation\'],\n' +
@@ -148,7 +148,7 @@ class MapChartConfigSample extends Component {
                     </pre>
                 </ChartWrapper>
                 <ChartWrapper title="API" chart="line" media={false} actionBar={false}>
-                    {/*<MapGenerator config={this.usaConfig} metadata={this.metadata} data={this.state.data2}/>*/}
+                    {/* <MapGenerator config={this.usaConfig} metadata={this.metadata} data={this.state.data2}/> */}
                     <pre>
                         <p>Main Properties</p>
                         <table>
@@ -180,7 +180,7 @@ class MapChartConfigSample extends Component {
                                 </tr>
                             </tbody>
                         </table>
-                        <br/>
+                        <br />
                         <p>Chart Properties</p>
                         <table>
                             <thead>

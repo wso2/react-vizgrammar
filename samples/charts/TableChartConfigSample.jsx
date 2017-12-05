@@ -28,9 +28,9 @@ class TableChartConfigSample extends Component {
         super(props);
         this.state = {
             data: [
-                [0, 10, 1, 'Piston']
+                [0, 10, 1, 'Piston'],
             ],
-            timer: 1
+            timer: 1,
         };
 
         this.mapConfig = {
@@ -47,7 +47,7 @@ class TableChartConfigSample extends Component {
 
         this.metadata = {
             names: ['rpm', 'torque', 'horsepower', 'EngineType'],
-            types: ['linear', 'linear', 'ordinal', 'ordinal']
+            types: ['linear', 'linear', 'ordinal', 'ordinal'],
         };
     }
 
@@ -55,7 +55,7 @@ class TableChartConfigSample extends Component {
         setInterval(() => {
             this.setState({
                 data: [[Math.round(Math.random() * 100), Math.round(Math.random() * 100), 1, 'Piston'], [Math.round(Math.random() * 100), Math.round(Math.random() * 100), 1, 'rotary']],
-                timer: this.state.timer + 1
+                timer: this.state.timer + 1,
             });
         }, 1000);
     }
@@ -63,10 +63,10 @@ class TableChartConfigSample extends Component {
     render() {
         return (
             <div>
-                <ChartWrapper title="Table Chart Sample" chart="line" media={true} actionBar={false}>
-                    <VizG config={this.mapConfig} metadata={this.metadata} data={this.state.data}/>
-                    <br/>
-                    <br/>
+                <ChartWrapper title="Table Chart Sample" chart="line" media actionBar={false}>
+                    <VizG config={this.mapConfig} metadata={this.metadata} data={this.state.data} />
+                    <br />
+                    <br />
                     <pre>
                         {
                             '{\n' +

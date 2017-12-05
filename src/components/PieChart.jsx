@@ -197,21 +197,24 @@ export default class PieCharts extends React.Component {
             }
 
             chartComponents.push((
-                <svg width='100%' height={'100%'}
-                     viewBox={`0 0 ${height > width ? width : height} ${height > width ? width : height}`}>
+                <svg
+                    width='100%'
+                    height={'100%'}
+                    viewBox={`0 0 ${height > width ? width : height} ${height > width ? width : height}`}
+                >
                     <VictoryPie
                         height={height > width ? width : height}
                         width={height > width ? width : height}
                         colorScale={chart.colorScale}
                         data={config.percentage ? dataSets : pieChartData}
-                        labelComponent={config.percentage ? <VictoryLabel text={''}/> :
-                            <VictoryTooltip
-                                orientation='top'
-                                pointerLength={4}
-                                cornerRadius={2}
-                                flyoutStyle={{ fill: '#000', fillOpacity: '0.8', strokeWidth: 0 }}
-                                style={{ fill: '#b0b0b0' }}
-                            />}
+                        labelComponent={config.percentage ? <VictoryLabel text={''} /> :
+                        <VictoryTooltip
+                            orientation='top'
+                            pointerLength={4}
+                            cornerRadius={2}
+                            flyoutStyle={{ fill: '#000', fillOpacity: '0.8', strokeWidth: 0 }}
+                            style={{ fill: '#b0b0b0' }}
+                        />}
                         labels={config.percentage === 'percentage' ? '' : d => `${d.x} : ${((d.y / total) * 100).toFixed(2)}%`}
                         style={{ labels: { fontSize: 6 } }}
                         labelRadius={height / 4}
@@ -232,11 +235,11 @@ export default class PieCharts extends React.Component {
                         randomUpdater={randomUpdater}
                         animate={
                             config.animate ?
-                                {
-                                    onEnter: {
-                                        duration: 100,
-                                    },
-                                } : null
+                            {
+                                onEnter: {
+                                    duration: 100,
+                                },
+                            } : null
                         }
                     />
                     {
@@ -323,7 +326,7 @@ export default class PieCharts extends React.Component {
             >
                 <VictoryLegend
                     centerTitle
-                    containerComponent={<VictoryContainer responsive/>}
+                    containerComponent={<VictoryContainer responsive />}
                     height={(() => {
                         if (!config.legendOrientation) return this.state.height;
                         else if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {

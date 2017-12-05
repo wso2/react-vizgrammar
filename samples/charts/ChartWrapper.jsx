@@ -34,7 +34,7 @@ export class ChartWrapper extends React.Component {
             title: this.props.title,
             subtitle: this.props.subtitle,
             actionBar: this.props.actionBar,
-            chart: this.props.chart
+            chart: this.props.chart,
         };
     }
 
@@ -78,5 +78,5 @@ ChartWrapper.propTypes = {
     children: PropTypes.any.isRequired,
     chart: PropTypes.string.isRequired,
     media: PropTypes.bool,
-    actionBar: PropTypes.bool.isRequired
+    actionBar: PropTypes.bool.isRequired,
 };

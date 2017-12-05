@@ -31,7 +31,7 @@ export default class ChartSkeleton extends React.Component {
             <VictoryChart
                 width={width}
                 height={height}
-                container={<VictoryVoronoiContainer dimension="x"/>}
+                container={<VictoryVoronoiContainer dimension="x" />}
                 padding={{ left: 100, top: 30, bottom: 50, right: 30 }}
                 scale={{ x: xScale === 'ordinal' ? null : xScale, y: 'linear' }}
                 domain={{
@@ -55,7 +55,7 @@ export default class ChartSkeleton extends React.Component {
                         grid: { stroke: '#000', strokeOpacity: 0.1 },
                         ticks: { stroke: '#000', strokeOpacity: 0.1, size: 5 },
                     }}
-                    gridComponent={config.disableVerticalGrid ? <g/> : <line/>}
+                    gridComponent={config.disableVerticalGrid ? <g /> : <line />}
                     label={config.xAxisLabel || config.x}
                     tickFormat={(() => {
                         if (xScale === 'time' && config.timeFormat) {
@@ -96,7 +96,7 @@ export default class ChartSkeleton extends React.Component {
                         grid: { stroke: '#000', strokeOpacity: 0.1 },
                         ticks: { stroke: '#000', strokeOpacity: 0.1, size: 5 },
                     }}
-                    gridComponent={config.disableHorizontalGrid ? <g/> : <line/>}
+                    gridComponent={config.disableHorizontalGrid ? <g /> : <line />}
                     label={config.yAxisLabel || config.charts.length > 1 ? '' : config.charts[0].y}
                     standalone={false}
                     tickLabelComponent={

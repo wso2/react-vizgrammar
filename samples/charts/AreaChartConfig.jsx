@@ -30,12 +30,12 @@ export default class AreaChartConfigSample extends React.Component {
         this.state = {
             data: [[1, 10, 23, 'piston'], [1, 20, 34, 'rotary']],
             data2: [[1, 10, 23, 'piston']],
-            timer: 0
+            timer: 0,
         };
 
         this.metadata = {
             names: ['rpm', 'torque', 'horsepower', 'EngineType'],
-            types: ['linear', 'linear', 'linear', 'ordinal']
+            types: ['linear', 'linear', 'linear', 'ordinal'],
         };
 
         this.interval_id = null;
@@ -72,14 +72,13 @@ export default class AreaChartConfigSample extends React.Component {
             this.setState({
                 data: [
                     [this.state.timer, this.state.timer === 20 ? null : Math.random() * 100, 10, 'piston'],
-                    [this.state.timer, Math.random() * 100, 10, 'rotary']
+                    [this.state.timer, Math.random() * 100, 10, 'rotary'],
                 ],
                 data2: [
-                    [this.state.timer, Math.random() * 100, Math.random() * 100, 'rotary']
+                    [this.state.timer, Math.random() * 100, Math.random() * 100, 'rotary'],
                 ],
-                timer: this.state.timer + 1
+                timer: this.state.timer + 1,
             });
-
         }, 500);
     }
 
@@ -91,7 +90,7 @@ export default class AreaChartConfigSample extends React.Component {
         return (
             <div>
                 <center><h1>Area Chart Config Samples</h1></center>
-                <ChartWrapper title="Group Area Chart Sample" chart="line" media={true} actionBar={false}>
+                <ChartWrapper title="Group Area Chart Sample" chart="line" media actionBar={false}>
                     <VizG config={this.areaChartConfig} metadata={this.metadata} data={this.state.data} />
                     <br />
                     <div>
@@ -111,7 +110,7 @@ export default class AreaChartConfigSample extends React.Component {
                         </pre>
                     </div>
                 </ChartWrapper>
-                <ChartWrapper title="Multi Area Chart Sample" chart="line" media={true} actionBar={false}>
+                <ChartWrapper title="Multi Area Chart Sample" chart="line" media actionBar={false}>
                     <VizG config={this.singleAreaChartConfig} metadata={this.metadata} data={this.state.data2} />
                     <br />
                     <div>
@@ -129,7 +128,7 @@ export default class AreaChartConfigSample extends React.Component {
                         </pre>
                     </div>
                 </ChartWrapper>
-                <ChartWrapper title="Group Area Chart Sample stacked" chart="line" media={true} actionBar={false}>
+                <ChartWrapper title="Group Area Chart Sample stacked" chart="line" media actionBar={false}>
                     <VizG config={this.stackedAreaChartConfig} metadata={this.metadata} data={this.state.data} />
                     <br />
                     <div>
@@ -230,7 +229,8 @@ export default class AreaChartConfigSample extends React.Component {
                                         <td>colorScale</td>
                                         <td>string | Array(string)</td>
                                         <td>color set to use in the charts for predefined colors check <a
-                                            href="https://github.com/d3/d3-3.x-api-reference/blob/master/Ordinal-Scales.md#categorical-colors">d3-documentation</a></td>
+                                            href="https://github.com/d3/d3-3.x-api-reference/blob/master/Ordinal-Scales.md#categorical-colors"
+                                        >d3-documentation</a></td>
                                     </tr>
                                     <tr>
                                         <td>colorDomain</td>
