@@ -29,7 +29,7 @@ class NumberChartConfigSample extends Component {
         super(props);
         this.state = {
             data: [
-                [0, 10, 1, 'Piston']
+                [10]
             ],
             timer: 1
         };
@@ -38,20 +38,22 @@ class NumberChartConfigSample extends Component {
             x: 'torque',
             title: 'Torque of Engine',
             charts: [{ type: 'number' }],
+            showDifference: true,
+            showPercentage: true,
             width: 400,
-            height: 200
+            height: 200,
         };
 
         this.metadata = {
-            'names': ['rpm', 'torque', 'horsepower', 'EngineType'],
-            'types': ['linear', 'linear', 'ordinal', 'ordinal']
+            names: ['torque'],
+            types: ['linear']
         };
     }
 
     componentDidMount() {
         setInterval(() => {
             this.setState({
-                data: this.state.data.concat([[0, Math.round(Math.random() * 100), 1, 'Piston'], [0, Math.round(Math.random() * 100), 1, 'rotary']])
+                data: this.state.data.concat([[Math.round(Math.random() * 100)], [Math.round(Math.random() * 100)]])
             });
         }, 1000);
     }
@@ -60,7 +62,7 @@ class NumberChartConfigSample extends Component {
         return (
             <div>
                 <ChartWrapper title="Number Chart Sample" chart="chart" media={true} actionBar={false}>
-                    <NumberCharts config={this.numConfig} metadata={this.metadata} data={this.state.data} />
+                    <NumberCharts config={this.numConfig} metadata={this.metadata} data={this.state.data}/>
                     <pre>
                         {
                             '{\n' +
@@ -124,7 +126,7 @@ class NumberChartConfigSample extends Component {
                                 </tr>
                             </tbody>
                         </table>
-                        <br /><br />
+                        <br/><br/>
                         <table>
                             <thead>
                                 <tr>

@@ -101,7 +101,7 @@ export default class BarChartConfigSample extends React.Component {
         return (
             <div>
                 <center><h1>Bar Chart Config Samples</h1></center>
-                <ChartWrapper title="Group MultiLine Chart Sample" chart="line" media={true} actionBar={false}>
+                <ChartWrapper title="Group Bar Chart Sample" chart="bar" media actionBar={false}>
                     <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data} />
                     <br />
                     <div>
@@ -121,7 +121,7 @@ export default class BarChartConfigSample extends React.Component {
                         </pre>
                     </div>
                 </ChartWrapper>
-                <ChartWrapper title="Multi Line Chart Sample" chart="line" media={true} actionBar={false}>
+                <ChartWrapper title="Multi Bar Chart Sample" chart="bar" media actionBar={false}>
                     <VizG config={this.singleBarChartConfig} metadata={this.metadata} data={this.state.data2} />
                     <br />
                     <div>
@@ -139,7 +139,7 @@ export default class BarChartConfigSample extends React.Component {
                         </pre>
                     </div>
                 </ChartWrapper>
-                <ChartWrapper title="Group MultiLine Chart Sample Horizontal" chart="line" media={true} actionBar={false}>
+                <ChartWrapper title="Group Multi-Bar Chart Sample Horizontal" chart="bar" media actionBar={false}>
                     <VizG config={this.barHorizontalChartConfig} metadata={this.metadata} data={this.state.data} />
                     <br />
                     <div>
@@ -160,7 +160,7 @@ export default class BarChartConfigSample extends React.Component {
                     </div>
                 </ChartWrapper>
 
-                <ChartWrapper title="Group MultiLine Chart Sample stacked" chart="line" media={true} actionBar={false}>
+                <ChartWrapper title="Group Multi-Bar Chart Sample stacked" chart="bar" media actionBar={false}>
                     <VizG config={this.stackedBarChartConfig} metadata={this.metadata} data={this.state.data} />
                     <br />
                     <div>
@@ -181,7 +181,7 @@ export default class BarChartConfigSample extends React.Component {
                     </div>
                 </ChartWrapper>
 
-                <ChartWrapper title="Sample Data Set" chart="line">
+                <ChartWrapper title="Sample Data Set" chart="bar">
                     <div>
                         <pre>
                             {
@@ -194,7 +194,7 @@ export default class BarChartConfigSample extends React.Component {
                         </pre>
                     </div>
                 </ChartWrapper>
-                <ChartWrapper title="API" chart="line">
+                <ChartWrapper title="API" chart="bar">
                     <div>
                         <pre>
                             <p>Main Properties</p>

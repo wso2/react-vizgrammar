@@ -46,6 +46,7 @@ export default class LineChartConfigSample extends React.Component {
             width: 300,
             height: 300,
             legendOrientation: 'top',
+            animate: true,
         };
 
         this.configPie = {
@@ -92,8 +93,8 @@ export default class LineChartConfigSample extends React.Component {
             <div>
                 <center><h1>Line Chart Config Samples</h1></center>
                 <ChartWrapper title="Donut Chart Sample" chart="line" media actionBar={false}>
-                    <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data} />
-                    <br /><br />
+                    <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data}/>
+                    <br/><br/>
                     <div style={{ display: 'block' }}>
                         <pre>
                             {
@@ -108,8 +109,8 @@ export default class LineChartConfigSample extends React.Component {
                     </div>
                 </ChartWrapper>
                 <ChartWrapper title="Pie Chart Sample" chart="line" media actionBar={false}>
-                    <VizG config={this.configPie} metadata={this.metadata} data={this.state.data} />
-                    <br />
+                    <VizG config={this.configPie} metadata={this.metadata} data={this.state.data}/>
+                    <br/>
                     <div>
                         <pre>
                             {
@@ -123,8 +124,8 @@ export default class LineChartConfigSample extends React.Component {
                     </div>
                 </ChartWrapper>
                 <ChartWrapper title="Donut Chart Sample" chart="line" media actionBar={false}>
-                    <VizG config={this.configT} metadata={this.metadata} data={this.state.data} />
-                    <br /><br />
+                    <VizG config={this.configT} metadata={this.metadata} data={this.state.data}/>
+                    <br/><br/>
                     <div style={{ display: 'block' }}>
                         <pre>
                             {
@@ -196,7 +197,7 @@ export default class LineChartConfigSample extends React.Component {
                                 </tbody>
 
                             </table>
-                            <br />
+                            <br/>
                             <p>Chart Object Properties</p>
                             <table>
                                 <tbody>

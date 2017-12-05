@@ -17,21 +17,21 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { VictoryChart, VictoryAxis, VictoryVoronoiContainer, VictoryLabel } from 'victory';
-import { timeFormat, formatPrefix } from 'd3';
+import { VictoryChart, VictoryAxis, VictoryVoronoiContainer, VictoryLabel, VictoryBrushContainer } from 'victory';
+import { timeFormat } from 'd3';
 
 /**
  * This class will render a skeleton that's required for a Line, Area or Bar Chart
  */
 export default class ChartSkeleton extends React.Component {
     render() {
-        const { width, height, xScale, config, yDomain, xDomain } = this.props;
+        const { width, height, xScale, config, yDomain, xDomain, xRange } = this.props;
 
         return (
             <VictoryChart
                 width={width}
                 height={height}
-                container={<VictoryVoronoiContainer dimension="x" />}
+                container={<VictoryVoronoiContainer dimension="x"/>}
                 padding={{ left: 100, top: 30, bottom: 50, right: 30 }}
                 scale={{ x: xScale === 'ordinal' ? null : xScale, y: 'linear' }}
                 domain={{
@@ -55,7 +55,7 @@ export default class ChartSkeleton extends React.Component {
                         grid: { stroke: '#000', strokeOpacity: 0.1 },
                         ticks: { stroke: '#000', strokeOpacity: 0.1, size: 5 },
                     }}
-                    gridComponent={config.disableVerticalGrid ? <g /> : <line />}
+                    gridComponent={config.disableVerticalGrid ? <g/> : <line/>}
                     label={config.xAxisLabel || config.x}
                     tickFormat={(() => {
                         if (xScale === 'time' && config.timeFormat) {
@@ -96,7 +96,7 @@ export default class ChartSkeleton extends React.Component {
                         grid: { stroke: '#000', strokeOpacity: 0.1 },
                         ticks: { stroke: '#000', strokeOpacity: 0.1, size: 5 },
                     }}
-                    gridComponent={config.disableHorizontalGrid ? <g /> : <line />}
+                    gridComponent={config.disableHorizontalGrid ? <g/> : <line/>}
                     label={config.yAxisLabel || config.charts.length > 1 ? '' : config.charts[0].y}
                     standalone={false}
                     tickLabelComponent={

@@ -84,17 +84,36 @@ class VizG extends Component {
             case 'bar':
                 return (
                     <BasicCharts
-                        config={config} metadata={metadata}
-                        data={data} onClick={onClick}
+                        config={config}
+                        metadata={metadata}
+                        data={data}
+                        onClick={onClick}
                         yDomain={this.props.yDomain}
+                        append={this.props.append}
                     />
                 );
             case 'arc':
-                return (<PieCharts config={config} metadata={metadata} data={data} onClick={onClick} />);
+                return (
+                    <PieCharts
+                        config={config}
+                        metadata={metadata}
+                        data={data}
+                        onClick={onClick}
+                        append={this.props.append}
+                    />
+                );
             case 'scatter':
-                return <ScatterCharts config={config} metadata={metadata} data={data} onClick={onClick} />;
+                return (
+                    <ScatterCharts
+                        config={config}
+                        metadata={metadata}
+                        data={data}
+                        onClick={onClick}
+                        append={this.props.append}
+                    />
+                );
             case 'map':
-                return <MapGenerator config={config} metadata={metadata} data={data} onClick={onClick} />;
+                return <MapGenerator config={config} metadata={metadata} data={data} onClick={onClick}/>;
             case 'table':
                 return (
                     <TableCharts
@@ -133,7 +152,7 @@ class VizG extends Component {
 
 VizG.defaultProps = {
     append: true,
-}
+};
 
 VizG.propTypes = {
     config: PropTypes.object.isRequired,

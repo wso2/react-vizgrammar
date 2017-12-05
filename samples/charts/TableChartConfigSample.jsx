@@ -34,19 +34,15 @@ class TableChartConfigSample extends Component {
         };
 
         this.mapConfig = {
-            key: 'rpm',
-            charts: [{
-                type: 'table',
-                y: 'torque',
-                color: '*',
-                columns: ['EngineType', 'torque', 'rpm'],
-                columnTitles: ['Engine Type', 'Engine Torque', 'Engine RPM'],
-            }
+            charts: [
+                {
+                    type: 'table',
+                    columns: ['EngineType', 'torque', 'rpm'],
+                    columnTitles: ['Engine Type', 'Engine Torque', 'Engine RPM'],
+                },
             ],
             maxLength: 7,
-            width: 400,
-            height: 200,
-            colorBasedStyle: true
+            colorBasedStyle: true,
         };
 
         this.metadata = {
@@ -64,14 +60,13 @@ class TableChartConfigSample extends Component {
         }, 1000);
     }
 
-
     render() {
         return (
             <div>
                 <ChartWrapper title="Table Chart Sample" chart="line" media={true} actionBar={false}>
-                    <VizG config={this.mapConfig} metadata={this.metadata} data={this.state.data} />
-                    <br />
-                    <br />
+                    <VizG config={this.mapConfig} metadata={this.metadata} data={this.state.data}/>
+                    <br/>
+                    <br/>
                     <pre>
                         {
                             '{\n' +
