@@ -198,8 +198,6 @@ export default class PieCharts extends React.Component {
 
             chartComponents.push((
                 <svg
-                    width='100%'
-                    height={'100%'}
                     viewBox={`0 0 ${height > width ? width : height} ${height > width ? width : height}`}
                 >
                     <VictoryPie
@@ -247,8 +245,8 @@ export default class PieCharts extends React.Component {
                             <VictoryLabel
                                 textAnchor="middle"
                                 verticalAnchor="middle"
-                                x={height / 2}
-                                y={width / 2}
+                                x="50%"
+                                y="50%"
                                 text={`${Math.round(dataSets[0].y)}%`}
                                 style={{ fontSize: 45, fill: config.labelColor || 'black' }}
                             /> : null
@@ -257,7 +255,7 @@ export default class PieCharts extends React.Component {
             ));
         });
         return (
-            <div style={{ overflow: 'hidden' }}>
+            <div style={{ overflow: 'visible', height: this.props.height || height, width: this.props.width || width }}>
                 {
                     (config.legend || legend) && (config.legendOrientation && config.legendOrientation === 'top') ?
                         this.generateLegendComponent(config, legendItems) :
