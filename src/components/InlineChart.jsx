@@ -32,10 +32,6 @@ export default class InlineChart extends BasicChart {
         this.visualizeData(this.props);
     }
 
-    componentWillReceiveProps(nextProps) {
-        this.visualizeData(nextProps);
-    }
-
     render() {
         const { config } = this.props;
         const { height, width, chartArray, dataSets } = this.state;
