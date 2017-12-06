@@ -256,6 +256,7 @@ export default class BasicChart extends React.Component {
         return { chartArray, dataSets, xDomain, seriesMaxXVal, seriesMinXVal };
     }
 
+// TODO : sort and handle ordinal series data.
     /**
      * Reduce the array length to the the given maximum array length
      * @param {Array} dataSet the dataSet that needs to be maintained by the length
@@ -361,7 +362,7 @@ export default class BasicChart extends React.Component {
                                     data={dataSets[dataSetName]}
                                     color={chart.dataSetNames[dataSetName]}
                                 >
-                                    {getLineOrAreaComponent(config, chartIndex, this._handleMouseEvent)}
+                                    {getLineOrAreaComponent(config, chartIndex, this._handleMouseEvent, xScale)}
                                 </VictoryGroup>
                             ));
                         }
@@ -390,7 +391,7 @@ export default class BasicChart extends React.Component {
                                     color={chart.dataSetNames[dataSetName]}
 
                                 >
-                                    {getLineOrAreaComponent(config, chartIndex, this._handleMouseEvent)}
+                                    {getLineOrAreaComponent(config, chartIndex, this._handleMouseEvent, xScale)}
                                 </VictoryGroup>
                             ));
                         }
@@ -425,7 +426,7 @@ export default class BasicChart extends React.Component {
                         if (!addChart) {
                             localBar.push((
                                 getBarComponent(config, chartIndex,
-                                    dataSets[dataSetName], chart.dataSetNames[dataSetName])
+                                    dataSets[dataSetName], chart.dataSetNames[dataSetName], xScale)
                             ));
                         }
 
