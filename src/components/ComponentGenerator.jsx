@@ -87,8 +87,6 @@ export function getLineOrAreaComponent(config, chartIndex, onClick, xScale) {
                                     return `${config.x}:${Number(d.x).toFixed(2)}\n
                                     ${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}`;
                                 }
-                                //                 `${config.x}:${Number(d.x).toFixed(2)}\n
-                                // ${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}`;
                             };
                         }
                     })()
@@ -152,8 +150,6 @@ export function getBarComponent(config, chartIndex, data, color, onClick, xScale
                                 return `${config.x}:${Number(d.x).toFixed(2)}\n
                                 ${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}`;
                             }
-                            //                 `${config.x}:${Number(d.x).toFixed(2)}\n
-                            // ${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}`;
                         };
                     }
                 })()
@@ -252,16 +248,15 @@ export function getLegendComponent(config, legendItems, ignoreArray, interaction
                             }
                         })()
                 }
-                title="Legend"
                 style={{
                     title: { fontSize: 25, fill: config.style ? config.style.legendTitleColor : null },
-                    labels: { fontSize: 20, fill: config.style ? config.style.legendTextColor : null },
+                    labels: { fontSize: 18, fill: config.style ? config.style.legendTextColor : null },
                 }}
                 data={legendItems.length > 0 ? legendItems : [{
                     name: 'undefined',
                     symbol: { fill: '#333' },
                 }]}
-                itemsPerRow={config.legendOrientation === 'top' || config.legendOrientation === 'bottom' ? 5 : 4}
+                itemsPerRow={config.legendOrientation === 'top' || config.legendOrientation === 'bottom' ? 10 : null}
                 events={[
                     {
                         target: 'data',
