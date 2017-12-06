@@ -73,7 +73,11 @@ export default class ChartSkeleton extends React.Component {
                             };
                         } else if (xScale === 'ordinal' && config.charts[0].type === 'bar') {
                             return (data) => {
-                                return arr[Number(data) - 1].x;
+                                if ((data - Math.floor(data)) !== 0) {
+                                    return '';
+                                } else {
+                                    return arr[Number(data) - 1].x;
+                                }
                             };
                         } else {
                             return null;
