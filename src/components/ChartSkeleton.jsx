@@ -32,7 +32,9 @@ export default class ChartSkeleton extends React.Component {
     render() {
         const { width, height, xScale, config, yDomain, xDomain, xRange, dataSets } = this.props;
         let arr = null;
-        if (xScale === 'ordinal' && config.charts[0].type === 'bar') arr = dataSets[Object.keys(dataSets)[0]];
+        if (xScale === 'ordinal' && config.charts[0].type === 'bar') {
+            arr = dataSets[Object.keys(dataSets)[0]];
+        }
         return (
             <VictoryChart
                 width={width}
