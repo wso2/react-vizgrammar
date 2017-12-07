@@ -61,7 +61,7 @@ export default class ChartSkeleton extends React.Component {
                         <g /> :
                         <line
                             style={{
-                                stroke: config.gridColor || 'rgb(0, 0, 0)',
+                                stroke: config.gridColor || currentTheme.line.style.data.stroke,
                                 strokeOpacity: 0.1,
                                 fill: 'transparent',
                             }}
@@ -105,21 +105,16 @@ export default class ChartSkeleton extends React.Component {
                     theme={currentTheme}
                     style={{
                         axis: {
-                            stroke: config.style ? config.style.axisColor || '#000' : null, strokeOpacity: 0.5,
+                            stroke: config.style ? config.style.axisColor : currentTheme.axis.style.axis.stroke,
                         },
                         axisLabel: {
-                            fill: config.style ? config.style.axisLabelColor || '#000' : null,
-                            fillOpacity: 0.25,
-                            fontSize: 15,
-                            padding: 30,
+                            fill: config.style ? config.style.axisLabelColor : currentTheme.axis.style.axisLabel.fill,
                         },
-                        grid: { stroke: '#000', strokeOpacity: 0.1 },
-                        ticks: { stroke: '#000', strokeOpacity: 0.1, size: 5 },
                     }}
                     gridComponent={config.disableHorizontalGrid ? <g /> :
                     <line
                         style={{
-                            stroke: config.gridColor || 'rgb(0, 0, 0)',
+                            stroke: config.gridColor || currentTheme.line.style.data.stroke,
                             strokeOpacity: 0.1,
                             fill: 'transparent',
                         }}
