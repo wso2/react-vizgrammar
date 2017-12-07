@@ -48,15 +48,15 @@ import ScrollToTop from './charts/ScrollToTop';
 const muiLightTheme = getMuiTheme({
     fontFamily: 'Roboto, sans-serif',
     palette: {
-        primary1Color: grey700,
+        primary1Color: '#f8f9fe',
         primary2Color: grey500,
         primary3Color: grey400,
         accent1Color: deepOrange500,
         accent2Color: grey100,
         accent3Color: grey500,
         textColor: darkBlack,
-        alternateTextColor: grey400,
-        canvasColor: grey100,
+        alternateTextColor: grey700,
+        canvasColor: '#ffffff',
         borderColor: grey300,
         disabledColor: fade(darkBlack, 0.3),
         pickerHeaderColor: grey700,
@@ -68,7 +68,7 @@ const muiLightTheme = getMuiTheme({
 const muiDarkTheme = getMuiTheme({
     fontFamily: 'Roboto, sans-serif',
     palette: {
-        primary1Color: grey700,
+        primary1Color: '#162e39',
         primary2Color: grey500,
         primary3Color: grey400,
         accent1Color: deepOrange500,
@@ -76,7 +76,7 @@ const muiDarkTheme = getMuiTheme({
         accent3Color: grey500,
         textColor: lightWhite,
         alternateTextColor: grey100,
-        canvasColor: darkBlack,
+        canvasColor: '#132029',
         borderColor: grey700,
         disabledColor: fade(white, 0.3),
         pickerHeaderColor: grey700,
@@ -87,7 +87,7 @@ const muiDarkTheme = getMuiTheme({
 
 ReactDOM.render(
     <Router>
-        <MuiThemeProvider muiTheme={getMuiTheme(muiLightTheme)}>
+        <MuiThemeProvider muiTheme={getMuiTheme(muiDarkTheme)}>
             <AppBar
                 title="react-vizgrammer"
                 iconStyleRight={{ color: '#ffffff' }}
@@ -99,7 +99,7 @@ ReactDOM.render(
 
                 />}
             />
-            <div className={'lightBaseTheme'}>
+            <div className={'darkBaseTheme'}>
                 <ScrollToTop>
                     <Route exact path="/" component={App} />
                 </ScrollToTop>
