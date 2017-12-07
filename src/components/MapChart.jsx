@@ -296,7 +296,6 @@ export default class MapGenerator extends React.Component {
                                                     },
                                                 }}
                                                 onClick={this._handleMouseEvent}
-
                                             />);
                                     });
                                 }
@@ -319,10 +318,27 @@ export default class MapGenerator extends React.Component {
                                     </linearGradient>
                                 </defs>
                                 <g className='legend'>
-
-                                    <text x={20} y={20}>{config.charts[0].y}</text>
-                                    <text x={37} y={37}>{this.state.mapDataRange[1]}</text>
-                                    <text x={37} y={132}>{this.state.mapDataRange[0]}</text>
+                                    <text
+                                        style={{ fill: config.style ? config.style.legendTitleColor : null }}
+                                        x={20}
+                                        y={20}
+                                    >
+                                        {config.charts[0].y}
+                                    </text>
+                                    <text
+                                        style={{ fill: config.style ? config.style.legendTextColor : null }}
+                                        x={37}
+                                        y={37}
+                                    >
+                                        {this.state.mapDataRange[1]}
+                                    </text>
+                                    <text
+                                        style={{ fill: config.style ? config.style.legendTextColor : null }}
+                                        x={37}
+                                        y={132}
+                                    >
+                                        {this.state.mapDataRange[0]}
+                                    </text>
                                     <rect x={20} y={30} fill='url(#grad1)' height={100} width={15} />
                                 </g>
                             </svg>
@@ -332,10 +348,8 @@ export default class MapGenerator extends React.Component {
                                 width={300}
                                 title="Legend"
                                 style={{
-                                    title: {
-                                        fontSize: 25, fill: config.axisLabelColor,
-                                    },
-                                    labels: { fontSize: 20, fill: config.axisLabelColor },
+                                    title: { fontSize: 25, fill: config.style ? config.style.legendTitleColor : null },
+                                    labels: { fontSize: 18, fill: config.style ? config.style.legendTextColor : null },
                                 }}
                                 data={Object.keys(ordinalColorMap).map((name) => {
                                     return { name, symbol: { fill: ordinalColorMap[name] } };
