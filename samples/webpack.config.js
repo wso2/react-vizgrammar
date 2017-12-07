@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
     devtool: 'source-map',
-    entry: './index.jsx',
+    entry: './index',
     output: {
         path: path.resolve(__dirname, './public'),
         filename: 'app.js',
@@ -34,5 +34,8 @@ module.exports = {
         historyApiFallback: true,
         inline: true,
         port: 8080,
+    },
+    resolve: {
+        extensions: ['.js', '.json', '.jsx', '.scss'],
     },
 };

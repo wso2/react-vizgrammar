@@ -17,8 +17,8 @@
  */
 
 import React, { Component } from 'react';
-import MapGenerator from '../../src/components/MapChart.jsx';
-import { ChartWrapper } from './ChartWrapper.jsx';
+import MapGenerator from '../../src/components/MapChart';
+import { ChartWrapper } from './ChartWrapper';
 
 /**
  * This class will render a page that contains samples on how to use Geographical charts.

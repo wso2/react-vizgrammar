@@ -16,7 +16,7 @@
  * under the License.
  */
 
-export { default as WorldMap } from './world';
-export { default as EuropeMap } from './europe';
-export { default as USAMap } from './usa2';
-export { default as CountryInfo } from './countryInfo';
+export { default as WorldMap } from './world.json';
+export { default as EuropeMap } from './europe.json';
+export { default as USAMap } from './usa2.json';
+export { default as CountryInfo } from './countryInfo.json';

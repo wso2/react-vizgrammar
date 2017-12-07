@@ -16,6 +16,6 @@
  * under the License.
  */
 
-import VizG from './VizG.jsx';
+import VizG from './VizG';
 
 export default VizG;

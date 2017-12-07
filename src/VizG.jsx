@@ -18,13 +18,13 @@
 // TODO:Fix dynamically changing config for other charts
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import BasicCharts from './components/BasicChart.jsx';
-import ScatterCharts from './components/ScatterChart.jsx';
-import PieCharts from './components/PieChart.jsx';
-import MapGenerator from './components/MapChart.jsx';
-import TableCharts from './components/TableChart.jsx';
-import NumberCharts from './components/NumberChart.jsx';
-import InlineCharts from './components/InlineChart.jsx';
+import BasicCharts from './components/BasicChart';
+import ScatterCharts from './components/ScatterChart';
+import PieCharts from './components/PieChart';
+import MapGenerator from './components/MapChart';
+import TableCharts from './components/TableChart';
+import NumberCharts from './components/NumberChart';
+import InlineCharts from './components/InlineChart';
 import VizGError from './VizGError';
 
 class VizG extends Component {

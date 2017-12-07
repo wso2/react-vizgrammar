@@ -32,15 +32,15 @@ import {
 import { fade } from 'material-ui/utils/colorManipulator';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
-import App from './App.jsx';
-import LineChart from './charts/LineChartsSamples.jsx';
-import BarChart from './charts/BarChartConfigSample.jsx';
-import AreaChart from './charts/AreaChartConfig.jsx';
-import ScatterPlot from './charts/ScatterPlotConfigSample.jsx';
-import PieChart from './charts/PieChartsConfigSample.jsx';
-import MapChartConfigSample from './charts/MapChartConfigSample.jsx';
-import NumberChartConfigSample from './charts/NumberChartConfigSample.jsx';
-import TableCharts from './charts/TableChartConfigSample.jsx';
+import App from './App';
+import LineChart from './charts/LineChartsSamples';
+import BarChart from './charts/BarChartConfigSample';
+import AreaChart from './charts/AreaChartConfig';
+import ScatterPlot from './charts/ScatterPlotConfigSample';
+import PieChart from './charts/PieChartsConfigSample';
+import MapChartConfigSample from './charts/MapChartConfigSample';
+import NumberChartConfigSample from './charts/NumberChartConfigSample';
+import TableCharts from './charts/TableChartConfigSample';
 import './charts/css/default.css';
 import ScrollToTop from './charts/ScrollToTop';
 

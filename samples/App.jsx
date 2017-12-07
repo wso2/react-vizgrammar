@@ -17,7 +17,7 @@
  */
 import React from 'react';
 import VizG from '../src/index';
-import { ChartWrapper } from './charts/ChartWrapper.jsx';
+import { ChartWrapper } from './charts/ChartWrapper';
 
 const styles = {
     flexContainer: {

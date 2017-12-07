@@ -18,7 +18,7 @@
 
 import React from 'react';
 import { VictoryLine, VictoryArea, VictoryGroup, VictoryBar, VictoryTooltip, VictoryStack } from 'victory';
-import BasicChart from './BasicChart.jsx';
+import BasicChart from './BasicChart';
 import VizGError from '../VizGError';
 
 export default class InlineChart extends BasicChart {

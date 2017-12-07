@@ -16,9 +16,9 @@
  * under the License.
  */
 import React from 'react';
-import { ChartWrapper } from './ChartWrapper.jsx';
+import { ChartWrapper } from './ChartWrapper';
 import './css/Table.css';
-import VizG from '../../src/VizG.jsx';
+import VizG from '../../src/VizG';
 
 /**
  * This class will render a page that contains samples on how to use Bar charts.
