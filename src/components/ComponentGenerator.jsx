@@ -77,7 +77,8 @@ export function getLineOrAreaComponent(config, chartIndex, onClick, xScale) {
                     (() => {
                         if (xScale === 'time' && config.tipTimeFormat) {
                             return (data) => {
-                                return `${config.x}:${timeFormat(config.tipTimeFormat)(new Date(data.x))}\n${config.charts[chartIndex].y}:${Number(data.y).toFixed(2)}`;
+                                return `${config.x}:${timeFormat(config.tipTimeFormat)(new Date(data.x))}\n` +
+                                    `${config.charts[chartIndex].y}:${Number(data.y).toFixed(2)}`;
                             };
                         } else {
                             return (d) => {
@@ -139,8 +140,9 @@ export function getBarComponent(config, chartIndex, data, color, onClick, xScale
             labels={
                 (() => {
                     if (xScale === 'time' && config.tipTimeFormat) {
-                        return (data) => {
-                            return `${config.x}:${timeFormat(config.tipTimeFormat)(new Date(data.x))}\n${config.charts[chartIndex].y}:${Number(data.y).toFixed(2)}`;
+                        return (d) => {
+                            return `${config.x}:${timeFormat(config.tipTimeFormat)(new Date(d.x))}\n` +
+                                `${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}`;
                         };
                     } else {
                         return (d) => {
@@ -250,11 +252,11 @@ export function getLegendComponent(config, legendItems, ignoreArray, interaction
                 }
                 style={{
                     title: {
-                        fontSize: config.style ? config.style.legendTitleSize || 25 : 25,
+                        fontSize: (config.style ? (config.style.legendTitleSize || 25) : 25),
                         fill: config.style ? config.style.legendTitleColor : null,
                     },
                     labels: {
-                        fontSize: config.style ? config.style.legendTextSize || 18 : 18,
+                        fontSize: config.style ? (config.style.legendTextSize || 18) : 18,
                         fill: config.style ? config.style.legendTextColor : null,
                     },
                 }}

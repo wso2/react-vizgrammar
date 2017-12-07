@@ -296,7 +296,6 @@ export default class MapGenerator extends React.Component {
                                                     },
                                                 }}
                                                 onClick={this._handleMouseEvent}
-
                                             />);
                                     });
                                 }
