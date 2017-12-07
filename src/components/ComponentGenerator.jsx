@@ -206,7 +206,7 @@ export function getLegendComponent(config, legendItems, ignoreArray, interaction
     return (
         <div
             style={{
-                width: !config.legendOrientation ? '15%' :
+                width: !config.legendOrientation ? '20%' :
                     (() => {
                         if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
                             return '20%';

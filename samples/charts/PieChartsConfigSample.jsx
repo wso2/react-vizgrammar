@@ -56,7 +56,7 @@ export default class LineChartConfigSample extends React.Component {
         };
 
         this.configT = {
-            charts: [{ type: 'arc', x: 'torque', color: 'EngineType', colorScale: ['steelblue', '#80ccff'] }],
+            charts: [{ type: 'arc', x: 'torque', color: 'EngineType'}],
             tooltip: { enabled: false },
             legend: false,
             percentage: true,
