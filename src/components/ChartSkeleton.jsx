@@ -26,7 +26,8 @@ import { timeFormat } from 'd3';
 export default class ChartSkeleton extends React.Component {
     render() {
         const { width, height, xScale, config, yDomain, xDomain, xRange, dataSets } = this.props;
-
+        let arr = null;
+        if (xScale === 'ordinal' && config.charts[0].type === 'bar') arr = dataSets[Object.keys(dataSets)[0]];
         return (
             <VictoryChart
                 width={width}
@@ -72,7 +73,6 @@ export default class ChartSkeleton extends React.Component {
                                 return timeFormat(config.timeFormat)(new Date(date));
                             };
                         } else if (xScale === 'ordinal' && config.charts[0].type === 'bar') {
-                            const arr = dataSets[Object.keys(dataSets)[0]];
                             return (data) => {
                                 if ((data - Math.floor(data)) !== 0) {
                                     return '';
@@ -115,13 +115,13 @@ export default class ChartSkeleton extends React.Component {
                         ticks: { stroke: '#000', strokeOpacity: 0.1, size: 5 },
                     }}
                     gridComponent={config.disableHorizontalGrid ? <g /> :
-                    <line
-                        style={{
-                            stroke: config.gridColor || 'rgb(0, 0, 0)',
-                            strokeOpacity: 0.1,
-                            fill: 'transparent',
-                        }}
-                    />}
+                        <line
+                            style={{
+                                stroke: config.gridColor || 'rgb(0, 0, 0)',
+                                strokeOpacity: 0.1,
+                                fill: 'transparent',
+                            }}
+                        />}
                     label={config.yAxisLabel || config.charts.length > 1 ? '' : config.charts[0].y}
                     standalone={false}
                     tickLabelComponent={
