@@ -320,20 +320,14 @@ export default class MapGenerator extends React.Component {
                                 </defs>
                                 <g className='legend'>
                                     <text
-                                        style={{
-                                            fill: config.style ? config.style.legendTitleColor :
-                                                null,
-                                        }}
+                                        style={{ fill: config.style ? config.style.legendTitleColor : null }}
                                         x={20}
                                         y={20}
                                     >
                                         {config.charts[0].y}
                                     </text>
                                     <text
-                                        style={{
-                                            fill: config.style ? config.style.legendTextColor :
-                                                null,
-                                        }}
+                                        style={{ fill: config.style ? config.style.legendTextColor : null }}
                                         x={37}
                                         y={37}
                                     >
