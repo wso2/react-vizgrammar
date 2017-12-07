@@ -1,12 +1,15 @@
 {
   "name": "react-vizgrammar",
-  "version": "0.6.0",
+  "version": "0.6.2",
   "description": "React-VizGrammar is a charting library that makes charting easy by adding required boilerplate code so that developers/designers can get started in few minutes.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "WSO2",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wso2/react-vizgrammar.git"
+  },
   "license": "Apache-2.0",
   "dependencies": {
     "d3": "^4.12.0",
