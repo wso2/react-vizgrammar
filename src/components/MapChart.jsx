@@ -55,11 +55,15 @@ export default class MapGenerator extends React.Component {
     }
 
     componentDidMount() {
-        this._handleDataReceived(this.props);
+        if (this.props.metadata !== null) {
+            this._handleDataReceived(this.props);
+        }
     }
 
     componentWillReceiveProps(nextProps) {
-        this._handleDataReceived(nextProps);
+        if (this.props.metadata !== null) {
+            this._handleDataReceived(nextProps);
+        }
     }
 
     componentWillUnmount() {

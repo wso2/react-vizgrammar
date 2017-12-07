@@ -65,7 +65,9 @@ export default class BasicChart extends React.Component {
 
     componentDidMount() {
         this.chartConfig = this.props.config;
-        this.visualizeData(this.props);
+        if (this.props.metadata !== null) {
+            this.visualizeData(this.props);
+        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -76,7 +78,9 @@ export default class BasicChart extends React.Component {
             this.state.initialized = false;
         }
 
-        this.visualizeData(nextProps);
+        if (this.props.metadata !== null) {
+            this.visualizeData(nextProps);
+        }
     }
 
     componentWillUnmount() {
@@ -235,12 +239,12 @@ export default class BasicChart extends React.Component {
                             } else {
                                 chartArray[index]
                                     .dataSetNames[dataSetName] = chartArray[index]
-                                    .colorScale[chartArray[index].colorIndex++];
+                                        .colorScale[chartArray[index].colorIndex++];
                             }
                         } else {
                             chartArray[index]
                                 .dataSetNames[dataSetName] = chartArray[index]
-                                .colorScale[chartArray[index].colorIndex++];
+                                    .colorScale[chartArray[index].colorIndex++];
                         }
                     } else {
                         chartArray[index].dataSetNames[dataSetName] =
@@ -256,7 +260,7 @@ export default class BasicChart extends React.Component {
         return { chartArray, dataSets, xDomain, seriesMaxXVal, seriesMinXVal };
     }
 
-// TODO : sort and handle ordinal series data.
+    // TODO : sort and handle ordinal series data.
     /**
      * Reduce the array length to the the given maximum array length
      * @param {Array} dataSet the dataSet that needs to be maintained by the length

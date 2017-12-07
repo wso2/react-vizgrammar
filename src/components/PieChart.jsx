@@ -54,7 +54,9 @@ export default class PieCharts extends React.Component {
     }
 
     componentDidMount() {
-        this._handleAndSortData(this.props);
+        if (this.props.metadata !== null) {
+            this._handleAndSortData(this.props);
+        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -63,7 +65,9 @@ export default class PieCharts extends React.Component {
             this.state.chartArray = [];
             this.state.initialized = false;
         }
-        this._handleAndSortData(nextProps);
+        if (this.props.metadata !== null) {
+            this._handleAndSortData(nextProps);
+        }
     }
 
     componentWillUnmount() {
@@ -232,7 +236,7 @@ export default class PieCharts extends React.Component {
                         width={height > width ? width : height}
                         colorScale={chart.colorScale}
                         data={config.percentage ? dataSets : pieChartData}
-                        labelComponent={config.percentage ? <VictoryLabel text={''}/> :
+                        labelComponent={config.percentage ? <VictoryLabel text={''} /> :
                             <VictoryTooltip
                                 orientation='top'
                                 pointerLength={4}
