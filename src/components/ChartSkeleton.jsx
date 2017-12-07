@@ -112,15 +112,6 @@ export default class ChartSkeleton extends React.Component {
                         },
                     }}
                     gridComponent={config.disableHorizontalGrid ? <g /> :
-<<<<<<< HEAD
-                        <line
-                            style={{
-                                stroke: config.gridColor || 'rgb(0, 0, 0)',
-                                strokeOpacity: 0.1,
-                                fill: 'transparent',
-                            }}
-                        />}
-=======
                     <line
                         style={{
                             stroke: config.gridColor || currentTheme.line.style.data.stroke,
@@ -128,7 +119,6 @@ export default class ChartSkeleton extends React.Component {
                             fill: 'transparent',
                         }}
                     />}
->>>>>>> 028c4e1c1f39bc4f704148acea9bb0caa415a17c
                     label={config.yAxisLabel || config.charts.length > 1 ? '' : config.charts[0].y}
                     standalone={false}
                     tickLabelComponent={
