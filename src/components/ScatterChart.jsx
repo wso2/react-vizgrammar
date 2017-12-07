@@ -25,8 +25,8 @@ import PropTypes from 'prop-types';
 import { scaleLinear } from 'd3';
 import { getDefaultColorScale } from './helper';
 import VizGError from '../VizGError';
-import ChartSkeleton from './ChartSkeleton.jsx';
-import { getLegendComponent } from './ComponentGenerator.jsx';
+import ChartSkeleton from './ChartSkeleton';
+import { getLegendComponent } from './ComponentGenerator';
 
 const LEGEND_DISABLED_COLOR = '#d3d3d3';
 

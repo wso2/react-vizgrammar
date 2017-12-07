@@ -17,8 +17,8 @@
  */
 
 import React, { Component } from 'react';
-import NumberCharts from '../../src/components/NumberChart.jsx';
-import { ChartWrapper } from './ChartWrapper.jsx';
+import NumberCharts from '../../src/components/NumberChart';
+import { ChartWrapper } from './ChartWrapper';
 
 /**
  * This class will render a page that contains samples on how to use Number charts.

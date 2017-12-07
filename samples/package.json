@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "samples": "webpack-dev-server --progress"
+    "samples": "webpack-dev-server --progress",
+    "build": "npx babel src -d dist"
   },
   "author": "WSO2",
   "license": "Apache-2.0",

@@ -23,7 +23,7 @@ import victoryLightTheme from './resources/themes/victoryLightTheme';
 import victoryDarkTheme from './resources/themes/victoryDarkTheme';
 
 // TODO: should be switchable with parent's respective light or dark themes
-const currentTheme = victoryDarkTheme;
+const currentTheme = victoryLightTheme;
 
 /**
  * This class will render a skeleton that's required for a Line, Area or Bar Chart

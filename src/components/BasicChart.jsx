@@ -18,13 +18,13 @@ import PropTypes from 'prop-types';
 import { VictoryGroup, VictoryStack } from 'victory';
 import VizGError from '../VizGError';
 import { getDefaultColorScale } from './helper';
-import ChartSkeleton from './ChartSkeleton.jsx';
+import ChartSkeleton from './ChartSkeleton';
 import {
     getBarComponent,
     getBrushComponent,
     getLegendComponent,
     getLineOrAreaComponent,
-} from './ComponentGenerator.jsx';
+} from './ComponentGenerator';
 
 const LEGEND_DISABLED_COLOR = '#d3d3d3';
 
