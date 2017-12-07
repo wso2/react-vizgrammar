@@ -19,6 +19,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { VictoryChart, VictoryAxis, VictoryVoronoiContainer, VictoryLabel, VictoryBrushContainer } from 'victory';
 import { timeFormat } from 'd3';
+import victoryLightTheme from './resources/themes/victoryLightTheme';
+import victoryDarkTheme from './resources/themes/victoryDarkTheme';
+
+// TODO: should be switchable with parent's respective light or dark themes
+const currentTheme = victoryDarkTheme;
 
 /**
  * This class will render a skeleton that's required for a Line, Area or Bar Chart
@@ -39,28 +44,25 @@ export default class ChartSkeleton extends React.Component {
                     x: config.brush && xDomain[0] ? xDomain : null,
                     y: yDomain || null,
                 }}
+                theme={currentTheme}
             >
                 {this.props.children}
                 <VictoryAxis
                     crossAxis
+                    theme={currentTheme}
                     style={{
                         axis: {
-                            stroke: config.style ? config.style.axisColor || '#000' : null, strokeOpacity: 0.5,
+                            stroke: config.style ? config.style.axisColor : currentTheme.axis.style.axis.stroke,
                         },
                         axisLabel: {
-                            fill: config.style ? config.style.axisLabelColor || '#000' : null,
-                            fillOpacity: 0.25,
-                            fontSize: 15,
-                            padding: 30,
+                            fill: config.style ? config.style.axisLabelColor : currentTheme.axis.style.axisLabel.fill,
                         },
-                        grid: { stroke: '#000', strokeOpacity: 0.1 },
-                        ticks: { stroke: '#000', strokeOpacity: 0.1, size: 5 },
                     }}
                     gridComponent={config.disableVerticalGrid ?
                         <g /> :
                         <line
                             style={{
-                                stroke: config.gridColor || 'rgb(0, 0, 0)',
+                                stroke: config.gridColor || currentTheme.line.style.data.stroke,
                                 strokeOpacity: 0.1,
                                 fill: 'transparent',
                             }}
@@ -88,11 +90,10 @@ export default class ChartSkeleton extends React.Component {
                     tickLabelComponent={
                         <VictoryLabel
                             angle={config.style ? config.style.xAxisTickAngle || 0 : 0}
+                            theme={currentTheme}
                             style={{
-                                fill: config.style ? config.style.tickLabelColor || '#000' : null,
-                                fillOpacity: 0.5,
-                                fontSize: 10,
-                                padding: 0,
+                                fill: config.style ?
+                                    config.style.tickLabelColor : currentTheme.axis.style.tickLabels.fill,
                             }}
                         />
                     }
@@ -101,20 +102,17 @@ export default class ChartSkeleton extends React.Component {
                 <VictoryAxis
                     dependentAxis
                     crossAxis
+                    theme={currentTheme}
                     style={{
                         axis: {
-                            stroke: config.style ? config.style.axisColor || '#000' : null, strokeOpacity: 0.5,
+                            stroke: config.style ? config.style.axisColor : currentTheme.axis.style.axis.stroke,
                         },
                         axisLabel: {
-                            fill: config.style ? config.style.axisLabelColor || '#000' : null,
-                            fillOpacity: 0.25,
-                            fontSize: 15,
-                            padding: 30,
+                            fill: config.style ? config.style.axisLabelColor : currentTheme.axis.style.axisLabel.fill,
                         },
-                        grid: { stroke: '#000', strokeOpacity: 0.1 },
-                        ticks: { stroke: '#000', strokeOpacity: 0.1, size: 5 },
                     }}
                     gridComponent={config.disableHorizontalGrid ? <g /> :
+<<<<<<< HEAD
                         <line
                             style={{
                                 stroke: config.gridColor || 'rgb(0, 0, 0)',
@@ -122,16 +120,24 @@ export default class ChartSkeleton extends React.Component {
                                 fill: 'transparent',
                             }}
                         />}
+=======
+                    <line
+                        style={{
+                            stroke: config.gridColor || currentTheme.line.style.data.stroke,
+                            strokeOpacity: 0.1,
+                            fill: 'transparent',
+                        }}
+                    />}
+>>>>>>> 028c4e1c1f39bc4f704148acea9bb0caa415a17c
                     label={config.yAxisLabel || config.charts.length > 1 ? '' : config.charts[0].y}
                     standalone={false}
                     tickLabelComponent={
                         <VictoryLabel
                             angle={config.style ? config.style.yAxisTickAngle || 0 : 0}
+                            theme={currentTheme}
                             style={{
-                                fill: config.style ? config.style.tickLabelColor || '#000' : null,
-                                fillOpacity: 0.5,
-                                fontSize: 10,
-                                padding: 0,
+                                fill: config.style ?
+                                    config.style.tickLabelColor : currentTheme.axis.style.tickLabels.fill,
                             }}
                         />
                     }
