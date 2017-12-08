@@ -45,6 +45,7 @@ export default class AreaChartConfigSample extends React.Component {
             maxLength: 7,
             width: 700,
             height: 450,
+            legend:true,
 
         };
 

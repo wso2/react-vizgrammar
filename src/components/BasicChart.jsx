@@ -78,7 +78,7 @@ export default class BasicChart extends React.Component {
             this.state.initialized = false;
         }
 
-        if (this.props.metadata !== null) {
+        if (nextProps.metadata !== null) {
             this.visualizeData(nextProps);
         }
     }
@@ -474,7 +474,14 @@ export default class BasicChart extends React.Component {
         }
 
         return (
-            <div style={{ overflow: 'hidden', zIndex: 99999 }}>
+            <div
+                style={{
+                    overflow: 'hidden',
+                    height: '100%',
+                    width: '100%',
+                    paddingBottom: 10,
+                }}
+            >
                 <div
                     style={
                         config.legend ? {
@@ -483,6 +490,14 @@ export default class BasicChart extends React.Component {
                                     if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
                                         return '80%';
                                     } else return '100%';
+                                })(),
+                            height: !config.legendOrientation ? '100%' :
+                                (() => {
+                                    if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
+                                        return '100%%';
+                                    } else {
+                                        return '80%';
+                                    }
                                 })(),
                             display: !config.legendOrientation ? 'inline' :
                                 (() => {
@@ -495,7 +510,7 @@ export default class BasicChart extends React.Component {
                                 else if (config.legendOrientation === 'right') return 'left';
                                 else return null;
                             })(),
-                        } : { width: '100%' }
+                        } : { width: '100%', height: '100%' }
                     }
                 >
                     {
@@ -504,8 +519,8 @@ export default class BasicChart extends React.Component {
                             : null
                     }
                     <ChartSkeleton
-                        width={width}
-                        height={height}
+                        width={this.props.width || width || 800}
+                        height={this.props.height || height || 800}
                         config={config}
                         xScale={xScale}
                         yDomain={this.props.yDomain}
@@ -533,8 +548,8 @@ export default class BasicChart extends React.Component {
 }
 
 BasicChart.defaultProps = {
-    width: 800,
-    height: 450,
+    width: null,
+    height: null,
     onClick: null,
     yDomain: null,
     append: true,

@@ -44,11 +44,11 @@ export function getLineOrAreaComponent(config, chartIndex, onClick, xScale) {
             }}
             animate={
                 config.animate ?
-                {
-                    onEnter: {
-                        duration: 100,
-                    },
-                } : null
+                    {
+                        onEnter: {
+                            duration: 100,
+                        },
+                    } : null
             }
         />) :
         (<VictoryArea
@@ -61,11 +61,11 @@ export function getLineOrAreaComponent(config, chartIndex, onClick, xScale) {
             }}
             animate={
                 config.animate ?
-                {
-                    onEnter: {
-                        duration: 100,
-                    },
-                } : null
+                    {
+                        onEnter: {
+                            duration: 100,
+                        },
+                    } : null
             }
         />);
 
@@ -121,11 +121,11 @@ export function getLineOrAreaComponent(config, chartIndex, onClick, xScale) {
                 }]}
                 animate={
                     config.animate ?
-                    {
-                        onEnter: {
-                            duration: 100,
-                        },
-                    } : null
+                        {
+                            onEnter: {
+                                duration: 100,
+                            },
+                        } : null
                 }
 
             />
@@ -182,11 +182,11 @@ export function getBarComponent(config, chartIndex, data, color, onClick, xScale
             }]}
             animate={
                 config.animate ?
-                {
-                    onEnter: {
-                        duration: 100,
-                    },
-                } : null
+                    {
+                        onEnter: {
+                            duration: 100,
+                        },
+                    } : null
             }
         />
     );
@@ -219,7 +219,7 @@ export function getLegendComponent(config, legendItems, ignoreArray, interaction
                         } else return null;
                     })(),
                 float: !config.legendOrientation ? 'right' : (() => {
-                    if (config.legendOrientation === 'left') return 'left';
+                    if (config.legendOrientation === 'left') return 'right';
                     else if (config.legendOrientation === 'right') return 'right';
                     else return null;
                 })(),
