@@ -40,11 +40,15 @@ class ReactTableTest extends Component {
     }
 
     componentDidMount() {
-        this._handleData(this.props);
+        if (this.props.metadata !== null) {
+            this._handleData(this.props);
+        }
     }
 
     componentWillReceiveProps(nextProps) {
-        this._handleData(nextProps);
+        if (this.props.metadata !== null) {
+            this._handleData(nextProps);
+        }
     }
 
     /**

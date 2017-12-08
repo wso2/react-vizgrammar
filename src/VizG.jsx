@@ -56,13 +56,15 @@ class VizG extends Component {
     }
 
     render() {
-        const { config, data, metadata, onClick } = this.state;
-        const chartType = config.charts[0].type;
+        const { config, data, metadata, onClick } = this.props;
 
         return (
             <div>
                 {
-                    this._selectAndRenderChart(chartType, config, data, metadata, onClick)
+                    !config || !metadata ?
+                        null :
+                        this._selectAndRenderChart(config.charts[0].type, config, data, metadata, onClick)
+
                 }
             </div>
         );
