@@ -29,8 +29,8 @@ export default class InlineChart extends BasicChart {
     }
 
     render() {
-        const { config } = this.props;
-        const { height, width, chartArray, dataSets } = this.state;
+        const { config, height, width } = this.props;
+        const { chartArray, dataSets } = this.state;
         let chartComponents = [];
         const legendItems = [];
         let horizontal = false;
@@ -169,8 +169,12 @@ export default class InlineChart extends BasicChart {
         }
 
         return (
-            <div>{chartComponents}</div>
+            <div style={{ height, width }} >{chartComponents}</div>
         );
     }
-
 }
+
+InlineChart.defaultProps = {
+    height: 100,
+    width: 200,
+};

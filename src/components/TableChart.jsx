@@ -29,8 +29,6 @@ class ReactTableTest extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            height: props.config.height || 450,
-            width: props.config.width || 800,
             columnArray: [],
             dataSet: [],
             initialized: false,

@@ -22,15 +22,14 @@ import { timeFormat } from 'd3';
 import victoryLightTheme from './resources/themes/victoryLightTheme';
 import victoryDarkTheme from './resources/themes/victoryDarkTheme';
 
-// TODO: should be switchable with parent's respective light or dark themes
-const currentTheme = victoryLightTheme;
-
 /**
  * This class will render a skeleton that's required for a Line, Area or Bar Chart
  */
 export default class ChartSkeleton extends React.Component {
+
     render() {
-        const { width, height, xScale, config, yDomain, xDomain, xRange, dataSets } = this.props;
+        const { width, height, xScale, config, yDomain, xDomain, dataSets, theme } = this.props;
+        const currentTheme = theme === 'materialLight' ? victoryLightTheme : victoryDarkTheme;
         let arr = null;
         if (xScale === 'ordinal' && config.charts[0].type === 'bar') {
             arr = dataSets[Object.keys(dataSets)[0]];

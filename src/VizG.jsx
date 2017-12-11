@@ -28,48 +28,6 @@ import InlineCharts from './components/InlineChart';
 import VizGError from './VizGError';
 
 class VizG extends Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            config: props.config,
-            data: props.data,
-            metadata: props.metadata,
-            onClick: props.onClick,
-        };
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (JSON.stringify(this.state.config) !== JSON.stringify(nextProps.config)) {
-            this.setState({
-                config: nextProps.config,
-                metadata: nextProps.metadata,
-            });
-        }
-        this.setState({
-            data: nextProps.data,
-        });
-    }
-
-    componentWillUnmount() {
-        this.setState({});
-    }
-
-    render() {
-        const { config, data, metadata, onClick } = this.props;
-
-        return (
-            <div>
-                {
-                    !config || !metadata ?
-                        null :
-                        this._selectAndRenderChart(config.charts[0].type, config, data, metadata, onClick)
-
-                }
-            </div>
-        );
-    }
-
     /**
      * Function will render a chart based on the given chart.
      * @param {String} chartType Chart type of the chart.
@@ -92,6 +50,9 @@ class VizG extends Component {
                         onClick={onClick}
                         yDomain={this.props.yDomain}
                         append={this.props.append}
+                        theme={this.props.theme}
+                        width={this.props.width}
+                        height={this.props.height}
                     />
                 );
             case 'arc':
@@ -102,6 +63,8 @@ class VizG extends Component {
                         data={data}
                         onClick={onClick}
                         append={this.props.append}
+                        width={this.props.width}
+                        height={this.props.height}
                     />
                 );
             case 'scatter':
@@ -112,6 +75,8 @@ class VizG extends Component {
                         data={data}
                         onClick={onClick}
                         append={this.props.append}
+                        width={this.props.width}
+                        height={this.props.height}
                     />
                 );
             case 'map':
@@ -132,6 +97,8 @@ class VizG extends Component {
                         config={config}
                         data={data}
                         onClick={onClick}
+                        width={this.props.width}
+                        height={this.props.height}
                     />
                 );
             case 'spark-line':
@@ -144,16 +111,35 @@ class VizG extends Component {
                         data={data}
                         yDomain={this.props.yDomain}
                         append={this.props.append}
+                        width={this.props.width}
+                        height={this.props.height}
                     />
                 );
             default:
                 throw new VizGError('VizG', 'Unknown chart ' + chartType + ' defined in the chart config.');
         }
     }
+
+    render() {
+        const { config, data, metadata, onClick } = this.props;
+        return (
+            <div>
+                {
+                    !config || !metadata ?
+                        null :
+                        this._selectAndRenderChart(config.charts[0].type, config, data, metadata, onClick)
+
+                }
+            </div>
+        );
+    }
 }
 
 VizG.defaultProps = {
     append: true,
+    theme: 'materialLight',
+    width: 800,
+    height: 450,
 };
 
 VizG.propTypes = {
@@ -162,6 +148,9 @@ VizG.propTypes = {
     metadata: PropTypes.object.isRequired,
     onClick: PropTypes.func,
     append: PropTypes.bool,
+    theme: PropTypes.String,
+    height: PropTypes.number,
+    width: PropTypes.number,
 };
 
 export default VizG;

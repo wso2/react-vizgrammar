@@ -37,8 +37,6 @@ export default class BasicChart extends React.Component {
         this.state = {
             dataSets: {},
             chartArray: [],
-            height: props.config.height || props.height,
-            width: props.config.width || props.width,
             initialized: false,
             xScale: 'linear',
             xDomain: [null, null],
@@ -337,8 +335,8 @@ export default class BasicChart extends React.Component {
     }
 
     render() {
-        const { config } = this.props;
-        const { height, width, chartArray, dataSets, xScale, ignoreArray } = this.state;
+        const { config, height, width, theme } = this.props;
+        const { chartArray, dataSets, xScale, ignoreArray } = this.state;
         let chartComponents = [];
         const legendItems = [];
         let horizontal = false;
@@ -494,7 +492,7 @@ export default class BasicChart extends React.Component {
                             height: !config.legendOrientation ? '100%' :
                                 (() => {
                                     if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
-                                        return '100%%';
+                                        return '100%';
                                     } else {
                                         return '80%';
                                     }
@@ -527,6 +525,7 @@ export default class BasicChart extends React.Component {
                         xDomain={this.state.xDomain}
                         xRange={this.xRange}
                         dataSets={dataSets}
+                        theme={theme}
                     >
                         {chartComponents}
                     </ChartSkeleton>
@@ -548,8 +547,8 @@ export default class BasicChart extends React.Component {
 }
 
 BasicChart.defaultProps = {
-    width: null,
-    height: null,
+    width: 800,
+    height: 400,
     onClick: null,
     yDomain: null,
     append: true,
