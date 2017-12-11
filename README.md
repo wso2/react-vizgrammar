@@ -71,6 +71,7 @@ These prerequisites must be installed before proceeding with the build process.
 In order build React-VizGrammar from the sources, Get a clone from this repository and then run the following commands in the terminal from the react-vizgrammar directory.
 ```bash
     npm install
+    npm run build
 ```
 
 #### Build and run samples

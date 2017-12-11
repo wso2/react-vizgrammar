@@ -157,6 +157,7 @@ export default class BasicChart extends React.Component {
         if (['linear', 'time', 'ordinal'].indexOf(metadata.types[xIndex].toLowerCase()) === -1) {
             throw new VizGError('BasicChart', 'Unknown metadata type is defined for x axis in the chart configuration');
         }
+        xScale = metadata.types[xIndex].toLowerCase();
         if (!initialized) {
             chartArray = this.generateChartArray(config.charts);
             initialized = true;
@@ -212,7 +213,24 @@ export default class BasicChart extends React.Component {
                 }
 
                 dataSets[dataSetName] = dataSets[dataSetName] || [];
-                dataSets[dataSetName].push({ x: datum[xIndex], y: datum[yIndex] });
+                if (xScale === 'linear' || xScale === 'time') {
+                    dataSets[dataSetName].push({ x: datum[xIndex], y: datum[yIndex] });
+                } else {
+                    const key = [];
+                    dataSets[dataSetName].filter((d, i) => {
+                        if (d.x === datum[xIndex]) {
+                            key.push(i);
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    });
+                    if (key.length > 0) {
+                        dataSets[dataSetName][key[0]] = { x: datum[xIndex], y: datum[yIndex] };
+                    } else {
+                        dataSets[dataSetName].push({ x: datum[xIndex], y: datum[yIndex] });
+                    }
+                }
                 if (maxLength) dataSets[dataSetName] = this.maintainArrayLength(dataSets[dataSetName], maxLength);
                 if (xScale !== 'ordinal') {
                     this.xRange = xDomain = this.getXDomain(xDomain, this.getDataSetDomain(dataSets[dataSetName]));
@@ -237,12 +255,12 @@ export default class BasicChart extends React.Component {
                             } else {
                                 chartArray[index]
                                     .dataSetNames[dataSetName] = chartArray[index]
-                                        .colorScale[chartArray[index].colorIndex++];
+                                    .colorScale[chartArray[index].colorIndex++];
                             }
                         } else {
                             chartArray[index]
                                 .dataSetNames[dataSetName] = chartArray[index]
-                                    .colorScale[chartArray[index].colorIndex++];
+                                .colorScale[chartArray[index].colorIndex++];
                         }
                     } else {
                         chartArray[index].dataSetNames[dataSetName] =

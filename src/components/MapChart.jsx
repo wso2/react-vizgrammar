@@ -38,8 +38,6 @@ export default class MapGenerator extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            height: props.height || 450,
-            width: props.width || 800,
             mapData: [],
             markerData: [],
             config: props.config,
@@ -224,7 +222,7 @@ export default class MapGenerator extends React.Component {
         }
 
         return (
-            <div style={{ overflow: 'hidden', zIndex: 9999, height:'100%', width:'100%' }}>
+            <div style={{ overflow: 'hidden', zIndex: 9999, height: '100%', width: '100%' }}>
                 <div
                     style={{
                         float: 'left',
@@ -303,7 +301,6 @@ export default class MapGenerator extends React.Component {
                                             />);
                                     });
                                 }
-
                             }
                         </Geographies>
                     </ComposableMap>
