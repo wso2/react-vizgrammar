@@ -212,6 +212,12 @@ export function getLegendComponent(config, legendItems, ignoreArray, interaction
                             return '20%';
                         } else return '100%';
                     })(),
+                height: !config.legendOrientation ? '100%' :
+                    (() => {
+                        if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
+                            return '100%';
+                        } else return '20%';
+                    })(),
                 display: !config.legendOrientation ? 'inline' :
                     (() => {
                         if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {

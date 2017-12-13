@@ -36,8 +36,6 @@ export default class PieCharts extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            height: props.height || props.config.height || 450,
-            width: props.width || props.config.width || 800,
             dataSets: {},
             chartArray: [],
             initialized: false,
@@ -211,8 +209,8 @@ export default class PieCharts extends React.Component {
     }
 
     render() {
-        const { config } = this.props;
-        const { height, width, chartArray, dataSets, xScale, legend, randomUpdater } = this.state;
+        const { config, height, width } = this.props;
+        const { chartArray, dataSets, xScale, legend, randomUpdater } = this.state;
         const chartComponents = [];
         const legendItems = [];
 
@@ -229,6 +227,8 @@ export default class PieCharts extends React.Component {
 
             chartComponents.push((
                 <svg
+                    height="100%"
+                    width="100%"
                     viewBox={`0 0 ${height > width ? width : height} ${height > width ? width : height}`}
                 >
                     <VictoryPie
@@ -237,13 +237,13 @@ export default class PieCharts extends React.Component {
                         colorScale={chart.colorScale}
                         data={config.percentage ? dataSets : pieChartData}
                         labelComponent={config.percentage ? <VictoryLabel text={''} /> :
-                            <VictoryTooltip
-                                orientation='top'
-                                pointerLength={4}
-                                cornerRadius={2}
-                                flyoutStyle={{ fill: '#000', fillOpacity: '0.8', strokeWidth: 0 }}
-                                style={{ fill: '#b0b0b0' }}
-                            />}
+                        <VictoryTooltip
+                            orientation='top'
+                            pointerLength={4}
+                            cornerRadius={2}
+                            flyoutStyle={{ fill: '#000', fillOpacity: '0.8', strokeWidth: 0 }}
+                            style={{ fill: '#b0b0b0' }}
+                        />}
                         labels={config.percentage === 'percentage' ? '' : d => `${d.x} : ${((d.y / total) * 100).toFixed(2)}%`}
                         style={{ labels: { fontSize: 6 } }}
                         labelRadius={height / 4}
@@ -264,11 +264,7 @@ export default class PieCharts extends React.Component {
                         randomUpdater={randomUpdater}
                         animate={
                             config.animate ?
-                                {
-                                    onEnter: {
-                                        duration: 100,
-                                    },
-                                } : null
+                                { onEnter: { duration: 100 } } : null
                         }
                     />
                     {
@@ -286,7 +282,7 @@ export default class PieCharts extends React.Component {
             ));
         });
         return (
-            <div style={{ overflow: 'visible', height: this.props.height || height, width: this.props.width || width }}>
+            <div style={{ overflow: 'hidden', height: '100%', width: '100%' }}>
                 {
                     (config.legend || legend) && (config.legendOrientation && config.legendOrientation === 'top') ?
                         getLegendComponent(config, legendItems, [], null, height, width) :
@@ -300,6 +296,13 @@ export default class PieCharts extends React.Component {
                                 else if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
                                     return '80%';
                                 } else return '100%';
+                            })(),
+                        height: !(config.legend || legend) ? '100%' :
+                            (() => {
+                                if (!config.legendOrientation) return '100%';
+                                else if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
+                                    return '100%%';
+                                } else return '80%';
                             })(),
                         display: !config.legendOrientation ? 'inline' :
                             (() => {
@@ -325,6 +328,11 @@ export default class PieCharts extends React.Component {
         );
     }
 }
+
+PieCharts.defaultProps = {
+    height: 450,
+    width: 800,
+};
 
 PieCharts.propTypes = {
     data: PropTypes.array,
