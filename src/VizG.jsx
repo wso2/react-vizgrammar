@@ -123,7 +123,7 @@ class VizG extends Component {
     render() {
         const { config, data, metadata, onClick } = this.props;
         return (
-            <div>
+            <div style={{ height: '100%', width: '100%' }}>
                 {
                     !config || !metadata ?
                         null :

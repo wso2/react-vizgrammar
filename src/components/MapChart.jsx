@@ -222,7 +222,7 @@ export default class MapGenerator extends React.Component {
         }
 
         return (
-            <div style={{ overflow: 'hidden', zIndex: 9999, height: '100%', width: '100%' }}>
+            <div style={{ overflow: 'hidden', height: '100%' }}>
                 <div
                     style={{
                         float: 'left',
@@ -362,6 +362,11 @@ export default class MapGenerator extends React.Component {
         );
     }
 }
+
+MapGenerator.defaultProps = {
+    height: 800,
+    width: 450,
+};
 
 MapGenerator.propTypes = {
     height: PropTypes.number,

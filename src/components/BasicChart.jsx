@@ -231,6 +231,8 @@ export default class BasicChart extends React.Component {
                         dataSets[dataSetName].push({ x: datum[xIndex], y: datum[yIndex] });
                     }
                 }
+
+
                 if (maxLength) dataSets[dataSetName] = this.maintainArrayLength(dataSets[dataSetName], maxLength);
                 if (xScale !== 'ordinal') {
                     this.xRange = xDomain = this.getXDomain(xDomain, this.getDataSetDomain(dataSets[dataSetName]));
@@ -275,6 +277,8 @@ export default class BasicChart extends React.Component {
 
         return { chartArray, dataSets, xDomain, seriesMaxXVal, seriesMinXVal };
     }
+
+
 
     // TODO : sort and handle ordinal series data.
     /**
