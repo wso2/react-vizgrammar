@@ -17,7 +17,6 @@
  */
 
 import React, { Component } from 'react';
-import MapGenerator from '../../src/components/MapChart';
 import VizG from '../../src/VizG';
 import { ChartWrapper } from './ChartWrapper';
 

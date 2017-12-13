@@ -248,14 +248,7 @@ export default class ScatterCharts extends React.Component {
                                     },
                                 },
                             }]}
-                            animate={
-                                config.animate ?
-                                {
-                                    onEnter: {
-                                        duration: 100,
-                                    },
-                                } : null
-                            }
+                            animate={config.animate ? { onEnter: { duration: 100 } } : null}
                         />
                     ));
                 });

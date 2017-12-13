@@ -232,7 +232,6 @@ export default class BasicChart extends React.Component {
                     }
                 }
 
-
                 if (maxLength) dataSets[dataSetName] = this.maintainArrayLength(dataSets[dataSetName], maxLength);
                 if (xScale !== 'ordinal') {
                     this.xRange = xDomain = this.getXDomain(xDomain, this.getDataSetDomain(dataSets[dataSetName]));

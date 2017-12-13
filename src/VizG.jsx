@@ -128,7 +128,6 @@ class VizG extends Component {
                     !config || !metadata ?
                         null :
                         this._selectAndRenderChart(config.charts[0].type, config, data, metadata, onClick)
-
                 }
             </div>
         );
