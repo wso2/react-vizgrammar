@@ -275,7 +275,7 @@ export default class PieCharts extends React.Component {
                                 x="50%"
                                 y="50%"
                                 text={`${Math.round(dataSets[0].y)}%`}
-                                style={{ fontSize: 45, fill: config.labelColor || 'black' }}
+                                style={{ fontSize: config.labelFontSize || 45, fill: config.labelColor || 'black' }}
                             /> : null
                     }
                 </svg>

@@ -51,7 +51,13 @@ export default class InlineChart extends BasicChart {
                                 height={height}
                                 width={width}
                                 padding={0}
-                                style={{ data: { strokeWidth: 0.5 } }}
+                                style={{
+                                    data: {
+
+                                        fillOpacity: config.fillOpacity || 0.5,
+                                        strokeWidth: config.strokeWidth || 0.5,
+                                    },
+                                }}
 
                             >
                                 <VictoryLine
@@ -70,10 +76,12 @@ export default class InlineChart extends BasicChart {
                             <VictoryGroup
                                 key={`chart-${chart.id}-${chart.type}-${dataSetName}`}
                                 data={dataSets[dataSetName]}
-                                color={chart.dataSetNames[dataSetName]}
                                 style={{
                                     data: {
-                                        fillOpacity: config.charts[chartIndex].fillOpacity || 0.5, strokeWidth: 0.5,
+                                        fillOpacity: config.fillOpacity || 0.5,
+                                        strokeWidth: config.strokeWidth || 0.5,
+                                        fill: chart.dataSetNames[dataSetName],
+                                        stroke: chart.dataSetNames[dataSetName],
                                     },
                                 }}
                                 height={height}
