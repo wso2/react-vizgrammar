@@ -53,8 +53,6 @@ export default class InlineChart extends BasicChart {
                                 padding={0}
                                 style={{
                                     data: {
-
-                                        fillOpacity: config.fillOpacity || 0.5,
                                         strokeWidth: config.strokeWidth || 0.5,
                                     },
                                 }}
