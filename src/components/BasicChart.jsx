@@ -17,7 +17,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { VictoryGroup, VictoryStack } from 'victory';
 import VizGError from '../VizGError';
-import { getDefaultColorScale } from './helper';
+import { getDefaultColorScale, sortDataSet } from './helper';
 import ChartSkeleton from './ChartSkeleton';
 import {
     getBarComponent,
@@ -215,7 +215,7 @@ export default class BasicChart extends React.Component {
                 dataSets[dataSetName] = dataSets[dataSetName] || [];
                 if (xScale === 'linear' || xScale === 'time') {
                     dataSets[dataSetName].push({ x: datum[xIndex], y: datum[yIndex] });
-                    dataSets[dataSetName] = this.sortDataSet(dataSets[dataSetName]);
+                    dataSets[dataSetName] = sortDataSet(dataSets[dataSetName]);
                 } else {
                     const key = [];
                     dataSets[dataSetName].filter((d, i) => {
@@ -276,19 +276,6 @@ export default class BasicChart extends React.Component {
         });
 
         return { chartArray, dataSets, xDomain, seriesMaxXVal, seriesMinXVal };
-    }
-
-    sortDataSet(dataSet) {
-        return dataSet.sort((a, b) => {
-            if (a.x > b.x) {
-                return 1;
-            }
-            if (a.x < b.x) {
-                return -1;
-            }
-
-            return 0;
-        });
     }
 
     // TODO : sort and handle ordinal series data.
