@@ -17,7 +17,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { VictoryGroup, VictoryStack } from 'victory';
 import VizGError from '../VizGError';
-import { getDefaultColorScale } from './helper';
+import { getDefaultColorScale, sortDataSet } from './helper';
 import ChartSkeleton from './ChartSkeleton';
 import {
     getBarComponent,
@@ -215,6 +215,7 @@ export default class BasicChart extends React.Component {
                 dataSets[dataSetName] = dataSets[dataSetName] || [];
                 if (xScale === 'linear' || xScale === 'time') {
                     dataSets[dataSetName].push({ x: datum[xIndex], y: datum[yIndex] });
+                    dataSets[dataSetName] = sortDataSet(dataSets[dataSetName]);
                 } else {
                     const key = [];
                     dataSets[dataSetName].filter((d, i) => {
@@ -256,12 +257,12 @@ export default class BasicChart extends React.Component {
                             } else {
                                 chartArray[index]
                                     .dataSetNames[dataSetName] = chartArray[index]
-                                    .colorScale[chartArray[index].colorIndex++];
+                                        .colorScale[chartArray[index].colorIndex++];
                             }
                         } else {
                             chartArray[index]
                                 .dataSetNames[dataSetName] = chartArray[index]
-                                .colorScale[chartArray[index].colorIndex++];
+                                    .colorScale[chartArray[index].colorIndex++];
                         }
                     } else {
                         chartArray[index].dataSetNames[dataSetName] =
@@ -276,8 +277,6 @@ export default class BasicChart extends React.Component {
 
         return { chartArray, dataSets, xDomain, seriesMaxXVal, seriesMinXVal };
     }
-
-
 
     // TODO : sort and handle ordinal series data.
     /**
@@ -395,7 +394,6 @@ export default class BasicChart extends React.Component {
                     break;
                 case 'area': {
                     const areaLocal = [];
-
                     Object.keys(chart.dataSetNames).map((dataSetName) => {
                         legendItems.push({
                             name: dataSetName,
