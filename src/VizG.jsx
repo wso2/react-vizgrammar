@@ -38,6 +38,9 @@ class VizG extends Component {
      * @private
      */
     _selectAndRenderChart(chartType, config, data, metadata, onClick) {
+        if (config.append === undefined) {
+            config.append = true;
+        }
         switch (chartType) {
             case 'line':
             case 'area':
@@ -49,7 +52,7 @@ class VizG extends Component {
                         data={data}
                         onClick={onClick}
                         yDomain={this.props.yDomain}
-                        append={this.props.append}
+                        append={this.props.append && config.append}
                         theme={this.props.theme}
                         width={this.props.width}
                         height={this.props.height}
@@ -62,7 +65,7 @@ class VizG extends Component {
                         metadata={metadata}
                         data={data}
                         onClick={onClick}
-                        append={this.props.append}
+                        append={this.props.append && config.append}
                         width={this.props.width}
                         height={this.props.height}
                     />
@@ -74,7 +77,7 @@ class VizG extends Component {
                         metadata={metadata}
                         data={data}
                         onClick={onClick}
-                        append={this.props.append}
+                        append={this.props.append && config.append}
                         width={this.props.width}
                         height={this.props.height}
                     />
