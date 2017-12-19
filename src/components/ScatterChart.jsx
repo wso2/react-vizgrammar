@@ -90,7 +90,7 @@ export default class ScatterCharts extends React.Component {
             const yIndex = metadata.names.indexOf(chart.y);
             let colorIndex = metadata.names.indexOf(chart.color);
             const sizeIndex = metadata.names.indexOf(chart.size);
-            xScale = metadata.types[xIndex] === 'time' ? 'time' : xScale;
+            xScale = metadata.types[xIndex].toLowerCase() === 'time' ? 'time' : xScale;
 
             if (xIndex === -1) {
                 throw new VizGError('ScatterChart', "Unknown 'x' field defined in the Scatter Plot config.");
