@@ -80,7 +80,7 @@ class ReactTableTest extends Component {
             }
 
             data.map((datum) => {
-                if (metadata.types[colIndex] === 'linear') {
+                if (metadata.types[colIndex].toLowerCase() === 'linear') {
                     if (!columnArray[i].hasOwnProperty('range')) {
                         columnArray[i].range = [datum[colIndex], datum[colIndex]];
                         columnArray[i].color = colorScale[columnColorIndex++];
