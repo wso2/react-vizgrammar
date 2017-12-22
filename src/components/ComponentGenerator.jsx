@@ -42,14 +42,7 @@ export function getLineOrAreaComponent(config, chartIndex, onClick, xScale) {
                         config.charts[chartIndex].style.strokeWidth || null : null,
                 },
             }}
-            animate={
-                config.animate ?
-                    {
-                        onEnter: {
-                            duration: 100,
-                        },
-                    } : null
-            }
+            animate={config.animate ? { onEnter: { duration: 100 } } : null}
         />) :
         (<VictoryArea
             style={{
@@ -59,14 +52,7 @@ export function getLineOrAreaComponent(config, chartIndex, onClick, xScale) {
                         DEFAULT_AREA_FILL_OPACITY,
                 },
             }}
-            animate={
-                config.animate ?
-                    {
-                        onEnter: {
-                            duration: 100,
-                        },
-                    } : null
-            }
+            animate={config.animate ? { onEnter: { duration: 100 } } : null}
         />);
 
     return ([
@@ -119,14 +105,7 @@ export function getLineOrAreaComponent(config, chartIndex, onClick, xScale) {
                         },
                     },
                 }]}
-                animate={
-                    config.animate ?
-                        {
-                            onEnter: {
-                                duration: 100,
-                            },
-                        } : null
-                }
+                animate={config.animate ? { onEnter: { duration: 100 } } : null}
 
             />
         </VictoryPortal>),
@@ -180,14 +159,7 @@ export function getBarComponent(config, chartIndex, data, color, onClick, xScale
                     },
                 },
             }]}
-            animate={
-                config.animate ?
-                    {
-                        onEnter: {
-                            duration: 100,
-                        },
-                    } : null
-            }
+            animate={config.animate ? { onEnter: { duration: 100 } } : null}
         />
     );
 }
@@ -211,6 +183,12 @@ export function getLegendComponent(config, legendItems, ignoreArray, interaction
                         if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
                             return '20%';
                         } else return '100%';
+                    })(),
+                height: !config.legendOrientation ? '100%' :
+                    (() => {
+                        if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
+                            return '100%';
+                        } else return '20%';
                     })(),
                 display: !config.legendOrientation ? 'inline' :
                     (() => {

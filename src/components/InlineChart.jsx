@@ -29,8 +29,8 @@ export default class InlineChart extends BasicChart {
     }
 
     render() {
-        const { config } = this.props;
-        const { height, width, chartArray, dataSets } = this.state;
+        const { config, height, width } = this.props;
+        const { chartArray, dataSets } = this.state;
         let chartComponents = [];
         const legendItems = [];
         let horizontal = false;
@@ -51,7 +51,11 @@ export default class InlineChart extends BasicChart {
                                 height={height}
                                 width={width}
                                 padding={0}
-                                style={{ data: { strokeWidth: 0.5 } }}
+                                style={{
+                                    data: {
+                                        strokeWidth: config.strokeWidth || 0.5,
+                                    },
+                                }}
 
                             >
                                 <VictoryLine
@@ -70,10 +74,12 @@ export default class InlineChart extends BasicChart {
                             <VictoryGroup
                                 key={`chart-${chart.id}-${chart.type}-${dataSetName}`}
                                 data={dataSets[dataSetName]}
-                                color={chart.dataSetNames[dataSetName]}
                                 style={{
                                     data: {
-                                        fillOpacity: config.charts[chartIndex].fillOpacity || 0.5, strokeWidth: 0.5,
+                                        fillOpacity: config.fillOpacity || 0.5,
+                                        strokeWidth: config.strokeWidth || 0.5,
+                                        fill: chart.dataSetNames[dataSetName],
+                                        stroke: chart.dataSetNames[dataSetName],
                                     },
                                 }}
                                 height={height}
@@ -169,8 +175,12 @@ export default class InlineChart extends BasicChart {
         }
 
         return (
-            <div>{chartComponents}</div>
+            <div style={{ height, width }} >{chartComponents}</div>
         );
     }
-
 }
+
+InlineChart.defaultProps = {
+    height: 100,
+    width: 200,
+};

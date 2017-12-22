@@ -34,8 +34,6 @@ export default class ScatterCharts extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            height: props.height || props.config.height || 450,
-            width: props.width || props.config.width || 800,
             dataSets: {},
             chartArray: [],
             initialized: false,
@@ -85,14 +83,14 @@ export default class ScatterCharts extends React.Component {
         const { config, metadata, data } = props;
         let { dataSets, chartArray, initialized, xScale, orientation, legend, scatterPlotRange } = this.state;
 
-        config.charts.map((chart, chartIndex) => {
+        config.charts.forEach((chart, chartIndex) => {
             if (!chart.x) throw new VizGError('ScatterChart', "Field 'x' is not defined in the Scatter Plot config");
             if (!chart.y) throw new VizGError('ScatterChart', "Field 'y' is not defined in the Scatter Plot config");
             const xIndex = metadata.names.indexOf(chart.x);
             const yIndex = metadata.names.indexOf(chart.y);
             let colorIndex = metadata.names.indexOf(chart.color);
             const sizeIndex = metadata.names.indexOf(chart.size);
-            xScale = metadata.types[xIndex] === 'time' ? 'time' : xScale;
+            xScale = metadata.types[xIndex].toLowerCase() === 'time' ? 'time' : xScale;
 
             if (xIndex === -1) {
                 throw new VizGError('ScatterChart', "Unknown 'x' field defined in the Scatter Plot config.");
@@ -139,7 +137,7 @@ export default class ScatterCharts extends React.Component {
                         chartArray[chartIndex].dataSetNames['scatterChart' + chartIndex] || null;
                 });
             } else {
-                data.map((datum) => {
+                data.forEach((datum) => {
                     let dataSetName = 'scatterChart' + chartIndex;
                     if (chart.color) {
                         colorIndex = metadata.names.indexOf(chart.color);
@@ -201,12 +199,12 @@ export default class ScatterCharts extends React.Component {
     }
 
     render() {
-        const { config } = this.props;
-        const { height, width, chartArray, dataSets, xScale, legend, ignoreArray } = this.state;
+        const { config, height, width } = this.props;
+        const { chartArray, dataSets, xScale, legend, ignoreArray } = this.state;
         const chartComponents = [];
         const legendItems = [];
 
-        chartArray.map((chart, chartIndex) => {
+        chartArray.forEach((chart, chartIndex) => {
             if (chart.colorType === 'linear') {
                 Object.keys(chart.dataSetNames).forEach((dataSetName) => {
                     chartComponents.push((
@@ -250,14 +248,7 @@ export default class ScatterCharts extends React.Component {
                                     },
                                 },
                             }]}
-                            animate={
-                                config.animate ?
-                                    {
-                                        onEnter: {
-                                            duration: 100,
-                                        },
-                                    } : null
-                            }
+                            animate={config.animate ? { onEnter: { duration: 100 } } : null}
                         />
                     ));
                 });
@@ -304,31 +295,39 @@ export default class ScatterCharts extends React.Component {
         });
 
         return (
-            <div style={{ overflow: 'hidden' }}>
+            <div style={{ overflow: 'hidden', height: '100%', width: '100%' }}>
                 <div
                     style={
                         config.legend && legend ?
-                            {
-                                width: !config.legendOrientation ? '80%' :
+                        {
+                            width: !config.legendOrientation ? '80%' :
                                     (() => {
                                         if (config.legendOrientation === 'left' ||
                                             config.legendOrientation === 'right') {
                                             return '80%';
                                         } else return '100%';
                                     })(),
-                                display: !config.legendOrientation ? 'inline' :
+                            height: !config.legendOrientation ? '100%' :
+                                (() => {
+                                    if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
+                                        return '100%';
+                                    } else {
+                                        return '80%';
+                                    }
+                                })(),
+                            display: !config.legendOrientation ? 'inline' :
                                     (() => {
                                         if (config.legendOrientation === 'left' ||
                                             config.legendOrientation === 'right') {
                                             return 'inline';
                                         } else return null;
                                     })(),
-                                float: !config.legendOrientation ? 'right' : (() => {
-                                    if (config.legendOrientation === 'left') return 'right';
-                                    else if (config.legendOrientation === 'right') return 'left';
-                                    else return null;
-                                })(),
-                            } : null
+                            float: !config.legendOrientation ? 'right' : (() => {
+                                if (config.legendOrientation === 'left') return 'right';
+                                else if (config.legendOrientation === 'right') return 'left';
+                                else return null;
+                            })(),
+                        } : { width: '100%', height: '100%' }
                     }
                 >
                     {
@@ -349,6 +348,11 @@ export default class ScatterCharts extends React.Component {
         );
     }
 }
+
+ScatterCharts.defaultProps = {
+    height: 450,
+    width: 800,
+};
 
 ScatterCharts.propTypes = {
     data: PropTypes.array,

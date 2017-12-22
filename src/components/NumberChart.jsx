@@ -25,8 +25,6 @@ export default class NumberCharts extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            height: props.config.height || 450,
-            width: props.config.width || 800,
             value: null,
             prevValue: null,
         };
@@ -67,8 +65,8 @@ export default class NumberCharts extends React.Component {
     }
 
     render() {
-        const { config } = this.props;
-        const { width, height, prevValue, value } = this.state;
+        const { config, width, height } = this.props;
+        const { prevValue, value } = this.state;
         const highValueColor = config.highValueColor || '#109618';
         const lowValueColor = config.lowValueColor || '#B82E2E';
 
@@ -77,16 +75,16 @@ export default class NumberCharts extends React.Component {
                 <VictoryLabel
                     textAnchor="middle"
                     verticalAnchor="middle"
-                    x={width / 2}
-                    y={(height / 2) - 50}
+                    x={'50%'}
+                    y={'25%'}
                     text={config.title}
-                    style={{ fill: '#4d4d4d', fontSize: width / 25 }}
+                    style={{ fill: '#4d4d4d', fontSize: width / 20 }}
                 />
                 <VictoryLabel
                     textAnchor="middle"
                     verticalAnchor="middle"
-                    x={width / 2}
-                    y={(height / 2) - 10}
+                    x={'50%'}
+                    y={'40%'}
                     text={(value === null ? value : value.toFixed(3))}
                     style={{ fill: '#919191', fontSize: width / 15 }}
                 />
@@ -95,8 +93,8 @@ export default class NumberCharts extends React.Component {
                         <VictoryLabel
                             textAnchor="middle"
                             verticalAnchor="middle"
-                            x={width / 2}
-                            y={(height / 2) + 10}
+                            x={'50%'}
+                            y={'50%'}
                             text={(Math.abs(Number((prevValue - value)))).toFixed(3)}
                             style={{ fill: '#919191', fontSize: width / 15 }}
                         /> : null
@@ -106,16 +104,16 @@ export default class NumberCharts extends React.Component {
                         (<VictoryLabel
                             textAnchor="middle"
                             verticalAnchor="middle"
-                            x={width / 2}
-                            y={(height / 2) + 50}
+                            x={'50%'}
+                            y={'60%'}
                             text={(Math.abs((100 * ((value - prevValue) / prevValue))).toFixed(2)) + '%'}
                             style={{ fill: prevValue < value ? highValueColor : lowValueColor, fontSize: width / 20 }}
                         />),
                         (<VictoryLabel
                             textAnchor="middle"
                             verticalAnchor="middle"
-                            x={(width / 2) + 50}
-                            y={((height / 2) + 50)}
+                            x={'65%'}
+                            y={'60%'}
                             text={(() => {
                                 if (prevValue < value) {
                                     return '↑';
@@ -147,6 +145,14 @@ NumberCharts.propTypes = {
     metadata: PropTypes.shape({
         names: PropTypes.arrayOf(PropTypes.string),
         types: PropTypes.arrayOf(PropTypes.string),
-    }),
+    }).isRequired,
     data: PropTypes.array,
+    height: PropTypes.number,
+    width: PropTypes.number,
+};
+
+NumberCharts.defaultProps = {
+    height: 450,
+    width: 800,
+    data: [],
 };

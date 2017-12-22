@@ -17,7 +17,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { VictoryGroup, VictoryStack } from 'victory';
 import VizGError from '../VizGError';
-import { getDefaultColorScale } from './helper';
+import { getDefaultColorScale, sortDataSet } from './helper';
 import ChartSkeleton from './ChartSkeleton';
 import {
     getBarComponent,
@@ -37,8 +37,6 @@ export default class BasicChart extends React.Component {
         this.state = {
             dataSets: {},
             chartArray: [],
-            height: props.config.height || props.height,
-            width: props.config.width || props.width,
             initialized: false,
             xScale: 'linear',
             xDomain: [null, null],
@@ -159,6 +157,7 @@ export default class BasicChart extends React.Component {
         if (['linear', 'time', 'ordinal'].indexOf(metadata.types[xIndex].toLowerCase()) === -1) {
             throw new VizGError('BasicChart', 'Unknown metadata type is defined for x axis in the chart configuration');
         }
+        xScale = metadata.types[xIndex].toLowerCase();
         if (!initialized) {
             chartArray = this.generateChartArray(config.charts);
             initialized = true;
@@ -214,7 +213,26 @@ export default class BasicChart extends React.Component {
                 }
 
                 dataSets[dataSetName] = dataSets[dataSetName] || [];
-                dataSets[dataSetName].push({ x: datum[xIndex], y: datum[yIndex] });
+                if (xScale === 'linear' || xScale === 'time') {
+                    dataSets[dataSetName].push({ x: datum[xIndex], y: datum[yIndex] });
+                    dataSets[dataSetName] = sortDataSet(dataSets[dataSetName]);
+                } else {
+                    const key = [];
+                    dataSets[dataSetName].filter((d, i) => {
+                        if (d.x === datum[xIndex]) {
+                            key.push(i);
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    });
+                    if (key.length > 0) {
+                        dataSets[dataSetName][key[0]] = { x: datum[xIndex], y: datum[yIndex] };
+                    } else {
+                        dataSets[dataSetName].push({ x: datum[xIndex], y: datum[yIndex] });
+                    }
+                }
+
                 if (maxLength) dataSets[dataSetName] = this.maintainArrayLength(dataSets[dataSetName], maxLength);
                 if (xScale !== 'ordinal') {
                     this.xRange = xDomain = this.getXDomain(xDomain, this.getDataSetDomain(dataSets[dataSetName]));
@@ -337,8 +355,8 @@ export default class BasicChart extends React.Component {
     }
 
     render() {
-        const { config } = this.props;
-        const { height, width, chartArray, dataSets, xScale, ignoreArray } = this.state;
+        const { config, height, width, theme } = this.props;
+        const { chartArray, dataSets, xScale, ignoreArray } = this.state;
         let chartComponents = [];
         const legendItems = [];
         let horizontal = false;
@@ -376,7 +394,6 @@ export default class BasicChart extends React.Component {
                     break;
                 case 'area': {
                     const areaLocal = [];
-
                     Object.keys(chart.dataSetNames).map((dataSetName) => {
                         legendItems.push({
                             name: dataSetName,
@@ -494,7 +511,7 @@ export default class BasicChart extends React.Component {
                             height: !config.legendOrientation ? '100%' :
                                 (() => {
                                     if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
-                                        return '100%%';
+                                        return '100%';
                                     } else {
                                         return '80%';
                                     }
@@ -527,6 +544,7 @@ export default class BasicChart extends React.Component {
                         xDomain={this.state.xDomain}
                         xRange={this.xRange}
                         dataSets={dataSets}
+                        theme={theme}
                     >
                         {chartComponents}
                     </ChartSkeleton>
@@ -548,8 +566,8 @@ export default class BasicChart extends React.Component {
 }
 
 BasicChart.defaultProps = {
-    width: null,
-    height: null,
+    width: 800,
+    height: 400,
     onClick: null,
     yDomain: null,
     append: true,

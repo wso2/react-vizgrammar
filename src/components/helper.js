@@ -25,3 +25,19 @@ export function getDefaultColorScale() {
         '#DD4477', '#66AA00', '#B82E2E', '#316395', '#994499', '#22AA99', '#AAAA11',
         '#6633CC', '#E67300', '#8B0707', '#329262', '#5574A6', '#3B3EAC'];
 }
+
+/**
+ * Sort a provided dataset array of a chart in ascending order.
+ * @param {Array} dataSet dataSet array
+ */
+export function sortDataSet(dataSet) {
+    return dataSet.sort((a, b) => {
+        if (a.x > b.x) {
+            return 1;
+        }
+        if (a.x < b.x) {
+            return -1;
+        }
+        return 0;
+    });
+}
