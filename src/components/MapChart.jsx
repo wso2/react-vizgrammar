@@ -27,10 +27,11 @@ import { getDefaultColorScale } from './helper';
 import { CountryInfo, EuropeMap, WorldMap, USAMap } from './resources/MapData';
 import VizGError from '../VizGError';
 
-const USA_YOFFSET_FACTOR = 1.2;
-const USA_XOFFSET_FACTOR = 0.75;
+const USA_YOFFSET_FACTOR = 2;
+const USA_XOFFSET_FACTOR = 0.8;
 const USA_PROJECTION_SCALE = 600;
 const EUROPE_PROJECTION_SCALE = 400;
+const EUROPE_YOFFSET_FACTOR = 2;
 const WORLD_PROJECTION_SCALE = 120;
 
 export default class MapGenerator extends React.Component {
@@ -138,18 +139,18 @@ export default class MapGenerator extends React.Component {
                 break;
             case 'usa':
                 projectionConfig.scale = USA_PROJECTION_SCALE;
-                projectionConfig.yOffset = this.state.height / USA_YOFFSET_FACTOR;
-                projectionConfig.xOffset = this.state.width / USA_XOFFSET_FACTOR;
+                projectionConfig.yOffset = this.props.height / USA_YOFFSET_FACTOR;
+                projectionConfig.xOffset = this.props.width / USA_XOFFSET_FACTOR;
                 break;
             case 'europe':
                 projectionConfig.scale = EUROPE_PROJECTION_SCALE;
-                projectionConfig.yOffset = this.state.height;
+                projectionConfig.yOffset = this.props.height / EUROPE_YOFFSET_FACTOR;
                 break;
             default:
                 throw new VizGError('MapChart', 'Unknown chart type defined in the Geographical chart config.');
         }
-        colorType = metadata.types[yIndex];
-        if (metadata.types[yIndex] === 'linear') {
+        colorType = metadata.types[yIndex].toLowerCase();
+        if (metadata.types[yIndex].toLowerCase() === 'linear') {
             data.map((datum) => {
                 if (mapDataRange.length === 0) {
                     mapDataRange = [datum[yIndex], datum[yIndex]];
@@ -365,7 +366,7 @@ export default class MapGenerator extends React.Component {
 
 MapGenerator.defaultProps = {
     height: 800,
-    width: 450,
+    width: 800,
 };
 
 MapGenerator.propTypes = {
