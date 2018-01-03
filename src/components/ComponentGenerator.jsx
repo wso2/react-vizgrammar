@@ -57,58 +57,56 @@ export function getLineOrAreaComponent(config, chartIndex, onClick, xScale) {
 
     return ([
         chartElement,
-        (<VictoryPortal>
-            <VictoryScatter
-                labels={
-                    (() => {
-                        if (xScale === 'time' && config.tipTimeFormat) {
-                            return (data) => {
-                                return `${config.x}:${timeFormat(config.tipTimeFormat)(new Date(data.x))}\n` +
-                                    `${config.charts[chartIndex].y}:${Number(data.y).toFixed(2)}`;
-                            };
-                        } else {
-                            return (d) => {
-                                if (isNaN(d.x)) {
-                                    return `${config.x}:${d.x}\n${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}`;
-                                } else {
-                                    return `${config.x}:${Number(d.x).toFixed(2)}\n
-                                    ${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}`;
-                                }
-                            };
-                        }
-                    })()
-                }
-                labelComponent={
-                    <VictoryTooltip
-                        orientation='right'
-                        pointerLength={4}
-                        cornerRadius={2}
-                        flyoutStyle={{ fill: '#000', fillOpacity: '0.8', strokeWidth: 0 }}
-                        style={{ fill: '#b0b0b0' }}
-                    />
-                }
-                padding={{ left: 100, top: 30, bottom: 50, right: 30 }}
-                size={(
-                    config.charts[chartIndex].style ?
-                        config.charts[chartIndex].style.markRadius || DEFAULT_MARK_RADIUS : DEFAULT_MARK_RADIUS
-                )}
-                events={[{
-                    target: 'data',
-                    eventHandlers: {
-                        onClick: () => {
-                            return [
-                                {
-                                    target: 'data',
-                                    mutation: onClick,
-                                },
-                            ];
-                        },
+        (<VictoryScatter
+            labels={
+                (() => {
+                    if (xScale === 'time' && config.tipTimeFormat) {
+                        return (data) => {
+                            return `${config.x}:${timeFormat(config.tipTimeFormat)(new Date(data.x))}\n` +
+                                `${config.charts[chartIndex].y}:${Number(data.y).toFixed(2)}`;
+                        };
+                    } else {
+                        return (d) => {
+                            if (isNaN(d.x)) {
+                                return `${config.x}:${d.x}\n${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}`;
+                            } else {
+                                return `${config.x}:${Number(d.x).toFixed(2)}\n` +
+                                    `${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}`;
+                            }
+                        };
+                    }
+                })()
+            }
+            labelComponent={
+                <VictoryTooltip
+                    orientation='right'
+                    pointerLength={4}
+                    cornerRadius={2}
+                    flyoutStyle={{ fill: '#000', fillOpacity: '0.8', strokeWidth: 0 }}
+                    style={{ fill: '#b0b0b0' }}
+                />
+            }
+            padding={{ left: 100, top: 30, bottom: 50, right: 30 }}
+            size={(
+                config.charts[chartIndex].style ?
+                    config.charts[chartIndex].style.markRadius || DEFAULT_MARK_RADIUS : DEFAULT_MARK_RADIUS
+            )}
+            events={[{
+                target: 'data',
+                eventHandlers: {
+                    onClick: () => {
+                        return [
+                            {
+                                target: 'data',
+                                mutation: onClick,
+                            },
+                        ];
                     },
-                }]}
-                animate={config.animate ? { onEnter: { duration: 100 } } : null}
+                },
+            }]}
+            animate={config.animate ? { onEnter: { duration: 100 } } : null}
 
-            />
-        </VictoryPortal>),
+        />),
     ]);
 }
 
