@@ -38,7 +38,24 @@ export default class ChartSkeleton extends React.Component {
             <VictoryChart
                 width={width}
                 height={height}
-                padding={{ left: 100, top: 30, bottom: 50, right: 30 }}
+                padding={
+                    (() => {
+                        if (config.legend === true) {
+                            if (!config.legendOrientation) return { left: 100, top: 30, bottom: 50, right: 230 };
+                            else if (config.legendOrientation === 'left') {
+                                return { left: 300, top: 30, bottom: 50, right: 30 };
+                            } else if (config.legendOrientation === 'right') {
+                                return { left: 100, top: 30, bottom: 50, right: 230 };
+                            } else if (config.legendOrientation === 'top') {
+                                return { left: 100, top: 100, bottom: 50, right: 30 };
+                            } else if (config.legendOrientation === 'bottom') {
+                                return { left: 100, top: 30, bottom: 150, right: 30 };
+                            } else return { left: 100, top: 30, bottom: 50, right: 230 };
+                        } else {
+                            return { left: 100, top: 30, bottom: 50, right: 30 };
+                        }
+                    })()
+                }
                 scale={{ x: xScale === 'ordinal' ? null : xScale, y: 'linear' }}
                 domain={{
                     x: config.brush && xDomain[0] ? xDomain : null,
@@ -112,13 +129,13 @@ export default class ChartSkeleton extends React.Component {
                         },
                     }}
                     gridComponent={config.disableHorizontalGrid ? <g /> :
-                    <line
-                        style={{
-                            stroke: config.gridColor || currentTheme.line.style.data.stroke,
-                            strokeOpacity: 0.1,
-                            fill: 'transparent',
-                        }}
-                    />}
+                        <line
+                            style={{
+                                stroke: config.gridColor || currentTheme.line.style.data.stroke,
+                                strokeOpacity: 0.1,
+                                fill: 'transparent',
+                            }}
+                        />}
                     label={config.yAxisLabel || config.charts.length > 1 ? '' : config.charts[0].y}
                     standalone={false}
                     tickLabelComponent={

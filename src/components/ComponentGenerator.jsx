@@ -172,7 +172,7 @@ export function getBarComponent(config, chartIndex, data, color, onClick, xScale
  * @param {Number} width width of the chart
  * @returns Victory Legend component to be included in the graph.
  */
-export function getLegendComponent(config, legendItems, ignoreArray, interaction, height, width) {
+export function getPieChartLegendComponent(config, legendItems, ignoreArray, interaction, height, width) {
     return (
         <div
             style={{
@@ -258,6 +258,81 @@ export function getLegendComponent(config, legendItems, ignoreArray, interaction
                 ]}
             />
         </div>
+    );
+}
+
+export function getBasicChartLegend(config, legendItems, ignoreArray, interaction, height, width) {
+    return (
+        <VictoryPortal>
+            <VictoryLegend
+                x={
+                    (() => {
+                        if (!config.legendOrientation) return (width - 200);
+                        else if (config.legendOrientation === 'right') {
+                            return (width - 200);
+                        } else if (config.legendOrientation === 'left') {
+                            return 0;
+                        } else return 100;
+                    })()
+                }
+                y={
+                    (() => {
+                        if (!config.legendOrientation) return 0;
+                        else if (config.legendOrientation === 'top') {
+                            return 0;
+                        } else if (config.legendOrientation === 'bottom') {
+                            return height - 100;
+                        } else return 0;
+                    })()
+                }
+                standalone
+                containerComponent={<VictoryContainer responsive />}
+                centerTitle
+                height={height}
+                width={width}
+                orientation={
+                    !config.legendOrientation ?
+                        'vertical' :
+                        (() => {
+                            if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
+                                return 'vertical';
+                            } else {
+                                return 'horizontal';
+                            }
+                        })()
+                }
+                style={{
+                    title: {
+                        fontSize: (config.style ? (config.style.legendTitleSize || 25) : 25),
+                        fill: config.style ? config.style.legendTitleColor : null,
+                    },
+                    labels: {
+                        fontSize: config.style ? (config.style.legendTextSize || 18) : 18,
+                        fill: config.style ? config.style.legendTextColor : null,
+                    },
+                }}
+                data={legendItems.length > 0 ? legendItems : [{
+                    name: 'undefined',
+                    symbol: { fill: '#333' },
+                }]}
+                itemsPerRow={config.legendOrientation === 'top' || config.legendOrientation === 'bottom' ? 10 : null}
+                events={[
+                    {
+                        target: 'data',
+                        eventHandlers: {
+                            onClick: config.interactiveLegend ? () => { // TODO: update doc with the attribute
+                                return [
+                                    {
+                                        target: 'data',
+                                        mutation: interaction,
+                                    },
+                                ];
+                            } : null,
+                        },
+                    },
+                ]}
+            />
+        </VictoryPortal>
     );
 }
 

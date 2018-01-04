@@ -28,7 +28,7 @@ import {
 import PropTypes from 'prop-types';
 import { getDefaultColorScale } from './helper';
 import VizGError from '../VizGError';
-import { getLegendComponent } from './ComponentGenerator';
+import { getPieChartLegendComponent } from './ComponentGenerator';
 
 const LEGEND_DISABLED_COLOR = '#d3d3d3';
 
@@ -285,7 +285,7 @@ export default class PieCharts extends React.Component {
             <div style={{ overflow: 'hidden', height: '100%', width: '100%' }}>
                 {
                     (config.legend || legend) && (config.legendOrientation && config.legendOrientation === 'top') ?
-                        getLegendComponent(config, legendItems, [], null, height, width) :
+                        getPieChartLegendComponent(config, legendItems, [], null, height, width) :
                         null
                 }
                 <div
@@ -321,7 +321,7 @@ export default class PieCharts extends React.Component {
                 </div>
                 {
                     (config.legend || legend) && (!config.legendOrientation || config.legendOrientation !== 'top') ?
-                        getLegendComponent(config, legendItems, [], null, height, width) :
+                        getPieChartLegendComponent(config, legendItems, [], null, height, width) :
                         null
                 }
             </div>
