@@ -150,7 +150,7 @@ VizG.propTypes = {
     metadata: PropTypes.object.isRequired,
     onClick: PropTypes.func,
     append: PropTypes.bool,
-    theme: PropTypes.String,
+    theme: PropTypes.string,
     height: PropTypes.number,
     width: PropTypes.number,
 };
