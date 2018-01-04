@@ -38,7 +38,6 @@ export default class ChartSkeleton extends React.Component {
             <VictoryChart
                 width={width}
                 height={height}
-                containerComponent={<VictoryVoronoiContainer dimension="x" />}
                 padding={{ left: 100, top: 30, bottom: 50, right: 30 }}
                 scale={{ x: xScale === 'ordinal' ? null : xScale, y: 'linear' }}
                 domain={{
@@ -167,6 +166,6 @@ ChartSkeleton.propTypes = {
         maxLength: PropTypes.number,
     }).isRequired,
     yDomain: PropTypes.number,
-    children: PropTypes.element.isRequired,
+    children: PropTypes.arrayOf(PropTypes.element).isRequired,
 };
 

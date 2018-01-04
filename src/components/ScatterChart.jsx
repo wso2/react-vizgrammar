@@ -222,10 +222,21 @@ export default class ScatterCharts extends React.Component {
                                 },
                             }}
                             data={dataSets[dataSetName]}
-                            labels={d => `${config.charts[chartIndex].x} : ${d.x}\n
-                                                   ${config.charts[chartIndex].y} : ${d.y}\n
-                                                   ${config.charts[chartIndex].size} : ${d.amount}
-                                                   ${config.charts[chartIndex].color} : ${d.color}`}
+                            labels={
+                                (d) => {
+                                    let text = `${config.charts[chartIndex].x} : ${d.x}\n` +
+                                        `${config.charts[chartIndex].y} : ${d.y}\n`;
+                                    if (config.charts[chartIndex].size) {
+                                        text += `${config.charts[chartIndex].size} : ${d.amount}\n`;
+                                    }
+
+                                    if (config.charts[chartIndex].color) {
+                                        text += `${config.charts[chartIndex].color} : ${d.color}`;
+                                    }
+
+                                    return text;
+                                }
+                            }
                             labelComponent={
                                 <VictoryTooltip
                                     orientation='top'
@@ -262,10 +273,20 @@ export default class ScatterCharts extends React.Component {
                             style={{ data: { fill: chart.dataSetNames[dataSetName] } }}
                             data={dataSets[dataSetName]}
                             labels={
-                                d => `${config.charts[chartIndex].x}:${Number(d.x).toFixed(2)}\n
-                                ${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}\n
-                                ${config.charts[chartIndex].size}:${Number(d.amount).toFixed}\n
-                                ${config.charts[chartIndex].color}:${d.color}`}
+                                (d) => {
+                                    let text = `${config.charts[chartIndex].x} : ${d.x}\n` +
+                                        `${config.charts[chartIndex].y} : ${d.y}\n`;
+                                    if (config.charts[chartIndex].size) {
+                                        text += `${config.charts[chartIndex].size} : ${d.amount}\n`;
+                                    }
+
+                                    if (config.charts[chartIndex].color) {
+                                        text += `${config.charts[chartIndex].color} : ${dataSetName}`;
+                                    }
+
+                                    return text;
+                                }
+                            }
                             labelComponent={
                                 <VictoryTooltip
                                     orientation='top'
