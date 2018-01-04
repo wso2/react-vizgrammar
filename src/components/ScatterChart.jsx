@@ -26,7 +26,7 @@ import { scaleLinear } from 'd3';
 import { getDefaultColorScale } from './helper';
 import VizGError from '../VizGError';
 import ChartSkeleton from './ChartSkeleton';
-import { getLegendComponent } from './ComponentGenerator';
+import { getBasicChartLegend } from './ComponentGenerator';
 
 const LEGEND_DISABLED_COLOR = '#d3d3d3';
 
@@ -319,51 +319,17 @@ export default class ScatterCharts extends React.Component {
             <div style={{ overflow: 'hidden', height: '100%', width: '100%' }}>
                 <div
                     style={
-                        config.legend && legend ?
-                        {
-                            width: !config.legendOrientation ? '80%' :
-                                    (() => {
-                                        if (config.legendOrientation === 'left' ||
-                                            config.legendOrientation === 'right') {
-                                            return '80%';
-                                        } else return '100%';
-                                    })(),
-                            height: !config.legendOrientation ? '100%' :
-                                (() => {
-                                    if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
-                                        return '100%';
-                                    } else {
-                                        return '80%';
-                                    }
-                                })(),
-                            display: !config.legendOrientation ? 'inline' :
-                                    (() => {
-                                        if (config.legendOrientation === 'left' ||
-                                            config.legendOrientation === 'right') {
-                                            return 'inline';
-                                        } else return null;
-                                    })(),
-                            float: !config.legendOrientation ? 'right' : (() => {
-                                if (config.legendOrientation === 'left') return 'right';
-                                else if (config.legendOrientation === 'right') return 'left';
-                                else return null;
-                            })(),
-                        } : { width: '100%', height: '100%' }
+                        { width: '100%', height: '100%' }
                     }
                 >
-                    {
-                        config.legend && legend && (config.legendOrientation && config.legendOrientation === 'top') ?
-                            getLegendComponent(config, legendItems, ignoreArray, this._legendInteraction, height, width)
-                            : null
-                    }
                     <ChartSkeleton width={width} height={height} xScale={xScale} config={config}>
+                        {
+                            config.legend === true ?
+                                getBasicChartLegend(config, legendItems, ignoreArray, this._legendInteraction, height, width)
+                                : null
+                        }
                         {chartComponents}
                     </ChartSkeleton>
-                    {
-                        config.legend && legend && (!config.legendOrientation || config.legendOrientation !== 'top') ?
-                            getLegendComponent(config, legendItems, ignoreArray, this._legendInteraction, height, width)
-                            : null
-                    }
                 </div>
             </div>
         );

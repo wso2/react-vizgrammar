@@ -15,15 +15,15 @@
 */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { VictoryGroup, VictoryStack } from 'victory';
+import { VictoryGroup, VictoryStack, VictoryPortal } from 'victory';
 import VizGError from '../VizGError';
 import { getDefaultColorScale, sortDataSet } from './helper';
 import ChartSkeleton from './ChartSkeleton';
 import {
     getBarComponent,
     getBrushComponent,
-    getLegendComponent,
     getLineOrAreaComponent,
+    getBasicChartLegend,
 } from './ComponentGenerator';
 
 const LEGEND_DISABLED_COLOR = '#d3d3d3';
@@ -374,7 +374,6 @@ export default class BasicChart extends React.Component {
                             symbol: { fill: chart.dataSetNames[dataSetName] },
                             chartIndex,
                         });
-
                         addChart = ignoreArray
                             .filter(d => (d.name === dataSetName)).length > 0;
                         if (!addChart) {
@@ -501,40 +500,9 @@ export default class BasicChart extends React.Component {
             >
                 <div
                     style={
-                        config.legend ? {
-                            width: !config.legendOrientation ? '80%' :
-                                (() => {
-                                    if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
-                                        return '80%';
-                                    } else return '100%';
-                                })(),
-                            height: !config.legendOrientation ? '100%' :
-                                (() => {
-                                    if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
-                                        return '100%';
-                                    } else {
-                                        return '80%';
-                                    }
-                                })(),
-                            display: !config.legendOrientation ? 'inline' :
-                                (() => {
-                                    if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
-                                        return 'inline';
-                                    } else return null;
-                                })(),
-                            float: !config.legendOrientation ? 'left' : (() => {
-                                if (config.legendOrientation === 'left') return 'right';
-                                else if (config.legendOrientation === 'right') return 'left';
-                                else return null;
-                            })(),
-                        } : { width: '100%', height: '100%' }
+                        { width: '100%', height: '100%' }
                     }
                 >
-                    {
-                        config.legend && config.legendOrientation && config.legendOrientation === 'top' ?
-                            getLegendComponent(config, legendItems, ignoreArray, this._legendInteraction, height, width)
-                            : null
-                    }
                     <ChartSkeleton
                         width={this.props.width || width || 800}
                         height={this.props.height || height || 800}
@@ -546,14 +514,15 @@ export default class BasicChart extends React.Component {
                         dataSets={dataSets}
                         theme={theme}
                     >
+                        {
+                            config.legend === true ?
+                                getBasicChartLegend(config, legendItems, ignoreArray, this._legendInteraction, height, width)
+                                : null
+                        }
                         {chartComponents}
+
                     </ChartSkeleton>
                 </div>
-                {
-                    config.legend && (!config.legendOrientation || ['bottom', 'left', 'right'].indexOf(config.legendOrientation) > -1) ?
-                        getLegendComponent(config, legendItems, ignoreArray, this._legendInteraction, height, width) :
-                        null
-                }
                 {
                     config.brush ?
                         getBrushComponent(xScale, this.xRange, this.state.xDomain, this._brushReset, this._brushOnChange) :
