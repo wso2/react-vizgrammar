@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui';
-import { HashRouter as Router, Route} from 'react-router-dom';
+import { HashRouter as Router, Route } from 'react-router-dom';
 import App from './App';
+import LineCharts from './chart-docs/LineChartSamples';
 
 const theme = createMuiTheme({
     palette: {
@@ -11,8 +12,10 @@ const theme = createMuiTheme({
 });
 
 ReactDOM.render(
-    <MuiThemeProvider theme={theme} >
-        <Router>
+    <Router>
+        <MuiThemeProvider theme={theme} >
             <Route exact path={'/'} component={App} />
-        </Router>
-    </MuiThemeProvider>, document.getElementById('samples'));
+            <Route path={'/line-charts'} component={LineCharts} />
+            
+        </MuiThemeProvider>
+    </Router>, document.getElementById('samples'));
