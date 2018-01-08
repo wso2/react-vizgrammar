@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardActions, CardMedia, CardHeader, Button, CardContent } from 'material-ui';
+import { Card, CardActions, CardHeader, Button, CardContent } from 'material-ui';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -9,15 +9,18 @@ export default class ChartWrapper extends React.Component {
             <Card style={{ marginTop: 80 }} >
                 <CardHeader title={this.props.title} subheader={this.props.subtitle} />
                 <CardContent>
-                    <div>
-                        {this.props.children}
-                    </div>
+
+                    {this.props.children}
+
                 </CardContent>
-                <CardActions>
-                    <Link to={'/' + this.props.chart + '-charts'}>
-                        <Button raised color="primary">{this.props.actionBar ? 'View Usage' : ' '}</Button>
-                    </Link>
-                </CardActions>
+                {
+                    this.props.actionBar ?
+                        <CardContent style={{ height: 50 }}>
+                            <Link to={'/' + this.props.chart + '-charts'} style={{ textDecoration: 'none', float: 'right' }}>
+                                <Button raised color="primary">{this.props.actionBar ? 'View Usage' : ' '}</Button>
+                            </Link>
+                        </CardContent> : null
+                }
             </Card>
         );
     }
@@ -28,6 +31,7 @@ ChartWrapper.defaultProps = {
     actionBar: false,
     subtitle: '',
     children: null,
+    height: 450,
 };
 
 ChartWrapper.propTypes = {
@@ -36,4 +40,5 @@ ChartWrapper.propTypes = {
     children: PropTypes.element,
     chart: PropTypes.string.isRequired,
     actionBar: PropTypes.bool.isRequired,
+    height: PropTypes.number,
 };

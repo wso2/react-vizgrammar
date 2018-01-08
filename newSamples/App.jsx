@@ -1,7 +1,7 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography, Grid } from 'material-ui';
 import ChartWrapper from './ChartWrapper';
-import VizG from '../src/VizG';
+import VizG from 'react-vizgrammar';
 
 export default class App extends React.Component {
     constructor(props) {
@@ -81,6 +81,25 @@ export default class App extends React.Component {
             width: 400,
             height: 200,
         };
+
+        this.pieChartConfig = {
+            charts: [{ type: 'arc', x: 'torque', color: 'EngineType', mode: 'donut' }],
+        };
+
+        this.tableConfig = {
+            charts: [
+                {
+                    type: 'table',
+                    y: 'torque',
+                    columns: ['EngineType', 'torque', 'rpm'],
+                    columnTitles: ['Engine Type', 'Engine Torque', 'Engine RPM'],
+                },
+            ],
+            maxLength: 7,
+            colorBasedStyle: true,
+            width: 400,
+            height: 200,
+        };
     }
 
     componentDidMount() {
@@ -121,7 +140,9 @@ export default class App extends React.Component {
                             title={'Line Charts'}
                             actionBar
                         >
-                            <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data} />
+                            <div style={{ height: 450 }}>
+                                <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data} />
+                            </div>
                         </ChartWrapper>
                     </Grid>
                     <Grid item xs={6}>
@@ -131,7 +152,9 @@ export default class App extends React.Component {
                             title={'Area Charts'}
                             actionBar
                         >
-                            <VizG config={this.areaChartConfig} metadata={this.metadata} data={this.state.data} />
+                            <div style={{ height: 450 }}>
+                                <VizG config={this.areaChartConfig} metadata={this.metadata} data={this.state.data} />
+                            </div>
                         </ChartWrapper>
                     </Grid>
                     <Grid item xs={6}>
@@ -141,7 +164,9 @@ export default class App extends React.Component {
                             title={'Bar Charts'}
                             actionBar
                         >
-                            <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data} />
+                            <div style={{ height: 450 }}>
+                                <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data} />
+                            </div>
                         </ChartWrapper>
                     </Grid>
                     <Grid item xs={6} >
@@ -151,12 +176,14 @@ export default class App extends React.Component {
                             title={'Scatter Charts'}
                             actionBar
                         >
-                            <VizG
-                                config={this.scatterPlotConfig}
-                                metadata={this.metadata}
-                                data={this.state.scatterPlot}
-                                height={360}
-                            />
+                            <div style={{ height: 450 }}>
+                                <VizG
+                                    config={this.scatterPlotConfig}
+                                    metadata={this.metadata}
+                                    data={this.state.scatterPlot}
+                                    height={360}
+                                />
+                            </div>
                         </ChartWrapper>
                     </Grid>
                     <Grid item xs={6} >
@@ -166,7 +193,9 @@ export default class App extends React.Component {
                             title={'Map Charts'}
                             actionBar
                         >
-                            <VizG config={this.mapConfig} metadata={this.mapMetadata} data={this.state.mapData} />
+                            <div style={{ height: 450 }}>
+                                <VizG config={this.mapConfig} metadata={this.mapMetadata} data={this.state.mapData} />
+                            </div>
                         </ChartWrapper>
                     </Grid>
                     <Grid item xs={6} >
@@ -176,7 +205,35 @@ export default class App extends React.Component {
                             title={'Number Charts'}
                             actionBar
                         >
-                            <VizG config={this.numConfig} metadata={this.metadata} data={this.state.data} />
+                            <div style={{ height: 450 }}>
+                                <VizG config={this.numConfig} metadata={this.metadata} data={this.state.data} />
+                            </div>
+                        </ChartWrapper>
+                    </Grid>
+                    <Grid item xs={6} >
+                        <ChartWrapper
+                            media
+                            chart={'pie'}
+                            title={'Pie Charts'}
+                            actionBar
+                        >
+                            <div style={{ height: 450 }}>
+                                <VizG config={this.pieChartConfig} metadata={this.metadata} data={this.state.data} />
+                            </div>
+                        </ChartWrapper>
+                    </Grid>
+                    <Grid item xs={6} >
+                        <ChartWrapper
+                            media
+                            chart={'table'}
+                            title={'Table Charts'}
+                            actionBar
+                        >
+                            <div style={{ height: 450 }}>
+                                <div style={{ height: 40 }}>
+                                    <VizG config={this.tableConfig} metadata={this.metadata} data={this.state.data} />
+                                </div>
+                            </div>
                         </ChartWrapper>
                     </Grid>
                 </Grid>
