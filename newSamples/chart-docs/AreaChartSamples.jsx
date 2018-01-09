@@ -25,7 +25,7 @@ import '../styles/snippet-highlight.css';
 import ChartWrapper from '../ChartWrapper';
 import { syntaxHighlight } from './helper';
 
-export default class LineChartSamples extends React.Component {
+export default class AreaChartSamples extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -41,7 +41,7 @@ export default class LineChartSamples extends React.Component {
         };
         this.barChartConfig = {
             x: 'rpm',
-            charts: [{ type: 'line', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston'] }],
+            charts: [{ type: 'area', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston'] }],
             maxLength: 7,
             legend: true,
         };
@@ -49,12 +49,20 @@ export default class LineChartSamples extends React.Component {
         this.singleBarChartConfig = {
             x: 'rpm',
             charts: [
-                { type: 'line', y: 'horsepower', fill: '#2ca02c' },
-                { type: 'line', y: 'torque', fill: '#ff7f0e' },
+                { type: 'area', y: 'horsepower', fill: '#2ca02c' },
+                { type: 'area', y: 'torque', fill: '#ff7f0e' },
             ],
             maxLength: 7,
             legend: true,
         };
+
+        this.barChartStackedConfig = {
+            x: 'rpm',
+            charts: [{ type: 'area', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston'], mode: 'stacked' }],
+            maxLength: 7,
+            legend: true,
+        };
+
     }
 
     componentDidMount() {
@@ -82,13 +90,13 @@ export default class LineChartSamples extends React.Component {
                 <AppBar>
                     <Toolbar >
                         <Typography type="title" color="inherit" >
-                            React-VizGrammar - Line Chart Samples
+                            React-VizGrammar - Area Chart Samples
                         </Typography>
                     </Toolbar>
                 </AppBar>
                 <Grid container>
                     <Grid item xs={6} >
-                        <ChartWrapper title="Group MultiLine Chart Sample" chart="line" media actionBar={false}>
+                        <ChartWrapper title="Group Area Chart Sample" chart="line" media actionBar={false}>
                             <div style={{ height: 450 }}>
                                 <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data} />
                             </div>
@@ -97,7 +105,7 @@ export default class LineChartSamples extends React.Component {
                                 <pre
                                     dangerouslySetInnerHTML={
                                     { __html: syntaxHighlight(
-                                            JSON.stringify(this.barChartConfig, undefined, 4)) }
+                                                JSON.stringify(this.barChartConfig, undefined, 4)) }
                                     }
                                 />
                             </div>
@@ -105,7 +113,7 @@ export default class LineChartSamples extends React.Component {
                         </ChartWrapper>
                     </Grid>
                     <Grid item xs={6} >
-                        <ChartWrapper title="Group MultiLine Chart Sample" chart="line" media actionBar={false}>
+                        <ChartWrapper title="Group Area Chart Sample" chart="line" media actionBar={false}>
                             <div style={{ height: 450 }}>
                                 <VizG
                                     config={this.singleBarChartConfig}
@@ -119,6 +127,27 @@ export default class LineChartSamples extends React.Component {
                                     dangerouslySetInnerHTML={{
                                         __html: syntaxHighlight(JSON
                                             .stringify(this.singleBarChartConfig, undefined, 4)),
+                                    }}
+                                />
+                            </div>
+
+                        </ChartWrapper>
+                    </Grid>
+                    <Grid item xs={6} >
+                        <ChartWrapper title="Stacked Area Chart Sample" chart="line" media actionBar={false}>
+                            <div style={{ height: 450 }}>
+                                <VizG
+                                    config={this.barChartStackedConfig}
+                                    metadata={this.metadata}
+                                    data={this.state.data}
+                                />
+                            </div>
+                            <div>
+                                <br /><br />
+                                <pre
+                                    dangerouslySetInnerHTML={{
+                                        __html: syntaxHighlight(JSON
+                                            .stringify(this.barChartStackedConfig, undefined, 4)),
                                     }}
                                 />
                             </div>
@@ -142,11 +171,8 @@ export default class LineChartSamples extends React.Component {
                                     }}
                                 />
                             </div>
-
-                        </ChartWrapper>
-                    </Grid>
-                    <Grid item xs={6} >
-                        <ChartWrapper title="Chart JSON structure" chart="line" media actionBar={false} >
+                            <br/><br/>
+                            <h3>Chart JSON Structure</h3>
                             <ul>
                                 <li>
                                     <strong>x</strong> - Datafield representing the independant axis in the metadata
@@ -175,6 +201,9 @@ export default class LineChartSamples extends React.Component {
                                                 <li>
                                                     <strong>fill</strong> - If a color categorization field is not defined the color in which the data should be plotted.
                                                 </li>
+                                                <li>
+                                                    <strong>mode</strong> - mode of the chart stacked or not.
+                                                </li>
                                             </ul>
                                         </li>
                                         <li>....</li>
@@ -191,9 +220,9 @@ export default class LineChartSamples extends React.Component {
                                 </li>
                                 <li>
                                     <strong>timeFormat</strong> - If the x-axis is a time series using this attribute
-                                     user can format the tick values of the x axis using regex. refer&nbsp;
+                                    user can format the tick values of the x axis using regex. refer&nbsp;
                                     <a href={'https://github.com/d3/d3-time-format/blob/master/README.md#timeFormat'}>
-                                          d3 documentation
+                                        d3 documentation
                                     </a> for more info
                                 </li>
                                 <li>
@@ -230,3 +259,4 @@ export default class LineChartSamples extends React.Component {
         );
     }
 }
+

@@ -14,6 +14,7 @@
     "rc-tree": "^1.7.10",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-sortable-tree": "^1.5.4",
     "react-vizgrammar": "^0.6.15"
   },
   "devDependencies": {

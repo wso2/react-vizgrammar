@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
@@ -17,56 +17,54 @@
  */
 
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, Grid } from 'material-ui';
-import VizG from 'react-vizgrammar';
-import 'rc-tree/assets/index.css';
-import '../styles/snippet-highlight.css';
 import ChartWrapper from '../ChartWrapper';
+import VizG from '../../src/VizG';
 import { syntaxHighlight } from './helper';
 
-export default class LineChartSamples extends React.Component {
+/**
+ * This class will render a page that contains samples on how to use Scatter plots.
+ */
+export default class ScatterChartConfigSample extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
-            data: [],
-            data2: [],
+            scatterPlot: [
+                [1, 4, 3.5, 79.91, 0.8, 0.03, 'piston'],
+                [2, 3, 3.5, 79.65, 1.3, 0.06, 'rotary']],
             timer: 0,
         };
 
         this.interval_id = null;
+
         this.metadata = {
-            names: ['rpm', 'torque', 'horsepower', 'EngineType'],
-            types: ['linear', 'linear', 'linear', 'ordinal'],
-        };
-        this.barChartConfig = {
-            x: 'rpm',
-            charts: [{ type: 'line', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston'] }],
-            maxLength: 7,
-            legend: true,
+            names: ['rpm', 'torque', 'horsepower', 'weight', 'EngineType'],
+            types: ['linear', 'linear', 'linear', 'linear', 'ordinal'],
         };
 
-        this.singleBarChartConfig = {
-            x: 'rpm',
+        this.scatterPlotConfig = {
+            type: 'scatter',
             charts: [
-                { type: 'line', y: 'horsepower', fill: '#2ca02c' },
-                { type: 'line', y: 'torque', fill: '#ff7f0e' },
-            ],
-            maxLength: 7,
-            legend: true,
+                {
+                    type: 'scatter',
+                    x: 'rpm',
+                    y: 'torque',
+                    color: 'horsepower',
+                    size: 'weight',
+                    maxLength: 30,
+                    colorScale: ['#1f77b4', '#ebff3b'],
+
+                }],
+            width: 800,
+            height: 450,
         };
     }
 
     componentDidMount() {
         this.interval_id = setInterval(() => {
             this.setState({
-                data: [
-                    [this.state.timer, this.state.timer === 20 ? null : Math.random() * 100, 10, 'piston'],
-                    [this.state.timer, Math.random() * 100, 10, 'rotary'],
-                ],
-                data2: [
-                    [this.state.timer, Math.random() * 100, Math.random() * 100, 'rotary'],
-                ],
+                scatterPlot: [[this.state.timer, Math.random() * 100, Math.random() * 10, Math.random() * 100, 'piston'], [this.state.timer, Math.random() * 100, Math.random() * 10, Math.random() * 100, 'rotary']],
                 timer: this.state.timer + 1,
             });
         }, 500);
@@ -82,51 +80,29 @@ export default class LineChartSamples extends React.Component {
                 <AppBar>
                     <Toolbar >
                         <Typography type="title" color="inherit" >
-                            React-VizGrammar - Line Chart Samples
+                            React-VizGrammar - Scatter Plot Sample
                         </Typography>
                     </Toolbar>
                 </AppBar>
                 <Grid container>
                     <Grid item xs={6} >
-                        <ChartWrapper title="Group MultiLine Chart Sample" chart="line" media actionBar={false}>
+                        <ChartWrapper title={'Scatter Plot'} chart={'scatter'} actionBar={false} media>
                             <div style={{ height: 450 }}>
-                                <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data} />
+                                <VizG config={this.scatterPlotConfig} metadata={this.metadata} data={this.state.scatterPlot} />
                             </div>
                             <div>
                                 <br /><br />
                                 <pre
                                     dangerouslySetInnerHTML={
                                     { __html: syntaxHighlight(
-                                            JSON.stringify(this.barChartConfig, undefined, 4)) }
+                                                JSON.stringify(this.scatterPlotConfig, undefined, 4)) }
                                     }
                                 />
                             </div>
-
                         </ChartWrapper>
                     </Grid>
-                    <Grid item xs={6} >
-                        <ChartWrapper title="Group MultiLine Chart Sample" chart="line" media actionBar={false}>
-                            <div style={{ height: 450 }}>
-                                <VizG
-                                    config={this.singleBarChartConfig}
-                                    metadata={this.metadata}
-                                    data={this.state.data2}
-                                />
-                            </div>
-                            <div>
-                                <br /><br />
-                                <pre
-                                    dangerouslySetInnerHTML={{
-                                        __html: syntaxHighlight(JSON
-                                            .stringify(this.singleBarChartConfig, undefined, 4)),
-                                    }}
-                                />
-                            </div>
-
-                        </ChartWrapper>
-                    </Grid>
-                    <Grid item xs={6} >
-                        <ChartWrapper title="Sample Data set" chart="line" media actionBar={false}>
+                    <Grid item xs={6}>
+                        <ChartWrapper title={'Sample Dataset and Configuration structure'} chart={'scatter'} actionBar={false} media>
                             <div>
                                 metadata :
                                 <pre
@@ -138,18 +114,15 @@ export default class LineChartSamples extends React.Component {
                                 data :
                                 <pre
                                     dangerouslySetInnerHTML={{
-                                        __html: syntaxHighlight(JSON.stringify(this.state.data, undefined, 4)),
+                                        __html: syntaxHighlight(JSON.stringify(this.state.scatterPlot, undefined, 4)),
                                     }}
                                 />
                             </div>
-
-                        </ChartWrapper>
-                    </Grid>
-                    <Grid item xs={6} >
-                        <ChartWrapper title="Chart JSON structure" chart="line" media actionBar={false} >
+                            <br /><br />
+                            <h3>Chart JSON Structure</h3>
                             <ul>
                                 <li>
-                                    <strong>x</strong> - Datafield representing the independant axis in the metadata
+                                    <strong>type</strong> - Type of the Chart in this case &quot;scatter&quot;
                                 </li>
                                 <li>
                                     <strong>charts</strong> - Array of chart objects to be visualized.
@@ -158,7 +131,7 @@ export default class LineChartSamples extends React.Component {
                                             <strong>Chart Object</strong>
                                             <ul>
                                                 <li>
-                                                    <strong>type</strong> - type of the chart required to be visualized
+                                                    <strong>x</strong> - Data field representing x-axis in the metadata
                                                 </li>
                                                 <li>
                                                     <strong>y</strong> - Data field representing y-axis in the metadata
@@ -167,13 +140,13 @@ export default class LineChartSamples extends React.Component {
                                                     <strong>color</strong> - Data field representing color categorization data field of the metadata
                                                 </li>
                                                 <li>
+                                                    <strong>size</strong> - Data field representing size categorization data field of the metadata
+                                                </li>
+                                                <li>
                                                     <strong>colorScale</strong> - Array of colors in hex form that will be over-riding the default color set
                                                 </li>
                                                 <li>
                                                     <strong>colorDomain</strong> - If a certain color category needs to be plotted in a specific color.
-                                                </li>
-                                                <li>
-                                                    <strong>fill</strong> - If a color categorization field is not defined the color in which the data should be plotted.
                                                 </li>
                                             </ul>
                                         </li>
@@ -191,9 +164,9 @@ export default class LineChartSamples extends React.Component {
                                 </li>
                                 <li>
                                     <strong>timeFormat</strong> - If the x-axis is a time series using this attribute
-                                     user can format the tick values of the x axis using regex. refer&nbsp;
+                                    user can format the tick values of the x axis using regex. refer&nbsp;
                                     <a href={'https://github.com/d3/d3-time-format/blob/master/README.md#timeFormat'}>
-                                          d3 documentation
+                                        d3 documentation
                                     </a> for more info
                                 </li>
                                 <li>
@@ -211,7 +184,6 @@ export default class LineChartSamples extends React.Component {
                                 <li><strong>yAxisTickCount</strong> - Number of ticks shown in the y-axis</li>
                                 <li><strong>xAxisTickCount</strong> - Number of ticks shown in the x-axis</li>
                                 <li><strong>legendOrientaion</strong> - Orientaion of the legend relative to the chart (top | bottom | left | right)</li>
-                                <li><strong>brush</strong> - show a component to brush data(boolean value)</li>
                                 <li>
                                     <strong>style</strong> - object that contain style attributes of the charts.
                                     <ul>
@@ -225,6 +197,7 @@ export default class LineChartSamples extends React.Component {
                             </ul>
                         </ChartWrapper>
                     </Grid>
+                    <Grid item xs={6} />
                 </Grid>
             </div>
         );

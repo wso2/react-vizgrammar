@@ -16,16 +16,34 @@
  * under the License.
  */
 
+/*
+ * Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, Grid } from 'material-ui';
-import VizG from 'react-vizgrammar';
+import VizG from '../../src/VizG';
 import 'rc-tree/assets/index.css';
 import '../styles/snippet-highlight.css';
 import ChartWrapper from '../ChartWrapper';
 import { syntaxHighlight } from './helper';
 
-export default class LineChartSamples extends React.Component {
+export default class BarChartSamples extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -41,7 +59,7 @@ export default class LineChartSamples extends React.Component {
         };
         this.barChartConfig = {
             x: 'rpm',
-            charts: [{ type: 'line', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston'] }],
+            charts: [{ type: 'bar', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston'] }],
             maxLength: 7,
             legend: true,
         };
@@ -49,9 +67,23 @@ export default class LineChartSamples extends React.Component {
         this.singleBarChartConfig = {
             x: 'rpm',
             charts: [
-                { type: 'line', y: 'horsepower', fill: '#2ca02c' },
-                { type: 'line', y: 'torque', fill: '#ff7f0e' },
+                { type: 'bar', y: 'horsepower', fill: '#2ca02c' },
+                { type: 'bar', y: 'torque', fill: '#ff7f0e' },
             ],
+            maxLength: 7,
+            legend: true,
+        };
+
+        this.barChartStackedConfig = {
+            x: 'rpm',
+            charts: [{ type: 'bar', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston'], mode: 'stacked' }],
+            maxLength: 7,
+            legend: true,
+        };
+
+        this.barChartStackedConfigHorizontal = {
+            x: 'rpm',
+            charts: [{ type: 'bar', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston'], mode: 'stacked', orientation: 'left' }],
             maxLength: 7,
             legend: true,
         };
@@ -82,13 +114,13 @@ export default class LineChartSamples extends React.Component {
                 <AppBar>
                     <Toolbar >
                         <Typography type="title" color="inherit" >
-                            React-VizGrammar - Line Chart Samples
+                            React-VizGrammar - Bar Chart Samples
                         </Typography>
                     </Toolbar>
                 </AppBar>
                 <Grid container>
                     <Grid item xs={6} >
-                        <ChartWrapper title="Group MultiLine Chart Sample" chart="line" media actionBar={false}>
+                        <ChartWrapper title="Group Bar Chart Sample" chart="line" media actionBar={false}>
                             <div style={{ height: 450 }}>
                                 <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data} />
                             </div>
@@ -97,7 +129,7 @@ export default class LineChartSamples extends React.Component {
                                 <pre
                                     dangerouslySetInnerHTML={
                                     { __html: syntaxHighlight(
-                                            JSON.stringify(this.barChartConfig, undefined, 4)) }
+                                                JSON.stringify(this.barChartConfig, undefined, 4)) }
                                     }
                                 />
                             </div>
@@ -105,7 +137,7 @@ export default class LineChartSamples extends React.Component {
                         </ChartWrapper>
                     </Grid>
                     <Grid item xs={6} >
-                        <ChartWrapper title="Group MultiLine Chart Sample" chart="line" media actionBar={false}>
+                        <ChartWrapper title="Group Bar Chart Sample" chart="line" media actionBar={false}>
                             <div style={{ height: 450 }}>
                                 <VizG
                                     config={this.singleBarChartConfig}
@@ -119,6 +151,48 @@ export default class LineChartSamples extends React.Component {
                                     dangerouslySetInnerHTML={{
                                         __html: syntaxHighlight(JSON
                                             .stringify(this.singleBarChartConfig, undefined, 4)),
+                                    }}
+                                />
+                            </div>
+
+                        </ChartWrapper>
+                    </Grid>
+                    <Grid item xs={6} >
+                        <ChartWrapper title="Stacked Bar Chart Sample" chart="line" media actionBar={false}>
+                            <div style={{ height: 450 }}>
+                                <VizG
+                                    config={this.barChartStackedConfig}
+                                    metadata={this.metadata}
+                                    data={this.state.data}
+                                />
+                            </div>
+                            <div>
+                                <br /><br />
+                                <pre
+                                    dangerouslySetInnerHTML={{
+                                        __html: syntaxHighlight(JSON
+                                            .stringify(this.barChartStackedConfig, undefined, 4)),
+                                    }}
+                                />
+                            </div>
+
+                        </ChartWrapper>
+                    </Grid>
+                    <Grid item xs={6} >
+                        <ChartWrapper title="Horizontal Bar Chart Sample" chart="line" media actionBar={false}>
+                            <div style={{ height: 450 }}>
+                                <VizG
+                                    config={this.barChartStackedConfigHorizontal}
+                                    metadata={this.metadata}
+                                    data={this.state.data}
+                                />
+                            </div>
+                            <div>
+                                <br /><br />
+                                <pre
+                                    dangerouslySetInnerHTML={{
+                                        __html: syntaxHighlight(JSON
+                                            .stringify(this.barChartStackedConfigHorizontal, undefined, 4)),
                                     }}
                                 />
                             </div>
@@ -142,11 +216,10 @@ export default class LineChartSamples extends React.Component {
                                     }}
                                 />
                             </div>
-
                         </ChartWrapper>
                     </Grid>
                     <Grid item xs={6} >
-                        <ChartWrapper title="Chart JSON structure" chart="line" media actionBar={false} >
+                        <ChartWrapper title="Chart JSON structure" chart="line" media actionBar={false}>
                             <ul>
                                 <li>
                                     <strong>x</strong> - Datafield representing the independant axis in the metadata
@@ -175,6 +248,12 @@ export default class LineChartSamples extends React.Component {
                                                 <li>
                                                     <strong>fill</strong> - If a color categorization field is not defined the color in which the data should be plotted.
                                                 </li>
+                                                <li>
+                                                    <strong>mode</strong> - mode of the chart stacked or not.
+                                                </li>
+                                                <li>
+                                                    <strong>orientation</strong> - orientation of the bars left or bottom
+                                                </li>
                                             </ul>
                                         </li>
                                         <li>....</li>
@@ -191,9 +270,9 @@ export default class LineChartSamples extends React.Component {
                                 </li>
                                 <li>
                                     <strong>timeFormat</strong> - If the x-axis is a time series using this attribute
-                                     user can format the tick values of the x axis using regex. refer&nbsp;
+                                    user can format the tick values of the x axis using regex. refer&nbsp;
                                     <a href={'https://github.com/d3/d3-time-format/blob/master/README.md#timeFormat'}>
-                                          d3 documentation
+                                        d3 documentation
                                     </a> for more info
                                 </li>
                                 <li>
@@ -225,8 +304,10 @@ export default class LineChartSamples extends React.Component {
                             </ul>
                         </ChartWrapper>
                     </Grid>
+
                 </Grid>
             </div>
         );
     }
 }
+

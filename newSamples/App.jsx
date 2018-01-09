@@ -1,7 +1,7 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography, Grid } from 'material-ui';
 import ChartWrapper from './ChartWrapper';
-import VizG from 'react-vizgrammar';
+import VizG from '../src/VizG';
 
 export default class App extends React.Component {
     constructor(props) {
@@ -56,7 +56,7 @@ export default class App extends React.Component {
             x: 'rpm',
             charts: [{ y: 'torque', color: 'EngineType', type: 'bar' }],
             legend: true,
-            maxLength: 30,
+            maxLength: 10,
         };
         this.scatterPlotConfig = {
             type: 'scatter',
