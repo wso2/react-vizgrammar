@@ -8,6 +8,9 @@ import AreaCharts from './chart-docs/AreaChartSamples';
 import BarCharts from './chart-docs/BarChartSamples';
 import ScatterChart from './chart-docs/ScatterPlotSample';
 import Maps from './chart-docs/GeographicalChartsSample';
+import Arcs from './chart-docs/PieChartSamples';
+import NumChart from './chart-docs/NumberChartSample';
+import Table from './chart-docs/TableChartSamples';
 
 const theme = createMuiTheme({
     palette: {
@@ -24,5 +27,8 @@ ReactDOM.render(
             <Route path={'/bar-charts'} component={BarCharts} />
             <Route path={'/scatter-charts'} component={ScatterChart} />
             <Route path="/map-charts" component={Maps} />
+            <Route path="/pie-charts" component={Arcs} />
+            <Route path="/number-charts" component={NumChart} />
+            <Route path="/table-charts" component={Table} />
         </MuiThemeProvider>
     </Router>, document.getElementById('samples'));
