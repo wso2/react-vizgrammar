@@ -24,7 +24,7 @@ import VizG from '../../src/VizG';
 import 'rc-tree/assets/index.css';
 import '../styles/snippet-highlight.css';
 import ChartWrapper from '../ChartWrapper';
-import { syntaxHighlight } from './helper';
+import { syntaxHighlight } from './util/SyntaxHighLight';
 
 export default class BarChartSamples extends React.Component {
     constructor(props) {

@@ -22,7 +22,7 @@ import HomeIcon from 'material-ui-icons/ArrowBack';
 import { Link } from 'react-router-dom';
 import ChartWrapper from '../ChartWrapper';
 import VizG from '../../src/VizG';
-import { syntaxHighlight } from './helper';
+import { syntaxHighlight } from './util/SyntaxHighLight';
 
 /**
  * This class will render a page that contains samples on how to use Scatter plots.

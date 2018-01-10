@@ -22,7 +22,7 @@ import HomeIcon from 'material-ui-icons/ArrowBack';
 import { Link } from 'react-router-dom';
 import ChartWrapper from '../ChartWrapper';
 import VizG from '../../src/VizG';
-import { syntaxHighlight } from './helper';
+import { syntaxHighlight } from './util/SyntaxHighLight';
 
 export default class NumberChartSample extends React.Component {
     constructor(props) {

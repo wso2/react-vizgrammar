@@ -22,7 +22,7 @@ import HomeIcon from 'material-ui-icons/ArrowBack';
 import { Link } from 'react-router-dom';
 import VizG from '../../src/VizG';
 import ChartWrapper from '../ChartWrapper';
-import { syntaxHighlight } from './helper';
+import { syntaxHighlight } from './util/SyntaxHighLight';
 
 export default class PieChartSamples extends React.Component {
     constructor(props) {
@@ -33,7 +33,7 @@ export default class PieChartSamples extends React.Component {
             timer: 0,
         };
 
-        this.interval_jd = null;
+        this.intervalId = null;
 
         this.metadata = {
             names: ['rpm', 'torque', 'horsepower', 'EngineType', 'weight'],
@@ -58,7 +58,7 @@ export default class PieChartSamples extends React.Component {
     }
 
     componentDidMount() {
-        this.interval_jd = setInterval(() => {
+        this.intervalId = setInterval(() => {
             this.setState({
                 data: [
                     [this.state.timer, this.state.timer === 20 ? null : Math.random() * 100, 10, 'piston'],
@@ -76,7 +76,7 @@ export default class PieChartSamples extends React.Component {
     }
 
     componentWillUnmount() {
-        clearInterval(this.interval_jd);
+        clearInterval(this.intervalId);
     }
 
     render() {
