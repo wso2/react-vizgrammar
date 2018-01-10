@@ -41,16 +41,16 @@ export default class ChartSkeleton extends React.Component {
                 padding={
                     (() => {
                         if (config.legend === true) {
-                            if (!config.legendOrientation) return { left: 100, top: 30, bottom: 50, right: 230 };
+                            if (!config.legendOrientation) return { left: 100, top: 30, bottom: 50, right: 180 };
                             else if (config.legendOrientation === 'left') {
                                 return { left: 300, top: 30, bottom: 50, right: 30 };
                             } else if (config.legendOrientation === 'right') {
-                                return { left: 100, top: 30, bottom: 50, right: 230 };
+                                return { left: 100, top: 30, bottom: 50, right: 180 };
                             } else if (config.legendOrientation === 'top') {
                                 return { left: 100, top: 100, bottom: 50, right: 30 };
                             } else if (config.legendOrientation === 'bottom') {
                                 return { left: 100, top: 30, bottom: 150, right: 30 };
-                            } else return { left: 100, top: 30, bottom: 50, right: 230 };
+                            } else return { left: 100, top: 30, bottom: 50, right: 180 };
                         } else {
                             return { left: 100, top: 30, bottom: 50, right: 30 };
                         }
