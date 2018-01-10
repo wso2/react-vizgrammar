@@ -35,7 +35,9 @@
  */
 
 import React, { Component } from 'react';
-import { AppBar, Toolbar, Typography, Grid } from 'material-ui';
+import { AppBar, Toolbar, Typography, Grid, IconButton } from 'material-ui';
+import { Link } from 'react-router-dom';
+import HomeIcon from 'material-ui-icons/ArrowBack';
 import VizG from '../../src/VizG';
 import ChartWrapper from '../ChartWrapper';
 import { syntaxHighlight } from './helper';
@@ -97,6 +99,11 @@ class MapChartConfigSample extends Component {
             <div>
                 <AppBar>
                     <Toolbar >
+                        <Link to='/' >
+                            <IconButton color="contrast" aria-label="Menu">
+                                <HomeIcon />
+                            </IconButton>
+                        </Link>
                         <Typography type="title" color="inherit" >
                             React-VizGrammar - Geographical Chart Samples
                         </Typography>
@@ -112,9 +119,11 @@ class MapChartConfigSample extends Component {
                                 <br /><br />
                                 <pre
                                     dangerouslySetInnerHTML={
-                                    { __html: syntaxHighlight(
-                                                    JSON.stringify(this.mapConfig, undefined, 4)) }
+                                        {
+                                            __html: syntaxHighlight(
+                                                JSON.stringify(this.mapConfig, undefined, 4))
                                         }
+                                    }
                                 />
                             </div>
                         </ChartWrapper>
@@ -128,8 +137,10 @@ class MapChartConfigSample extends Component {
                                 <br /><br />
                                 <pre
                                     dangerouslySetInnerHTML={
-                                        { __html: syntaxHighlight(
-                                                JSON.stringify(this.europeConfig, undefined, 4)) }
+                                        {
+                                            __html: syntaxHighlight(
+                                                JSON.stringify(this.europeConfig, undefined, 4))
+                                        }
                                     }
                                 />
                             </div>
@@ -144,8 +155,10 @@ class MapChartConfigSample extends Component {
                                 <br /><br />
                                 <pre
                                     dangerouslySetInnerHTML={
-                                        { __html: syntaxHighlight(
-                                                JSON.stringify(this.usaConfig, undefined, 4)) }
+                                        {
+                                            __html: syntaxHighlight(
+                                                JSON.stringify(this.usaConfig, undefined, 4))
+                                        }
                                     }
                                 />
                             </div>

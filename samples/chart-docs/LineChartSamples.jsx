@@ -18,7 +18,8 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Grid } from 'material-ui';
+import { AppBar, Toolbar, Typography, Grid, IconButton } from 'material-ui';
+import HomeIcon from 'material-ui-icons/ArrowBack';
 import VizG from 'react-vizgrammar';
 import 'rc-tree/assets/index.css';
 import '../styles/snippet-highlight.css';
@@ -81,6 +82,11 @@ export default class LineChartSamples extends React.Component {
             <div>
                 <AppBar>
                     <Toolbar >
+                        <Link to='/' >
+                            <IconButton color="contrast" aria-label="Menu">
+                                <HomeIcon />
+                            </IconButton>
+                        </Link>
                         <Typography type="title" color="inherit" >
                             React-VizGrammar - Line Chart Samples
                         </Typography>
@@ -96,8 +102,10 @@ export default class LineChartSamples extends React.Component {
                                 <br /><br />
                                 <pre
                                     dangerouslySetInnerHTML={
-                                    { __html: syntaxHighlight(
-                                            JSON.stringify(this.barChartConfig, undefined, 4)) }
+                                        {
+                                            __html: syntaxHighlight(
+                                                JSON.stringify(this.barChartConfig, undefined, 4))
+                                        }
                                     }
                                 />
                             </div>
@@ -193,7 +201,7 @@ export default class LineChartSamples extends React.Component {
                                     <strong>timeFormat</strong> - If the x-axis is a time series using this attribute
                                      user can format the tick values of the x axis using regex. refer&nbsp;
                                     <a href={'https://github.com/d3/d3-time-format/blob/master/README.md#timeFormat'}>
-                                          d3 documentation
+                                        d3 documentation
                                     </a> for more info
                                 </li>
                                 <li>
