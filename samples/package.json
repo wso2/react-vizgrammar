@@ -1,27 +1,21 @@
 {
-  "name": "samples",
+  "name": "react-vizgrammar-samples",
   "version": "1.0.0",
-  "description": "Sample set for react-vizgrammar",
+  "description": "Charting Samples for react-vizgrammar library",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "samples": "webpack-dev-server --progress",
-    "build": "npx babel src -d dist"
+    "samples": "webpack-dev-server --progress"
   },
-  "author": "WSO2",
+  "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "d3": "^4.12.0",
-    "material-ui": "^0.19.4",
-    "prop-types": "^15.6.0",
-    "rc-slider": "^8.4.0",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
-    "react-simple-maps": "^0.9.0",
-    "react-table": "^6.7.4",
-    "react-tooltip": "^3.4.0",
-    "topojson-client": "^3.0.0",
-    "victory": "^0.22.2"
+    "material-ui": "^1.0.0-beta.26",
+    "rc-tree": "^1.7.10",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-sortable-tree": "^1.5.4",
+    "react-vizgrammar": "^0.6.15"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
