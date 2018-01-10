@@ -24,7 +24,7 @@ import VizG from 'react-vizgrammar';
 import 'rc-tree/assets/index.css';
 import '../styles/snippet-highlight.css';
 import ChartWrapper from '../ChartWrapper';
-import { syntaxHighlight } from './helper';
+import { syntaxHighlight } from './util/SyntaxHighLight';
 
 export default class LineChartSamples extends React.Component {
     constructor(props) {
@@ -35,7 +35,7 @@ export default class LineChartSamples extends React.Component {
             timer: 0,
         };
 
-        this.interval_id = null;
+        this.intervalId = null;
         this.metadata = {
             names: ['rpm', 'torque', 'horsepower', 'EngineType'],
             types: ['linear', 'linear', 'linear', 'ordinal'],
@@ -59,7 +59,7 @@ export default class LineChartSamples extends React.Component {
     }
 
     componentDidMount() {
-        this.interval_id = setInterval(() => {
+        this.intervalId = setInterval(() => {
             this.setState({
                 data: [
                     [this.state.timer, this.state.timer === 20 ? null : Math.random() * 100, 10, 'piston'],
@@ -74,7 +74,7 @@ export default class LineChartSamples extends React.Component {
     }
 
     componentWillUnmount() {
-        clearInterval(this.interval_id);
+        clearInterval(this.intervalId);
     }
 
     render() {

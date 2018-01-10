@@ -22,7 +22,7 @@ import { Link } from 'react-router-dom';
 import HomeIcon from 'material-ui-icons/ArrowBack';
 import VizG from '../../src/VizG';
 import ChartWrapper from '../ChartWrapper';
-import { syntaxHighlight } from './helper';
+import { syntaxHighlight } from './util/SyntaxHighLight';
 
 /**
  * This class will render a page that contains samples on how to use Geographical charts.
@@ -31,27 +31,25 @@ class MapChartConfigSample extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            data: [
-                ['Afghanistan', 4.23],
-                ['EGY', 1.23],
-                ['Afghanistan', 2.23],
-                ['United States', 10.23],
-                ['Albania', 3.23],
-                ['United Kingdom', 7],
-                ['Australia', 5],
-                ['Ireland', 1],
-                ['RUS', 15],
-            ],
-            data2: [
-                ['Alabama', 4.23],
-                ['Michigan', 1.23],
-                ['Georgia', 8.23],
-                ['Texas', 3.23],
-                ['Hawaii', 2.23],
-            ],
-            timer: 1,
-        };
+
+        this.data = [
+            ['Afghanistan', 4.23],
+            ['EGY', 1.23],
+            ['Afghanistan', 2.23],
+            ['United States', 10.23],
+            ['Albania', 3.23],
+            ['United Kingdom', 7],
+            ['Australia', 5],
+            ['Ireland', 1],
+            ['RUS', 15],
+        ];
+        this.data2 = [
+            ['Alabama', 4.23],
+            ['Michigan', 1.23],
+            ['Georgia', 8.23],
+            ['Texas', 3.23],
+            ['Hawaii', 2.23],
+        ];
 
         this.mapConfig = {
             x: 'Country',
@@ -95,16 +93,16 @@ class MapChartConfigSample extends Component {
                     <Grid item xs={6}>
                         <ChartWrapper title={'World Map Sample'} chart={'map'} actionBar={false} media>
                             <div style={{ height: 450 }}>
-                                <VizG config={this.mapConfig} metadata={this.metadata} data={this.state.data} />
+                                <VizG config={this.mapConfig} metadata={this.metadata} data={this.data} />
                             </div>
                             <div>
                                 <br /><br />
                                 <pre
                                     dangerouslySetInnerHTML={
-                                        {
-                                            __html: syntaxHighlight(
-                                                JSON.stringify(this.mapConfig, undefined, 4))
-                                        }
+                                    {
+                                        __html: syntaxHighlight(
+                                                JSON.stringify(this.mapConfig, undefined, 4)),
+                                    }
                                     }
                                 />
                             </div>
@@ -113,16 +111,16 @@ class MapChartConfigSample extends Component {
                     <Grid item xs={6}>
                         <ChartWrapper title={'Europe Map Sample'} chart={'map'} actionBar={false} media>
                             <div style={{ height: 450 }}>
-                                <VizG config={this.europeConfig} metadata={this.metadata} data={this.state.data} />
+                                <VizG config={this.europeConfig} metadata={this.metadata} data={this.data} />
                             </div>
                             <div>
                                 <br /><br />
                                 <pre
                                     dangerouslySetInnerHTML={
-                                        {
-                                            __html: syntaxHighlight(
-                                                JSON.stringify(this.europeConfig, undefined, 4))
-                                        }
+                                    {
+                                        __html: syntaxHighlight(
+                                                JSON.stringify(this.europeConfig, undefined, 4)),
+                                    }
                                     }
                                 />
                             </div>
@@ -131,16 +129,16 @@ class MapChartConfigSample extends Component {
                     <Grid item xs={6}>
                         <ChartWrapper title={'Europe Map Sample'} chart={'map'} actionBar={false} media>
                             <div style={{ height: 450 }}>
-                                <VizG config={this.usaConfig} metadata={this.metadata} data={this.state.data2} />
+                                <VizG config={this.usaConfig} metadata={this.metadata} data={this.data2} />
                             </div>
                             <div>
                                 <br /><br />
                                 <pre
                                     dangerouslySetInnerHTML={
-                                        {
-                                            __html: syntaxHighlight(
-                                                JSON.stringify(this.usaConfig, undefined, 4))
-                                        }
+                                    {
+                                        __html: syntaxHighlight(
+                                                JSON.stringify(this.usaConfig, undefined, 4)),
+                                    }
                                     }
                                 />
                             </div>
@@ -159,7 +157,7 @@ class MapChartConfigSample extends Component {
                                 data :
                                 <pre
                                     dangerouslySetInnerHTML={{
-                                        __html: syntaxHighlight(JSON.stringify(this.state.data, undefined, 4)),
+                                        __html: syntaxHighlight(JSON.stringify(this.data, undefined, 4)),
                                     }}
                                 />
                             </div>
