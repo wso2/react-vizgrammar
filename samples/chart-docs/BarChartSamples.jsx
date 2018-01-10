@@ -66,7 +66,16 @@ export default class BarChartSamples extends React.Component {
 
         this.barChartStackedConfigHorizontal = {
             x: 'rpm',
-            charts: [{ type: 'bar', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston'], mode: 'stacked', orientation: 'left' }],
+            charts: [
+                {
+                    type: 'bar',
+                    y: 'torque',
+                    color: 'EngineType',
+                    colorDomain: ['', '', 'piston'],
+                    mode: 'stacked',
+                    orientation: 'left',
+                },
+            ],
             maxLength: 7,
             legend: true,
         };
@@ -116,10 +125,10 @@ export default class BarChartSamples extends React.Component {
                                 <br /><br />
                                 <pre
                                     dangerouslySetInnerHTML={
-                                        {
-                                            __html: syntaxHighlight(
-                                                JSON.stringify(this.barChartConfig, undefined, 4))
-                                        }
+                                    {
+                                        __html: syntaxHighlight(
+                                                JSON.stringify(this.barChartConfig, undefined, 4)),
+                                    }
                                     }
                                 />
                             </div>
