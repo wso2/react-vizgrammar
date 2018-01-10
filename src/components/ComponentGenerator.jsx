@@ -267,9 +267,9 @@ export function getBasicChartLegend(config, legendItems, ignoreArray, interactio
             <VictoryLegend
                 x={
                     (() => {
-                        if (!config.legendOrientation) return (width - 200);
+                        if (!config.legendOrientation) return (width - 150);
                         else if (config.legendOrientation === 'right') {
-                            return (width - 200);
+                            return (width - 100);
                         } else if (config.legendOrientation === 'left') {
                             return 0;
                         } else return 100;
