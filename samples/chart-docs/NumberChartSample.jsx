@@ -17,7 +17,9 @@
  */
 
 import React from 'react';
-import { AppBar, Toolbar, Typography, Grid } from 'material-ui';
+import { AppBar, Toolbar, Typography, Grid, IconButton } from 'material-ui';
+import HomeIcon from 'material-ui-icons/ArrowBack';
+import { Link } from 'react-router-dom';
 import ChartWrapper from '../ChartWrapper';
 import VizG from '../../src/VizG';
 import { syntaxHighlight } from './helper';
@@ -65,6 +67,11 @@ export default class NumberChartSample extends React.Component {
             <div>
                 <AppBar>
                     <Toolbar >
+                        <Link to='/' >
+                            <IconButton color="contrast" aria-label="Menu">
+                                <HomeIcon />
+                            </IconButton>
+                        </Link>
                         <Typography type="title" color="inherit" >
                             React-VizGrammar - Pie Chart Samples
                         </Typography>
@@ -85,10 +92,10 @@ export default class NumberChartSample extends React.Component {
                                 <br /><br />
                                 <pre
                                     dangerouslySetInnerHTML={
-                                    {
-                                        __html: syntaxHighlight(
+                                        {
+                                            __html: syntaxHighlight(
                                                 JSON.stringify(this.numConfig, undefined, 4)),
-                                    }
+                                        }
                                     }
                                 />
                             </div>
@@ -105,7 +112,7 @@ export default class NumberChartSample extends React.Component {
                             <pre
                                 dangerouslySetInnerHTML={{
                                     __html: syntaxHighlight(
-                                                JSON.stringify(this.metadata, undefined, 4)),
+                                        JSON.stringify(this.metadata, undefined, 4)),
                                 }}
                             />
                             data:
@@ -115,7 +122,7 @@ export default class NumberChartSample extends React.Component {
                                         JSON.stringify(this.state.data, undefined, 4)),
                                 }}
                             />
-                            <br/><br/>
+                            <br /><br />
                             <h3>Chart Configuration JSON structure</h3>
                             <ul>
                                 <li><strong>x</strong> - Datafield that should be shown in the number chart</li>

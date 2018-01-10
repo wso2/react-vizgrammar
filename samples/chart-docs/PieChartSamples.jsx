@@ -17,7 +17,9 @@
  */
 
 import React from 'react';
-import { AppBar, Toolbar, Typography, Grid } from 'material-ui';
+import { AppBar, Toolbar, Typography, Grid, IconButton } from 'material-ui';
+import HomeIcon from 'material-ui-icons/ArrowBack';
+import { Link } from 'react-router-dom';
 import VizG from '../../src/VizG';
 import ChartWrapper from '../ChartWrapper';
 import { syntaxHighlight } from './helper';
@@ -82,8 +84,13 @@ export default class PieChartSamples extends React.Component {
             <div>
                 <AppBar>
                     <Toolbar >
+                        <Link to='/' >
+                            <IconButton color="contrast" aria-label="Menu">
+                                <HomeIcon />
+                            </IconButton>
+                        </Link>
                         <Typography type="title" color="inherit" >
-                          React-VizGrammar - Pie Chart Samples
+                            React-VizGrammar - Pie Chart Samples
                         </Typography>
                     </Toolbar>
                 </AppBar>
@@ -97,11 +104,11 @@ export default class PieChartSamples extends React.Component {
                                 <br /><br />
                                 <pre
                                     dangerouslySetInnerHTML={
-                                    {
-                                        __html: syntaxHighlight(
-                                              JSON.stringify(this.pieChartConfig, undefined, 4)),
+                                        {
+                                            __html: syntaxHighlight(
+                                                JSON.stringify(this.pieChartConfig, undefined, 4)),
+                                        }
                                     }
-                                  }
                                 />
                             </div>
 
@@ -116,10 +123,10 @@ export default class PieChartSamples extends React.Component {
                                 <br /><br />
                                 <pre
                                     dangerouslySetInnerHTML={
-                                    {
-                                        __html: syntaxHighlight(
+                                        {
+                                            __html: syntaxHighlight(
                                                 JSON.stringify(this.donutChartConfig, undefined, 4)),
-                                    }
+                                        }
                                     }
                                 />
                             </div>
@@ -135,10 +142,10 @@ export default class PieChartSamples extends React.Component {
                                 <br /><br />
                                 <pre
                                     dangerouslySetInnerHTML={
-                                    {
-                                        __html: syntaxHighlight(
+                                        {
+                                            __html: syntaxHighlight(
                                                 JSON.stringify(this.percentChartConfig, undefined, 4)),
-                                    }
+                                        }
                                     }
                                 />
                             </div>
@@ -151,19 +158,19 @@ export default class PieChartSamples extends React.Component {
                                 metadata :
                                 <pre
                                     dangerouslySetInnerHTML={
-                                    {
-                                        __html: syntaxHighlight(
+                                        {
+                                            __html: syntaxHighlight(
                                                 JSON.stringify(this.metadata, undefined, 4)),
-                                    }
+                                        }
                                     }
                                 />
                                 data:
                                 <pre
                                     dangerouslySetInnerHTML={
-                                    {
-                                        __html: syntaxHighlight(
+                                        {
+                                            __html: syntaxHighlight(
                                                 JSON.stringify(this.state.data, undefined, 4)),
-                                    }
+                                        }
                                     }
                                 />
                             </div>

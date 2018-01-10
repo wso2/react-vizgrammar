@@ -17,7 +17,9 @@
  */
 
 import React from 'react';
-import { AppBar, Toolbar, Typography, Grid } from 'material-ui';
+import { AppBar, Toolbar, Typography, Grid, IconButton } from 'material-ui';
+import HomeIcon from 'material-ui-icons/ArrowBack';
+import { Link } from 'react-router-dom';
 import ChartWrapper from '../ChartWrapper';
 import VizG from '../../src/VizG';
 import { syntaxHighlight } from './helper';
@@ -79,6 +81,11 @@ export default class ScatterChartConfigSample extends React.Component {
             <div>
                 <AppBar>
                     <Toolbar >
+                        <Link to='/' >
+                            <IconButton color="contrast" aria-label="Menu">
+                                <HomeIcon />
+                            </IconButton>
+                        </Link>
                         <Typography type="title" color="inherit" >
                             React-VizGrammar - Scatter Plot Sample
                         </Typography>
@@ -94,8 +101,10 @@ export default class ScatterChartConfigSample extends React.Component {
                                 <br /><br />
                                 <pre
                                     dangerouslySetInnerHTML={
-                                    { __html: syntaxHighlight(
-                                                JSON.stringify(this.scatterPlotConfig, undefined, 4)) }
+                                        {
+                                            __html: syntaxHighlight(
+                                                JSON.stringify(this.scatterPlotConfig, undefined, 4))
+                                        }
                                     }
                                 />
                             </div>

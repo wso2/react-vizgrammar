@@ -18,7 +18,8 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Grid } from 'material-ui';
+import { AppBar, Toolbar, Typography, Grid, IconButton } from 'material-ui';
+import HomeIcon from 'material-ui-icons/ArrowBack';
 import VizG from 'react-vizgrammar';
 import 'rc-tree/assets/index.css';
 import '../styles/snippet-highlight.css';
@@ -89,6 +90,11 @@ export default class AreaChartSamples extends React.Component {
             <div>
                 <AppBar>
                     <Toolbar >
+                        <Link to='/' >
+                            <IconButton color="contrast" aria-label="Menu">
+                                <HomeIcon />
+                            </IconButton>
+                        </Link>
                         <Typography type="title" color="inherit" >
                             React-VizGrammar - Area Chart Samples
                         </Typography>
@@ -104,8 +110,10 @@ export default class AreaChartSamples extends React.Component {
                                 <br /><br />
                                 <pre
                                     dangerouslySetInnerHTML={
-                                    { __html: syntaxHighlight(
-                                                JSON.stringify(this.barChartConfig, undefined, 4)) }
+                                        {
+                                            __html: syntaxHighlight(
+                                                JSON.stringify(this.barChartConfig, undefined, 4))
+                                        }
                                     }
                                 />
                             </div>
@@ -171,7 +179,7 @@ export default class AreaChartSamples extends React.Component {
                                     }}
                                 />
                             </div>
-                            <br/><br/>
+                            <br /><br />
                             <h3>Chart JSON Structure</h3>
                             <ul>
                                 <li>

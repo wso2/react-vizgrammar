@@ -17,10 +17,13 @@
  */
 
 import React from 'react';
-import { AppBar, Toolbar, Typography, Grid } from 'material-ui';
+import { AppBar, Toolbar, Typography, Grid, IconButton } from 'material-ui';
+import HomeIcon from 'material-ui-icons/ArrowBack';
+import { Link } from 'react-router-dom';
 import ChartWrapper from '../ChartWrapper';
 import VizG from '../../src/VizG';
 import { syntaxHighlight } from './helper';
+
 
 export default class TableChartSamples extends React.Component {
     constructor(props) {
@@ -73,6 +76,12 @@ export default class TableChartSamples extends React.Component {
             <div>
                 <AppBar>
                     <Toolbar >
+                        <Link to='/' >
+                            <IconButton color="contrast" aria-label="Menu">
+
+                                <HomeIcon />
+                            </IconButton>
+                        </Link>
                         <Typography type="title" color="inherit" >
                             React-VizGrammar - Pie Chart Samples
                         </Typography>
@@ -93,10 +102,10 @@ export default class TableChartSamples extends React.Component {
                             <div>
                                 <pre
                                     dangerouslySetInnerHTML={
-                                    {
-                                        __html: syntaxHighlight(
+                                        {
+                                            __html: syntaxHighlight(
                                                 JSON.stringify(this.mapConfig, undefined, 4)),
-                                    }
+                                        }
                                     }
                                 />
                             </div>
@@ -108,21 +117,21 @@ export default class TableChartSamples extends React.Component {
                             chart={'table'}
                             actionBar={false}
                         >
-                        metadata:
+                            metadata:
                             <pre
                                 dangerouslySetInnerHTML={{
                                     __html: syntaxHighlight(
                                         JSON.stringify(this.metadata, undefined, 4)),
                                 }}
                             />
-                        data:
+                            data:
                             <pre
                                 dangerouslySetInnerHTML={{
                                     __html: syntaxHighlight(
                                         JSON.stringify(this.state.data, undefined, 4)),
                                 }}
                             />
-                            <br/><br/>
+                            <br /><br />
                             <h3>Chart Configuration JSON structure</h3>
                             <ul>
                                 <li>
