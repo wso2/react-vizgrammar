@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui';
 import { HashRouter as Router, Route } from 'react-router-dom';
+import ScrollReset from './ScrollReset';
 import App from './App';
 import LineCharts from './chart-docs/LineChartSamples';
 import AreaCharts from './chart-docs/AreaChartSamples';
@@ -21,14 +22,32 @@ const theme = createMuiTheme({
 ReactDOM.render(
     <Router>
         <MuiThemeProvider theme={theme} >
-            <Route exact path={'/'} component={App} />
-            <Route path={'/line-charts'} component={LineCharts} />
-            <Route path={'/area-charts'} component={AreaCharts} />
-            <Route path={'/bar-charts'} component={BarCharts} />
-            <Route path={'/scatter-charts'} component={ScatterChart} />
-            <Route path="/map-charts" component={Maps} />
-            <Route path="/pie-charts" component={Arcs} />
-            <Route path="/number-charts" component={NumChart} />
-            <Route path="/table-charts" component={Table} />
+            <ScrollReset>
+                <Route exact path={'/'} component={App} />
+            </ScrollReset>
+            <ScrollReset>
+                <Route path={'/line-charts'} component={LineCharts} />
+            </ScrollReset>
+            <ScrollReset>
+                <Route path={'/area-charts'} component={AreaCharts} />
+            </ScrollReset>
+            <ScrollReset>
+                <Route path={'/bar-charts'} component={BarCharts} />
+            </ScrollReset>
+            <ScrollReset>
+                <Route path={'/scatter-charts'} component={ScatterChart} />
+            </ScrollReset>
+            <ScrollReset>
+                <Route path="/map-charts" component={Maps} />
+            </ScrollReset>
+            <ScrollReset>
+                <Route path="/pie-charts" component={Arcs} />
+            </ScrollReset>
+            <ScrollReset>
+                <Route path="/number-charts" component={NumChart} />
+            </ScrollReset>
+            <ScrollReset>
+                <Route path="/table-charts" component={Table} />
+            </ScrollReset>
         </MuiThemeProvider>
     </Router>, document.getElementById('samples'));
