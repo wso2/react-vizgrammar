@@ -18,6 +18,7 @@
 
 import React from 'react';
 import { AppBar, Toolbar, Typography, Grid } from 'material-ui';
+import Table, { TableCell, TableBody, TableHead, TableRow } from 'material-ui/Table';
 import ChartWrapper from './ChartWrapper';
 import VizG from '../src/VizG';
 
@@ -118,6 +119,52 @@ export default class App extends React.Component {
             width: 400,
             height: 200,
         };
+
+        this.sampleDataset = [
+            [10, 20, 30, 'test1'],
+            [11, 89, 30, 'test2'],
+            [12, -6, 30, 'test1'],
+            [13, 15, 30, 'test2'],
+            [14, 30, 30, 'test1'],
+            [15, 20, 30, 'test2'],
+            [16, 34, 30, 'test1'],
+            [17, 90, 30, 'test2'],
+            [18, 70, 30, 'test1'],
+            [19, 60, 30, 'test2'],
+            [20, 50, 30, 'test1'],
+            [21, 0, 30, 'test2'],
+            [22, 20, 30, 'test1'],
+            [23, 20, 30, 'test2'],
+            [24, 30, 30, 'test1'],
+            [25, 40, 30, 'test2'],
+            [26, 35, 30, 'test1'],
+            [27, 45, 30, 'test2'],
+            [28, 50, 30, 'test1'],
+            [29, 60, 30, 'test2'],
+            [30, 70, 30, 'test1'],
+        ];
+
+        this.sparkAreaChart = {
+            x: 'rpm',
+            charts: [
+                { type: 'spark-area', y: 'torque', fill: '#47c5ff' },
+            ],
+            maxLength: 30,
+        };
+        this.sparkLineChart = {
+            x: 'rpm',
+            charts: [
+                { type: 'spark-line', y: 'torque', fill: 'red' },
+            ],
+            maxLength: 30,
+        };
+        this.sparkBarChart = {
+            x: 'rpm',
+            charts: [
+                { type: 'spark-bar', y: 'torque', fill: 'red' },
+            ],
+            maxLength: 30,
+        };
     }
 
     componentDidMount() {
@@ -142,7 +189,7 @@ export default class App extends React.Component {
 
     render() {
         return (
-            <div>
+            <div style={{ padding: 10 }}>
                 <AppBar>
                     <Toolbar >
                         <Typography type="title" color="inherit" >
@@ -151,7 +198,7 @@ export default class App extends React.Component {
                     </Toolbar>
                 </AppBar>
                 <Grid container spacing={24} >
-                    <Grid item xs={6}>
+                    <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper
                             media
                             chart={'line'}
@@ -163,7 +210,7 @@ export default class App extends React.Component {
                             </div>
                         </ChartWrapper>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper
                             media
                             chart={'area'}
@@ -175,7 +222,7 @@ export default class App extends React.Component {
                             </div>
                         </ChartWrapper>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper
                             media
                             chart={'bar'}
@@ -187,7 +234,7 @@ export default class App extends React.Component {
                             </div>
                         </ChartWrapper>
                     </Grid>
-                    <Grid item xs={6} >
+                    <Grid item lg={6} sm={12} xs={12} >
                         <ChartWrapper
                             media
                             chart={'scatter'}
@@ -204,7 +251,7 @@ export default class App extends React.Component {
                             </div>
                         </ChartWrapper>
                     </Grid>
-                    <Grid item xs={6} >
+                    <Grid item lg={6} sm={12} xs={12} >
                         <ChartWrapper
                             media
                             chart={'map'}
@@ -216,7 +263,7 @@ export default class App extends React.Component {
                             </div>
                         </ChartWrapper>
                     </Grid>
-                    <Grid item xs={6} >
+                    <Grid item lg={6} sm={12} xs={12} >
                         <ChartWrapper
                             media
                             chart={'number'}
@@ -228,7 +275,7 @@ export default class App extends React.Component {
                             </div>
                         </ChartWrapper>
                     </Grid>
-                    <Grid item xs={6} >
+                    <Grid item lg={6} sm={12} xs={12} >
                         <ChartWrapper
                             media
                             chart={'pie'}
@@ -240,7 +287,7 @@ export default class App extends React.Component {
                             </div>
                         </ChartWrapper>
                     </Grid>
-                    <Grid item xs={6} >
+                    <Grid item lg={6} sm={12} xs={12} >
                         <ChartWrapper
                             media
                             chart={'table'}
@@ -251,6 +298,55 @@ export default class App extends React.Component {
                                 <div style={{ height: 40 }}>
                                     <VizG config={this.tableConfig} metadata={this.metadata} data={this.state.data} />
                                 </div>
+                            </div>
+                        </ChartWrapper>
+                    </Grid>
+                    <Grid item lg={6} sm={12} xs={12} >
+                        <ChartWrapper
+                            media
+                            chart={'table'}
+                            title={'Spark-Charts Samples'}
+                            actionBar={false}
+                        >
+                            <div style={{ height: 200 }}>
+                                <Table>
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell>Chart Preview</TableCell>
+                                            <TableCell>Chart Type</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        <TableRow>
+                                            <TableCell>
+                                                <div style={{ height: 20, width: 300 }}>
+                                                    <VizG
+                                                        config={this.sparkAreaChart}
+                                                        metadata={this.metadata}
+                                                        data={this.state.data}
+                                                        height={20}
+                                                        width={300}
+                                                    />
+                                                </div>
+                                            </TableCell>
+                                            <TableCell>spark-area Chart</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell>
+                                                <div style={{ height: 20, width: 300 }}>
+                                                    <VizG
+                                                        config={this.sparkLineChart}
+                                                        metadata={this.metadata}
+                                                        data={this.state.data}
+                                                        height={20}
+                                                        width={300}
+                                                    />
+                                                </div>
+                                            </TableCell>
+                                            <TableCell>spark-line chart</TableCell>
+                                        </TableRow>
+                                    </TableBody>
+                                </Table>
                             </div>
                         </ChartWrapper>
                     </Grid>

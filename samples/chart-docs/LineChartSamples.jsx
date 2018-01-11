@@ -93,8 +93,8 @@ export default class LineChartSamples extends React.Component {
                     </Toolbar>
                 </AppBar>
                 <Grid container>
-                    <Grid item xs={6} >
-                        <ChartWrapper title="Group MultiLine Chart Sample" chart="line" media actionBar={false}>
+                    <Grid item lg={6} sm={12} xs={12} >
+                        <ChartWrapper title="Multiline Chart Sample with Color Categorization" chart="line" media actionBar={false}>
                             <div style={{ height: 450 }}>
                                 <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data} />
                             </div>
@@ -112,8 +112,8 @@ export default class LineChartSamples extends React.Component {
 
                         </ChartWrapper>
                     </Grid>
-                    <Grid item xs={6} >
-                        <ChartWrapper title="Group MultiLine Chart Sample" chart="line" media actionBar={false}>
+                    <Grid item lg={6} sm={12} xs={12} >
+                        <ChartWrapper title="MultiLine Chart Sample with multiple chart components" chart="line" media actionBar={false}>
                             <div style={{ height: 450 }}>
                                 <VizG
                                     config={this.singleBarChartConfig}
@@ -133,7 +133,7 @@ export default class LineChartSamples extends React.Component {
 
                         </ChartWrapper>
                     </Grid>
-                    <Grid item xs={6} >
+                    <Grid item lg={6} sm={12} xs={12} >
                         <ChartWrapper title="Sample Data set" chart="line" media actionBar={false}>
                             <div>
                                 metadata :
@@ -153,7 +153,7 @@ export default class LineChartSamples extends React.Component {
 
                         </ChartWrapper>
                     </Grid>
-                    <Grid item xs={6} >
+                    <Grid item lg={6} sm={12} xs={12} >
                         <ChartWrapper title="Chart JSON structure" chart="line" media actionBar={false} >
                             <ul>
                                 <li>

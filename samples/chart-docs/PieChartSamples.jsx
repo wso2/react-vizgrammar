@@ -95,7 +95,7 @@ export default class PieChartSamples extends React.Component {
                     </Toolbar>
                 </AppBar>
                 <Grid container>
-                    <Grid item xs={6}>
+                    <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper title="Pie Chart Sample" chart="line" media actionBar={false}>
                             <div style={{ height: 450 }}>
                                 <VizG config={this.pieChartConfig} metadata={this.metadata} data={this.state.data} />
@@ -114,7 +114,7 @@ export default class PieChartSamples extends React.Component {
 
                         </ChartWrapper>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper title="Donut Chart Sample" chart="line" media actionBar={false}>
                             <div style={{ height: 450 }}>
                                 <VizG config={this.donutChartConfig} metadata={this.metadata} data={this.state.data} />
@@ -133,7 +133,7 @@ export default class PieChartSamples extends React.Component {
 
                         </ChartWrapper>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper title="Donut Chart Sample" chart="line" media actionBar={false}>
                             <div style={{ height: 450 }}>
                                 <VizG config={this.percentChartConfig} metadata={this.metadata} data={this.state.data2} />
@@ -152,7 +152,7 @@ export default class PieChartSamples extends React.Component {
 
                         </ChartWrapper>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper title="Sample Dataset and Chart Configuration" chart="line" media actionBar={false}>
                             <div>
                                 metadata :
@@ -200,7 +200,7 @@ export default class PieChartSamples extends React.Component {
                             </ul>
                         </ChartWrapper>
                     </Grid>
-                    <Grid item xs={6} />
+                    <Grid item lg={6} sm={12} xs={12} />
                 </Grid>
             </div>
         );

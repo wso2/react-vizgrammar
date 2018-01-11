@@ -116,8 +116,8 @@ export default class BarChartSamples extends React.Component {
                     </Toolbar>
                 </AppBar>
                 <Grid container>
-                    <Grid item xs={6} >
-                        <ChartWrapper title="Group Bar Chart Sample" chart="line" media actionBar={false}>
+                    <Grid item lg={6} sm={12} xs={12} >
+                        <ChartWrapper title="Bar Chart Sample with Color Categorization" chart="line" media actionBar={false}>
                             <div style={{ height: 450 }}>
                                 <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data} />
                             </div>
@@ -135,8 +135,8 @@ export default class BarChartSamples extends React.Component {
 
                         </ChartWrapper>
                     </Grid>
-                    <Grid item xs={6} >
-                        <ChartWrapper title="Group Bar Chart Sample" chart="line" media actionBar={false}>
+                    <Grid item lg={6} sm={12} xs={12} >
+                        <ChartWrapper title="Bar Chart Sample with Multiple Chart objects in the Config" chart="line" media actionBar={false}>
                             <div style={{ height: 450 }}>
                                 <VizG
                                     config={this.singleBarChartConfig}
@@ -156,7 +156,7 @@ export default class BarChartSamples extends React.Component {
 
                         </ChartWrapper>
                     </Grid>
-                    <Grid item xs={6} >
+                    <Grid item lg={6} sm={12} xs={12} >
                         <ChartWrapper title="Stacked Bar Chart Sample" chart="line" media actionBar={false}>
                             <div style={{ height: 450 }}>
                                 <VizG
@@ -177,7 +177,7 @@ export default class BarChartSamples extends React.Component {
 
                         </ChartWrapper>
                     </Grid>
-                    <Grid item xs={6} >
+                    <Grid item lg={6} sm={12} xs={12} >
                         <ChartWrapper title="Horizontal Bar Chart Sample" chart="line" media actionBar={false}>
                             <div style={{ height: 450 }}>
                                 <VizG
@@ -198,7 +198,7 @@ export default class BarChartSamples extends React.Component {
 
                         </ChartWrapper>
                     </Grid>
-                    <Grid item xs={6} >
+                    <Grid item lg={6} sm={12} xs={12} >
                         <ChartWrapper title="Sample Data set" chart="line" media actionBar={false}>
                             <div>
                                 metadata :
@@ -217,7 +217,7 @@ export default class BarChartSamples extends React.Component {
                             </div>
                         </ChartWrapper>
                     </Grid>
-                    <Grid item xs={6} >
+                    <Grid item lg={6} sm={12} xs={12} >
                         <ChartWrapper title="Chart JSON structure" chart="line" media actionBar={false}>
                             <ul>
                                 <li>

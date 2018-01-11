@@ -92,7 +92,7 @@ export default class ScatterChartConfigSample extends React.Component {
                     </Toolbar>
                 </AppBar>
                 <Grid container>
-                    <Grid item xs={6} >
+                    <Grid item lg={6} sm={12} xs={12} >
                         <ChartWrapper title={'Scatter Plot'} chart={'scatter'} actionBar={false} media>
                             <div style={{ height: 450 }}>
                                 <VizG config={this.scatterPlotConfig} metadata={this.metadata} data={this.state.scatterPlot} />
@@ -110,7 +110,7 @@ export default class ScatterChartConfigSample extends React.Component {
                             </div>
                         </ChartWrapper>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper title={'Sample Dataset and Configuration structure'} chart={'scatter'} actionBar={false} media>
                             <div>
                                 metadata :
@@ -206,7 +206,7 @@ export default class ScatterChartConfigSample extends React.Component {
                             </ul>
                         </ChartWrapper>
                     </Grid>
-                    <Grid item xs={6} />
+                    <Grid item lg={6} sm={12} xs={12} />
                 </Grid>
             </div>
         );
