@@ -149,6 +149,13 @@ export default class ChartSkeleton extends React.Component {
                         />
                     }
                     tickCount={config.yAxisTickCount}
+                    axisLabelComponent={
+                        <VictoryLabel
+                            angle={0}
+                            x={110}
+                            y={25}
+                        />
+                    }
                 />
             </VictoryChart>
         );
