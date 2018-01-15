@@ -90,7 +90,7 @@ class MapChartConfigSample extends Component {
                     </Toolbar>
                 </AppBar>
                 <Grid container>
-                    <Grid item xs={6}>
+                    <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper title={'World Map Sample'} chart={'map'} actionBar={false} media>
                             <div style={{ height: 450 }}>
                                 <VizG config={this.mapConfig} metadata={this.metadata} data={this.data} />
@@ -108,7 +108,7 @@ class MapChartConfigSample extends Component {
                             </div>
                         </ChartWrapper>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper title={'Europe Map Sample'} chart={'map'} actionBar={false} media>
                             <div style={{ height: 450 }}>
                                 <VizG config={this.europeConfig} metadata={this.metadata} data={this.data} />
@@ -126,7 +126,7 @@ class MapChartConfigSample extends Component {
                             </div>
                         </ChartWrapper>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper title={'Europe Map Sample'} chart={'map'} actionBar={false} media>
                             <div style={{ height: 450 }}>
                                 <VizG config={this.usaConfig} metadata={this.metadata} data={this.data2} />
@@ -144,7 +144,7 @@ class MapChartConfigSample extends Component {
                             </div>
                         </ChartWrapper>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper title={'Sample Dataset and Configuration structure'} chart={'scatter'} actionBar={false} media>
                             <div>
                                 metadata :
@@ -164,7 +164,7 @@ class MapChartConfigSample extends Component {
                             <br /><br />
                         </ChartWrapper>
                     </Grid>
-                    <Grid item xs={6} >
+                    <Grid item lg={6} sm={12} xs={12} >
                         <ChartWrapper title="Chart JSON structure" chart="line" media actionBar={false}>
                             <ul>
                                 <li><strong>type</strong> - Type of the chart in this case &qoute;map&qoute;</li>

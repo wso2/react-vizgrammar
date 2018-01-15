@@ -78,7 +78,7 @@ export default class NumberChartSample extends React.Component {
                     </Toolbar>
                 </AppBar>
                 <Grid container>
-                    <Grid item xs={6}>
+                    <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper
                             media
                             actionBar={false}
@@ -101,7 +101,7 @@ export default class NumberChartSample extends React.Component {
                             </div>
                         </ChartWrapper>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper
                             media
                             actionBar={false}

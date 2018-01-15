@@ -101,8 +101,8 @@ export default class AreaChartSamples extends React.Component {
                     </Toolbar>
                 </AppBar>
                 <Grid container>
-                    <Grid item xs={6} >
-                        <ChartWrapper title="Group Area Chart Sample" chart="line" media actionBar={false}>
+                    <Grid item lg={6} sm={12} xs={12} >
+                        <ChartWrapper title="Area Chart Sample with color categorization" chart="line" media actionBar={false}>
                             <div style={{ height: 450 }}>
                                 <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data} />
                             </div>
@@ -120,8 +120,8 @@ export default class AreaChartSamples extends React.Component {
 
                         </ChartWrapper>
                     </Grid>
-                    <Grid item xs={6} >
-                        <ChartWrapper title="Group Area Chart Sample" chart="line" media actionBar={false}>
+                    <Grid item lg={6} sm={12} xs={12} >
+                        <ChartWrapper title="Area Chart Sample with multiple chart objects in the configuration" chart="line" media actionBar={false}>
                             <div style={{ height: 450 }}>
                                 <VizG
                                     config={this.singleBarChartConfig}
@@ -141,7 +141,7 @@ export default class AreaChartSamples extends React.Component {
 
                         </ChartWrapper>
                     </Grid>
-                    <Grid item xs={6} >
+                    <Grid item lg={6} sm={12} xs={12} >
                         <ChartWrapper title="Stacked Area Chart Sample" chart="line" media actionBar={false}>
                             <div style={{ height: 450 }}>
                                 <VizG
@@ -162,7 +162,7 @@ export default class AreaChartSamples extends React.Component {
 
                         </ChartWrapper>
                     </Grid>
-                    <Grid item xs={6} >
+                    <Grid item lg={6} sm={12} xs={12} >
                         <ChartWrapper title="Sample Data set" chart="line" media actionBar={false}>
                             <div>
                                 metadata :
