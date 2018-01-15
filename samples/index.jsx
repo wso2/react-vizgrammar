@@ -30,7 +30,6 @@ import Maps from './chart-docs/GeographicalChartsSample';
 import Arcs from './chart-docs/PieChartSamples';
 import NumChart from './chart-docs/NumberChartSample';
 import Table from './chart-docs/TableChartSamples';
-import Test from './chart-docs/SparkLineSample';
 
 const theme = createMuiTheme({
     palette: {
@@ -67,9 +66,6 @@ ReactDOM.render(
             </ScrollReset>
             <ScrollReset>
                 <Route path="/table-charts" component={Table} />
-            </ScrollReset>
-            <ScrollReset>
-                <Route path="/test" component={Test} />
             </ScrollReset>
         </MuiThemeProvider>
     </Router>, document.getElementById('samples'));
