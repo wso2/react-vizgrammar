@@ -52,7 +52,7 @@ class VizG extends Component {
                         data={data}
                         onClick={onClick}
                         yDomain={this.props.yDomain}
-                        append={this.props.append && config.append}
+                        append={config.append}
                         theme={this.props.theme}
                         width={this.props.width}
                         height={this.props.height}
@@ -65,7 +65,7 @@ class VizG extends Component {
                         metadata={metadata}
                         data={data}
                         onClick={onClick}
-                        append={this.props.append && config.append}
+                        append={config.append}
                         width={this.props.width}
                         height={this.props.height}
                     />
@@ -77,7 +77,7 @@ class VizG extends Component {
                         metadata={metadata}
                         data={data}
                         onClick={onClick}
-                        append={this.props.append && config.append}
+                        append={config.append}
                         width={this.props.width}
                         height={this.props.height}
                     />
@@ -113,7 +113,7 @@ class VizG extends Component {
                         config={config}
                         data={data}
                         yDomain={this.props.yDomain}
-                        append={this.props.append}
+                        append={config.append}
                         width={this.props.width}
                         height={this.props.height}
                     />
