@@ -16,13 +16,13 @@
  * under the License.
  */
 
-path = require('path');
+var path = require('path');
 
 module.exports = {
     devtool: 'source-map',
-    entry: './index',
+    entry: './samples/index',
     output: {
-        path: path.resolve(__dirname, './public'),
+        path: path.resolve(__dirname, './docs'),
         filename: 'app.js',
     },
     module: {
@@ -32,7 +32,7 @@ module.exports = {
                 loader: 'json-loader',
             },
             {
-                exclude: path.resolve(__dirname, './node_modules'),
+                exclude: [path.resolve(__dirname, './node_modules')],
                 test: /\.(js|jsx)$/,
                 loader: 'babel-loader',
             },
@@ -48,7 +48,7 @@ module.exports = {
         ],
     },
     devServer: {
-        contentBase: './public',
+        contentBase: './docs',
         historyApiFallback: true,
         inline: true,
         port: 8080,
@@ -57,4 +57,3 @@ module.exports = {
         extensions: ['.js', '.json', '.jsx', '.scss'],
     },
 };
-
