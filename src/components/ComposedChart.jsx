@@ -60,7 +60,8 @@ export default class ComposedChart extends BaseChart {
                         {localChartSet}
                     </VictoryStack>));
             } else if (chart.type === 'bar') {
-                const barWidth = ((chart.orientation === 'bottom' ? height : (width - 280)) / (dataSetLength)) - 1;
+                const barWidth = ((chart.orientation === 'bottom' ?
+                    height : (width - 280)) / (dataSetLength * chartComponents.length)) - 1;
                 chartComponents.push((
                     <VictoryGroup
                         horizontal={(chart.orientation === 'left')}

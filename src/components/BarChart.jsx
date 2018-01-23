@@ -115,7 +115,7 @@ export default class BarChart extends BaseChart {
 
         const barWidth =
                 ((BarChart.isHorizontal(config) ?
-                    height : (width - 280)) / (dataSetLength * (chartComponents.length > 1 ? chartComponents.length : 2))) - 1;
+                    height : (width - 280)) / (dataSetLength * chartComponents.length)) - 1;
         chartComponents = [
             <VictoryGroup
                 name={'blacked'}
