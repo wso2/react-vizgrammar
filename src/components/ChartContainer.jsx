@@ -16,7 +16,7 @@
  * under the License.
  */
 import React from 'react';
-import { VictoryChart, VictoryVoronoiContainer, VictoryAxis, VictoryLabel } from 'victory';
+import { VictoryChart, VictoryVoronoiContainer, VictoryContainer, VictoryAxis, VictoryLabel } from 'victory';
 import { timeFormat } from 'd3';
 import PropTypes from 'prop-types';
 import lightTheme from './resources/themes/victoryLightTheme';
@@ -59,10 +59,12 @@ export default class ChartContainer extends React.Component {
                 scale={{ x: xScale, y: 'linear' }}
                 theme={currentTheme}
                 containerComponent={
-                    <VictoryVoronoiContainer
-                        voronoiDimension="x"
-                        voronoiBlacklist={['blacked']}
-                    />
+                    this.props.disableContainer ?
+                        <VictoryContainer />:
+                        <VictoryVoronoiContainer
+                            voronoiDimension="x"
+                            voronoiBlacklist={['blacked']}
+                        />
                 }
                 yDomain={yDomain}
                 xDomain={xDomain}
@@ -173,6 +175,7 @@ ChartContainer.defaultProps = {
     xDomain: null,
     theme: 'materialLight',
     children: [],
+    disableContainer: false,
 };
 
 ChartContainer.propTypes = {
@@ -215,4 +218,5 @@ ChartContainer.propTypes = {
         width: PropTypes.number,
         maxLength: PropTypes.number,
     }).isRequired,
+    disableContainer: PropTypes.bool,
 };
