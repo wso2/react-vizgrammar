@@ -72,6 +72,10 @@ export default class BaseChart extends React.Component {
         this.sortDataBasedOnConfig = this.sortDataBasedOnConfig.bind(this);
     }
 
+    componentDidMount() {
+        this.sortDataBasedOnConfig(this.props);
+    }
+
     componentWillReceiveProps(nextProps) {
         const { config } = nextProps;
         if (this.chartConfig === undefined || !(_.isEqual(config, this.chartConfig)) || config.append) {
@@ -125,7 +129,7 @@ export default class BaseChart extends React.Component {
                     }
                 });
             } else {
-                dataSet[chart.y] = data.map(datum => ({ x: datum[xIndex], y: datum[yIndex] }));
+                dataSet[chart.y] = data.map(datum => ({ x: datum[xIndex], y: datum[yIndex], yName: chart.y }));
                 chart.dataSetNames[chart.y] = chart.colorScale[chart.colorIndex];
             }
 

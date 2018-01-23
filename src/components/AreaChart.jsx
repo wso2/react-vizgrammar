@@ -21,6 +21,7 @@ import PropTypes from 'prop-types';
 import theme from './resources/themes/victoryDarkTheme';
 import BaseChart from './BaseChart';
 import ChartContainer from './ChartContainer';
+import { timeFormat } from 'd3';
 
 const DEFAULT_MARK_RADIUS = 4;
 const DEFAULT_AREA_FILL_OPACITY = 0.1;
@@ -30,7 +31,7 @@ const DEFAULT_AREA_FILL_OPACITY = 0.1;
  */
 export default class AreaChart extends BaseChart {
 
-    static getAreaChartComponent(chartArray, dataSets, config) {
+    static getAreaChartComponent(chartArray, xScale, dataSets, config) {
         const chartComponents = [];
         const legendComponents = [];
 
@@ -42,41 +43,9 @@ export default class AreaChart extends BaseChart {
                     symbol: { fill: chart.dataSetNames[dsName] },
                     chartIndex,
                 });
-                localChartComp.push((
-                    <VictoryGroup
-                        key={`area-group-${chart.id}`}
-                        data={dataSets[dsName]}
-                        color={chart.dataSetNames[dsName]}
-                    >
-                        <VictoryArea
-                            style={{
-                                data: {
-                                    fillOpacity: config.charts[chartIndex].style ?
-                                        config.charts[chartIndex].style.fillOpacity || DEFAULT_AREA_FILL_OPACITY :
-                                        DEFAULT_AREA_FILL_OPACITY,
-                                },
-                            }}
-                            animate={config.animate ? { onEnter: { duration: 100 } } : null}
-                            name={'blacked'}
-
-                        />
-                        <VictoryScatter
-                            labels={d => `${config.x}: ${d.x}\n${d.yName}: ${d.y}`}
-                            labelComponent={
-                                <VictoryTooltip
-                                    pointerLength={4}
-                                    cornerRadius={2}
-                                    flyoutStyle={{ fill: '#000', fillOpacity: '0.8', strokeWidth: 0 }}
-                                    style={{ fill: '#b0b0b0' }}
-                                />
-                            }
-                            size={(
-                                config.charts[chartIndex].style ?
-                                    config.charts[chartIndex].style.markRadius || DEFAULT_MARK_RADIUS : DEFAULT_MARK_RADIUS
-                            )}
-                        />
-                    </VictoryGroup>
-                ));
+                localChartComp.push(
+                    AreaChart
+                        .getComponent(config, chartIndex, xScale, dataSets[dsName], chart.dataSetNames[dsName], null));
             });
 
             if (chart.mode === 'stacked') {
@@ -94,11 +63,67 @@ export default class AreaChart extends BaseChart {
         return { chartComponents, legendComponents };
     }
 
+    static getComponent(config, chartIndex, xScale, data, color, onClick) {
+        return (
+            <VictoryGroup
+                key={`area-group-${chartIndex}`}
+                data={data}
+                color={color}
+                animate={config.animate ? { onEnter: { duration: 100 } } : null}
+            >
+                <VictoryArea
+                    style={{
+                        data: {
+                            fillOpacity: config.charts[chartIndex].style ?
+                                config.charts[chartIndex].style.fillOpacity || DEFAULT_AREA_FILL_OPACITY :
+                                DEFAULT_AREA_FILL_OPACITY,
+                        },
+                    }}
+                    name={'blacked'}
+
+                />
+                <VictoryScatter
+                    labels={
+                        (() => {
+                            if (xScale === 'time' && config.tipTimeFormat) {
+                                return (d) => {
+                                    return `${config.x}:${timeFormat(config.tipTimeFormat)(new Date(d.x))}\n` +
+                                        `${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}`;
+                                };
+                            } else {
+                                return (d) => {
+                                    if (isNaN(d.x)) {
+                                        return `${config.x}:${d.x}\n${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}`;
+                                    } else {
+                                        return `${config.x}:${Number(d.x).toFixed(2)}\n` +
+                                            `${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}`;
+                                    }
+                                };
+                            }
+                        })()
+                    }
+                    labelComponent={
+                        <VictoryTooltip
+                            pointerLength={4}
+                            cornerRadius={2}
+                            flyoutStyle={{ fill: '#000', fillOpacity: '0.8', strokeWidth: 0 }}
+                            style={{ fill: '#b0b0b0' }}
+                        />
+                    }
+                    size={(
+                        config.charts[chartIndex].style ?
+                            config.charts[chartIndex].style.markRadius || DEFAULT_MARK_RADIUS : DEFAULT_MARK_RADIUS
+                    )}
+                />
+            </VictoryGroup>
+        );
+    }
+
     render() {
         const { config, height, width } = this.props;
         const { chartArray, dataSets, xScale, ignoreArray } = this.state;
 
-        const { chartComponents, legendComponents } = AreaChart.getAreaChartComponent(chartArray, dataSets, config);
+        const { chartComponents, legendComponents } = AreaChart.getAreaChartComponent(chartArray, xScale, dataSets, config);
 
         return (
             <ChartContainer width={width} height={height} xScale={xScale} config={config}>

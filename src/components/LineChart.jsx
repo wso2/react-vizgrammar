@@ -19,6 +19,7 @@ import React from 'react';
 import { VictoryLine, VictoryTooltip, VictoryScatter } from 'victory';
 import BaseChart from './BaseChart';
 import ChartContainer from './ChartContainer';
+import { timeFormat } from 'd3';
 
 const DEFAULT_MARK_RADIUS = 4;
 
@@ -26,7 +27,7 @@ const DEFAULT_MARK_RADIUS = 4;
  * Class to handle the visualization of line charts.
  */
 export default class LineChart extends BaseChart {
-    static getLineChartComponent(chartArray, dataSets, config){
+    static getLineChartComponent(chartArray, xScale, dataSets, config) {
         const chartComponents = [];
         const legendComponents = [];
 
@@ -37,52 +38,75 @@ export default class LineChart extends BaseChart {
                     symbol: { fill: chart.dataSetNames[dsName] },
                     chartIndex,
                 });
-                chartComponents.push(...[
-                    (<VictoryLine
-                        style={{
-                            data: {
-                                strokeWidth: config.charts[chartIndex].style ?
-                                    config.charts[chartIndex].style.strokeWidth || null : null,
-                                stroke: chart.dataSetNames[dsName],
-                            },
-                        }}
-                        animate={config.animate ? { onEnter: { duration: 100 } } : null}
-                        data={dataSets[dsName]}
-                        name={'blacked'}
-                    />),
-                    (<VictoryScatter
-                        style={{
-                            data: {
-                                fill: chart.dataSetNames[dsName],
-                            },
-                        }}
-                        data={dataSets[dsName]}
-                        labels={d => `${config.x}: ${d.x}\n${d.yName}: ${d.y}`}
-                        labelComponent={
-                            <VictoryTooltip
-                                pointerLength={4}
-                                cornerRadius={2}
-                                flyoutStyle={{ fill: '#000', fillOpacity: '0.8', strokeWidth: 0 }}
-                                style={{ fill: '#b0b0b0' }}
-                            />
-                        }
-                        size={(
-                            config.charts[chartIndex].style ?
-                                config.charts[chartIndex].style.markRadius || DEFAULT_MARK_RADIUS : DEFAULT_MARK_RADIUS
-                        )}
-                    />),
-                ]);
+                chartComponents.push(...LineChart
+                    .getComponent(config, chartIndex, xScale, dataSets[dsName], chart.dataSetNames[dsName], null));
             });
         });
 
         return { chartComponents, legendComponents };
     }
 
+    static getComponent(config, chartIndex, xScale, data, color, onClick) {
+        return [
+                (<VictoryLine
+                    style={{
+                        data: {
+                            strokeWidth: config.charts[chartIndex].style ?
+                                config.charts[chartIndex].style.strokeWidth || null : null,
+                            stroke: color,
+                        },
+                    }}
+                    animate={config.animate ? { onEnter: { duration: 100 } } : null}
+                    data={data}
+                    name={'blacked'}
+                />),
+                (<VictoryScatter
+                    style={{
+                        data: {
+                            fill: color,
+                        },
+                    }}
+                    data={data}
+                    labels={
+                        (() => {
+                            if (xScale === 'time' && config.tipTimeFormat) {
+                                return (d) => {
+                                    return `${config.x}:${timeFormat(config.tipTimeFormat)(new Date(d.x))}\n` +
+                                        `${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}`;
+                                };
+                            } else {
+                                return (d) => {
+                                    if (isNaN(d.x)) {
+                                        return `${config.x}:${d.x}\n${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}`;
+                                    } else {
+                                        return `${config.x}:${Number(d.x).toFixed(2)}\n` +
+                                            `${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}`;
+                                    }
+                                };
+                            }
+                        })()
+                    }
+                    labelComponent={
+                        <VictoryTooltip
+                            pointerLength={4}
+                            cornerRadius={2}
+                            flyoutStyle={{ fill: '#000', fillOpacity: '0.8', strokeWidth: 0 }}
+                            style={{ fill: '#b0b0b0' }}
+                        />
+                    }
+                    size={(
+                        config.charts[chartIndex].style ?
+                            config.charts[chartIndex].style.markRadius || DEFAULT_MARK_RADIUS : DEFAULT_MARK_RADIUS
+                    )}
+                />),
+        ];
+    }
+
     render() {
         const { config, height, width } = this.props;
         const { chartArray, dataSets, xScale, ignoreArray } = this.state;
 
-        const { chartComponents, legendComponents } = LineChart.getLineChartComponent(chartArray,dataSets,config);
+        const { chartComponents, legendComponents } = LineChart.getLineChartComponent(chartArray, xScale, dataSets, config);
 
         return (
             <ChartContainer width={width} height={height} xScale={xScale} config={config}>
