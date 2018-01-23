@@ -26,8 +26,13 @@ import AreaChart from './AreaChart';
 
 export default class BarChart extends BaseChart {
 
+    constructor(props) {
+        super(props);
+        this.handleMouseEvent = this.handleMouseEvent.bind(this);
+    }
+
     static isHorizontal(config) {
-        return _.find(config.charts, { orientaion: 'left' }) !== undefined;
+        return _.find(config.charts, { orientation: 'left' }) !== undefined;
     }
 
     static getBarChartComponent(chartArray, dataSets, config, onClick, xScale) {
@@ -40,53 +45,7 @@ export default class BarChart extends BaseChart {
             _.keys(chart.dataSetNames).forEach((dsName) => {
                 if (dataSetLength < dataSets[dsName].length) dataSetLength = dataSets[dsName].length;
                 localSet.push((
-                    <VictoryBar
-                        name={'blacked'}
-                        labels={
-                            (() => {
-                                if (xScale === 'time' && config.tipTimeFormat) {
-                                    return (d) => {
-                                        return `${config.x}:${timeFormat(config.tipTimeFormat)(new Date(d.x))}\n` +
-                                            `${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}`;
-                                    };
-                                } else {
-                                    return (d) => {
-                                        if (isNaN(d.x)) {
-                                            return `${config.x}:${d.x}\n${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}`;
-                                        } else {
-                                            return `${config.x}:${Number(d.x).toFixed(2)}\n` +
-                                `${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}`;
-                                        }
-                                    };
-                                }
-                            })()
-                        }
-                        labelComponent={
-                            <VictoryTooltip
-                                orientation='top'
-                                pointerLength={4}
-                                cornerRadius={2}
-                                flyoutStyle={{ fill: '#000', fillOpacity: '0.8', strokeWidth: 0 }}
-                                style={{ fill: '#b0b0b0' }}
-                            />
-                        }
-                        data={dataSets[dsName]}
-                        color={chart.dataSetNames[dsName]}
-                        events={[{
-                            target: 'data',
-                            eventHandlers: {
-                                onClick: () => {
-                                    return [
-                                        {
-                                            target: 'data',
-                                            mutation: onClick,
-                                        },
-                                    ];
-                                },
-                            },
-                        }]}
-                        animate={config.animate ? { onEnter: { duration: 100 } } : null}
-                    />
+                    BarChart.getComponent(config, chartIndex, xScale, dataSets[dsName], chart.dataSetNames[dsName], onClick)
                 ));
             });
 
@@ -106,16 +65,69 @@ export default class BarChart extends BaseChart {
         return { chartComponents, legendComponenets, dataSetLength };
     }
 
+    static getComponent(config, chartIndex, xScale, data, color, onClick) {
+        return (
+            <VictoryBar
+                name={'blacked'}
+                labels={
+                    (() => {
+                        if (xScale === 'time' && config.tipTimeFormat) {
+                            return (d) => {
+                                return `${config.x}:${timeFormat(config.tipTimeFormat)(new Date(d.x))}\n` +
+                                    `${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}`;
+                            };
+                        } else {
+                            return (d) => {
+                                if (isNaN(d.x)) {
+                                    return `${config.x}:${d.x}\n${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}`;
+                                } else {
+                                    return `${config.x}:${Number(d.x).toFixed(2)}\n` +
+                                        `${config.charts[chartIndex].y}:${Number(d.y).toFixed(2)}`;
+                                }
+                            };
+                        }
+                    })()
+                }
+                labelComponent={
+                    <VictoryTooltip
+                        orientation='top'
+                        pointerLength={4}
+                        cornerRadius={2}
+                        flyoutStyle={{ fill: '#000', fillOpacity: '0.8', strokeWidth: 0 }}
+                        style={{ fill: '#b0b0b0' }}
+                    />
+                }
+                data={data}
+                color={color}
+                events={[{
+                    target: 'data',
+                    eventHandlers: {
+                        onClick: () => {
+                            return [
+                                {
+                                    target: 'data',
+                                    mutation: this.handleMouseEvent,
+                                },
+                            ];
+                        },
+                    },
+                }]}
+                animate={config.animate ? { onEnter: { duration: 100 } } : null}
+            />
+        );
+    }
+
     render() {
         const { config, height, width } = this.props;
         const { chartArray, dataSets, xScale, ignoreArray } = this.state;
 
         let { chartComponents, legendComponents, dataSetLength } =
-            BarChart.getBarChartComponent(chartArray, dataSets, config, null, xScale);
+            BarChart.getBarChartComponent(chartArray, dataSets, config, this.props.onClick, xScale);
 
         const barWidth =
                 ((BarChart.isHorizontal(config) ?
-                    height : (width - 280)) / (dataSetLength * chartComponents.length)) - 1;
+                    (height - 80) : (width - 280)) / (dataSetLength * chartComponents.length)) - 1;
+
         chartComponents = [
             <VictoryGroup
                 name={'blacked'}
@@ -129,7 +141,15 @@ export default class BarChart extends BaseChart {
 
 
         return (
-            <ChartContainer width={width} height={height} xScale={xScale} config={config} disableContainer>
+            <ChartContainer
+                width={width}
+                height={height}
+                xScale={xScale}
+                config={config}
+                disableContainer
+                horizontal={BarChart.isHorizontal(config)}
+                yDomain={this.props.yDomain}
+            >
                 {chartComponents}
             </ChartContainer>
         );

@@ -31,11 +31,11 @@ export default class ComposedChart extends BaseChart {
         const { config, height, width } = this.props;
         const { chartArray, dataSets, xScale, ignoreArray } = this.state;
 
-
         chartArray.forEach((chart, chartIndex) => {
             const localChartSet = [];
-            const dataSetLength = 1;
+            let dataSetLength = 1;
             _.keys(chart.dataSetNames).forEach((dsName) => {
+                if (dataSetLength < dataSets[dsName].length) dataSetLength = dataSets[dsName].length;
                 const component = {
                     line: () => {
                         return LineChart
@@ -47,7 +47,7 @@ export default class ComposedChart extends BaseChart {
                     },
                     bar: () => {
                         return BarChart
-                            .getComponent(config, xScale, chartIndex, dataSets[dsName], chart.dataSetNames[dsName], null);
+                            .getComponent(config, chartIndex, xScale, dataSets[dsName], chart.dataSetNames[dsName], null);
                     },
                 };
 
@@ -60,8 +60,10 @@ export default class ComposedChart extends BaseChart {
                         {localChartSet}
                     </VictoryStack>));
             } else if (chart.type === 'bar') {
-                const barWidth = ((chart.orientation === 'bottom' ?
-                    height : (width - 280)) / (dataSetLength * chartComponents.length)) - 1;
+                const barWidth =
+                    ((BarChart.isHorizontal(config) ?
+                        (height - 80) : (width - 280)) / (dataSetLength * localChartSet.length)) - 1;
+
                 chartComponents.push((
                     <VictoryGroup
                         horizontal={(chart.orientation === 'left')}

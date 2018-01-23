@@ -18,6 +18,7 @@
 // TODO:Fix dynamically changing config for other charts
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import BasicCharts from './components/BasicChart';
 import ScatterCharts from './components/ScatterChart';
 import PieCharts from './components/PieChart';
@@ -26,6 +27,10 @@ import TableCharts from './components/TableChart';
 import NumberCharts from './components/NumberChart';
 import InlineCharts from './components/InlineChart';
 import VizGError from './VizGError';
+import LineChart from './components/LineChart';
+import AreaChart from './components/AreaChart';
+import BarChart from './components/BarChart';
+import ComposedChart from './components/ComposedChart';
 
 class VizG extends Component {
     /**
@@ -43,10 +48,50 @@ class VizG extends Component {
         }
         switch (chartType) {
             case 'line':
+                return (
+                    <LineChart
+                        config={config}
+                        metadata={metadata}
+                        data={data}
+                        onClick={onClick}
+                        yDomain={this.props.yDomain}
+                        append={config.append}
+                        theme={this.props.theme}
+                        width={this.props.width}
+                        height={this.props.height}
+                    />
+                );
             case 'area':
+                return (
+                    <AreaChart
+                        config={config}
+                        metadata={metadata}
+                        data={data}
+                        onClick={onClick}
+                        yDomain={this.props.yDomain}
+                        append={config.append}
+                        theme={this.props.theme}
+                        width={this.props.width}
+                        height={this.props.height}
+                    />
+                );
             case 'bar':
                 return (
-                    <BasicCharts
+                    <BarChart
+                        config={config}
+                        metadata={metadata}
+                        data={data}
+                        onClick={onClick}
+                        yDomain={this.props.yDomain}
+                        append={config.append}
+                        theme={this.props.theme}
+                        width={this.props.width}
+                        height={this.props.height}
+                    />
+                );
+            case 'composed':
+                return (
+                    <ComposedChart
                         config={config}
                         metadata={metadata}
                         data={data}
@@ -123,6 +168,25 @@ class VizG extends Component {
         }
     }
 
+    _isComposed(config) {
+        const chartType = config.charts[0].type;
+        if ((chartType === 'line' || chartType === 'area' || chartType === 'bar') && config.charts.length > 1) {
+            const areaChart = _.find(config.charts, { type: 'area' });
+            const barChart = _.find(config.charts, { type: 'bar' });
+            const lineChart = _.find(config.charts, { type: 'line' });
+
+            if ((areaChart === undefined && barChart === undefined) ||
+                (lineChart === undefined && areaChart === undefined) ||
+                (barChart === undefined && lineChart === undefined)) {
+                return chartType;
+            } else {
+                return 'composed';
+            }
+        } else {
+            return chartType;
+        }
+    }
+
     render() {
         const { config, data, metadata, onClick } = this.props;
         return (
@@ -130,7 +194,7 @@ class VizG extends Component {
                 {
                     !config || !metadata ?
                         null :
-                        this._selectAndRenderChart(config.charts[0].type, config, data, metadata, onClick)
+                        this._selectAndRenderChart(this._isComposed(config), config, data, metadata, onClick)
                 }
             </div>
         );

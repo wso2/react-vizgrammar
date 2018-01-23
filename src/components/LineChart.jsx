@@ -20,6 +20,7 @@ import { VictoryLine, VictoryTooltip, VictoryScatter } from 'victory';
 import BaseChart from './BaseChart';
 import ChartContainer from './ChartContainer';
 import { timeFormat } from 'd3';
+import BarChart from './BarChart';
 
 const DEFAULT_MARK_RADIUS = 4;
 
@@ -27,6 +28,11 @@ const DEFAULT_MARK_RADIUS = 4;
  * Class to handle the visualization of line charts.
  */
 export default class LineChart extends BaseChart {
+    constructor(props) {
+        super(props);
+        this.handleMouseEvent = this.handleMouseEvent.bind(this);
+    }
+
     static getLineChartComponent(chartArray, xScale, dataSets, config) {
         const chartComponents = [];
         const legendComponents = [];
@@ -98,6 +104,19 @@ export default class LineChart extends BaseChart {
                         config.charts[chartIndex].style ?
                             config.charts[chartIndex].style.markRadius || DEFAULT_MARK_RADIUS : DEFAULT_MARK_RADIUS
                     )}
+                    events={[{
+                        target: 'data',
+                        eventHandlers: {
+                            onClick: () => {
+                                return [
+                                    {
+                                        target: 'data',
+                                        mutation: onClick,
+                                    },
+                                ];
+                            },
+                        },
+                    }]}
                 />),
         ];
     }
@@ -109,7 +128,14 @@ export default class LineChart extends BaseChart {
         const { chartComponents, legendComponents } = LineChart.getLineChartComponent(chartArray, xScale, dataSets, config);
 
         return (
-            <ChartContainer width={width} height={height} xScale={xScale} config={config}>
+            <ChartContainer
+                width={width}
+                height={height}
+                xScale={xScale}
+                config={config}
+                horizontal={BarChart.isHorizontal(config)}
+                yDomain={this.props.yDomain}
+            >
                 {chartComponents}
             </ChartContainer>
         );

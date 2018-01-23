@@ -25,7 +25,6 @@ import { getDefaultColorScale } from './helper';
  * Base Chart that contain most common methods that requires for the charts.
  */
 export default class BaseChart extends React.Component {
-
     static getXScale(type) {
         if (type.toLowerCase() === 'linear' || type.toLowerCase() === 'ordinal') return 'linear';
         else return 'time';
@@ -78,13 +77,18 @@ export default class BaseChart extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         const { config } = nextProps;
-        if (this.chartConfig === undefined || !(_.isEqual(config, this.chartConfig)) || config.append) {
+        if (this.chartConfig === undefined || !(_.isEqual(config, this.chartConfig)) || !this.props.append) {
             this.state.chartArray = [];
             this.state.dataSets = {};
             this.chartConfig = config;
         }
 
         this.sortDataBasedOnConfig(nextProps);
+    }
+
+    handleMouseEvent() {
+        const { onClick } = this.props;
+        return onClick && onClick(evt);
     }
 
     sortDataBasedOnConfig(props) {

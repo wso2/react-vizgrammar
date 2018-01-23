@@ -27,7 +27,7 @@ import darkTheme from './resources/themes/victoryDarkTheme';
  */
 export default class ChartContainer extends React.Component {
     render() {
-        const { width, height, xScale, theme, config, yDomain, xDomain, dataSets } = this.props;
+        const { width, height, xScale, theme, config, horizontal, yDomain, xDomain, dataSets } = this.props;
         const currentTheme = theme === 'materialLight' ? lightTheme : darkTheme;
         let arr = null;
         if (xScale === 'ordinal' && config.charts[0].type === 'bar') {
@@ -60,7 +60,7 @@ export default class ChartContainer extends React.Component {
                 theme={currentTheme}
                 containerComponent={
                     this.props.disableContainer ?
-                        <VictoryContainer />:
+                        <VictoryContainer /> :
                         <VictoryVoronoiContainer
                             voronoiDimension="x"
                             voronoiBlacklist={['blacked']}
@@ -92,7 +92,8 @@ export default class ChartContainer extends React.Component {
                             }}
                         />
                     }
-                    label={config.xAxisLabel || config.x}
+                    label={horizontal ? config.yAxisLabel || (config.charts.length > 1 ? '' : config.charts[0].y) :
+                        config.xAxisLabel || config.x}
                     tickFormat={(() => {
                         if (xScale === 'time' && config.timeFormat) {
                             return (date) => {
@@ -144,7 +145,8 @@ export default class ChartContainer extends React.Component {
                             fill: 'transparent',
                         }}
                     />}
-                    label={config.yAxisLabel || config.charts.length > 1 ? '' : config.charts[0].y}
+                    label={horizontal ? config.xAxisLabel || config.x :
+                        config.yAxisLabel || (config.charts.length > 1 ? '' : config.charts[0].y)}
                     standalone={false}
                     tickLabelComponent={
                         <VictoryLabel
@@ -176,6 +178,7 @@ ChartContainer.defaultProps = {
     theme: 'materialLight',
     children: [],
     disableContainer: false,
+    horizontal: false,
 };
 
 ChartContainer.propTypes = {
@@ -219,4 +222,5 @@ ChartContainer.propTypes = {
         maxLength: PropTypes.number,
     }).isRequired,
     disableContainer: PropTypes.bool,
+    horizontal: PropTypes.bool,
 };

@@ -31,6 +31,11 @@ const DEFAULT_AREA_FILL_OPACITY = 0.1;
  */
 export default class AreaChart extends BaseChart {
 
+    constructor(props) {
+        super(props);
+        this.handleMouseEvent = this.handleMouseEvent.bind(this);
+    }
+
     static getAreaChartComponent(chartArray, xScale, dataSets, config) {
         const chartComponents = [];
         const legendComponents = [];
@@ -69,7 +74,7 @@ export default class AreaChart extends BaseChart {
                 key={`area-group-${chartIndex}`}
                 data={data}
                 color={color}
-                animate={config.animate ? { onEnter: { duration: 100 } } : null}
+
             >
                 <VictoryArea
                     style={{
@@ -80,7 +85,7 @@ export default class AreaChart extends BaseChart {
                         },
                     }}
                     name={'blacked'}
-
+                    animate={config.animate ? { onEnter: { duration: 50 } } : null}
                 />
                 <VictoryScatter
                     labels={
@@ -100,6 +105,7 @@ export default class AreaChart extends BaseChart {
                                     }
                                 };
                             }
+
                         })()
                     }
                     labelComponent={
@@ -114,6 +120,20 @@ export default class AreaChart extends BaseChart {
                         config.charts[chartIndex].style ?
                             config.charts[chartIndex].style.markRadius || DEFAULT_MARK_RADIUS : DEFAULT_MARK_RADIUS
                     )}
+                    animate={config.animate ? { onEnter: { duration: 50 } } : null}
+                    events={[{
+                        target: 'data',
+                        eventHandlers: {
+                            onClick: () => {
+                                return [
+                                    {
+                                        target: 'data',
+                                        mutation: this.handleMouseEvent,
+                                    },
+                                ];
+                            },
+                        },
+                    }]}
                 />
             </VictoryGroup>
         );
@@ -126,7 +146,13 @@ export default class AreaChart extends BaseChart {
         const { chartComponents, legendComponents } = AreaChart.getAreaChartComponent(chartArray, xScale, dataSets, config);
 
         return (
-            <ChartContainer width={width} height={height} xScale={xScale} config={config}>
+            <ChartContainer
+                width={width}
+                height={height}
+                xScale={xScale}
+                config={config}
+                yDomain={this.props.yDomain}
+            >
                 {chartComponents}
             </ChartContainer>
         );
