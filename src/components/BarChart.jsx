@@ -22,36 +22,45 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import BaseChart from './BaseChart';
 import ChartContainer from './ChartContainer';
-import AreaChart from './AreaChart';
+import LegendComponent from './LegendComponent';
 
 export default class BarChart extends BaseChart {
 
     constructor(props) {
         super(props);
         this.handleMouseEvent = this.handleMouseEvent.bind(this);
+        this.handleLegendInteraction = this.handleLegendInteraction.bind(this);
     }
 
     static isHorizontal(config) {
         return _.find(config.charts, { orientation: 'left' }) !== undefined;
     }
 
-    static getBarChartComponent(chartArray, dataSets, config, onClick, xScale) {
+    static getBarChartComponent(chartArray, dataSets, config, onClick, xScale, ignoreArray) {
         const chartComponents = [];
-        const legendComponenets = [];
+        const legendComponents = [];
         let dataSetLength = 1;
 
         chartArray.forEach((chart, chartIndex) => {
             const localSet = [];
             _.keys(chart.dataSetNames).forEach((dsName) => {
+                legendComponents.push({
+                    name: dsName,
+                    symbol: { fill: _.indexOf(ignoreArray, dsName) > -1 ? '#d3d3d3' : chart.dataSetNames[dsName] },
+                    chartIndex,
+                });
                 if (dataSetLength < dataSets[dsName].length) dataSetLength = dataSets[dsName].length;
-                localSet.push((
-                    BarChart.getComponent(config, chartIndex, xScale, dataSets[dsName], chart.dataSetNames[dsName], onClick)
-                ));
+                if ((_.indexOf(ignoreArray, dsName)) === -1) {
+                    localSet.push((
+                        BarChart.getComponent(config, chartIndex, xScale, dataSets[dsName], chart.dataSetNames[dsName], onClick)
+                    ));
+                }
             });
 
             if (chart.mode === 'stacked') {
                 chartComponents.push((
                     <VictoryStack
+                        key={`victoryStackGroup-${chart.id}`}
                         name={'blacked'}
                     >
                         {localSet}
@@ -62,12 +71,13 @@ export default class BarChart extends BaseChart {
             }
         });
 
-        return { chartComponents, legendComponenets, dataSetLength };
+        return { chartComponents, legendComponents, dataSetLength };
     }
 
     static getComponent(config, chartIndex, xScale, data, color, onClick) {
         return (
             <VictoryBar
+                key={`bar-${chartIndex}`}
                 name={'blacked'}
                 labels={
                     (() => {
@@ -99,19 +109,21 @@ export default class BarChart extends BaseChart {
                 }
                 data={data}
                 color={color}
-                events={[{
-                    target: 'data',
-                    eventHandlers: {
-                        onClick: () => {
-                            return [
-                                {
-                                    target: 'data',
-                                    mutation: this.handleMouseEvent,
-                                },
-                            ];
+                events={[
+                    {
+                        target: 'data',
+                        eventHandlers: {
+                            onClick: () => {
+                                return [
+                                    {
+                                        target: 'data',
+                                        mutation: onClick,
+                                    },
+                                ];
+                            },
                         },
                     },
-                }]}
+                ]}
                 animate={config.animate ? { onEnter: { duration: 100 } } : null}
             />
         );
@@ -122,7 +134,7 @@ export default class BarChart extends BaseChart {
         const { chartArray, dataSets, xScale, ignoreArray } = this.state;
 
         let { chartComponents, legendComponents, dataSetLength } =
-            BarChart.getBarChartComponent(chartArray, dataSets, config, this.props.onClick, xScale);
+            BarChart.getBarChartComponent(chartArray, dataSets, config, this.handleMouseEvent, xScale, ignoreArray);
 
         const barWidth =
                 ((BarChart.isHorizontal(config) ?
@@ -139,7 +151,6 @@ export default class BarChart extends BaseChart {
             </VictoryGroup>,
         ];
 
-
         return (
             <ChartContainer
                 width={width}
@@ -150,6 +161,17 @@ export default class BarChart extends BaseChart {
                 horizontal={BarChart.isHorizontal(config)}
                 yDomain={this.props.yDomain}
             >
+                {
+                    config.legend === true ?
+                        <LegendComponent
+                            height={height}
+                            width={width}
+                            legendItems={legendComponents}
+                            interaction={this.handleLegendInteraction}
+                            config={config}
+                        /> : null
+
+                }
                 {chartComponents}
             </ChartContainer>
         );

@@ -23,8 +23,16 @@ import LineChart from './LineChart';
 import AreaChart from './AreaChart';
 import BarChart from './BarChart';
 import ChartContainer from './ChartContainer';
+import LegendComponent from './LegendComponent';
 
 export default class ComposedChart extends BaseChart {
+
+    constructor(props) {
+        super(props);
+        this.handleMouseEvent = this.handleMouseEvent.bind(this);
+        this.handleLegendInteraction = this.handleLegendInteraction.bind(this);
+    }
+
     render() {
         const finalLegend = [];
         const chartComponents = [];
@@ -35,6 +43,11 @@ export default class ComposedChart extends BaseChart {
             const localChartSet = [];
             let dataSetLength = 1;
             _.keys(chart.dataSetNames).forEach((dsName) => {
+                finalLegend.push({
+                    name: dsName,
+                    symbol: { fill: _.indexOf(ignoreArray, dsName) > -1 ? '#d3d3d3' : chart.dataSetNames[dsName] },
+                    chartIndex,
+                });
                 if (dataSetLength < dataSets[dsName].length) dataSetLength = dataSets[dsName].length;
                 const component = {
                     line: () => {
@@ -51,7 +64,9 @@ export default class ComposedChart extends BaseChart {
                     },
                 };
 
-                localChartSet.push(component[chart.type]());
+                if (_.indexOf(ignoreArray, dsName) === -1) {
+                    localChartSet.push(component[chart.type]());
+                }
             });
 
             if (chart.mode === 'stacked') {
@@ -80,6 +95,17 @@ export default class ComposedChart extends BaseChart {
 
         return (
             <ChartContainer width={width} height={height} xScale={xScale} config={config} disableContainer>
+                {
+                    config.legend === true ?
+                        <LegendComponent
+                            height={height}
+                            width={width}
+                            legendItems={finalLegend}
+                            interaction={this.handleLegendInteraction}
+                            config={config}
+                        /> : null
+
+                }
                 {chartComponents}
             </ChartContainer>
         );

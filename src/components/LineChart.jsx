@@ -21,6 +21,7 @@ import BaseChart from './BaseChart';
 import ChartContainer from './ChartContainer';
 import { timeFormat } from 'd3';
 import BarChart from './BarChart';
+import LegendComponent from './LegendComponent';
 
 const DEFAULT_MARK_RADIUS = 4;
 
@@ -31,9 +32,10 @@ export default class LineChart extends BaseChart {
     constructor(props) {
         super(props);
         this.handleMouseEvent = this.handleMouseEvent.bind(this);
+        this.handleLegendInteraction = this.handleLegendInteraction.bind(this);
     }
 
-    static getLineChartComponent(chartArray, xScale, dataSets, config) {
+    static getLineChartComponent(chartArray, xScale, dataSets, config, onClick, ignoreArray) {
         const chartComponents = [];
         const legendComponents = [];
 
@@ -41,11 +43,13 @@ export default class LineChart extends BaseChart {
             _.keys(chart.dataSetNames).forEach((dsName) => {
                 legendComponents.push({
                     name: dsName,
-                    symbol: { fill: chart.dataSetNames[dsName] },
+                    symbol: { fill: _.indexOf(ignoreArray, dsName) > -1 ? '#d3d3d3' : chart.dataSetNames[dsName] },
                     chartIndex,
                 });
-                chartComponents.push(...LineChart
-                    .getComponent(config, chartIndex, xScale, dataSets[dsName], chart.dataSetNames[dsName], null));
+                if (_.indexOf(ignoreArray, dsName) === -1) {
+                    chartComponents.push(...LineChart
+                        .getComponent(config, chartIndex, xScale, dataSets[dsName], chart.dataSetNames[dsName], onClick));
+                }
             });
         });
 
@@ -55,6 +59,7 @@ export default class LineChart extends BaseChart {
     static getComponent(config, chartIndex, xScale, data, color, onClick) {
         return [
                 (<VictoryLine
+                    key={`lineChart-${chartIndex}`}
                     style={{
                         data: {
                             strokeWidth: config.charts[chartIndex].style ?
@@ -67,6 +72,7 @@ export default class LineChart extends BaseChart {
                     name={'blacked'}
                 />),
                 (<VictoryScatter
+                    key={`lineScatter-${chartIndex}`}
                     style={{
                         data: {
                             fill: color,
@@ -125,7 +131,8 @@ export default class LineChart extends BaseChart {
         const { config, height, width } = this.props;
         const { chartArray, dataSets, xScale, ignoreArray } = this.state;
 
-        const { chartComponents, legendComponents } = LineChart.getLineChartComponent(chartArray, xScale, dataSets, config);
+        const { chartComponents, legendComponents } =
+            LineChart.getLineChartComponent(chartArray, xScale, dataSets, config, this.handleMouseEvent, ignoreArray);
 
         return (
             <ChartContainer
@@ -136,6 +143,17 @@ export default class LineChart extends BaseChart {
                 horizontal={BarChart.isHorizontal(config)}
                 yDomain={this.props.yDomain}
             >
+                {
+                    config.legend === true ?
+                        <LegendComponent
+                            height={height}
+                            width={width}
+                            legendItems={legendComponents}
+                            interaction={this.handleLegendInteraction}
+                            config={config}
+                        /> : null
+
+                }
                 {chartComponents}
             </ChartContainer>
         );

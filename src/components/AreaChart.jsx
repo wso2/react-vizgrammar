@@ -17,11 +17,10 @@
  */
 import React from 'react';
 import { VictoryArea, VictoryChart, VictoryVoronoiContainer, createContainer, VictoryStack, VictoryTooltip, VictoryScatter, VictoryGroup } from 'victory';
-import PropTypes from 'prop-types';
-import theme from './resources/themes/victoryDarkTheme';
+import { timeFormat } from 'd3';
 import BaseChart from './BaseChart';
 import ChartContainer from './ChartContainer';
-import { timeFormat } from 'd3';
+import LegendComponent from './LegendComponent';
 
 const DEFAULT_MARK_RADIUS = 4;
 const DEFAULT_AREA_FILL_OPACITY = 0.1;
@@ -34,9 +33,10 @@ export default class AreaChart extends BaseChart {
     constructor(props) {
         super(props);
         this.handleMouseEvent = this.handleMouseEvent.bind(this);
+        this.handleLegendInteraction = this.handleLegendInteraction.bind(this);
     }
 
-    static getAreaChartComponent(chartArray, xScale, dataSets, config) {
+    static getAreaChartComponent(chartArray, xScale, dataSets, config, onClick, ignoreArray) {
         const chartComponents = [];
         const legendComponents = [];
 
@@ -45,12 +45,14 @@ export default class AreaChart extends BaseChart {
             _.keys(chart.dataSetNames).forEach((dsName) => {
                 legendComponents.push({
                     name: dsName,
-                    symbol: { fill: chart.dataSetNames[dsName] },
+                    symbol: { fill: _.indexOf(ignoreArray, dsName) > -1 ? '#d3d3d3' : chart.dataSetNames[dsName] },
                     chartIndex,
                 });
-                localChartComp.push(
-                    AreaChart
-                        .getComponent(config, chartIndex, xScale, dataSets[dsName], chart.dataSetNames[dsName], null));
+                if (_.indexOf(ignoreArray, dsName) === -1) {
+                    localChartComp.push(
+                        AreaChart
+                            .getComponent(config, chartIndex, xScale, dataSets[dsName], chart.dataSetNames[dsName], onClick));
+                }
             });
 
             if (chart.mode === 'stacked') {
@@ -105,7 +107,6 @@ export default class AreaChart extends BaseChart {
                                     }
                                 };
                             }
-
                         })()
                     }
                     labelComponent={
@@ -128,7 +129,7 @@ export default class AreaChart extends BaseChart {
                                 return [
                                     {
                                         target: 'data',
-                                        mutation: this.handleMouseEvent,
+                                        mutation: onClick,
                                     },
                                 ];
                             },
@@ -143,7 +144,8 @@ export default class AreaChart extends BaseChart {
         const { config, height, width } = this.props;
         const { chartArray, dataSets, xScale, ignoreArray } = this.state;
 
-        const { chartComponents, legendComponents } = AreaChart.getAreaChartComponent(chartArray, xScale, dataSets, config);
+        const { chartComponents, legendComponents } =
+            AreaChart.getAreaChartComponent(chartArray, xScale, dataSets, config, this.handleMouseEvent, ignoreArray);
 
         return (
             <ChartContainer
@@ -153,6 +155,17 @@ export default class AreaChart extends BaseChart {
                 config={config}
                 yDomain={this.props.yDomain}
             >
+                {
+                    config.legend === true ?
+                        <LegendComponent
+                            height={height}
+                            width={width}
+                            legendItems={legendComponents}
+                            interaction={this.handleLegendInteraction}
+                            config={config}
+                        /> : null
+
+                }
                 {chartComponents}
             </ChartContainer>
         );

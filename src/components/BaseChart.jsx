@@ -21,6 +21,8 @@ import PropTypes from 'prop-types';
 import VizGError from '../VizGError';
 import { getDefaultColorScale } from './helper';
 
+const LEGEND_DISABLED_COLOR = '#d3d3d3';
+
 /**
  * Base Chart that contain most common methods that requires for the charts.
  */
@@ -67,6 +69,7 @@ export default class BaseChart extends React.Component {
         };
 
         this.chartConfig = undefined;
+        this.updating = false;
 
         this.sortDataBasedOnConfig = this.sortDataBasedOnConfig.bind(this);
     }
@@ -86,9 +89,21 @@ export default class BaseChart extends React.Component {
         this.sortDataBasedOnConfig(nextProps);
     }
 
-    handleMouseEvent() {
+    handleMouseEvent(evt) {
         const { onClick } = this.props;
         return onClick && onClick(evt);
+    }
+
+    handleLegendInteraction(props) {
+        this.setState((prevState) => {
+            const ignoreIndex = _.indexOf(prevState.ignoreArray, props.datum.name);
+            if (ignoreIndex < 0) {
+                prevState.ignoreArray.push(props.datum.name);
+            } else {
+                prevState.ignoreArray.splice(ignoreIndex, 1);
+            }
+            return prevState;
+        });
     }
 
     sortDataBasedOnConfig(props) {
@@ -103,6 +118,8 @@ export default class BaseChart extends React.Component {
             throw VizGError('BasicChart', "Provided metadata doesn't match the previous metadata.");
         }
 
+        let dataSet = {};
+
         chartArray.forEach((chart) => {
             const yIndex = metadata.names.indexOf(chart.y);
             const colorIndex = metadata.names.indexOf(chart.colorCategoryName);
@@ -111,7 +128,6 @@ export default class BaseChart extends React.Component {
                 throw new VizGError('BasicChart', 'Axis name not found in metadata');
             }
 
-            let dataSet = {};
             if (chart.color) {
                 if (colorIndex < 0) {
                     throw new VizGError('BasicChart', 'Color category not found in metadata.');
@@ -136,16 +152,19 @@ export default class BaseChart extends React.Component {
                 dataSet[chart.y] = data.map(datum => ({ x: datum[xIndex], y: datum[yIndex], yName: chart.y }));
                 chart.dataSetNames[chart.y] = chart.colorScale[chart.colorIndex];
             }
+        });
 
-            _.mergeWith(dataSets, dataSet, (objValue, srcValue) => {
+        this.setState((prevState) => {
+            prevState.chartArray.push(...(_.differenceWith(chartArray, prevState.chartArray, _.isEqual)));
+            _.mergeWith(prevState.dataSets, dataSet, (objValue, srcValue) => {
                 if (_.isArray(objValue)) {
                     return objValue.concat(srcValue);
                 }
             });
-        });
+            if (config.maxLength) BaseChart.trimDataSet(prevState.dataSets, config.maxLength);
 
-        if (config.maxLength) dataSets = BaseChart.trimDataSet(dataSets, config.maxLength);
-        this.setState({ chartArray, dataSets });
+            return prevState;
+        });
     }
 
     render() {
