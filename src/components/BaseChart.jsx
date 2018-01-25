@@ -95,15 +95,18 @@ export default class BaseChart extends React.Component {
     }
 
     handleLegendInteraction(props) {
-        this.setState((prevState) => {
-            const ignoreIndex = _.indexOf(prevState.ignoreArray, props.datum.name);
-            if (ignoreIndex < 0) {
-                prevState.ignoreArray.push(props.datum.name);
-            } else {
-                prevState.ignoreArray.splice(ignoreIndex, 1);
-            }
-            return prevState;
-        });
+        const { ignoreArray } = this.state;
+
+        const ignoreIndex = _.indexOf(ignoreArray, props.datum.name);
+        if (ignoreIndex < 0) {
+            ignoreArray.push(props.datum.name);
+        } else {
+            ignoreArray.splice(ignoreIndex, 1);
+        }
+
+        this.state.ignoreArray = ignoreArray;
+
+        this.forceUpdate();
     }
 
     sortDataBasedOnConfig(props) {
