@@ -19,9 +19,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import BasicCharts from './components/BasicChart';
 import ScatterCharts from './components/ScatterChart';
-import PieCharts from './components/PieChart';
 import MapGenerator from './components/MapChart';
 import TableCharts from './components/TableChart';
 import NumberCharts from './components/NumberChart';
@@ -31,6 +29,7 @@ import LineChart from './components/LineChart';
 import AreaChart from './components/AreaChart';
 import BarChart from './components/BarChart';
 import ComposedChart from './components/ComposedChart';
+import ArcCharts from './components/ArcCharts';
 
 class VizG extends Component {
     /**
@@ -105,7 +104,7 @@ class VizG extends Component {
                 );
             case 'arc':
                 return (
-                    <PieCharts
+                    <ArcCharts
                         config={config}
                         metadata={metadata}
                         data={data}

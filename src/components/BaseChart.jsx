@@ -55,6 +55,8 @@ export default class BaseChart extends React.Component {
                 colorIndex: chartIndex,
                 id: chartIndex,
                 y: chart.y,
+                x: chart.x,
+                size: chart.size,
             };
         });
     }
@@ -69,7 +71,6 @@ export default class BaseChart extends React.Component {
         };
 
         this.chartConfig = undefined;
-        this.updating = false;
 
         this.sortDataBasedOnConfig = this.sortDataBasedOnConfig.bind(this);
     }
