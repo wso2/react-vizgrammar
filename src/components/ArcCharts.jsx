@@ -42,7 +42,6 @@ export default class NewPieChart extends BaseChart {
         random++;
         // generate chart array from the config.
         if (chartInfo.length === 0) {
-            console.info(chartInfo.length);
             chartInfo = BaseChart.generateChartArray(config.charts);
         }
 

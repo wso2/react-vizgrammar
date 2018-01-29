@@ -154,7 +154,7 @@ export default class BaseChart extends React.Component {
                 });
             } else {
                 dataSet[chart.y] = data.map(datum => ({ x: datum[xIndex], y: datum[yIndex], yName: chart.y }));
-                chart.dataSetNames[chart.y] = chart.colorScale[chart.colorIndex];
+                chart.dataSetNames[chart.y] = config.charts[chart.id].fill || chart.colorScale[chart.colorIndex];
             }
         });
 

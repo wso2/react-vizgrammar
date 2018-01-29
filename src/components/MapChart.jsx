@@ -139,12 +139,12 @@ export default class MapGenerator extends React.Component {
                 break;
             case 'usa':
                 projectionConfig.scale = USA_PROJECTION_SCALE;
-                projectionConfig.yOffset = this.props.height / USA_YOFFSET_FACTOR;
-                projectionConfig.xOffset = this.props.width / USA_XOFFSET_FACTOR;
+                projectionConfig.yOffset = 800 / USA_YOFFSET_FACTOR;
+                projectionConfig.xOffset = 800 / USA_XOFFSET_FACTOR;
                 break;
             case 'europe':
                 projectionConfig.scale = EUROPE_PROJECTION_SCALE;
-                projectionConfig.yOffset = this.props.height / EUROPE_YOFFSET_FACTOR;
+                projectionConfig.yOffset = 800 / EUROPE_YOFFSET_FACTOR;
                 break;
             default:
                 throw new VizGError('MapChart', 'Unknown chart type defined in the Geographical chart config.');
