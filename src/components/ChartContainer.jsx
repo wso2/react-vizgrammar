@@ -73,6 +73,7 @@ export default class ChartContainer extends React.Component {
                     disableAxes ?
                     [
                             (<VictoryAxis
+                                key={'xAxis'}
                                 crossAxis
                                 gridComponent={<g />}
                                 tickComponent={<g />}
@@ -80,7 +81,9 @@ export default class ChartContainer extends React.Component {
                                 axisComponent={<g />}
                             />),
                             (<VictoryAxis
-                                dependentAxis crossAxis
+                                key={'yAxis'}
+                                dependentAxis
+                                crossAxis
                                 gridComponent={<g />}
                                 tickComponent={<g />}
                                 tickLabelComponent={<g />}
@@ -89,6 +92,7 @@ export default class ChartContainer extends React.Component {
                     ] :
                     [
                             (<VictoryAxis
+                                key={'xAxis'}
                                 crossAxis
                                 theme={currentTheme}
                                 style={{
@@ -152,6 +156,7 @@ export default class ChartContainer extends React.Component {
                                     config.xAxisTickCount}
                             />),
                             (<VictoryAxis
+                                key={'yAxis'}
                                 dependentAxis
                                 crossAxis
                                 theme={currentTheme}

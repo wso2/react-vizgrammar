@@ -143,6 +143,7 @@ export default class BarChart extends BaseChart {
         chartComponents = [
             <VictoryGroup
                 name={'blacked'}
+                key={'victoryMainGroup'}
                 horizontal={BarChart.isHorizontal(config)}
                 offset={barWidth}
                 style={{ data: { width: barWidth } }}

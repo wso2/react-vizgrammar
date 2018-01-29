@@ -17,9 +17,10 @@
  */
 import React from 'react';
 import { VictoryLine, VictoryTooltip, VictoryScatter } from 'victory';
+import _ from 'lodash';
+import { timeFormat } from 'd3';
 import BaseChart from './BaseChart';
 import ChartContainer from './ChartContainer';
-import { timeFormat } from 'd3';
 import BarChart from './BarChart';
 import LegendComponent from './LegendComponent';
 

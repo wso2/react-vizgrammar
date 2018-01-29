@@ -159,7 +159,6 @@ export default class NewPieChart extends BaseChart {
                     config.percentage ?
                         <VictoryLabel
                             textAnchor="middle"
-                            verticalAnchor="middle"
                             x="55%"
                             y="50%"
                             text={`${Math.round(pieChartData.length > 0 ? pieChartData[0].y : 0)}%`}

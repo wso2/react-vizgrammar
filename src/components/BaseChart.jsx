@@ -194,7 +194,7 @@ BaseChart.propTypes = {
         x: PropTypes.string,
         charts: PropTypes.arrayOf(PropTypes.shape({
             type: PropTypes.string.isRequired,
-            y: PropTypes.string.isRequired,
+            y: PropTypes.string,
             fill: PropTypes.string,
             color: PropTypes.string,
             colorScale: PropTypes.arrayOf(PropTypes.string),

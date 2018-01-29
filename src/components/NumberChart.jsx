@@ -102,6 +102,7 @@ export default class NumberCharts extends React.Component {
                 {
                     config.showPercentage ? [
                         (<VictoryLabel
+                            key={'percentVal'}
                             textAnchor="middle"
                             verticalAnchor="middle"
                             x={'50%'}
@@ -110,6 +111,7 @@ export default class NumberCharts extends React.Component {
                             style={{ fill: prevValue < value ? highValueColor : lowValueColor, fontSize: width / 20 }}
                         />),
                         (<VictoryLabel
+                            key={'incrementDecrementSymbol'}
                             textAnchor="middle"
                             verticalAnchor="middle"
                             x={'65%'}
