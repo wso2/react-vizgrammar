@@ -19,7 +19,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import ScatterCharts from './components/ScatterChart';
 import MapGenerator from './components/MapChart';
 import TableCharts from './components/TableChart';
 import NumberCharts from './components/NumberChart';

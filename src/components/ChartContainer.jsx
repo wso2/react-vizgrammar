@@ -28,10 +28,10 @@ import darkTheme from './resources/themes/victoryDarkTheme';
 export default class ChartContainer extends React.Component {
 
     render() {
-        const { width, height, xScale, theme, config, horizontal, disableAxes, yDomain, xDomain, dataSets } = this.props;
+        const { width, height, xScale, theme, config, horizontal, disableAxes, yDomain, isOrdinal, dataSets } = this.props;
         const currentTheme = theme === 'materialLight' ? lightTheme : darkTheme;
         let arr = null;
-        if (xScale === 'ordinal' && config.charts[0].type === 'bar') {
+        if (isOrdinal && config.charts[0].type === 'bar') {
             arr = dataSets[Object.keys(dataSets)[0]];
         }
 
@@ -61,12 +61,21 @@ export default class ChartContainer extends React.Component {
                 theme={currentTheme}
                 containerComponent={
                     this.props.disableContainer ?
-                        <VictoryContainer /> :
-                        <VictoryVoronoiContainer
-                            voronoiDimension="x"
-                            voronoiBlacklist={['blacked']}
-                        />
+                        config.brush ?
+                            <VictoryZoomContainer
+                                dimension="x"
+                            /> :
+                            <VictoryContainer /> :
+                        config.brush ?
+                            <VictoryZoomContainer
+                                dimension="x"
+                            /> :
+                            <VictoryVoronoiContainer
+                                voronoiDimension="x"
+                                voronoiBlacklist={['blacked']}
+                            />
                 }
+                domain={{ y: yDomain }}
             >
                 {this.props.children}
                 {
@@ -129,7 +138,7 @@ export default class ChartContainer extends React.Component {
                                         return (date) => {
                                             return timeFormat(config.timeFormat)(new Date(date));
                                         };
-                                    } else if (xScale === 'ordinal' && config.charts[0].type === 'bar') {
+                                    } else if (isOrdinal && config.charts[0].type === 'bar') {
                                         return (data) => {
                                             if ((data - Math.floor(data)) !== 0) {
                                                 return '';
@@ -152,7 +161,7 @@ export default class ChartContainer extends React.Component {
                                         }}
                                     />
                                 }
-                                tickCount={(xScale === 'ordinal' && config.charts[0].type === 'bar') ? arr.length :
+                                tickCount={(isOrdinal && config.charts[0].type === 'bar') ? arr.length :
                                     config.xAxisTickCount}
                             />),
                             (<VictoryAxis
@@ -268,4 +277,5 @@ ChartContainer.propTypes = {
     }).isRequired,
     disableContainer: PropTypes.bool,
     horizontal: PropTypes.bool,
+    disableAxes: PropTypes.bool,
 };

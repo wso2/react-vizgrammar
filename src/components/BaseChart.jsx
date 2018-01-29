@@ -68,6 +68,7 @@ export default class BaseChart extends React.Component {
             dataSets: {},
             xScale: 'linear',
             ignoreArray: [],
+            isOrdinal: false,
         };
 
         this.chartConfig = undefined;
@@ -112,10 +113,11 @@ export default class BaseChart extends React.Component {
 
     sortDataBasedOnConfig(props) {
         const { config, metadata, data } = props;
-        let { chartArray, dataSets, xScale } = this.state;
+        let { chartArray, dataSets, xScale, isOrdinal } = this.state;
         if (chartArray.length === 0) chartArray = BaseChart.generateChartArray(config.charts); // generate chart array from the config.
         const xIndex = metadata.names.indexOf(config.x);
         if (_.keys(dataSets).length === 0) {
+            if (!isOrdinal) isOrdinal = metadata.types[xIndex].toLowerCase() === 'ordinal';
             xScale = BaseChart.getXScale(metadata.types[xIndex]);
         }
         if (xScale !== BaseChart.getXScale(metadata.types[xIndex])) {
@@ -166,7 +168,7 @@ export default class BaseChart extends React.Component {
                 }
             });
             if (config.maxLength) BaseChart.trimDataSet(prevState.dataSets, config.maxLength);
-
+            prevState.isOrdinal = isOrdinal;
             return prevState;
         });
     }

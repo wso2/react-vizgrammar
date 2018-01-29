@@ -161,6 +161,8 @@ export default class BarChart extends BaseChart {
                 disableContainer
                 horizontal={BarChart.isHorizontal(config)}
                 yDomain={this.props.yDomain}
+                isOrdinal={this.state.isOrdinal}
+                dataSets={dataSets}
             >
                 {
                     config.legend === true ?

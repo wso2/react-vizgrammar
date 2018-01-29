@@ -32,6 +32,7 @@ const DEFAULT_MARK_RADIUS = 4;
 export default class LineChart extends BaseChart {
     constructor(props) {
         super(props);
+        this.sortDataBasedOnConfig = this.sortDataBasedOnConfig.bind(this);
         this.handleMouseEvent = this.handleMouseEvent.bind(this);
         this.handleLegendInteraction = this.handleLegendInteraction.bind(this);
     }
@@ -160,3 +161,5 @@ export default class LineChart extends BaseChart {
         );
     }
 }
+
+

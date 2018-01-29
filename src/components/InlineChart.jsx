@@ -18,9 +18,8 @@
 
 import React from 'react';
 import { VictoryLine, VictoryArea, VictoryGroup, VictoryBar, VictoryTooltip, VictoryStack } from 'victory';
-import BasicChart from './BasicChart';
 import VizGError from '../VizGError';
-import BaseChart from "./BaseChart";
+import BaseChart from './BaseChart';
 
 export default class InlineChart extends BaseChart {
 
@@ -39,7 +38,6 @@ export default class InlineChart extends BaseChart {
         let barCharts = [];
 
         chartArray.map((chart, chartIndex) => {
-
             switch (chart.type) {
                 case 'spark-line':
                     Object.keys(chart.dataSetNames).map((dataSetName) => {
