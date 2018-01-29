@@ -15,6 +15,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 import React from 'react';
 import _ from 'lodash';
 import { VictoryPie, VictoryTooltip, VictoryLabel } from 'victory';
@@ -107,7 +108,7 @@ export default class NewPieChart extends BaseChart {
                 height={height}
                 width={width}
                 config={config}
-                xScale={'linear'}
+                xScale="linear"
                 theme={theme}
                 disableAxes
                 disableContainer
@@ -117,7 +118,7 @@ export default class NewPieChart extends BaseChart {
                     data={pieChartData}
                     labelComponent={
                         config.percentage ?
-                            <VictoryLabel text={''} /> :
+                            <VictoryLabel text="" /> :
                             <VictoryTooltip
                                 orientation='top'
                                 pointerLength={4}
@@ -141,19 +142,11 @@ export default class NewPieChart extends BaseChart {
                         target: 'data',
                         eventHandlers: {
                             onClick: () => {
-                                return [
-                                    {
-                                        target: 'data',
-                                        mutation: this.handleMouseEvent,
-                                    },
-                                ];
+                                return [{ target: 'data', mutation: this.handleMouseEvent }];
                             },
                         },
                     }]}
-                    animate={
-                        config.animate ?
-                            { onEnter: { duration: 100 } } : null
-                    }
+                    animate={config.animate ? { onEnter: { duration: 100 } } : null}
                 />
                 {
                     config.percentage ?

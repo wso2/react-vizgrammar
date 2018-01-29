@@ -15,6 +15,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 import React from 'react';
 import { VictoryScatter, VictoryTooltip } from 'victory';
 import _ from 'lodash';
@@ -166,12 +167,7 @@ export default class ScatterPlot extends BaseChart {
                             target: 'data',
                             eventHandlers: {
                                 onClick: () => {
-                                    return [
-                                        {
-                                            target: 'data',
-                                            mutation: this.handleMouseEvent,
-                                        },
-                                    ];
+                                    return [{ target: 'data', mutation: this.handleMouseEvent }];
                                 },
                             },
                         }]}

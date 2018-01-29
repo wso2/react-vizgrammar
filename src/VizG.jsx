@@ -15,7 +15,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-// TODO:Fix dynamically changing config for other charts
+// TODO: Fix dynamically changing config for other charts
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
@@ -57,9 +57,9 @@ class VizG extends Component {
             map: MapGenerator,
         };
 
-        const ChartComponent = component[chartType];
+        if (!component[chartType]) throw new VizGError('VizG', 'Invalid chart type defined in the configuration.');
 
-        // if (!component[chartType]) throw new VizGError('VizG', 'Invalid chart type defined in the configuration.');
+        const ChartComponent = component[chartType];
 
         return (<ChartComponent
             config={config}
@@ -81,9 +81,7 @@ class VizG extends Component {
             const barChart = _.find(config.charts, { type: 'bar' });
             const lineChart = _.find(config.charts, { type: 'line' });
 
-            if ((areaChart === undefined && barChart === undefined) ||
-                (lineChart === undefined && areaChart === undefined) ||
-                (barChart === undefined && lineChart === undefined)) {
+            if ((!areaChart && !barChart) || (!lineChart && !areaChart) || (!barChart && !lineChart)) {
                 return chartType;
             } else {
                 return 'composed';

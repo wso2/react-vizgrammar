@@ -15,8 +15,9 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 import React from 'react';
-import { VictoryArea, VictoryChart, VictoryVoronoiContainer, createContainer, VictoryStack, VictoryTooltip, VictoryScatter, VictoryGroup } from 'victory';
+import { VictoryArea, VictoryStack, VictoryTooltip, VictoryScatter, VictoryGroup } from 'victory';
 import { timeFormat } from 'd3';
 import BaseChart from './BaseChart';
 import ChartContainer from './ChartContainer';
@@ -57,9 +58,7 @@ export default class AreaChart extends BaseChart {
 
             if (chart.mode === 'stacked') {
                 chartComponents.push((
-                    <VictoryStack
-                        key={`area-group-${chart.id}`}
-                    >
+                    <VictoryStack key={`area-group-${chart.id}`} >
                         {localChartComp}
                     </VictoryStack>
                 ));
@@ -86,7 +85,7 @@ export default class AreaChart extends BaseChart {
                                 DEFAULT_AREA_FILL_OPACITY,
                         },
                     }}
-                    name={'blacked'}
+                    name="blacked"
                     animate={config.animate ? { onEnter: { duration: 50 } } : null}
                 />
                 <VictoryScatter
@@ -126,12 +125,7 @@ export default class AreaChart extends BaseChart {
                         target: 'data',
                         eventHandlers: {
                             onClick: () => {
-                                return [
-                                    {
-                                        target: 'data',
-                                        mutation: onClick,
-                                    },
-                                ];
+                                return [{ target: 'data', mutation: onClick }];
                             },
                         },
                     }]}

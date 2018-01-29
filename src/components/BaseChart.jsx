@@ -82,7 +82,7 @@ export default class BaseChart extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         const { config } = nextProps;
-        if (this.chartConfig === undefined || !(_.isEqual(config, this.chartConfig)) || !this.props.append) {
+        if (this.chartConfig || !(_.isEqual(config, this.chartConfig)) || !this.props.append) {
             this.state.chartArray = [];
             this.state.dataSets = {};
             this.chartConfig = config;
@@ -139,7 +139,11 @@ export default class BaseChart extends React.Component {
                     throw new VizGError('BasicChart', 'Color category not found in metadata.');
                 }
                 dataSet = _.groupBy(data.map(
-                    datum => ({ x: datum[xIndex], y: datum[yIndex], color: datum[colorIndex], yName: metadata.names[yIndex] })), d => d.color);
+                    datum => ({
+                        x: datum[xIndex],
+                        y: datum[yIndex],
+                        color: datum[colorIndex],
+                        yName: metadata.names[yIndex] })), d => d.color);
 
                 _.difference(_.keys(dataSet), _.keys(chart.dataSetNames)).forEach((key) => {
                     const colorDomIn = _.indexOf(chart.colorDomain, key);

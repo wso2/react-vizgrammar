@@ -15,10 +15,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 import React from 'react';
 import { VictoryBar, VictoryTooltip, VictoryStack, VictoryGroup } from 'victory';
 import { timeFormat } from 'd3';
-import PropTypes from 'prop-types';
 import _ from 'lodash';
 import BaseChart from './BaseChart';
 import ChartContainer from './ChartContainer';
@@ -33,7 +33,7 @@ export default class BarChart extends BaseChart {
     }
 
     static isHorizontal(config) {
-        return _.find(config.charts, { orientation: 'left' }) !== undefined;
+        return !!_.find(config.charts, { orientation: 'left' });
     }
 
     static getBarChartComponent(chartArray, dataSets, config, onClick, xScale, ignoreArray) {
@@ -61,7 +61,7 @@ export default class BarChart extends BaseChart {
                 chartComponents.push((
                     <VictoryStack
                         key={`victoryStackGroup-${chart.id}`}
-                        name={'blacked'}
+                        name="blacked"
                     >
                         {localSet}
                     </VictoryStack>
@@ -78,7 +78,7 @@ export default class BarChart extends BaseChart {
         return (
             <VictoryBar
                 key={`bar-${chartIndex}`}
-                name={'blacked'}
+                name="blacked"
                 labels={
                     (() => {
                         if (xScale === 'time' && config.tipTimeFormat) {
@@ -114,12 +114,7 @@ export default class BarChart extends BaseChart {
                         target: 'data',
                         eventHandlers: {
                             onClick: () => {
-                                return [
-                                    {
-                                        target: 'data',
-                                        mutation: onClick,
-                                    },
-                                ];
+                                return [{ target: 'data', mutation: onClick }];
                             },
                         },
                     },
@@ -142,8 +137,8 @@ export default class BarChart extends BaseChart {
 
         chartComponents = [
             <VictoryGroup
-                name={'blacked'}
-                key={'victoryMainGroup'}
+                name="blacked"
+                key="victoryMainGroup"
                 horizontal={BarChart.isHorizontal(config)}
                 offset={barWidth}
                 style={{ data: { width: barWidth } }}

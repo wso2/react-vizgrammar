@@ -71,20 +71,20 @@ export default class NumberCharts extends React.Component {
         const lowValueColor = config.lowValueColor || '#B82E2E';
 
         return (
-            <svg height={'100%'} width={'100%'} viewBox={`0 0 ${width} ${height}`}>
+            <svg height="100%" width="100%" viewBox={`0 0 ${width} ${height}`}>
                 <VictoryLabel
                     textAnchor="middle"
                     verticalAnchor="middle"
-                    x={'50%'}
-                    y={'25%'}
+                    x="50%"
+                    y="25%"
                     text={config.title}
                     style={{ fill: '#4d4d4d', fontSize: width / 20 }}
                 />
                 <VictoryLabel
                     textAnchor="middle"
                     verticalAnchor="middle"
-                    x={'50%'}
-                    y={'40%'}
+                    x="50%"
+                    y="40%"
                     text={(value === null ? value : value.toFixed(3))}
                     style={{ fill: '#919191', fontSize: width / 15 }}
                 />
@@ -93,8 +93,8 @@ export default class NumberCharts extends React.Component {
                         <VictoryLabel
                             textAnchor="middle"
                             verticalAnchor="middle"
-                            x={'50%'}
-                            y={'50%'}
+                            x="50%"
+                            y="50%"
                             text={(Math.abs(Number((prevValue - value)))).toFixed(3)}
                             style={{ fill: '#919191', fontSize: width / 15 }}
                         /> : null
@@ -102,20 +102,20 @@ export default class NumberCharts extends React.Component {
                 {
                     config.showPercentage ? [
                         (<VictoryLabel
-                            key={'percentVal'}
+                            key="percentVal"
                             textAnchor="middle"
                             verticalAnchor="middle"
-                            x={'50%'}
-                            y={'60%'}
+                            x="50%"
+                            y="60%"
                             text={(Math.abs((100 * ((value - prevValue) / prevValue))).toFixed(2)) + '%'}
                             style={{ fill: prevValue < value ? highValueColor : lowValueColor, fontSize: width / 20 }}
                         />),
                         (<VictoryLabel
-                            key={'incrementDecrementSymbol'}
+                            key="incrementDecrementSymbol"
                             textAnchor="middle"
                             verticalAnchor="middle"
-                            x={'65%'}
-                            y={'60%'}
+                            x="65%"
+                            y="60%"
                             text={(() => {
                                 if (prevValue < value) {
                                     return '↑';

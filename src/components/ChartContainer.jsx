@@ -15,8 +15,9 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 import React from 'react';
-import { VictoryChart, VictoryZoomContainer, VictoryVoronoiContainer, VictoryContainer, VictoryAxis, VictoryLabel, createContainer } from 'victory';
+import { VictoryChart, VictoryZoomContainer, VictoryVoronoiContainer, VictoryContainer, VictoryAxis, VictoryLabel } from 'victory';
 import { timeFormat } from 'd3';
 import PropTypes from 'prop-types';
 import lightTheme from './resources/themes/victoryLightTheme';
@@ -82,7 +83,7 @@ export default class ChartContainer extends React.Component {
                     disableAxes ?
                     [
                             (<VictoryAxis
-                                key={'xAxis'}
+                                key="xAxis"
                                 crossAxis
                                 gridComponent={<g />}
                                 tickComponent={<g />}
@@ -90,7 +91,7 @@ export default class ChartContainer extends React.Component {
                                 axisComponent={<g />}
                             />),
                             (<VictoryAxis
-                                key={'yAxis'}
+                                key="yAxis"
                                 dependentAxis
                                 crossAxis
                                 gridComponent={<g />}
@@ -101,7 +102,7 @@ export default class ChartContainer extends React.Component {
                     ] :
                     [
                             (<VictoryAxis
-                                key={'xAxis'}
+                                key="xAxis"
                                 crossAxis
                                 theme={currentTheme}
                                 style={{
@@ -165,7 +166,7 @@ export default class ChartContainer extends React.Component {
                                     config.xAxisTickCount}
                             />),
                             (<VictoryAxis
-                                key={'yAxis'}
+                                key="yAxis"
                                 dependentAxis
                                 crossAxis
                                 theme={currentTheme}

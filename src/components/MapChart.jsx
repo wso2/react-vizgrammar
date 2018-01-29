@@ -96,7 +96,6 @@ export default class MapGenerator extends React.Component {
         }
     }
 
-
     _getLinearColor(value) {
         return d3.scaleLinear()
             .range([this.state.colorScale[0], this.state.colorScale[1]]).domain(this.state.mapDataRange)(value);
@@ -233,7 +232,7 @@ export default class MapGenerator extends React.Component {
                     }}
                 >
                     <ComposableMap
-                        projection={'mercator'}
+                        projection="mercator"
                         projectionConfig={this.state.projectionConfig}
                         width={this.state.width}
                         heght={this.state.height}
@@ -311,12 +310,12 @@ export default class MapGenerator extends React.Component {
                 <div style={{ width: '15%', height: '100%', display: 'inline', float: 'right' }}>
                     {
                         colorType === 'linear' ?
-                            <svg width={'100%'} height={'100%'}>
+                            <svg width="100%" height="100%">
                                 <defs>
                                     <linearGradient id="grad1" x1="0%" y1="100%" x2="0%" y2="0%">
-                                        <stop offset={'0%'} stopColor={this.state.colorScale[0]} stopOpacity={1} />
+                                        <stop offset="0%" stopColor={this.state.colorScale[0]} stopOpacity={1} />
 
-                                        <stop offset={'100%'} stopColor={this.state.colorScale[1]} stopOpacity={1} />
+                                        <stop offset="100%" stopColor={this.state.colorScale[1]} stopOpacity={1} />
                                     </linearGradient>
                                 </defs>
                                 <g className='legend'>

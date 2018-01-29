@@ -15,6 +15,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 import React from 'react';
 import { VictoryLegend, VictoryPortal, VictoryContainer } from 'victory';
 import PropTypes from 'prop-types';
@@ -81,12 +82,7 @@ export default class LegendComponent extends React.Component {
                             target: 'data',
                             eventHandlers: {
                                 onClick: () => {
-                                    return [
-                                        {
-                                            target: 'data',
-                                            mutation: interaction,
-                                        },
-                                    ];
+                                    return [{ target: 'data', mutation: interaction }];
                                 },
                             },
                         },

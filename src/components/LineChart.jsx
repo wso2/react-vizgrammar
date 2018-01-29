@@ -15,6 +15,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 import React from 'react';
 import { VictoryLine, VictoryTooltip, VictoryScatter } from 'victory';
 import _ from 'lodash';
@@ -71,7 +72,7 @@ export default class LineChart extends BaseChart {
                     }}
                     animate={config.animate ? { onEnter: { duration: 100 } } : null}
                     data={data}
-                    name={'blacked'}
+                    name="blacked"
                 />),
                 (<VictoryScatter
                     key={`lineScatter-${chartIndex}`}
@@ -116,12 +117,7 @@ export default class LineChart extends BaseChart {
                         target: 'data',
                         eventHandlers: {
                             onClick: () => {
-                                return [
-                                    {
-                                        target: 'data',
-                                        mutation: onClick,
-                                    },
-                                ];
+                                return [{ target: 'data', mutation: onClick }];
                             },
                         },
                     }]}
@@ -161,5 +157,3 @@ export default class LineChart extends BaseChart {
         );
     }
 }
-
-
