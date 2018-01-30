@@ -222,5 +222,4 @@ const victoryLightTheme = {
     }, baseProps),
 };
 
-
 export default victoryLightTheme;

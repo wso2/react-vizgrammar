@@ -21,7 +21,6 @@ import { Link } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, Grid, IconButton } from 'material-ui';
 import HomeIcon from 'material-ui-icons/ArrowBack';
 import VizG from '../../src/VizG';
-import 'rc-tree/assets/index.css';
 import '../styles/snippet-highlight.css';
 import ChartWrapper from '../ChartWrapper';
 import { syntaxHighlight } from './util/SyntaxHighLight';

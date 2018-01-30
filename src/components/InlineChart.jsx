@@ -18,21 +18,20 @@
 
 import React from 'react';
 import { VictoryLine, VictoryArea, VictoryGroup, VictoryBar, VictoryTooltip, VictoryStack } from 'victory';
-import BasicChart from './BasicChart';
 import VizGError from '../VizGError';
+import BaseChart from './BaseChart';
 
-export default class InlineChart extends BasicChart {
+export default class InlineChart extends BaseChart {
 
     constructor(props) {
         super(props);
-        this.visualizeData = this.visualizeData.bind(this);
+        this.sortDataBasedOnConfig = this.sortDataBasedOnConfig.bind(this);
     }
 
     render() {
         const { config, height, width } = this.props;
         const { chartArray, dataSets } = this.state;
         let chartComponents = [];
-        const legendItems = [];
         let horizontal = false;
         const lineCharts = [];
         let areaCharts = [];
@@ -42,7 +41,6 @@ export default class InlineChart extends BasicChart {
             switch (chart.type) {
                 case 'spark-line':
                     Object.keys(chart.dataSetNames).map((dataSetName) => {
-                        legendItems.push({ name: dataSetName, symbol: { fill: chart.dataSetNames[dataSetName] } });
                         lineCharts.push((
                             <VictoryGroup
                                 key={`chart-${chart.id}-${chart.type}-${dataSetName}`}
@@ -69,7 +67,6 @@ export default class InlineChart extends BasicChart {
                 case 'spark-area': {
                     const areaLocal = [];
                     Object.keys(chart.dataSetNames).map((dataSetName) => {
-                        legendItems.push({ name: dataSetName, symbol: { fill: chart.dataSetNames[dataSetName] } });
                         areaLocal.push((
                             <VictoryGroup
                                 key={`chart-${chart.id}-${chart.type}-${dataSetName}`}
@@ -115,7 +112,6 @@ export default class InlineChart extends BasicChart {
                     horizontal = horizontal || chart.orientation === 'left';
 
                     Object.keys(chart.dataSetNames).map((dataSetName) => {
-                        legendItems.push({ name: dataSetName, symbol: { fill: chart.dataSetNames[dataSetName] } });
                         localBar.push((
                             <VictoryBar
                                 labels={d => `${config.x}:${d.x}\n${config.charts[chartIndex].y}:${d.y}`}

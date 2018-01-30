@@ -15,6 +15,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 import React, { Component } from 'react';
 import ReactTable from 'react-table';
 import PropTypes from 'prop-types';
@@ -176,12 +177,14 @@ class ReactTableTest extends Component {
         });
 
         return (
-            <ReactTable
-                data={dataSet}
-                columns={chartConfig}
-                showPagination={false}
-                minRows={config.maxLength}
-            />
+            <div style={{ height: 40 }}>
+                <ReactTable
+                    data={dataSet}
+                    columns={chartConfig}
+                    showPagination={false}
+                    minRows={config.maxLength}
+                />
+            </div>
         );
     }
 }

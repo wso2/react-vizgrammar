@@ -15,17 +15,21 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-// TODO:Fix dynamically changing config for other charts
+// TODO: Fix dynamically changing config for other charts
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import BasicCharts from './components/BasicChart';
-import ScatterCharts from './components/ScatterChart';
-import PieCharts from './components/PieChart';
+import _ from 'lodash';
 import MapGenerator from './components/MapChart';
 import TableCharts from './components/TableChart';
 import NumberCharts from './components/NumberChart';
 import InlineCharts from './components/InlineChart';
 import VizGError from './VizGError';
+import LineChart from './components/LineChart';
+import AreaChart from './components/AreaChart';
+import BarChart from './components/BarChart';
+import ComposedChart from './components/ComposedChart';
+import ArcCharts from './components/ArcCharts';
+import ScatterPlot from './components/ScatterPlot';
 
 class VizG extends Component {
     /**
@@ -37,89 +41,53 @@ class VizG extends Component {
      * @param {Function} onClick OnClick function provided by the user
      * @private
      */
-    _selectAndRenderChart(chartType, config, data, metadata, onClick) {
-        if (config.append === undefined) {
-            config.append = true;
-        }
-        switch (chartType) {
-            case 'line':
-            case 'area':
-            case 'bar':
-                return (
-                    <BasicCharts
-                        config={config}
-                        metadata={metadata}
-                        data={data}
-                        onClick={onClick}
-                        yDomain={this.props.yDomain}
-                        append={config.append}
-                        theme={this.props.theme}
-                        width={this.props.width}
-                        height={this.props.height}
-                    />
-                );
-            case 'arc':
-                return (
-                    <PieCharts
-                        config={config}
-                        metadata={metadata}
-                        data={data}
-                        onClick={onClick}
-                        append={config.append}
-                        width={this.props.width}
-                        height={this.props.height}
-                    />
-                );
-            case 'scatter':
-                return (
-                    <ScatterCharts
-                        config={config}
-                        metadata={metadata}
-                        data={data}
-                        onClick={onClick}
-                        append={config.append}
-                        width={this.props.width}
-                        height={this.props.height}
-                    />
-                );
-            case 'map':
-                return <MapGenerator config={config} metadata={metadata} data={data} onClick={onClick} />;
-            case 'table':
-                return (
-                    <TableCharts
-                        metadata={metadata}
-                        config={config}
-                        data={data}
-                        onClick={onClick}
-                    />
-                );
-            case 'number':
-                return (
-                    <NumberCharts
-                        metadata={metadata}
-                        config={config}
-                        data={data}
-                        onClick={onClick}
-                        width={this.props.width}
-                        height={this.props.height}
-                    />
-                );
-            case 'spark-line':
-            case 'spark-bar':
-            case 'spark-area':
-                return (
-                    <InlineCharts
-                        metadata={metadata}
-                        config={config}
-                        data={data}
-                        yDomain={this.props.yDomain}
-                        append={config.append}
-                        width={this.props.width}
-                        height={this.props.height}
-                    />
-                );
-            default:
-                throw new VizGError('VizG', 'Unknown chart ' + chartType + ' defined in the chart config.');
+    _getChartComponent(chartType, config, data, metadata, onClick) {
+        if (chartType === 'spark-line' || chartType === 'spark-area' || chartType === 'spark-bar') chartType = 'inline';
+
+        const component = {
+            line: LineChart,
+            area: AreaChart,
+            bar: BarChart,
+            composed: ComposedChart,
+            arc: ArcCharts,
+            scatter: ScatterPlot,
+            table: TableCharts,
+            number: NumberCharts,
+            inline: InlineCharts,
+            map: MapGenerator,
+        };
+
+        if (!component[chartType]) throw new VizGError('VizG', 'Invalid chart type defined in the configuration.');
+
+        const ChartComponent = component[chartType];
+
+        return (<ChartComponent
+            config={config}
+            metadata={metadata}
+            data={data}
+            onClick={onClick}
+            yDomain={this.props.yDomain}
+            append={config.append}
+            theme={this.props.theme}
+            width={this.props.width}
+            height={this.props.height}
+        />);
+    }
+
+    _isComposed(config) {
+        const chartType = config.charts[0].type;
+        if ((chartType === 'line' || chartType === 'area' || chartType === 'bar') && config.charts.length > 1) {
+            const areaChart = _.find(config.charts, { type: 'area' });
+            const barChart = _.find(config.charts, { type: 'bar' });
+            const lineChart = _.find(config.charts, { type: 'line' });
+
+            if ((!areaChart && !barChart) || (!lineChart && !areaChart) || (!barChart && !lineChart)) {
+                return chartType;
+            } else {
+                return 'composed';
+            }
+        } else {
+            return chartType;
         }
     }
 
@@ -130,7 +98,7 @@ class VizG extends Component {
                 {
                     !config || !metadata ?
                         null :
-                        this._selectAndRenderChart(config.charts[0].type, config, data, metadata, onClick)
+                        this._getChartComponent(this._isComposed(config), config, data, metadata, onClick)
                 }
             </div>
         );
