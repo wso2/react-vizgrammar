@@ -82,7 +82,8 @@ export default class BaseChart extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         const { config } = nextProps;
-        if (this.chartConfig || !(_.isEqual(config, this.chartConfig)) || !this.props.append) {
+
+        if (!this.chartConfig || !(_.isEqual(config, this.chartConfig)) || !this.props.append) {
             this.state.chartArray = [];
             this.state.dataSets = {};
             this.chartConfig = config;
