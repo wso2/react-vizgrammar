@@ -16,7 +16,7 @@
  * under the License.
  */
 
-var path = require('path');
+const path = require('path');
 
 module.exports = {
     devtool: 'source-map',
@@ -44,6 +44,10 @@ module.exports = {
             {
                 test: /\.scss$/,
                 loaders: ['style-loader', 'css-loader', 'sass-loader'],
+            },
+            {
+                test: /\.md$/,
+                loader: 'raw-loader',
             },
         ],
     },
