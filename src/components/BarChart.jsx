@@ -24,6 +24,9 @@ import BaseChart from './BaseChart';
 import ChartContainer from './ChartContainer';
 import LegendComponent from './LegendComponent';
 
+/**
+ * Class to handle visualization of Bar charts.
+ */
 export default class BarChart extends BaseChart {
 
     constructor(props) {
@@ -32,10 +35,25 @@ export default class BarChart extends BaseChart {
         this.handleLegendInteraction = this.handleLegendInteraction.bind(this);
     }
 
+    /**
+     * Check if the chart is horizontal.
+     * @param {Object} config - chart configuration provided by the user.
+     * @returns {Boolean} - true in the case of the chart alignment is horizontal false if not.
+     */
     static isHorizontal(config) {
-        return !!_.find(config.charts, { orientation: 'left' });
+        return _.find(config.charts, { orientation: 'left' });
     }
 
+    /**
+     * Generate the chart components in the case where there's only Bar charts defined in the chart config.
+     * @param {Array} chartArray - Array containing objects that has the information to visualize each area chart.
+     * @param {String} xScale - xAxis scale to be used in the charts.
+     * @param {Object} dataSets - object containing arrays of data after classification.
+     * @param {Object} config - object containing user provided chart configuration
+     * @param {Function} onClick - function to be executed on click event
+     * @param {Array} ignoreArray - array that contains dataSets to be ignored in rendering the components.
+     * @returns {{chartComponents: Array, legendComponents: Array}}
+     */
     static getBarChartComponent(chartArray, dataSets, config, onClick, xScale, ignoreArray) {
         const chartComponents = [];
         const legendComponents = [];
@@ -49,6 +67,7 @@ export default class BarChart extends BaseChart {
                     symbol: { fill: _.indexOf(ignoreArray, dsName) > -1 ? '#d3d3d3' : chart.dataSetNames[dsName] },
                     chartIndex,
                 });
+
                 if (dataSetLength < dataSets[dsName].length) dataSetLength = dataSets[dsName].length;
                 if ((_.indexOf(ignoreArray, dsName)) === -1) {
                     localSet.push((
@@ -71,9 +90,31 @@ export default class BarChart extends BaseChart {
             }
         });
 
+        const found0 = _.findIndex(_.values(dataSets), (o) => {
+            if (o.length > 0) {
+                return o[0].x === 0;
+            } else {
+                return false;
+            }
+        });
+
+        if (found0 > -1 && !BarChart.isHorizontal(config)) {
+            dataSetLength += 1;
+        }
+
         return { chartComponents, legendComponents, dataSetLength };
     }
 
+    /**
+     * Generate a single Area chart component to be visualized.
+     * @param {Object} config - Chart configuration provided by the user.
+     * @param {Number} chartIndex - Index of the chart definition in the chart Array.
+     * @param {String} xScale - Scale to be used in the xAxis when plotting the chart.
+     * @param {Array} data - Array of objects that containing the dataset to be plotted using this chart component.
+     * @param {String} color - Color the chart should be plotted in.
+     * @param {Function} onClick - Function to be executed in the case of an click event.
+     * @returns {Element}
+     */
     static getComponent(config, chartIndex, xScale, data, color, onClick) {
         return (
             <VictoryBar
@@ -104,7 +145,7 @@ export default class BarChart extends BaseChart {
                         pointerLength={4}
                         cornerRadius={2}
                         flyoutStyle={{ fill: '#000', fillOpacity: '0.8', strokeWidth: 0 }}
-                        style={{ fill: '#b0b0b0' }}
+                        style={{ fill: '#e6e6e6' }}
                     />
                 }
                 data={data}

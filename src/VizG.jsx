@@ -74,6 +74,12 @@ class VizG extends Component {
         />);
     }
 
+    /**
+     * Check if the chart contains configuration of a mixed chart.
+     * @param config
+     * @returns {string}
+     * @private
+     */
     _isComposed(config) {
         const chartType = config.charts[0].type;
         if ((chartType === 'line' || chartType === 'area' || chartType === 'bar') && config.charts.length > 1) {

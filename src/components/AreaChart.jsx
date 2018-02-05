@@ -19,6 +19,7 @@
 import React from 'react';
 import { VictoryArea, VictoryStack, VictoryTooltip, VictoryScatter, VictoryGroup } from 'victory';
 import { timeFormat } from 'd3';
+import _ from 'lodash';
 import BaseChart from './BaseChart';
 import ChartContainer from './ChartContainer';
 import LegendComponent from './LegendComponent';
@@ -37,6 +38,16 @@ export default class AreaChart extends BaseChart {
         this.handleLegendInteraction = this.handleLegendInteraction.bind(this);
     }
 
+    /**
+     * Generate the chart components in the case where there's only Area charts defined in the chart config.
+     * @param {Array} chartArray - Array containing objects that has the information to visualize each area chart.
+     * @param {String} xScale - xAxis scale to be used in the charts.
+     * @param {Object} dataSets - object containing arrays of data after classification.
+     * @param {Object} config - object containing user provided chart configuration
+     * @param {Function} onClick - function to be executed on click event
+     * @param {Array} ignoreArray - array that contains dataSets to be ignored in rendering the components.
+     * @returns {{chartComponents: Array, legendComponents: Array}}
+     */
     static getAreaChartComponent(chartArray, xScale, dataSets, config, onClick, ignoreArray) {
         const chartComponents = [];
         const legendComponents = [];
@@ -69,13 +80,22 @@ export default class AreaChart extends BaseChart {
         return { chartComponents, legendComponents };
     }
 
+    /**
+     * Generate a single Area chart component to be visualized.
+     * @param {Object} config - Chart configuration provided by the user.
+     * @param {Number} chartIndex - Index of the chart definition in the chart Array.
+     * @param {String} xScale - Scale to be used in the xAxis when plotting the chart.
+     * @param {Array} data - Array of objects that containing the dataset to be plotted using this chart component.
+     * @param {String} color - Color the chart should be plotted in.
+     * @param {Function} onClick - Function to be executed in the case of an click event.
+     * @returns {Element}
+     */
     static getComponent(config, chartIndex, xScale, data, color, onClick) {
         return (
             <VictoryGroup
                 key={`area-group-${chartIndex}`}
                 data={data}
                 color={color}
-
             >
                 <VictoryArea
                     style={{
@@ -113,7 +133,7 @@ export default class AreaChart extends BaseChart {
                             pointerLength={4}
                             cornerRadius={2}
                             flyoutStyle={{ fill: '#000', fillOpacity: '0.8', strokeWidth: 0 }}
-                            style={{ fill: '#b0b0b0' }}
+                            style={{ fill: '#e6e6e6' }}
                         />
                     }
                     size={(

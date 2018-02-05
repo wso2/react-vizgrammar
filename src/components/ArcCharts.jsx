@@ -24,7 +24,10 @@ import VizGError from '../VizGError';
 import ChartContainer from './ChartContainer';
 import LegendComponent from './LegendComponent';
 
-export default class NewPieChart extends BaseChart {
+/**
+ * Class to handle Visualization of Arc Charts.
+ */
+export default class ArcChart extends BaseChart {
 
     constructor(props) {
         super(props);
@@ -82,7 +85,7 @@ export default class NewPieChart extends BaseChart {
                             }
                         });
                     } else {
-                        throw new VizGError('PieChart',
+                        throw new VizGError('ArcChart',
                             'color category of the chart not found among the metadata provided');
                     }
                 } else {
@@ -92,7 +95,7 @@ export default class NewPieChart extends BaseChart {
                     ];
                 }
             } else {
-                throw new VizGError('PieChart',
+                throw new VizGError('ArcChart',
                     "'x' defined in the chart configuration not found among the metadata provided");
             }
         });
@@ -124,7 +127,7 @@ export default class NewPieChart extends BaseChart {
                                 pointerLength={4}
                                 cornerRadius={2}
                                 flyoutStyle={{ fill: '#000', fillOpacity: '0.8', strokeWidth: 0 }}
-                                style={{ fill: '#b0b0b0' }}
+                                style={{ fill: '#e6e6e6' }}
                             />
                     }
                     innerRadius={

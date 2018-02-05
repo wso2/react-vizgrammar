@@ -20,6 +20,7 @@ import React from 'react';
 import { VictoryChart, VictoryZoomContainer, VictoryVoronoiContainer, VictoryContainer, VictoryAxis, VictoryLabel } from 'victory';
 import { timeFormat } from 'd3';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import lightTheme from './resources/themes/victoryLightTheme';
 import darkTheme from './resources/themes/victoryDarkTheme';
 
@@ -32,8 +33,29 @@ export default class ChartContainer extends React.Component {
         const { width, height, xScale, theme, config, horizontal, disableAxes, yDomain, isOrdinal, dataSets } = this.props;
         const currentTheme = theme === 'materialLight' ? lightTheme : darkTheme;
         let arr = null;
-        if (isOrdinal && config.charts[0].type === 'bar') {
+        let xDomain = null;
+        const xAxisPaddingBottom = config.style ? config.style.xAxisPaddingBottom || 50 : 50;
+
+        if (isOrdinal && ((_.findIndex(config.charts, o => o.type === 'bar')) > -1)) {
             arr = dataSets[Object.keys(dataSets)[0]];
+        } else if ((_.findIndex(config.charts, o => o.type === 'bar')) > -1) {
+            const found0 = _.findIndex(_.values(dataSets), (o) => {
+                if (o.length > 0) {
+                    return o[0].x === 0;
+                } else {
+                    return false;
+                }
+            });
+
+            if (found0 > -1 && !horizontal ) {
+                let maxOne = null;
+                _.keys(dataSets).forEach((key) => {
+                    const max = _.maxBy(dataSets[key], o => o.x);
+                    if (!maxOne) maxOne = max.x;
+                    else if (maxOne < max) maxOne = max.x;
+                });
+                xDomain = [-1, maxOne];
+            }
         }
 
         return (
@@ -43,18 +65,18 @@ export default class ChartContainer extends React.Component {
                 padding={
                     (() => {
                         if (config.legend === true) {
-                            if (!config.legendOrientation) return { left: 100, top: 30, bottom: 50, right: 180 };
+                            if (!config.legendOrientation) return { left: 100, top: 30, bottom: xAxisPaddingBottom, right: 180 };
                             else if (config.legendOrientation === 'left') {
-                                return { left: 300, top: 30, bottom: 50, right: 30 };
+                                return { left: 300, top: 30, bottom: xAxisPaddingBottom, right: 30 };
                             } else if (config.legendOrientation === 'right') {
-                                return { left: 100, top: 30, bottom: 50, right: 180 };
+                                return { left: 100, top: 30, bottom: xAxisPaddingBottom, right: 180 };
                             } else if (config.legendOrientation === 'top') {
-                                return { left: 100, top: 100, bottom: 50, right: 30 };
+                                return { left: 100, top: 100, bottom: xAxisPaddingBottom, right: 30 };
                             } else if (config.legendOrientation === 'bottom') {
-                                return { left: 100, top: 30, bottom: 150, right: 30 };
-                            } else return { left: 100, top: 30, bottom: 50, right: 180 };
+                                return { left: 100, top: 30, bottom: (100 + xAxisPaddingBottom), right: 30 };
+                            } else return { left: 100, top: 30, bottom: xAxisPaddingBottom, right: 180 };
                         } else {
-                            return { left: 100, top: 30, bottom: 50, right: 30 };
+                            return { left: 100, top: 30, bottom: xAxisPaddingBottom, right: 30 };
                         }
                     })()
                 }
@@ -76,7 +98,7 @@ export default class ChartContainer extends React.Component {
                                 voronoiBlacklist={['blacked']}
                             />
                 }
-                domain={{ y: yDomain }}
+                domain={{ x: xDomain, y: yDomain }}
             >
                 {this.props.children}
                 {

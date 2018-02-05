@@ -25,7 +25,10 @@ import './resources/css/tableChart.css';
 import { getDefaultColorScale } from './helper';
 import VizGError from '../VizGError';
 
-class ReactTableTest extends Component {
+/**
+ * Class to handle visualization of table charts.
+ */
+class TableChart extends Component {
 
     constructor(props) {
         super(props);
@@ -189,10 +192,10 @@ class ReactTableTest extends Component {
     }
 }
 
-ReactTableTest.propTypes = {
+TableChart.propTypes = {
     config: PropTypes.object.isRequired,
     metadata: PropTypes.object.isRequired,
     data: PropTypes.array,
 };
 
-export default ReactTableTest;
+export default TableChart;

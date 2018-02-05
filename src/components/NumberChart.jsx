@@ -21,6 +21,9 @@ import PropTypes from 'prop-types';
 import { VictoryLabel } from 'victory';
 import VizGError from '../VizGError';
 
+/**
+ * Class to handle visualization of Number Charts.
+ */
 export default class NumberCharts extends React.Component {
     constructor(props) {
         super(props);
