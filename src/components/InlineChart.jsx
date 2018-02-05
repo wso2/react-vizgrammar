@@ -21,6 +21,9 @@ import { VictoryLine, VictoryArea, VictoryGroup, VictoryBar, VictoryTooltip, Vic
 import VizGError from '../VizGError';
 import BaseChart from './BaseChart';
 
+/**
+ * Class to handle visualization of spark charts.
+ */
 export default class InlineChart extends BaseChart {
 
     constructor(props) {

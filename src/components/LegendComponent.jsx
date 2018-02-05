@@ -20,6 +20,9 @@ import React from 'react';
 import { VictoryLegend, VictoryPortal, VictoryContainer } from 'victory';
 import PropTypes from 'prop-types';
 
+/**
+ * Class to handle the visualization of legends.
+ */
 export default class LegendComponent extends React.Component {
     render() {
         const { config, height, width, legendItems, interaction } = this.props;

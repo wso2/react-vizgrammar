@@ -26,6 +26,9 @@ import BarChart from './BarChart';
 import ChartContainer from './ChartContainer';
 import LegendComponent from './LegendComponent';
 
+/**
+ * Class to handle visualization of Charts consisting of Area, Bar and Line Charts.
+ */
 export default class ComposedChart extends BaseChart {
 
     constructor(props) {

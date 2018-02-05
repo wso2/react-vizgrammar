@@ -25,6 +25,9 @@ import VizGError from '../VizGError';
 import ChartContainer from './ChartContainer';
 import LegendComponent from './LegendComponent';
 
+/**
+ * Class to handle visualization of scatter plots.
+ */
 export default class ScatterPlot extends BaseChart {
     constructor(props) {
         super(props);
@@ -160,7 +163,7 @@ export default class ScatterPlot extends BaseChart {
                                 pointerLength={4}
                                 cornerRadius={2}
                                 flyoutStyle={{ fill: '#000', fillOpacity: '0.8', strokeWidth: 0 }}
-                                style={{ fill: '#b0b0b0', textAlign: 'left' }}
+                                style={{ fill: '#e6e6e6', textAlign: 'left' }}
                             />
                         }
                         events={[{

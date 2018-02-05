@@ -27,11 +27,22 @@ const LEGEND_DISABLED_COLOR = '#d3d3d3';
  * Base Chart that contain most common methods that requires for the charts.
  */
 export default class BaseChart extends React.Component {
+    /**
+     * returns which x scale to be used for the current chart based on the metadata type.
+     * @param {String} type - type defined in the metadata one of values 'linear', 'ordinal', or 'time'
+     * @returns {string} type of the xScale that should be used in the chart.
+     */
     static getXScale(type) {
         if (type.toLowerCase() === 'linear' || type.toLowerCase() === 'ordinal') return 'linear';
         else return 'time';
     }
 
+    /**
+     * returns a dataSet object that contains arrays not longer than maxLength provided
+     * @param {Object} dataSets
+     * @param {number} maxLength
+     * @returns {*}
+     */
     static trimDataSet(dataSets, maxLength) {
         _.keys(_.pickBy(dataSets, obj => obj.length > maxLength)).forEach((key) => {
             const lengthDiff = dataSets[key].length - maxLength;
@@ -41,6 +52,11 @@ export default class BaseChart extends React.Component {
         return dataSets;
     }
 
+    /**
+     * Generates an array of objects containing chart information that needed to be plotted.
+     * @param {Array} charts - Charts array provided in the config.
+     * @returns {Array} - Array of objects containing chart information that needed to be plotted
+     */
     static generateChartArray(charts) {
         return charts.map((chart, chartIndex) => {
             return {
@@ -92,11 +108,20 @@ export default class BaseChart extends React.Component {
         this.sortDataBasedOnConfig(nextProps);
     }
 
+    /**
+     * Event handler for mouse events
+     * @param evt - event associated with the interaction.
+     * @returns {*}
+     */
     handleMouseEvent(evt) {
         const { onClick } = this.props;
         return onClick && onClick(evt);
     }
 
+    /**
+     * Event handler for onClick events of names shown in the legend.
+     * @param props
+     */
     handleLegendInteraction(props) {
         const { ignoreArray } = this.state;
 
@@ -112,10 +137,15 @@ export default class BaseChart extends React.Component {
         this.forceUpdate();
     }
 
+    /**
+     * Sort and set the state with data received from props.
+     * @param props - props received by the component.
+     */
     sortDataBasedOnConfig(props) {
         const { config, metadata, data } = props;
         let { chartArray, dataSets, xScale, isOrdinal } = this.state;
-        if (chartArray.length === 0) chartArray = BaseChart.generateChartArray(config.charts); // generate chart array from the config.
+        // generate chart array from the config.
+        if (chartArray.length === 0) chartArray = BaseChart.generateChartArray(config.charts);
         const xIndex = metadata.names.indexOf(config.x);
         if (_.keys(dataSets).length === 0) {
             if (!isOrdinal) isOrdinal = metadata.types[xIndex].toLowerCase() === 'ordinal';
@@ -167,11 +197,27 @@ export default class BaseChart extends React.Component {
 
         this.setState((prevState) => {
             prevState.chartArray.push(...(_.differenceWith(chartArray, prevState.chartArray, _.isEqual)));
-            _.mergeWith(prevState.dataSets, dataSet, (objValue, srcValue) => {
-                if (_.isArray(objValue)) {
-                    return objValue.concat(srcValue);
-                }
-            });
+            if (!isOrdinal) {
+                _.mergeWith(prevState.dataSets, dataSet, (objValue, srcValue) => {
+                    if (_.isArray(objValue)) {
+                        return objValue.concat(srcValue);
+                    }
+                });
+            } else {
+                _.keys(dataSet).forEach((key) => {
+                    prevState.dataSets[key] = prevState.dataSets[key] || [];
+                    dataSet[key].forEach((datum) => {
+                        const objIndex = _.findIndex(prevState.dataSets[key], obj => obj.x === datum.x);
+                        if (objIndex > -1) {
+                            prevState.dataSets[key][objIndex].y = datum.y;
+                        } else {
+                            prevState.dataSets[key].push(datum);
+                        }
+                    });
+                });
+            }
+
+            _.keys(prevState.dataSets).forEach(key => _.sortBy(prevState.dataSets[key], o => o.x));
             if (config.maxLength) BaseChart.trimDataSet(prevState.dataSets, config.maxLength);
             prevState.isOrdinal = isOrdinal;
             return prevState;
