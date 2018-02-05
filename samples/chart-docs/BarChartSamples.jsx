@@ -24,6 +24,7 @@ import VizG from '../../src/VizG';
 import '../styles/snippet-highlight.css';
 import ChartWrapper from '../ChartWrapper';
 import { syntaxHighlight } from './util/SyntaxHighLight';
+import GitHub from '../components/GitHub';
 
 export default class BarChartSamples extends React.Component {
     constructor(props) {
@@ -31,7 +32,7 @@ export default class BarChartSamples extends React.Component {
         this.state = {
             data: [],
             data2: [],
-            timer: 0,
+            timer: 1,
         };
 
         this.interval_id = null;
@@ -109,9 +110,16 @@ export default class BarChartSamples extends React.Component {
                                 <HomeIcon />
                             </IconButton>
                         </Link>
-                        <Typography type="title" color="inherit" >
+                        <Typography type="title" color="inherit" style={{ flex: 1 }} >
                             React-VizGrammar - Bar Chart Samples
                         </Typography>
+                        <IconButton
+                            color="inherit"
+                            onClick={() => { window.location.href = 'https://github.com/wso2/react-vizgrammar'; }}
+                            title="See the source on GitHub"
+                        >
+                            <GitHub />
+                        </IconButton>
                     </Toolbar>
                 </AppBar>
                 <Grid container>

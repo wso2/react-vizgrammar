@@ -24,6 +24,7 @@ import VizG from '../../src/VizG';
 import '../styles/snippet-highlight.css';
 import ChartWrapper from '../ChartWrapper';
 import { syntaxHighlight } from './util/SyntaxHighLight';
+import GitHub from '../components/GitHub';
 
 export default class LineChartSamples extends React.Component {
     constructor(props) {
@@ -86,9 +87,16 @@ export default class LineChartSamples extends React.Component {
                                 <HomeIcon />
                             </IconButton>
                         </Link>
-                        <Typography type="title" color="inherit" >
+                        <Typography type="title" color="inherit" style={{ flex: 1 }}>
                             React-VizGrammar - Line Chart Samples
                         </Typography>
+                        <IconButton
+                            color="inherit"
+                            onClick={() => { window.location.href = 'https://github.com/wso2/react-vizgrammar'; }}
+                            title="See the source on GitHub"
+                        >
+                            <GitHub />
+                        </IconButton>
                     </Toolbar>
                 </AppBar>
                 <Grid container>
@@ -101,10 +109,10 @@ export default class LineChartSamples extends React.Component {
                                 <br /><br />
                                 <pre
                                     dangerouslySetInnerHTML={
-                                        {
-                                            __html: syntaxHighlight(
-                                                JSON.stringify(this.barChartConfig, undefined, 4))
-                                        }
+                                    {
+                                        __html: syntaxHighlight(
+                                                JSON.stringify(this.barChartConfig, undefined, 4)),
+                                    }
                                     }
                                 />
                             </div>

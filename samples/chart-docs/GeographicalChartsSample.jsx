@@ -23,6 +23,7 @@ import HomeIcon from 'material-ui-icons/ArrowBack';
 import VizG from '../../src/VizG';
 import ChartWrapper from '../ChartWrapper';
 import { syntaxHighlight } from './util/SyntaxHighLight';
+import GitHub from '../components/GitHub';
 
 /**
  * This class will render a page that contains samples on how to use Geographical charts.
@@ -51,7 +52,7 @@ class MapChartConfigSample extends Component {
             ['Hawaii', 2.23],
         ];
 
-        this.mapConfig = {
+        this.lineChartConfig = {
             x: 'Country',
             charts: [{ type: 'map', y: 'Inflation', mapType: 'world', colorScale: ['#1958ff', '#1eff36'] }],
         };
@@ -84,16 +85,23 @@ class MapChartConfigSample extends Component {
                                 <HomeIcon />
                             </IconButton>
                         </Link>
-                        <Typography type="title" color="inherit" >
+                        <Typography type="title" color="inherit" style={{ flex: 1 }} >
                             React-VizGrammar - Geographical Chart Samples
                         </Typography>
+                        <IconButton
+                            color="inherit"
+                            onClick={() => { window.location.href = 'https://github.com/wso2/react-vizgrammar'; }}
+                            title="See the source on GitHub"
+                        >
+                            <GitHub />
+                        </IconButton>
                     </Toolbar>
                 </AppBar>
                 <Grid container>
                     <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper title={'World Map Sample'} chart={'map'} actionBar={false} media>
                             <div style={{ height: 450 }}>
-                                <VizG config={this.mapConfig} metadata={this.metadata} data={this.data} />
+                                <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.data} />
                             </div>
                             <div>
                                 <br /><br />
@@ -101,7 +109,7 @@ class MapChartConfigSample extends Component {
                                     dangerouslySetInnerHTML={
                                     {
                                         __html: syntaxHighlight(
-                                                JSON.stringify(this.mapConfig, undefined, 4)),
+                                                JSON.stringify(this.lineChartConfig, undefined, 4)),
                                     }
                                     }
                                 />
