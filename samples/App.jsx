@@ -30,7 +30,7 @@ export default class App extends React.Component {
         super(props);
         this.state = {
             data: [],
-            index: 0,
+            index: 1,
             scatterPlot: [],
             mapData: [
                 ['Afghanistan', 4.23],
@@ -208,7 +208,7 @@ export default class App extends React.Component {
                         <Typography type="title" color="inherit" style={{ flex: 1 }}>
                             React-VizGrammar
                         </Typography>
-                        <Link to={'/test'} style={{ textDecoration: 'none' }}>
+                        <Link to={'/'} style={{ textDecoration: 'none' }}>
                             <Button style={{color: '#fff'}}>
                             Getting Started
                             </Button>

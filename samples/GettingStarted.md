@@ -1,4 +1,4 @@
-# Getting Stared with React-VizGrammar
+# Getting started....
 
 React VizGrammar is a wrapper around Victory JS and it makes charting easier by adding boilerplate code so that 
 designers and developers can get started and set it up in a few minutes.
@@ -42,6 +42,7 @@ Following is a basic configuration to plot a line chart,
         height: 200
     }
 ```
+These configuration and how it varies for different charts can be found in the charting samples [here](/#/samples).
 ### `metadata` prop and `data` prop
 Once the `config` is provided. User can provide a dataset to visualize the chart. For easy interpretation React-VizGrammar require this dataset to be arranged in a tabular way similar to the way explained below.
 ```javascript

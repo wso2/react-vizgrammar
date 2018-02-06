@@ -16,16 +16,26 @@
  * under the License.
  */
 import React from 'react';
-import { Card, CardHeader, CardContent, AppBar, Toolbar, Typography, Button, IconButton } from 'material-ui';
+import { Card, CardContent } from 'material-ui';
 import Remarkable from 'remarkable';
 import hljs from 'highlight.js';
 import { Link } from 'react-router-dom';
+import { Jumbotron, Button } from 'reactstrap';
+import 'bootstrap/dist/css/bootstrap.css';
 import ReadMe from './GettingStarted.md';
 import SimpleChart from './chart-docs/SimpleChart';
-import GitHub from './components/GitHub';
-
+import './resources/gettingstarted.css';
 
 export default class GettingStarted extends React.Component {
+    constructor(props) {
+        super(props);
+        this.divRef = null;
+    }
+
+    componentDidMount() {
+
+    }
+
     render() {
         const md = new Remarkable('full', {
             html: false,        // Enable HTML tags in source
@@ -60,27 +70,33 @@ export default class GettingStarted extends React.Component {
         });
         return (
             <div>
-                <AppBar>
-                    <Toolbar >
-                        <Typography type="title" color="inherit" style={{ flex: 1 }}>
-                            React-VizGrammar
-                        </Typography>
-                        <Link to={'/'} style={{ textDecoration: 'none' }}>
-                            <Button style={{ color: '#fff' }}>
-                                Samples
-                            </Button>
-                        </Link>
+                <Jumbotron>
 
-                        <IconButton
-                            color="inherit"
-                            onClick={() => { window.location.href = 'https://github.com/wso2/react-vizgrammar'; }}
-                            title="See the source on GitHub"
-                        >
-                            <GitHub />
-                        </IconButton>
-                    </Toolbar>
-                </AppBar>
-                <Card style={{ marginTop: 80, marginLeft: 400, marginRight: 400 }} >
+                    <center>
+                        <h1 className="display-3">React-VizGrammar</h1>
+                        <p className="lead">A charting library based on React.JS, written with simplicity and flexibility in mind.</p>
+                        <hr className="my-2" />
+                        <div style={{ height: 200, textAlign: 'center' }}>
+                            <div style={{ float: 'left', marginLeft: 250 }} >
+                                <img className="rounded mx-auto d-block" src={require('./resources/thumbnails/Screenshot-1.png')} alt="thumbnail" height={200} width={400} />
+                            </div>
+                            <div style={{ float: 'left', marginLeft: 10 }} >
+                                <img className="rounded mx-auto d-block" src={require('./resources/thumbnails/Screenshot-2.png')} alt="thumbnail" height={200} width={400} />
+                            </div>
+                            <div style={{ float: 'left', marginLeft: 10 }} >
+                                <img className="rounded mx-auto d-block" src={require('./resources/thumbnails/Screenshot-3.png')} alt="thumbnail" height={200} width={250} />
+                            </div>
+                            <div style={{ float: 'left', marginLeft: 10 }} >
+                                <img className="rounded mx-auto d-block" src={require('./resources/thumbnails/Screenshot-4.png')} alt="thumbnail" height={200} width={300} />
+                            </div>
+                        </div>
+                        <p style={{ marginTop: 20 }} className="lead">
+                            <Button color="primary" size="lg" onClick={() => { window.location.href = 'https://github.com/wso2/react-vizgrammar'; }}>View on GitHub</Button>{' '}
+                            <Link to={'/samples'} style={{ textDecoration: 'none' }}><Button color="primary" size="lg">View Samples</Button></Link>{' '}
+                        </p>
+                    </center>
+                </Jumbotron>
+                <Card style={{ marginLeft: 400, marginRight: 400 }} >
                     <CardContent>
 
                         <div dangerouslySetInnerHTML={{ __html: md.render(ReadMe) }} />

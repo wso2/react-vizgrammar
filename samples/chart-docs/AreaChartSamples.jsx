@@ -18,7 +18,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Grid, IconButton } from 'material-ui';
+import { AppBar, Toolbar, Typography, Grid, IconButton, Button } from 'material-ui';
 import HomeIcon from 'material-ui-icons/ArrowBack';
 import VizG from '../../src/VizG';
 import '../styles/snippet-highlight.css';
@@ -89,7 +89,7 @@ export default class AreaChartSamples extends React.Component {
             <div>
                 <AppBar>
                     <Toolbar >
-                        <Link to='/' >
+                        <Link to='/samples' >
                             <IconButton color="contrast" aria-label="Menu">
                                 <HomeIcon />
                             </IconButton>
@@ -97,6 +97,11 @@ export default class AreaChartSamples extends React.Component {
                         <Typography type="title" color="inherit" style={{ flex: 1 }} >
                             React-VizGrammar - Area Chart Samples
                         </Typography>
+                        <Link to={'/'} style={{ textDecoration: 'none' }}>
+                            <Button style={{color: '#fff'}}>
+                                Getting Started
+                            </Button>
+                        </Link>
                         <IconButton
                             color="inherit"
                             onClick={() => { window.location.href = 'https://github.com/wso2/react-vizgrammar'; }}

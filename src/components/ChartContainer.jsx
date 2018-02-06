@@ -47,7 +47,7 @@ export default class ChartContainer extends React.Component {
                 }
             });
 
-            if (found0 > -1 && !horizontal ) {
+            if (found0 > -1 && !horizontal) {
                 let maxOne = null;
                 _.keys(dataSets).forEach((key) => {
                     const max = _.maxBy(dataSets[key], o => o.x);
@@ -99,6 +99,7 @@ export default class ChartContainer extends React.Component {
                             />
                 }
                 domain={{ x: xDomain, y: yDomain }}
+                style={{ parent: { overflow: 'visible' } }}
             >
                 {this.props.children}
                 {

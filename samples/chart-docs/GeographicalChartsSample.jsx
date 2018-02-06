@@ -17,7 +17,7 @@
  */
 
 import React, { Component } from 'react';
-import { AppBar, Toolbar, Typography, Grid, IconButton } from 'material-ui';
+import { AppBar, Toolbar, Typography, Grid, IconButton, Button } from 'material-ui';
 import { Link } from 'react-router-dom';
 import HomeIcon from 'material-ui-icons/ArrowBack';
 import VizG from '../../src/VizG';
@@ -80,7 +80,7 @@ class MapChartConfigSample extends Component {
             <div>
                 <AppBar>
                     <Toolbar >
-                        <Link to='/' >
+                        <Link to='/samples' >
                             <IconButton color="contrast" aria-label="Menu">
                                 <HomeIcon />
                             </IconButton>
@@ -88,6 +88,11 @@ class MapChartConfigSample extends Component {
                         <Typography type="title" color="inherit" style={{ flex: 1 }} >
                             React-VizGrammar - Geographical Chart Samples
                         </Typography>
+                        <Link to={'/'} style={{ textDecoration: 'none' }}>
+                            <Button style={{color: '#fff'}}>
+                                Getting Started
+                            </Button>
+                        </Link>
                         <IconButton
                             color="inherit"
                             onClick={() => { window.location.href = 'https://github.com/wso2/react-vizgrammar'; }}

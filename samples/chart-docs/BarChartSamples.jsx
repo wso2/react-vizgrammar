@@ -18,7 +18,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Grid, IconButton } from 'material-ui';
+import { AppBar, Toolbar, Typography, Grid, IconButton, Button } from 'material-ui';
 import HomeIcon from 'material-ui-icons/ArrowBack';
 import VizG from '../../src/VizG';
 import '../styles/snippet-highlight.css';
@@ -79,6 +79,43 @@ export default class BarChartSamples extends React.Component {
             maxLength: 7,
             legend: true,
         };
+
+        this.ordinalDataChart = {
+            x: 'Quarter',
+            charts: [
+                {
+                    type: 'bar',
+                    y: 'Sales',
+                    color: 'Product',
+                    mode: 'stacked',
+                },
+            ],
+            legend: true,
+        };
+
+        this.ordinalMetadata = {
+            names: ['Quarter', 'Sales', 'Product'],
+            types: ['ordinal', 'linear', 'ordinal'],
+        };
+
+        this.ordinalData = [
+            ['Q1', 100000, 'Product 1'],
+            ['Q1', 150000, 'Product 2'],
+            ['Q1', 50000, 'Product 3'],
+            ['Q1', 240000, 'Product 4'],
+            ['Q2', 14000, 'Product 1'],
+            ['Q2', 300000, 'Product 2'],
+            ['Q2', 140000, 'Product 3'],
+            ['Q2', 242000, 'Product 4'],
+            ['Q3', 110000, 'Product 1'],
+            ['Q3', 200000, 'Product 2'],
+            ['Q3', 140000, 'Product 3'],
+            ['Q3', 240000, 'Product 4'],
+            ['Q4', 240000, 'Product 1'],
+            ['Q4', 156009, 'Product 2'],
+            ['Q4', 149000, 'Product 3'],
+            ['Q4', 24000, 'Product 4'],
+        ];
     }
 
     componentDidMount() {
@@ -105,7 +142,7 @@ export default class BarChartSamples extends React.Component {
             <div>
                 <AppBar>
                     <Toolbar >
-                        <Link to='/' >
+                        <Link to='/samples' >
                             <IconButton color="contrast" aria-label="Menu">
                                 <HomeIcon />
                             </IconButton>
@@ -113,6 +150,11 @@ export default class BarChartSamples extends React.Component {
                         <Typography type="title" color="inherit" style={{ flex: 1 }} >
                             React-VizGrammar - Bar Chart Samples
                         </Typography>
+                        <Link to={'/'} style={{ textDecoration: 'none' }}>
+                            <Button style={{color: '#fff'}}>
+                                Getting Started
+                            </Button>
+                        </Link>
                         <IconButton
                             color="inherit"
                             onClick={() => { window.location.href = 'https://github.com/wso2/react-vizgrammar'; }}
@@ -140,6 +182,26 @@ export default class BarChartSamples extends React.Component {
                                 />
                             </div>
 
+                        </ChartWrapper>
+                    </Grid>
+                    <Grid item lg={6} sm={12} xs={12} >
+                        <ChartWrapper title="Bar Chart Sample with an ordinal Dataset." chart="line" media actionBar={false}>
+                            <div style={{ height: 450 }}>
+                                <VizG
+                                    config={this.ordinalDataChart}
+                                    metadata={this.ordinalMetadata}
+                                    data={this.ordinalData}
+                                />
+                            </div>
+                            <div>
+                                <br /><br />
+                                <pre
+                                    dangerouslySetInnerHTML={{
+                                        __html: syntaxHighlight(JSON
+                                            .stringify(this.ordinalDataChart, undefined, 4)),
+                                    }}
+                                />
+                            </div>
                         </ChartWrapper>
                     </Grid>
                     <Grid item lg={6} sm={12} xs={12} >

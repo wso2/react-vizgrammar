@@ -49,6 +49,10 @@ module.exports = {
                 test: /\.md$/,
                 loader: 'raw-loader',
             },
+            {
+                test: /\.(jpg|png)$/,
+                loader: 'url-loader',
+            },
         ],
     },
     devServer: {

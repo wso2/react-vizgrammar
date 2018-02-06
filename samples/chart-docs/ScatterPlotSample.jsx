@@ -17,7 +17,7 @@
  */
 
 import React from 'react';
-import { AppBar, Toolbar, Typography, Grid, IconButton } from 'material-ui';
+import { AppBar, Toolbar, Typography, Grid, IconButton, Button } from 'material-ui';
 import HomeIcon from 'material-ui-icons/ArrowBack';
 import { Link } from 'react-router-dom';
 import ChartWrapper from '../ChartWrapper';
@@ -82,7 +82,7 @@ export default class ScatterChartConfigSample extends React.Component {
             <div>
                 <AppBar>
                     <Toolbar >
-                        <Link to='/' >
+                        <Link to='/samples' >
                             <IconButton color="contrast" aria-label="Menu">
                                 <HomeIcon />
                             </IconButton>
@@ -90,6 +90,11 @@ export default class ScatterChartConfigSample extends React.Component {
                         <Typography type="title" color="inherit" style={{ flex: 1 }}>
                             React-VizGrammar - Scatter Plot Sample
                         </Typography>
+                        <Link to={'/'} style={{ textDecoration: 'none' }}>
+                            <Button style={{color: '#fff'}}>
+                                Getting Started
+                            </Button>
+                        </Link>
                         <IconButton
                             color="inherit"
                             onClick={() => { window.location.href = 'https://github.com/wso2/react-vizgrammar'; }}
