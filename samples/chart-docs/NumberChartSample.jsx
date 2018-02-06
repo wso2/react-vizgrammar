@@ -17,12 +17,13 @@
  */
 
 import React from 'react';
-import { AppBar, Toolbar, Typography, Grid, IconButton } from 'material-ui';
+import { AppBar, Toolbar, Typography, Grid, IconButton, Button } from 'material-ui';
 import HomeIcon from 'material-ui-icons/ArrowBack';
 import { Link } from 'react-router-dom';
 import ChartWrapper from '../ChartWrapper';
 import VizG from '../../src/VizG';
 import { syntaxHighlight } from './util/SyntaxHighLight';
+import GitHub from '../components/GitHub';
 
 export default class NumberChartSample extends React.Component {
     constructor(props) {
@@ -67,14 +68,26 @@ export default class NumberChartSample extends React.Component {
             <div>
                 <AppBar>
                     <Toolbar >
-                        <Link to='/' >
+                        <Link to='/samples' >
                             <IconButton color="contrast" aria-label="Menu">
                                 <HomeIcon />
                             </IconButton>
                         </Link>
-                        <Typography type="title" color="inherit" >
+                        <Typography type="title" color="inherit" style={{ flex: 1 }} >
                             React-VizGrammar - Pie Chart Samples
                         </Typography>
+                        <Link to={'/'} style={{ textDecoration: 'none' }}>
+                            <Button style={{color: '#fff'}}>
+                                Getting Started
+                            </Button>
+                        </Link>
+                        <IconButton
+                            color="inherit"
+                            onClick={() => { window.location.href = 'https://github.com/wso2/react-vizgrammar'; }}
+                            title="See the source on GitHub"
+                        >
+                            <GitHub />
+                        </IconButton>
                     </Toolbar>
                 </AppBar>
                 <Grid container>
@@ -92,10 +105,10 @@ export default class NumberChartSample extends React.Component {
                                 <br /><br />
                                 <pre
                                     dangerouslySetInnerHTML={
-                                        {
-                                            __html: syntaxHighlight(
+                                    {
+                                        __html: syntaxHighlight(
                                                 JSON.stringify(this.numConfig, undefined, 4)),
-                                        }
+                                    }
                                     }
                                 />
                             </div>

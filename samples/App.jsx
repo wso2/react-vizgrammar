@@ -17,17 +17,20 @@
  */
 
 import React from 'react';
-import { AppBar, Toolbar, Typography, Grid } from 'material-ui';
+import { AppBar, Toolbar, Typography, Grid, Button, IconButton } from 'material-ui';
 import Table, { TableCell, TableBody, TableHead, TableRow } from 'material-ui/Table';
+import Code from 'material-ui-icons/Code';
+import { Link } from 'react-router-dom';
 import ChartWrapper from './ChartWrapper';
 import VizG from '../src/VizG';
+import GitHub from './components/GitHub';
 
 export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             data: [],
-            index: 0,
+            index: 1,
             scatterPlot: [],
             mapData: [
                 ['Afghanistan', 4.23],
@@ -53,6 +56,13 @@ export default class App extends React.Component {
         };
 
         this.mapConfig = {
+            x: 'Country',
+            charts: [{ type: 'map', y: 'Inflation', mapType: 'world' }],
+            width: 400,
+            height: 200,
+        };
+
+        this.lineChartConfig = {
             x: 'Country',
             charts: [{ type: 'map', y: 'Inflation', mapType: 'world' }],
             width: 400,
@@ -150,6 +160,7 @@ export default class App extends React.Component {
                 { type: 'spark-area', y: 'torque', fill: '#47c5ff' },
             ],
             maxLength: 30,
+            append: true,
         };
         this.sparkLineChart = {
             x: 'rpm',
@@ -157,6 +168,7 @@ export default class App extends React.Component {
                 { type: 'spark-line', y: 'torque', fill: 'red' },
             ],
             maxLength: 30,
+            append: true,
         };
         this.sparkBarChart = {
             x: 'rpm',
@@ -164,6 +176,7 @@ export default class App extends React.Component {
                 { type: 'spark-bar', y: 'torque', fill: 'red' },
             ],
             maxLength: 30,
+            append: true,
         };
     }
 
@@ -192,9 +205,21 @@ export default class App extends React.Component {
             <div style={{ padding: 10 }}>
                 <AppBar>
                     <Toolbar >
-                        <Typography type="title" color="inherit" >
+                        <Typography type="title" color="inherit" style={{ flex: 1 }}>
                             React-VizGrammar
                         </Typography>
+                        <Link to={'/'} style={{ textDecoration: 'none' }}>
+                            <Button style={{color: '#fff'}}>
+                            Getting Started
+                            </Button>
+                        </Link>
+                        <IconButton
+                            color="inherit"
+                            onClick={() => { window.location.href = 'https://github.com/wso2/react-vizgrammar'; }}
+                            title="See the source on GitHub"
+                        >
+                            <GitHub />
+                        </IconButton>
                     </Toolbar>
                 </AppBar>
                 <Grid container spacing={24} >

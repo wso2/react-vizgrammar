@@ -30,6 +30,7 @@ import Maps from './chart-docs/GeographicalChartsSample';
 import Arcs from './chart-docs/PieChartSamples';
 import NumChart from './chart-docs/NumberChartSample';
 import Table from './chart-docs/TableChartSamples';
+import GettingStarted from './GettingStarted';
 
 const theme = createMuiTheme({
     palette: {
@@ -41,7 +42,7 @@ ReactDOM.render(
     <Router>
         <MuiThemeProvider theme={theme} >
             <ScrollReset>
-                <Route exact path={'/'} component={App} />
+                <Route exact path={'/'} component={GettingStarted} />
             </ScrollReset>
             <ScrollReset>
                 <Route path={'/line-charts'} component={LineCharts} />
@@ -66,6 +67,9 @@ ReactDOM.render(
             </ScrollReset>
             <ScrollReset>
                 <Route path="/table-charts" component={Table} />
+            </ScrollReset>
+            <ScrollReset>
+                <Route path="/samples" component={App} />
             </ScrollReset>
         </MuiThemeProvider>
     </Router>, document.getElementById('samples'));

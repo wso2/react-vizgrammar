@@ -26,6 +26,7 @@ import feature from 'topojson-client/src/feature';
 import { getDefaultColorScale } from './helper';
 import { CountryInfo, EuropeMap, WorldMap, USAMap } from './resources/MapData';
 import VizGError from '../VizGError';
+import './resources/css/map-chart.css';
 
 const USA_YOFFSET_FACTOR = 2;
 const USA_XOFFSET_FACTOR = 0.8;
@@ -304,7 +305,7 @@ export default class MapGenerator extends React.Component {
                             }
                         </Geographies>
                     </ComposableMap>
-                    <ReactToolTip />
+                    <ReactToolTip class="fontClass" />
                 </div>
 
                 <div style={{ width: '15%', height: '100%', display: 'inline', float: 'right' }}>
