@@ -58,12 +58,12 @@ export default class GettingStarted extends React.Component {
                 if (lang && hljs.getLanguage(lang)) {
                     try {
                         return hljs.highlight(lang, str).value;
-                    } catch (__) {}
+                    } catch (__) { }
                 }
 
                 try {
                     return hljs.highlightAuto(str).value;
-                } catch (__) {}
+                } catch (__) { }
 
                 return ''; // use external default escaping
             },
@@ -76,20 +76,7 @@ export default class GettingStarted extends React.Component {
                         <h1 className="display-3">React-VizGrammar</h1>
                         <p className="lead">A charting library based on React.JS, written with simplicity and flexibility in mind.</p>
                         <hr className="my-2" />
-                        <div style={{ height: 200, textAlign: 'center' }}>
-                            <div style={{ float: 'left', marginLeft: 250 }} >
-                                <img className="rounded mx-auto d-block" src={require('./resources/thumbnails/Screenshot-1.png')} alt="thumbnail" height={200} width={400} />
-                            </div>
-                            <div style={{ float: 'left', marginLeft: 10 }} >
-                                <img className="rounded mx-auto d-block" src={require('./resources/thumbnails/Screenshot-2.png')} alt="thumbnail" height={200} width={400} />
-                            </div>
-                            <div style={{ float: 'left', marginLeft: 10 }} >
-                                <img className="rounded mx-auto d-block" src={require('./resources/thumbnails/Screenshot-3.png')} alt="thumbnail" height={200} width={250} />
-                            </div>
-                            <div style={{ float: 'left', marginLeft: 10 }} >
-                                <img className="rounded mx-auto d-block" src={require('./resources/thumbnails/Screenshot-4.png')} alt="thumbnail" height={200} width={300} />
-                            </div>
-                        </div>
+                        <img className="rounded mx-auto d-block" src={require('./resources/thumbnails/banner_1.png')} alt="thumbnail" height={200} width={'80%'} />
                         <p style={{ marginTop: 20 }} className="lead">
                             <Button color="primary" size="lg" onClick={() => { window.location.href = 'https://github.com/wso2/react-vizgrammar'; }}>View on GitHub</Button>{' '}
                             <Link to={'/samples'} style={{ textDecoration: 'none' }}><Button color="primary" size="lg">View Samples</Button></Link>{' '}
