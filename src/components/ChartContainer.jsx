@@ -30,7 +30,7 @@ import darkTheme from './resources/themes/victoryDarkTheme';
 export default class ChartContainer extends React.Component {
 
     render() {
-        const { width, height, xScale, theme, config, horizontal, disableAxes, yDomain, isOrdinal, dataSets } = this.props;
+        const { width, height, xScale, theme, config, horizontal, disableAxes, yDomain, isOrdinal, dataSets, barData } = this.props;
         const currentTheme = theme === 'materialLight' ? lightTheme : darkTheme;
         let arr = null;
         let xDomain = null;
@@ -58,10 +58,18 @@ export default class ChartContainer extends React.Component {
             }
         }
 
+        let domainPadding = null;
+
+        if (barData) {
+            domainPadding = Math.floor(barData.fullBarWidth / 2) + 1;
+            domainPadding = (domainPadding > 50) ? (domainPadding + 30) : domainPadding;
+        }
+
         return (
             <VictoryChart
                 width={width}
                 height={height}
+                domainPadding={{ x: horizontal ? 20 : domainPadding, y: horizontal ? domainPadding : 20 }}
                 padding={
                     (() => {
                         if (config.legend === true) {
@@ -100,6 +108,7 @@ export default class ChartContainer extends React.Component {
                 }
                 domain={{ x: xDomain, y: yDomain }}
                 style={{ parent: { overflow: 'visible' } }}
+
             >
                 {this.props.children}
                 {
@@ -154,8 +163,8 @@ export default class ChartContainer extends React.Component {
                                 }
                                 label={
                                     horizontal ?
-                                    config.yAxisLabel || ((config.charts.length > 1 ? '' : config.charts[0].y)) :
-                                    config.xAxisLabel || config.x
+                                        config.yAxisLabel || ((config.charts.length > 1 ? '' : config.charts[0].y)) :
+                                        config.xAxisLabel || config.x
                                 }
                                 tickFormat={(() => {
                                     if (xScale === 'time' && config.timeFormat) {
@@ -167,7 +176,7 @@ export default class ChartContainer extends React.Component {
                                             if ((data - Math.floor(data)) !== 0) {
                                                 return '';
                                             } else {
-                                                return arr[Number(data) - 1].x;
+                                                return Number(data) <= arr.length ? arr[Number(data) - 1].x : '';
                                             }
                                         };
                                     } else {
