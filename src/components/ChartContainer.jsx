@@ -176,7 +176,7 @@ export default class ChartContainer extends React.Component {
                                             if ((data - Math.floor(data)) !== 0) {
                                                 return '';
                                             } else {
-                                                return Number(data) <= arr.length ? arr[Number(data) - 1].x : 'x';
+                                                return Number(data) <= arr.length ? arr[Number(data) - 1].x : '';
                                             }
                                         };
                                     } else {
