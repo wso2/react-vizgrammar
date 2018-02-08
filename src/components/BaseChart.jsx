@@ -85,6 +85,7 @@ export default class BaseChart extends React.Component {
             xScale: 'linear',
             ignoreArray: [],
             isOrdinal: false,
+            stacked: false,
         };
 
         this.chartConfig = undefined;

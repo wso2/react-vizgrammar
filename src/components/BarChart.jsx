@@ -33,6 +33,7 @@ export default class BarChart extends BaseChart {
         super(props);
         this.handleMouseEvent = this.handleMouseEvent.bind(this);
         this.handleLegendInteraction = this.handleLegendInteraction.bind(this);
+        this.getBarChartComponent = this.getBarChartComponent.bind(this);
     }
 
     /**
@@ -54,7 +55,7 @@ export default class BarChart extends BaseChart {
      * @param {Array} ignoreArray - array that contains dataSets to be ignored in rendering the components.
      * @returns {{chartComponents: Array, legendComponents: Array}}
      */
-    static getBarChartComponent(chartArray, dataSets, config, onClick, xScale, ignoreArray) {
+    getBarChartComponent(chartArray, dataSets, config, onClick, xScale, ignoreArray) {
         const chartComponents = [];
         const legendComponents = [];
         let dataSetLength = 1;
@@ -77,6 +78,7 @@ export default class BarChart extends BaseChart {
             });
 
             if (chart.mode === 'stacked') {
+                this.state.stacked = true;
                 chartComponents.push((
                     <VictoryStack
                         key={`victoryStackGroup-${chart.id}`}
@@ -170,11 +172,14 @@ export default class BarChart extends BaseChart {
         const { chartArray, dataSets, xScale, ignoreArray } = this.state;
 
         let { chartComponents, legendComponents, dataSetLength } =
-            BarChart.getBarChartComponent(chartArray, dataSets, config, this.handleMouseEvent, xScale, ignoreArray);
+            this.getBarChartComponent(chartArray, dataSets, config, this.handleMouseEvent, xScale, ignoreArray);
 
-        const barWidth =
-                ((BarChart.isHorizontal(config) ?
-                    (height - 80) : (width - 280)) / (dataSetLength * chartComponents.length)) - 1;
+        let fullBarWidth = ((BarChart.isHorizontal(config) ?
+            (height - 120) : (width - 280)) / (dataSetLength)) - 1;
+
+        fullBarWidth = (fullBarWidth > 100) ? fullBarWidth * 0.8 : fullBarWidth;
+
+        const barWidth = Math.floor(fullBarWidth / chartComponents.length);
 
         chartComponents = [
             <VictoryGroup
@@ -199,6 +204,7 @@ export default class BarChart extends BaseChart {
                 yDomain={this.props.yDomain}
                 isOrdinal={this.state.isOrdinal}
                 dataSets={dataSets}
+                barData={{ barWidth, dataSetLength, fullBarWidth }}
             >
                 {
                     config.legend === true ?
