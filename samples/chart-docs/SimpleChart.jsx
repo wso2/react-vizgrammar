@@ -53,7 +53,9 @@ export default class SimpleChart extends React.Component {
 
     render() {
         return (
-            <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.staticDataSet} height={600}/>
+            <div style={{ width: '100%', height: 500 }}>
+                <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.staticDataSet} width={1000} height={350} />
+            </div>
         );
     }
 }
