@@ -75,8 +75,7 @@ In order build React-VizGrammar from the sources, Get a clone from this reposito
 ```
 
 #### Build and run samples
-To build and run samples navigate to the samples directory inside the main directory and run the following commands.
+To build and start the dev-server and view the samples, inside the main directory run the following command afer installing the npm dependencies.
 ```bash
-    npm install
     npm run samples
 ```
