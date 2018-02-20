@@ -221,6 +221,7 @@ export default class BaseChart extends React.Component {
             _.keys(prevState.dataSets).forEach(key => _.sortBy(prevState.dataSets[key], o => o.x));
             if (config.maxLength) BaseChart.trimDataSet(prevState.dataSets, config.maxLength);
             prevState.isOrdinal = isOrdinal;
+            prevState.xScale = xScale;
             return prevState;
         });
     }

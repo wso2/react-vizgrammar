@@ -115,6 +115,7 @@ export default class ArcChart extends BaseChart {
                 theme={theme}
                 disableAxes
                 disableContainer
+                arcChart
             >
                 <VictoryPie
                     randomVal={random}
@@ -139,7 +140,7 @@ export default class ArcChart extends BaseChart {
                             '' :
                             d => `${d.x} : ${((d.y / (_.sumBy(pieChartData, o => o.y))) * 100).toFixed(2)}%`
                     }
-                    style={{ labels: { fontSize: 6 } }}
+                    style={{ labels: { fontSize: 6 }, data: { strokeWidth: 0 } }}
                     labelRadius={height / 3}
                     events={[{
                         target: 'data',
@@ -155,7 +156,7 @@ export default class ArcChart extends BaseChart {
                     config.percentage ?
                         <VictoryLabel
                             textAnchor="middle"
-                            x="55%"
+                            x="45%"
                             y="50%"
                             text={`${Math.round(pieChartData.length > 0 ? pieChartData[0].y : 0)}%`}
                             style={{ fontSize: config.labelFontSize || 45, fill: config.labelColor || 'black' }}
