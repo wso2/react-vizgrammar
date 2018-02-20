@@ -30,7 +30,7 @@ import darkTheme from './resources/themes/victoryDarkTheme';
 export default class ChartContainer extends React.Component {
 
     render() {
-        const { width, height, xScale, theme, config, horizontal, disableAxes, yDomain, isOrdinal, dataSets, barData } = this.props;
+        const { width, height, xScale, theme, config, horizontal, disableAxes, yDomain, isOrdinal, dataSets, barData, arcChart } = this.props;
         const currentTheme = theme === 'materialLight' ? lightTheme : darkTheme;
         let arr = null;
         let xDomain = null;
@@ -72,7 +72,7 @@ export default class ChartContainer extends React.Component {
                 domainPadding={{ x: horizontal ? 20 : domainPadding, y: horizontal ? domainPadding : 20 }}
                 padding={
                     (() => {
-                        if (config.legend === true) {
+                        if (config.legend === true || arcChart) {
                             if (!config.legendOrientation) return { left: 100, top: 30, bottom: xAxisPaddingBottom, right: 180 };
                             else if (config.legendOrientation === 'left') {
                                 return { left: 300, top: 30, bottom: xAxisPaddingBottom, right: 30 };
