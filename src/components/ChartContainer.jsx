@@ -30,7 +30,8 @@ import darkTheme from './resources/themes/victoryDarkTheme';
 export default class ChartContainer extends React.Component {
 
     render() {
-        const { width, height, xScale, theme, config, horizontal, disableAxes, yDomain, isOrdinal, dataSets, barData, arcChart } = this.props;
+        const { width, height, xScale,
+            theme, config, horizontal, disableAxes, yDomain, isOrdinal, dataSets, barData, arcChart } = this.props;
         const currentTheme = theme === 'materialLight' ? lightTheme : darkTheme;
         let arr = null;
         let xDomain = null;
