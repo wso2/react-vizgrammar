@@ -107,8 +107,6 @@ export default class ArcChart extends BaseChart {
         const { config, theme, height, width } = this.props;
         const { pieChartData, random } = this.state;
 
-        let additionalInnerRadius = config.innerRadius && !isNaN(config.innerRadius) ? config.innerRadius : 0;
-
         return (
             <ChartContainer
                 height={height}
