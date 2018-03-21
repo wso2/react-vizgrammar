@@ -89,31 +89,67 @@ class AppRoute extends React.Component {
                                 )}/>
                             </RouterSwitch>
                             <ScrollReset>
-                                <Route path={'/line-charts'} component={LineCharts}/>
+                                <Route path={'/line-charts'} component={()=>{
+                                    return(
+                                        <LineCharts theme={this.state.theme} />
+                                    )
+                                }}/>
                             </ScrollReset>
                             <ScrollReset>
-                                <Route path={'/area-charts'} component={AreaCharts}/>
+                                <Route path={'/area-charts'} component={()=>{
+                                    return(
+                                        <AreaCharts theme={this.state.theme} />
+                                    )
+                                }}/>
                             </ScrollReset>
                             <ScrollReset>
-                                <Route path={'/bar-charts'} component={BarCharts}/>
+                                <Route path={'/bar-charts'} component={()=>{
+                                    return(
+                                        <BarCharts theme={this.state.theme} />
+                                    )
+                                }}/>
                             </ScrollReset>
                             <ScrollReset>
-                                <Route path={'/scatter-charts'} component={ScatterChart}/>
+                                <Route path={'/scatter-charts'} component={()=>{
+                                    return(
+                                        <ScatterChart theme={this.state.theme} />
+                                    )
+                                }}/>
                             </ScrollReset>
                             <ScrollReset>
-                                <Route path="/map-charts" component={Maps}/>
+                                <Route path="/map-charts" component={()=>{
+                                    return(
+                                        <Maps theme={this.state.theme} />
+                                    )
+                                }}/>
                             </ScrollReset>
                             <ScrollReset>
-                                <Route path="/pie-charts" component={Arcs}/>
+                                <Route path="/pie-charts" component={()=>{
+                                    return(
+                                        <Arcs theme={this.state.theme} />
+                                    )
+                                }}/>
                             </ScrollReset>
                             <ScrollReset>
-                                <Route path="/number-charts" component={NumChart}/>
+                                <Route path="/number-charts" component={()=>{
+                                    return(
+                                        <NumChart theme={this.state.theme} />
+                                    )
+                                }}/>
                             </ScrollReset>
                             <ScrollReset>
-                                <Route path="/table-charts" component={Table}/>
+                                <Route path="/table-charts" component={()=>{
+                                    return(
+                                        <Table theme={this.state.theme} />
+                                    )
+                                }}/>
                             </ScrollReset>
                             <ScrollReset>
-                                <Route path="/samples" component={App}/>
+                                <Route path="/samples" component={()=>{
+                                    return(
+                                        <App theme={this.state.theme} />
+                                    )
+                                }}/>
                             </ScrollReset>
                         </div>
                     </MuiThemeProvider>
