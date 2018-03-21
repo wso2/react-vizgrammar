@@ -18,8 +18,8 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { MuiThemeProvider, createMuiTheme } from 'material-ui';
-import { HashRouter as Router, Route } from 'react-router-dom';
+import {MuiThemeProvider, createMuiTheme, Switch } from 'material-ui';
+import {HashRouter as Router, Route, Switch as RouterSwitch} from 'react-router-dom';
 import ScrollReset from './ScrollReset';
 import App from './App';
 import LineCharts from './chart-docs/LineChartSamples';
@@ -31,45 +31,99 @@ import Arcs from './chart-docs/PieChartSamples';
 import NumChart from './chart-docs/NumberChartSample';
 import Table from './chart-docs/TableChartSamples';
 import GettingStarted from './GettingStarted';
+import {FormGroup, FormControlLabel} from 'material-ui/Form';
 
-const theme = createMuiTheme({
+const dark = createMuiTheme({
+    palette: {
+        type: 'dark',
+    },
+});
+
+const light = createMuiTheme({
     palette: {
         type: 'light',
     },
 });
 
+class AppRoute extends React.Component {
+
+    constructor(props) {
+        super();
+        this.state = {
+            theme: light,
+            check: false,
+        };
+    }
+
+    handleChange = (evt) => {
+
+        evt.preventDefault();
+        this.setState({
+            check: !this.state.check,
+            theme: !this.state.check ? dark : light
+        });
+
+    };
+
+    render() {
+        return (
+            <Router>
+                <div>
+                    <ScrollReset>
+                        <Route exact path={'/'} component={GettingStarted}/>
+                    </ScrollReset>
+                    <MuiThemeProvider theme={this.state.theme}>
+                        <div>
+                            <RouterSwitch>
+                                <Route exact path={'/'} component={null}/>
+                                <Route component={( ) => (
+                                    <FormGroup style={{zIndex: '11100', position: 'fixed', right: '75px', top: '10px'}}>
+                                        <FormControlLabel
+                                            control={
+                                                <Switch checked={this.state.check}
+                                                             onChange={this.handleChange}/>
+                                            }
+                                            label={'Light/Dark'}
+                                        />
+                                    </FormGroup>
+                                )}/>
+                            </RouterSwitch>
+                            <ScrollReset>
+                                <Route path={'/line-charts'} component={LineCharts}/>
+                            </ScrollReset>
+                            <ScrollReset>
+                                <Route path={'/area-charts'} component={AreaCharts}/>
+                            </ScrollReset>
+                            <ScrollReset>
+                                <Route path={'/bar-charts'} component={BarCharts}/>
+                            </ScrollReset>
+                            <ScrollReset>
+                                <Route path={'/scatter-charts'} component={ScatterChart}/>
+                            </ScrollReset>
+                            <ScrollReset>
+                                <Route path="/map-charts" component={Maps}/>
+                            </ScrollReset>
+                            <ScrollReset>
+                                <Route path="/pie-charts" component={Arcs}/>
+                            </ScrollReset>
+                            <ScrollReset>
+                                <Route path="/number-charts" component={NumChart}/>
+                            </ScrollReset>
+                            <ScrollReset>
+                                <Route path="/table-charts" component={Table}/>
+                            </ScrollReset>
+                            <ScrollReset>
+                                <Route path="/samples" component={App}/>
+                            </ScrollReset>
+                        </div>
+                    </MuiThemeProvider>
+                </div>
+            </Router>
+        );
+    }
+}
+
 ReactDOM.render(
-    <Router>
-        <MuiThemeProvider theme={theme} >
-            <ScrollReset>
-                <Route exact path={'/'} component={GettingStarted} />
-            </ScrollReset>
-            <ScrollReset>
-                <Route path={'/line-charts'} component={LineCharts} />
-            </ScrollReset>
-            <ScrollReset>
-                <Route path={'/area-charts'} component={AreaCharts} />
-            </ScrollReset>
-            <ScrollReset>
-                <Route path={'/bar-charts'} component={BarCharts} />
-            </ScrollReset>
-            <ScrollReset>
-                <Route path={'/scatter-charts'} component={ScatterChart} />
-            </ScrollReset>
-            <ScrollReset>
-                <Route path="/map-charts" component={Maps} />
-            </ScrollReset>
-            <ScrollReset>
-                <Route path="/pie-charts" component={Arcs} />
-            </ScrollReset>
-            <ScrollReset>
-                <Route path="/number-charts" component={NumChart} />
-            </ScrollReset>
-            <ScrollReset>
-                <Route path="/table-charts" component={Table} />
-            </ScrollReset>
-            <ScrollReset>
-                <Route path="/samples" component={App} />
-            </ScrollReset>
-        </MuiThemeProvider>
-    </Router>, document.getElementById('samples'));
+    <AppRoute/>,
+    document.getElementById('samples')
+);
