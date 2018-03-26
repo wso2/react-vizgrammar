@@ -32,14 +32,16 @@ import NumChart from './chart-docs/NumberChartSample';
 import Table from './chart-docs/TableChartSamples';
 import GettingStarted from './GettingStarted';
 import {FormGroup, FormControlLabel} from 'material-ui/Form';
+import './styles/style.css';
 
-const dark = createMuiTheme({
+const darkTheme = createMuiTheme({
     palette: {
         type: 'dark',
     },
+
 });
 
-const light = createMuiTheme({
+const lightTheme = createMuiTheme({
     palette: {
         type: 'light',
     },
@@ -50,7 +52,7 @@ class AppRoute extends React.Component {
     constructor(props) {
         super();
         this.state = {
-            theme: light,
+            theme: `light`,
             check: false,
         };
     }
@@ -60,7 +62,7 @@ class AppRoute extends React.Component {
         evt.preventDefault();
         this.setState({
             check: !this.state.check,
-            theme: !this.state.check ? dark : light
+            theme: !this.state.check ? `dark` : `light`
         });
 
     };
@@ -68,12 +70,11 @@ class AppRoute extends React.Component {
     render() {
         return (
             <Router>
-                <div>
+                <div className={this.state.theme + 'Theme'}>
                     <ScrollReset>
                         <Route exact path={'/'} component={GettingStarted}/>
                     </ScrollReset>
-                    <MuiThemeProvider theme={this.state.theme}>
-                        <div>
+                    <MuiThemeProvider theme={this.state.theme === 'light' ? lightTheme : darkTheme}>
                             <RouterSwitch>
                                 <Route exact path={'/'} component={null}/>
                                 <Route component={( ) => (
@@ -151,7 +152,6 @@ class AppRoute extends React.Component {
                                     )
                                 }}/>
                             </ScrollReset>
-                        </div>
                     </MuiThemeProvider>
                 </div>
             </Router>
