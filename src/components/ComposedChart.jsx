@@ -40,7 +40,7 @@ export default class ComposedChart extends BaseChart {
     render() {
         const finalLegend = [];
         const chartComponents = [];
-        const { config, height, width } = this.props;
+        const { config, height, width, theme } = this.props;
         const { chartArray, dataSets, xScale, ignoreArray } = this.state;
 
         chartArray.forEach((chart, chartIndex) => {
@@ -98,7 +98,7 @@ export default class ComposedChart extends BaseChart {
         });
 
         return (
-            <ChartContainer width={width} height={height} xScale={xScale} config={config} disableContainer>
+            <ChartContainer width={width} height={height} xScale={xScale} config={config} theme={theme} disableContainer>
                 {
                     config.legend === true ?
                         <LegendComponent

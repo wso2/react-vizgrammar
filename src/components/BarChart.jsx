@@ -168,8 +168,8 @@ export default class BarChart extends BaseChart {
     }
 
     render() {
-        const { config, height, width } = this.props;
-        const { chartArray, dataSets, xScale, ignoreArray } = this.state;
+        const { config, height, width, yDomain, theme } = this.props;
+        const { chartArray, dataSets, xScale, ignoreArray, isOrdinal } = this.state;
 
         let { chartComponents, legendComponents, dataSetLength } =
             this.getBarChartComponent(chartArray, dataSets, config, this.handleMouseEvent, xScale, ignoreArray);
@@ -201,8 +201,9 @@ export default class BarChart extends BaseChart {
                 config={config}
                 disableContainer
                 horizontal={BarChart.isHorizontal(config)}
-                yDomain={this.props.yDomain}
-                isOrdinal={this.state.isOrdinal}
+                yDomain={yDomain}
+                theme={theme}
+                isOrdinal={isOrdinal}
                 dataSets={dataSets}
                 barData={{ barWidth, dataSetLength, fullBarWidth }}
             >

@@ -32,10 +32,6 @@ export default class GettingStarted extends React.Component {
         this.divRef = null;
     }
 
-    componentDidMount() {
-
-    }
-
     render() {
         const md = new Remarkable('full', {
             html: false,        // Enable HTML tags in source

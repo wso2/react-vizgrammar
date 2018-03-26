@@ -32,7 +32,7 @@ export default class ChartContainer extends React.Component {
     render() {
         const { width, height, xScale,
             theme, config, horizontal, disableAxes, yDomain, isOrdinal, dataSets, barData, arcChart } = this.props;
-        const currentTheme = theme === 'materialLight' ? lightTheme : darkTheme;
+        const currentTheme = theme === 'light' ? lightTheme : darkTheme;
         let arr = null;
         let xDomain = null;
         const xAxisPaddingBottom = config.style ? config.style.xAxisPaddingBottom || 50 : 50;
@@ -74,7 +74,8 @@ export default class ChartContainer extends React.Component {
                 padding={
                     (() => {
                         if (config.legend === true || arcChart) {
-                            if (!config.legendOrientation) return { left: 100, top: 30, bottom: xAxisPaddingBottom, right: 180 };
+                            if (!config.legendOrientation) return { left: 100, top: 30, bottom: xAxisPaddingBottom,
+                                right: 180 };
                             else if (config.legendOrientation === 'left') {
                                 return { left: 300, top: 30, bottom: xAxisPaddingBottom, right: 30 };
                             } else if (config.legendOrientation === 'right') {
@@ -262,7 +263,6 @@ export default class ChartContainer extends React.Component {
 ChartContainer.defaultProps = {
     yDomain: null,
     xDomain: null,
-    theme: 'materialLight',
     children: [],
     disableContainer: false,
     horizontal: false,
@@ -273,7 +273,6 @@ ChartContainer.propTypes = {
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
     xScale: PropTypes.string.isRequired,
-    theme: PropTypes.string,
     yDomain: PropTypes.arrayOf(PropTypes.number),
     xDomain: PropTypes.arrayOf(PropTypes.number),
     children: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node])),

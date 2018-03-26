@@ -211,7 +211,8 @@ export default class App extends React.Component {
                             actionBar
                         >
                             <div style={{ height: 450 }}>
-                                <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data} />
+                                <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data}
+                                      theme={this.props.theme}/>
                             </div>
                         </ChartWrapper>
                     </Grid>
@@ -223,7 +224,8 @@ export default class App extends React.Component {
                             actionBar
                         >
                             <div style={{ height: 450 }}>
-                                <VizG config={this.areaChartConfig} metadata={this.metadata} data={this.state.data} />
+                                <VizG config={this.areaChartConfig} metadata={this.metadata} data={this.state.data}
+                                      theme={this.props.theme}/>
                             </div>
                         </ChartWrapper>
                     </Grid>
@@ -235,7 +237,8 @@ export default class App extends React.Component {
                             actionBar
                         >
                             <div style={{ height: 450 }}>
-                                <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data} />
+                                <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data}
+                                      theme={this.props.theme}/>
                             </div>
                         </ChartWrapper>
                     </Grid>
@@ -252,6 +255,7 @@ export default class App extends React.Component {
                                     metadata={this.metadata}
                                     data={this.state.scatterPlot}
                                     height={360}
+                                    theme={this.props.theme}
                                 />
                             </div>
                         </ChartWrapper>
@@ -264,7 +268,8 @@ export default class App extends React.Component {
                             actionBar
                         >
                             <div style={{ height: 450 }}>
-                                <VizG config={this.mapConfig} metadata={this.mapMetadata} data={this.state.mapData} />
+                                <VizG config={this.mapConfig} metadata={this.mapMetadata} data={this.state.mapData}
+                                      theme={this.props.theme}/>
                             </div>
                         </ChartWrapper>
                     </Grid>
@@ -276,7 +281,8 @@ export default class App extends React.Component {
                             actionBar
                         >
                             <div style={{ height: 450 }}>
-                                <VizG config={this.numConfig} metadata={this.metadata} data={this.state.data} />
+                                <VizG config={this.numConfig} metadata={this.metadata} data={this.state.data}
+                                      theme={this.props.theme}/>
                             </div>
                         </ChartWrapper>
                     </Grid>
@@ -288,7 +294,8 @@ export default class App extends React.Component {
                             actionBar
                         >
                             <div style={{ height: 450 }}>
-                                <VizG config={this.pieChartConfig} metadata={this.metadata} data={this.state.data} />
+                                <VizG config={this.pieChartConfig} metadata={this.metadata} data={this.state.data}
+                                      theme={this.props.theme}/>
                             </div>
                         </ChartWrapper>
                     </Grid>

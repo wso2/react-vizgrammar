@@ -155,7 +155,7 @@ export default class AreaChart extends BaseChart {
     }
 
     render() {
-        const { config, height, width } = this.props;
+        const { config, height, width, yDomain, theme } = this.props;
         const { chartArray, dataSets, xScale, ignoreArray } = this.state;
 
         const { chartComponents, legendComponents } =
@@ -167,7 +167,8 @@ export default class AreaChart extends BaseChart {
                 height={height}
                 xScale={xScale}
                 config={config}
-                yDomain={this.props.yDomain}
+                yDomain={yDomain}
+                theme={theme}
             >
                 {
                     config.legend === true ?
