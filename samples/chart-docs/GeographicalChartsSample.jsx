@@ -17,13 +17,11 @@
  */
 
 import React, { Component } from 'react';
-import { AppBar, Toolbar, Typography, Grid, IconButton, Button } from 'material-ui';
-import { Link } from 'react-router-dom';
-import HomeIcon from 'material-ui-icons/ArrowBack';
+import {Grid} from 'material-ui';
 import VizG from '../../src/VizG';
 import ChartWrapper from '../ChartWrapper';
 import { syntaxHighlight } from './util/SyntaxHighLight';
-import GitHub from '../components/GitHub';
+import Header from '../components/Header';
 
 /**
  * This class will render a page that contains samples on how to use Geographical charts.
@@ -54,19 +52,19 @@ class MapChartConfigSample extends Component {
 
         this.lineChartConfig = {
             x: 'Country',
-            charts: [{ type: 'map', y: 'Inflation', mapType: 'world', colorScale: ['#1958ff', '#1eff36'] }],
+            charts: [{ type: 'map', y: 'Inflation', mapType: 'world', colorScale: ['#1565C0', '#4DB6AC'] }],
         };
 
         this.europeConfig = {
             type: 'map',
             x: 'Country',
-            charts: [{ type: 'map', y: 'Inflation', mapType: 'europe', colorScale: ['#1958ff', '#1eff36'] }],
+            charts: [{ type: 'map', y: 'Inflation', mapType: 'europe', colorScale: ['#1565C0', '#4DB6AC'] }],
         };
 
         this.usaConfig = {
             type: 'map',
             x: 'Country',
-            charts: [{ type: 'map', y: 'Inflation', mapType: 'usa', colorScale: ['#1958ff', '#1eff36'] }],
+            charts: [{ type: 'map', y: 'Inflation', mapType: 'usa', colorScale: ['#1565C0', '#4DB6AC'] }],
         };
 
         this.metadata = {
@@ -78,35 +76,13 @@ class MapChartConfigSample extends Component {
     render() {
         return (
             <div>
-                <AppBar>
-                    <Toolbar >
-                        <Link to='/samples' >
-                            <IconButton color="contrast" aria-label="Menu">
-                                <HomeIcon />
-                            </IconButton>
-                        </Link>
-                        <Typography type="title" color="inherit" style={{ flex: 1 }} >
-                            React-VizGrammar - Geographical Chart Samples
-                        </Typography>
-                        <Link to={'/'} style={{ textDecoration: 'none' }}>
-                            <Button style={{color: '#fff'}}>
-                                Getting Started
-                            </Button>
-                        </Link>
-                        <IconButton
-                            color="inherit"
-                            onClick={() => { window.location.href = 'https://github.com/wso2/react-vizgrammar'; }}
-                            title="See the source on GitHub"
-                        >
-                            <GitHub />
-                        </IconButton>
-                    </Toolbar>
-                </AppBar>
+                <Header url={'/samples'} title={'Geographical Chart Samples'} />
                 <Grid container>
                     <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper title={'World Map Sample'} chart={'map'} actionBar={false} media>
                             <div style={{ height: 450 }}>
-                                <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.data} />
+                                <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.data}
+                                      theme={this.props.theme} />
                             </div>
                             <div>
                                 <br /><br />
@@ -124,7 +100,8 @@ class MapChartConfigSample extends Component {
                     <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper title={'Europe Map Sample'} chart={'map'} actionBar={false} media>
                             <div style={{ height: 450 }}>
-                                <VizG config={this.europeConfig} metadata={this.metadata} data={this.data} />
+                                <VizG config={this.europeConfig} metadata={this.metadata} data={this.data}
+                                      theme={this.props.theme} />
                             </div>
                             <div>
                                 <br /><br />
@@ -142,7 +119,8 @@ class MapChartConfigSample extends Component {
                     <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper title={'Europe Map Sample'} chart={'map'} actionBar={false} media>
                             <div style={{ height: 450 }}>
-                                <VizG config={this.usaConfig} metadata={this.metadata} data={this.data2} />
+                                <VizG config={this.usaConfig} metadata={this.metadata} data={this.data2}
+                                      theme={this.props.theme} />
                             </div>
                             <div>
                                 <br /><br />
@@ -158,7 +136,8 @@ class MapChartConfigSample extends Component {
                         </ChartWrapper>
                     </Grid>
                     <Grid item lg={6} sm={12} xs={12}>
-                        <ChartWrapper title={'Sample Dataset and Configuration structure'} chart={'scatter'} actionBar={false} media>
+                        <ChartWrapper title={'Sample Dataset and Configuration structure'} chart={'scatter'}
+                                      actionBar={false} media>
                             <div>
                                 metadata :
                                 <pre
@@ -191,7 +170,8 @@ class MapChartConfigSample extends Component {
                                                 <li><strong>type</strong> - type of the chart</li>
                                                 <li><strong>y</strong> - Data field that needs to be visualized on the Map.</li>
                                                 <li><strong>mapType</strong> - Type of the geography (world | europe | usa)</li>
-                                                <li><strong>colorScale</strong> - Array of colors in hex form that will be over-riding the default color set</li>
+                                                <li><strong>colorScale</strong> - Array of colors in hex form that will
+                                                    be over-riding the default color set</li>
                                             </ul>
                                         </li>
                                     </ul>

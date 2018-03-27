@@ -17,14 +17,12 @@
  */
 
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Grid, IconButton, Button } from 'material-ui';
-import HomeIcon from 'material-ui-icons/ArrowBack';
+import { Grid} from 'material-ui';
 import VizG from '../../src/VizG';
 import '../styles/snippet-highlight.css';
 import ChartWrapper from '../ChartWrapper';
 import { syntaxHighlight } from './util/SyntaxHighLight';
-import GitHub from '../components/GitHub';
+import Header from '../components/Header';
 
 export default class AreaChartSamples extends React.Component {
     constructor(props) {
@@ -87,35 +85,14 @@ export default class AreaChartSamples extends React.Component {
     render() {
         return (
             <div>
-                <AppBar>
-                    <Toolbar >
-                        <Link to='/samples' >
-                            <IconButton color="contrast" aria-label="Menu">
-                                <HomeIcon />
-                            </IconButton>
-                        </Link>
-                        <Typography type="title" color="inherit" style={{ flex: 1 }} >
-                            React-VizGrammar - Area Chart Samples
-                        </Typography>
-                        <Link to={'/'} style={{ textDecoration: 'none' }}>
-                            <Button style={{color: '#fff'}}>
-                                Getting Started
-                            </Button>
-                        </Link>
-                        <IconButton
-                            color="inherit"
-                            onClick={() => { window.location.href = 'https://github.com/wso2/react-vizgrammar'; }}
-                            title="See the source on GitHub"
-                        >
-                            <GitHub />
-                        </IconButton>
-                    </Toolbar>
-                </AppBar>
+                <Header url={'/samples'} title={'Area Chart Samples'} />
                 <Grid container>
                     <Grid item lg={6} sm={12} xs={12} >
-                        <ChartWrapper title="Area Chart Sample with color categorization" chart="line" media actionBar={false}>
+                        <ChartWrapper title="Area Chart Sample with color categorization" chart="line" media
+                                      actionBar={false}>
                             <div style={{ height: 450 }}>
-                                <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data} />
+                                <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data}
+                                      theme={this.props.theme} />
                             </div>
                             <div>
                                 <br /><br />
@@ -132,12 +109,14 @@ export default class AreaChartSamples extends React.Component {
                         </ChartWrapper>
                     </Grid>
                     <Grid item lg={6} sm={12} xs={12} >
-                        <ChartWrapper title="Area Chart Sample with multiple chart objects in the configuration" chart="line" media actionBar={false}>
+                        <ChartWrapper title="Area Chart Sample with multiple chart objects in the configuration"
+                                      chart="line" media actionBar={false}>
                             <div style={{ height: 450 }}>
                                 <VizG
                                     config={this.singleBarChartConfig}
                                     metadata={this.metadata}
                                     data={this.state.data2}
+                                    theme={this.props.theme}
                                 />
                             </div>
                             <div>
@@ -159,6 +138,7 @@ export default class AreaChartSamples extends React.Component {
                                     config={this.barChartStackedConfig}
                                     metadata={this.metadata}
                                     data={this.state.data}
+                                    theme={this.props.theme}
                                 />
                             </div>
                             <div>
@@ -209,16 +189,20 @@ export default class AreaChartSamples extends React.Component {
                                                     <strong>y</strong> - Data field representing y-axis in the metadata
                                                 </li>
                                                 <li>
-                                                    <strong>color</strong> - Data field representing color categorization data field of the metadata
+                                                    <strong>color</strong> - Data field representing color
+                                                    categorization data field of the metadata
                                                 </li>
                                                 <li>
-                                                    <strong>colorScale</strong> - Array of colors in hex form that will be over-riding the default color set
+                                                    <strong>colorScale</strong> - Array of colors in hex form that will
+                                                    be over-riding the default color set
                                                 </li>
                                                 <li>
-                                                    <strong>colorDomain</strong> - If a certain color category needs to be plotted in a specific color.
+                                                    <strong>colorDomain</strong> - If a certain color category needs to
+                                                    be plotted in a specific color.
                                                 </li>
                                                 <li>
-                                                    <strong>fill</strong> - If a color categorization field is not defined the color in which the data should be plotted.
+                                                    <strong>fill</strong> - If a color categorization field is not
+                                                    defined the color in which the data should be plotted.
                                                 </li>
                                                 <li>
                                                     <strong>mode</strong> - mode of the chart stacked or not.
@@ -229,13 +213,15 @@ export default class AreaChartSamples extends React.Component {
                                     </ul>
                                 </li>
                                 <li>
-                                    <strong>maxLength</strong> - Max length of data points to be visualized in the chart at time
+                                    <strong>maxLength</strong> - Max length of data points to be visualized in the
+                                    chart at time
                                 </li>
                                 <li>
                                     <strong>legend</strong> - enable or disable legend (boolean) value.
                                 </li>
                                 <li>
-                                    <strong>Append</strong> - Append the incoming data to the existing dataset or replace the existing dataset boolean value.
+                                    <strong>Append</strong> - Append the incoming data to the existing dataset or
+                                    replace the existing dataset boolean value.
                                 </li>
                                 <li>
                                     <strong>timeFormat</strong> - If the x-axis is a time series using this attribute
@@ -251,15 +237,36 @@ export default class AreaChartSamples extends React.Component {
                                         d3 documentation
                                     </a> for more info
                                 </li>
-                                <li><strong>animate</strong> - animate chart visualizations</li>
-                                <li><strong>disableVerticleGrid</strong> - Disable verticle grid of the chart(boolean value)</li>
-                                <li><strong>disableHorizontalGrid</strong> - Disable horizontal grid of the chart(boolean value)</li>
-                                <li><strong>yAxisLabel</strong> - Change the label shown along the y-axis</li>
-                                <li><strong>xAxisLabel</strong> - Change the label shown along the x-axis</li>
-                                <li><strong>yAxisTickCount</strong> - Number of ticks shown in the y-axis</li>
-                                <li><strong>xAxisTickCount</strong> - Number of ticks shown in the x-axis</li>
-                                <li><strong>legendOrientaion</strong> - Orientaion of the legend relative to the chart (top | bottom | left | right)</li>
-                                <li><strong>brush</strong> - show a component to brush data(boolean value)</li>
+                                <li>
+                                    <strong>animate</strong> - animate chart visualizations
+                                </li>
+                                <li>
+                                    <strong>disableVerticleGrid</strong> - Disable verticle grid of the chart
+                                    (boolean value)
+                                </li>
+                                <li>
+                                    <strong>disableHorizontalGrid</strong> - Disable horizontal grid of the
+                                    chart(boolean value)
+                                </li>
+                                <li>
+                                    <strong>yAxisLabel</strong> - Change the label shown along the y-axis
+                                </li>
+                                <li>
+                                    <strong>xAxisLabel</strong> - Change the label shown along the x-axis
+                                </li>
+                                <li>
+                                    <strong>yAxisTickCount</strong> - Number of ticks shown in the y-axis
+                                </li>
+                                <li>
+                                    <strong>xAxisTickCount</strong> - Number of ticks shown in the x-axis
+                                </li>
+                                <li>
+                                    <strong>legendOrientaion</strong> - Orientaion of the legend relative to the chart
+                                    (top | bottom | left | right)
+                                </li>
+                                <li>
+                                    <strong>brush</strong> - show a component to brush data(boolean value)
+                                </li>
                                 <li>
                                     <strong>style</strong> - object that contain style attributes of the charts.
                                     <ul>

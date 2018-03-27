@@ -17,7 +17,8 @@
  */
 
 import React from 'react';
-import {AppBar, Toolbar, Typography, Switch, IconButton, createMuiTheme} from 'material-ui';
+import {AppBar, Toolbar, Typography, IconButton} from 'material-ui';
+import BackIcon from 'material-ui-icons/ArrowBack';
 import GitHub from '../components/GitHub';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -31,12 +32,14 @@ export default class header extends React.Component {
         return (
             <AppBar style={style}>
                 <Toolbar>
-                    <Link to= {this.props.url} style={{textDecoration: 'none', flex: 1}}>
-                        <Typography type="title">
-                            {this.props.title}
-                        </Typography>
+                    <Link to= {this.props.url} style={{textDecoration: 'none'}}>
+                        <IconButton>
+                            <BackIcon />
+                        </IconButton>
                     </Link>
-
+                    <Typography type="title" style={{ flex: 1 }}>
+                        {this.props.title}
+                    </Typography>
                     <IconButton
                         color="inherit"
                         onClick={() => {

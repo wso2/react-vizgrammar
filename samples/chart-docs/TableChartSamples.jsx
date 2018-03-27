@@ -17,13 +17,11 @@
  */
 
 import React from 'react';
-import { AppBar, Toolbar, Typography, Grid, IconButton, Button } from 'material-ui';
-import HomeIcon from 'material-ui-icons/ArrowBack';
-import { Link } from 'react-router-dom';
+import { Grid } from 'material-ui';
 import ChartWrapper from '../ChartWrapper';
 import VizG from '../../src/VizG';
 import { syntaxHighlight } from './util/SyntaxHighLight';
-import GitHub from '../components/GitHub';
+import Header from '../components/Header';
 
 export default class TableChartSamples extends React.Component {
     constructor(props) {
@@ -74,31 +72,7 @@ export default class TableChartSamples extends React.Component {
     render() {
         return (
             <div>
-                <AppBar>
-                    <Toolbar >
-                        <Link to='/samples' >
-                            <IconButton color="contrast" aria-label="Menu">
-
-                                <HomeIcon />
-                            </IconButton>
-                        </Link>
-                        <Typography type="title" color="inherit" style={{ flex: 1 }} >
-                            React-VizGrammar - Pie Chart Samples
-                        </Typography>
-                        <Link to={'/'} style={{ textDecoration: 'none' }}>
-                            <Button style={{color: '#fff'}}>
-                                Getting Started
-                            </Button>
-                        </Link>
-                        <IconButton
-                            color="inherit"
-                            onClick={() => { window.location.href = 'https://github.com/wso2/react-vizgrammar'; }}
-                            title="See the source on GitHub"
-                        >
-                            <GitHub />
-                        </IconButton>
-                    </Toolbar>
-                </AppBar>
+                <Header url={'/samples'} title={'Table Chart Samples'} />
                 <Grid container>
                     <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper
@@ -108,7 +82,8 @@ export default class TableChartSamples extends React.Component {
                         >
                             <div style={{ height: 400 }}>
                                 <div style={{ height: 40 }}>
-                                    <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data} />
+                                    <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data}
+                                          theme={this.props.theme} />
                                 </div>
                             </div>
                             <div>
@@ -152,15 +127,30 @@ export default class TableChartSamples extends React.Component {
                                         <li>
                                             <strong>Chart Object</strong>
                                             <ul>
-                                                <li><strong>type</strong> - Type of the chart that need to be visualized in this case &qoute;table&qoute;</li>
-                                                <li><strong>columns</strong> - String array of columns that the table should contain</li>
-                                                <li><strong>columnTitles</strong> - String array of column titles corresponding to the columns declared</li>
+                                                <li>
+                                                    <strong>type</strong> - Type of the chart that need to be
+                                                    visualized in this case &qoute;table&qoute;
+                                                </li>
+                                                <li>
+                                                    <strong>columns</strong> - String array of columns that the table
+                                                    should contain
+                                                </li>
+                                                <li>
+                                                    <strong>columnTitles</strong> - String array of column titles
+                                                    corresponding to the columns declared
+                                                </li>
                                             </ul>
                                         </li>
                                     </ul>
                                 </li>
-                                <li><strong>maxLength</strong> - maximum number of records to be shown in the table at a time</li>
-                                <li><strong>colorBasedStyle</strong> - color the column data according to the type of data in the columns(boolean value)</li>
+                                <li>
+                                    <strong>maxLength</strong> - maximum number of records to be shown in the table
+                                    at a time
+                                </li>
+                                <li>
+                                    <strong>colorBasedStyle</strong> - color the column data according to the type
+                                    of data in the columns(boolean value)
+                                </li>
                             </ul>
                         </ChartWrapper>
                     </Grid>

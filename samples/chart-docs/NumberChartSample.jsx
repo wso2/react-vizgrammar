@@ -17,13 +17,11 @@
  */
 
 import React from 'react';
-import { AppBar, Toolbar, Typography, Grid, IconButton, Button } from 'material-ui';
-import HomeIcon from 'material-ui-icons/ArrowBack';
-import { Link } from 'react-router-dom';
+import { Grid } from 'material-ui';
 import ChartWrapper from '../ChartWrapper';
 import VizG from '../../src/VizG';
 import { syntaxHighlight } from './util/SyntaxHighLight';
-import GitHub from '../components/GitHub';
+import Header from '../components/Header';
 
 export default class NumberChartSample extends React.Component {
     constructor(props) {
@@ -66,30 +64,7 @@ export default class NumberChartSample extends React.Component {
     render() {
         return (
             <div>
-                <AppBar>
-                    <Toolbar >
-                        <Link to='/samples' >
-                            <IconButton color="contrast" aria-label="Menu">
-                                <HomeIcon />
-                            </IconButton>
-                        </Link>
-                        <Typography type="title" color="inherit" style={{ flex: 1 }} >
-                            React-VizGrammar - Pie Chart Samples
-                        </Typography>
-                        <Link to={'/'} style={{ textDecoration: 'none' }}>
-                            <Button style={{color: '#fff'}}>
-                                Getting Started
-                            </Button>
-                        </Link>
-                        <IconButton
-                            color="inherit"
-                            onClick={() => { window.location.href = 'https://github.com/wso2/react-vizgrammar'; }}
-                            title="See the source on GitHub"
-                        >
-                            <GitHub />
-                        </IconButton>
-                    </Toolbar>
-                </AppBar>
+                <Header url={'/samples'} title={'Number Chart Samples'} />
                 <Grid container>
                     <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper
@@ -99,7 +74,8 @@ export default class NumberChartSample extends React.Component {
                             title={'Number Chart Sample'}
                         >
                             <div style={{ height: 450 }}>
-                                <VizG config={this.numConfig} metadata={this.metadata} data={this.state.data} theme={this.props.theme} />
+                                <VizG config={this.numConfig} metadata={this.metadata} data={this.state.data}
+                                      theme={this.props.theme} />
                             </div>
                             <div>
                                 <br /><br />
@@ -146,8 +122,10 @@ export default class NumberChartSample extends React.Component {
                                         <li><strong>type</strong> - Type of the chart to be displayed</li>
                                     </ul>
                                 </li>
-                                <li><strong>showDifference</strong> - Show difference between current value and the previous value</li>
-                                <li><strong>showPercentage</strong> - Show difference with the previous value as a percentage</li>
+                                <li><strong>showDifference</strong> - Show difference between current value and the
+                                    previous value</li>
+                                <li><strong>showPercentage</strong> - Show difference with the previous value as a
+                                    percentage</li>
                             </ul>
                         </ChartWrapper>
                     </Grid>
