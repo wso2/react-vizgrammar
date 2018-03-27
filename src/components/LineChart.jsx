@@ -170,6 +170,7 @@ export default class LineChart extends BaseChart {
                             legendItems={legendComponents}
                             interaction={this.handleLegendInteraction}
                             config={config}
+                            theme={theme}
                         /> : null
 
                 }

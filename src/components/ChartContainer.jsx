@@ -156,8 +156,8 @@ export default class ChartContainer extends React.Component {
                                     <line
                                         style={{
                                             stroke: config.style ?
-                                                config.style.gridColor || currentTheme.line.style.data.stroke :
-                                                currentTheme.line.style.data.stroke,
+                                                config.style.gridColor || currentTheme.axis.style.grid.stroke :
+                                                currentTheme.axis.style.grid.stroke,
                                             strokeOpacity: 0.1,
                                             fill: 'transparent',
                                         }}
@@ -221,7 +221,7 @@ export default class ChartContainer extends React.Component {
                                         <g /> :
                                         <line
                                             style={{
-                                                stroke: config.gridColor || currentTheme.line.style.data.stroke,
+                                                stroke: config.gridColor || currentTheme.axis.style.grid.stroke,
                                                 strokeOpacity: 0.1,
                                                 fill: 'transparent',
                                             }}

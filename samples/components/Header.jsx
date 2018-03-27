@@ -22,16 +22,17 @@ import GitHub from '../components/GitHub';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+const style = {
+    background: '#2196f3',
+};
 
 export default class header extends React.Component {
-
     render() {
         return (
-
-            <AppBar>
+            <AppBar style={style}>
                 <Toolbar>
                     <Link to= {this.props.url} style={{textDecoration: 'none', flex: 1}}>
-                        <Typography type="title" color="grey500">
+                        <Typography type="title">
                             {this.props.title}
                         </Typography>
                     </Link>
@@ -47,7 +48,6 @@ export default class header extends React.Component {
                     </IconButton>
                 </Toolbar>
             </AppBar>
-
         )
     };
 }

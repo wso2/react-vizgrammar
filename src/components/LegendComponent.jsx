@@ -18,14 +18,13 @@
 
 import React from 'react';
 import { VictoryLegend, VictoryPortal, VictoryContainer } from 'victory';
-import PropTypes from 'prop-types';
 
 /**
  * Class to handle the visualization of legends.
  */
 export default class LegendComponent extends React.Component {
     render() {
-        const { config, height, width, legendItems, interaction } = this.props;
+        const { config, height, width, legendItems, interaction, theme } = this.props;
         return (
             <VictoryPortal>
                 <VictoryLegend
@@ -68,11 +67,11 @@ export default class LegendComponent extends React.Component {
                     style={{
                         title: {
                             fontSize: (config.style ? (config.style.legendTitleSize || 25) : 25),
-                            fill: config.style ? config.style.legendTitleColor : null,
+                            fill: config.style ? config.style.legendTitleColor : theme.axis.style.axisLabel.fill,
                         },
                         labels: {
                             fontSize: config.style ? (config.style.legendTextSize || 18) : 18,
-                            fill: config.style ? config.style.legendTextColor : null,
+                            fill: config.style ? config.style.legendTextColor : theme.axis.style.axisLabel.fill,
                         },
                     }}
                     data={legendItems.length > 0 ? legendItems : [{

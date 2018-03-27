@@ -38,7 +38,6 @@ const darkTheme = createMuiTheme({
     palette: {
         type: 'dark',
     },
-
 });
 
 const lightTheme = createMuiTheme({
@@ -49,7 +48,7 @@ const lightTheme = createMuiTheme({
 
 class AppRoute extends React.Component {
 
-    constructor(props) {
+    constructor() {
         super();
         this.state = {
             theme: `light`,
@@ -81,8 +80,10 @@ class AppRoute extends React.Component {
                                     <FormGroup style={{zIndex: '11100', position: 'fixed', right: '75px', top: '10px'}}>
                                         <FormControlLabel
                                             control={
-                                                <Switch checked={this.state.check}
-                                                             onChange={this.handleChange}/>
+                                                <Switch
+                                                    checked={this.state.check}
+                                                    onChange={this.handleChange}
+                                                />
                                             }
                                             label={'Light/Dark'}
                                         />
