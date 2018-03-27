@@ -20,6 +20,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { VictoryLabel } from 'victory';
 import VizGError from '../VizGError';
+import lightTheme from './resources/themes/victoryLightTheme';
+import darkTheme from './resources/themes/victoryDarkTheme';
 
 /**
  * Class to handle visualization of Number Charts.
@@ -68,10 +70,11 @@ export default class NumberCharts extends React.Component {
     }
 
     render() {
-        const { config, width, height } = this.props;
+        const { config, width, height, theme } = this.props;
+        const currentTheme = theme === 'light' ? lightTheme : darkTheme;
         const { prevValue, value } = this.state;
-        const highValueColor = config.highValueColor || '#109618';
-        const lowValueColor = config.lowValueColor || '#B82E2E';
+        const highValueColor = config.highValueColor || currentTheme.number.style.labels.highValue.fill;
+        const lowValueColor = config.lowValueColor || currentTheme.number.style.labels.lowValue.fill;
 
         return (
             <svg height="100%" width="100%" viewBox={`0 0 ${width} ${height}`}>
@@ -81,7 +84,7 @@ export default class NumberCharts extends React.Component {
                     x="50%"
                     y="25%"
                     text={config.title}
-                    style={{ fill: '#4d4d4d', fontSize: width / 20 }}
+                    style={{ fill: currentTheme.number.style.labels.title.fill, fontSize: width / 20 }}
                 />
                 <VictoryLabel
                     textAnchor="middle"
@@ -89,18 +92,36 @@ export default class NumberCharts extends React.Component {
                     x="50%"
                     y="40%"
                     text={(value === null ? value : value.toFixed(3))}
-                    style={{ fill: '#919191', fontSize: width / 15 }}
+                    style={{ fill: currentTheme.number.style.labels.mainValue.fill, fontSize: width / 15 }}
                 />
                 {
-                    config.showDifference ?
-                        <VictoryLabel
+                    config.showDifference ? [
+                        (<VictoryLabel
                             textAnchor="middle"
                             verticalAnchor="middle"
-                            x="50%"
-                            y="50%"
-                            text={(Math.abs(Number((prevValue - value)))).toFixed(3)}
-                            style={{ fill: '#919191', fontSize: width / 15 }}
-                        /> : null
+                            x="56%"
+                            y="49.6%"
+                            text={(() => {
+                                if (prevValue < value) {
+                                    return '+';
+                                } else if (prevValue === value) {
+                                    return '';
+                                } else {
+                                    return '-';
+                                }
+                            })()}
+                            style={{ fill: currentTheme.number.style.labels.difference.fill, fontSize: width / 30 }}
+                        />),
+                        (
+                            <VictoryLabel
+                                textAnchor="middle"
+                                verticalAnchor="middle"
+                                x="50%"
+                                y="50%"
+                                text={(Math.abs(Number((prevValue - value)))).toFixed(3)}
+                                style={{ fill: currentTheme.number.style.labels.difference.fill, fontSize: width / 30 }}
+                            />
+                        )] : null
                 }
                 {
                     config.showPercentage ? [
@@ -108,17 +129,17 @@ export default class NumberCharts extends React.Component {
                             key="percentVal"
                             textAnchor="middle"
                             verticalAnchor="middle"
-                            x="50%"
-                            y="60%"
+                            x="49%"
+                            y="58%"
                             text={(Math.abs((100 * ((value - prevValue) / prevValue))).toFixed(2)) + '%'}
-                            style={{ fill: prevValue < value ? highValueColor : lowValueColor, fontSize: width / 20 }}
+                            style={{ fill: prevValue < value ? highValueColor : lowValueColor, fontSize: width / 30 }}
                         />),
                         (<VictoryLabel
                             key="incrementDecrementSymbol"
                             textAnchor="middle"
                             verticalAnchor="middle"
-                            x="65%"
-                            y="60%"
+                            x="58%"
+                            y="57.4%"
                             text={(() => {
                                 if (prevValue < value) {
                                     return '↑';
@@ -128,7 +149,7 @@ export default class NumberCharts extends React.Component {
                                     return '↓';
                                 }
                             })()}
-                            style={{ fill: prevValue < value ? highValueColor : lowValueColor, fontSize: width / 20 }}
+                            style={{ fill: prevValue < value ? highValueColor : lowValueColor, fontSize: width / 30 }}
                         />)] : null
                 }
 

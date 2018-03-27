@@ -29,6 +29,8 @@ const blueGrey50 = '#ECEFF1';
 const blueGrey300 = '#90A4AE';
 const grey700 = '#616161';
 const grey500 = '#9E9E9E';
+const grey50 = '#FAFAFA';
+
 const colors = [
     deepOrange600,
     yellow200,
@@ -86,7 +88,7 @@ const victoryDarkTheme = {
         style: {
             axis: {
                 fill: 'transparent',
-                stroke: grey700,
+                stroke: grey500,
                 strokeWidth: 1,
                 strokeLinecap,
                 strokeLinejoin,
@@ -97,7 +99,7 @@ const victoryDarkTheme = {
             }),
             grid: {
                 fill: 'transparent',
-                stroke: grey700,
+                stroke: blueGrey50,
                 strokeDasharray,
                 strokeLinecap,
                 strokeLinejoin,
@@ -114,7 +116,7 @@ const victoryDarkTheme = {
             },
             tickLabels: assign({}, baseLabelStyles, {
                 fontSize: fontSizeSmall,
-                fill: grey700,
+                fill: grey500,
                 stroke: 'transparent',
                 padding: tickLabelpadding,
             }),
@@ -236,6 +238,27 @@ const victoryDarkTheme = {
                 strokeWidth: 0,
             },
             labels: centeredLabelStyles,
+        },
+    }, baseProps),
+    number: assign({
+        style: {
+            labels: {
+                title: {
+                    fill: grey50,
+                },
+                highValue: {
+                    fill: lightGreen500,
+                },
+                lowValue: {
+                    fill: deepOrange600,
+                },
+                mainValue: {
+                    fill: blueGrey300,
+                },
+                difference: {
+                    fill: grey500,
+                },
+            },
         },
     }, baseProps),
 };

@@ -238,6 +238,27 @@ const victoryLightTheme = {
             labels: centeredLabelStyles,
         },
     }, baseProps),
+    number: assign({
+        style: {
+            labels: {
+                title: {
+                    fill: blueGrey700,
+                },
+                highValue: {
+                    fill: lightGreen500,
+                },
+                lowValue: {
+                    fill: deepOrange600,
+                },
+                mainValue: {
+                    fill: blueGrey700,
+                },
+                difference: {
+                    fill: blueGrey300,
+                },
+            },
+        },
+    }, baseProps),
 };
 
 export default victoryLightTheme;
