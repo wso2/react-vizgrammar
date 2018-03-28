@@ -259,6 +259,20 @@ const victoryLightTheme = {
             },
         },
     }, baseProps),
+    map: assign({
+        style: {
+            labels: {
+                title: {
+                    fill: blueGrey700,
+                    fontSize: fontSize,
+                },
+                legend: {
+                    fill: blueGrey700,
+                    fontSize: fontSizeSmall,
+                },
+            },
+        },
+    }, baseProps),
 };
 
 export default victoryLightTheme;

@@ -261,6 +261,20 @@ const victoryDarkTheme = {
             },
         },
     }, baseProps),
+    map: assign({
+        style: {
+            labels: {
+                title: {
+                    fill: grey500,
+                    fontSize: fontSize,
+                },
+                legend: {
+                    fill: grey500,
+                    fontSize: fontSizeSmall,
+                },
+            },
+        },
+    }, baseProps),
 };
 
 export default victoryDarkTheme;

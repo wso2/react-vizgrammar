@@ -27,6 +27,8 @@ import { getDefaultColorScale } from './helper';
 import { CountryInfo, EuropeMap, WorldMap, USAMap } from './resources/MapData';
 import VizGError from '../VizGError';
 import './resources/css/map-chart.css';
+import darkTheme from "./resources/themes/victoryDarkTheme";
+import lightTheme from "./resources/themes/victoryLightTheme";
 
 const USA_YOFFSET_FACTOR = 2;
 const USA_XOFFSET_FACTOR = 0.8;
@@ -205,8 +207,9 @@ export default class MapGenerator extends React.Component {
     }
 
     render() {
-        const { config } = this.props;
+        const { config, theme } = this.props;
         const { mapType, mapData, mapDataRange, colorType, ordinalColorMap } = this.state;
+        const currentTheme = theme === 'light' ? lightTheme : darkTheme;
         let mapFeatureData = null;
         switch (mapType) {
             case 'world':
@@ -321,21 +324,24 @@ export default class MapGenerator extends React.Component {
                                 </defs>
                                 <g className='legend'>
                                     <text
-                                        style={{ fill: config.style ? config.style.legendTitleColor : null }}
+                                        style={{ fill: config.style ? config.style.legendTitleColor :
+                                                currentTheme.map.style.labels.title.fill }}
                                         x={20}
                                         y={20}
                                     >
                                         {config.charts[0].y}
                                     </text>
                                     <text
-                                        style={{ fill: config.style ? config.style.legendTextColor : null }}
+                                        style={{ fill: config.style ? config.style.legendTextColor :
+                                                currentTheme.map.style.labels.legend.fill}}
                                         x={37}
                                         y={37}
                                     >
                                         {this.state.mapDataRange[1]}
                                     </text>
                                     <text
-                                        style={{ fill: config.style ? config.style.legendTextColor : null }}
+                                        style={{ fill: config.style ? config.style.legendTextColor :
+                                                currentTheme.map.style.labels.legend.fill }}
                                         x={37}
                                         y={132}
                                     >
@@ -350,8 +356,14 @@ export default class MapGenerator extends React.Component {
                                 width={300}
                                 title="Legend"
                                 style={{
-                                    title: { fontSize: 25, fill: config.style ? config.style.legendTitleColor : null },
-                                    labels: { fontSize: 18, fill: config.style ? config.style.legendTextColor : null },
+                                    title: {
+                                        fontSize:   currentTheme.map.style.labels.title.fontSize,
+                                        fill:       config.style ? config.style.legendTitleColor :
+                                                        currentTheme.map.style.labels.title.fill },
+                                    labels: {
+                                        fontSize:   currentTheme.map.style.labels.legend.fontSize,
+                                        fill:       config.style ? config.style.legendTextColor :
+                                                        currentTheme.map.style.labels.legend.fill },
                                 }}
                                 data={Object.keys(ordinalColorMap).map((name) => {
                                     return { name, symbol: { fill: ordinalColorMap[name] } };
