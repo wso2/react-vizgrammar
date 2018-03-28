@@ -191,6 +191,9 @@ const victoryLightTheme = {
                 stroke: 'transparent',
                 strokeWidth: 0,
             }),
+            presentage: {
+                fontSize: '45',
+            },
         },
     }, baseProps),
     scatter: assign({
@@ -211,16 +214,13 @@ const victoryLightTheme = {
     }, baseProps),
     tooltip: assign({
         style: {
-            data: {
-                fill: 'transparent',
-                stroke: 'transparent',
-                strokeWidth: 0,
-            },
-            labels: centeredLabelStyles,
-            flyout: {
-                stroke: blueGrey700,
-                strokeWidth: 1,
+            labels: {
                 fill: blueGrey50,
+            },
+            flyout: {
+                fillOpacity: '0.8',
+                strokeWidth: 1,
+                fill: '#000',
             },
         },
         flyoutProps: {

@@ -23,6 +23,8 @@ import BaseChart from './BaseChart';
 import VizGError from '../VizGError';
 import ChartContainer from './ChartContainer';
 import LegendComponent from './LegendComponent';
+import lightTheme from './resources/themes/victoryLightTheme';
+import darkTheme from './resources/themes/victoryDarkTheme';
 
 /**
  * Class to handle Visualization of Arc Charts.
@@ -106,6 +108,7 @@ export default class ArcChart extends BaseChart {
     render() {
         const { config, theme, height, width } = this.props;
         const { pieChartData, random } = this.state;
+        const currentTheme = theme === 'light' ? lightTheme : darkTheme;
         return (
             <ChartContainer
                 height={height}
@@ -127,8 +130,12 @@ export default class ArcChart extends BaseChart {
                                 orientation='top'
                                 pointerLength={4}
                                 cornerRadius={2}
-                                flyoutStyle={{ fill: '#000', fillOpacity: '0.8', strokeWidth: 0 }}
-                                style={{ fill: '#e6e6e6' }}
+                                flyoutStyle={{
+                                    fill: currentTheme.tooltip.style.flyout.fill,
+                                    fillOpacity: currentTheme.tooltip.style.flyout.fillOpacity,
+                                    strokeWidth: currentTheme.tooltip.style.flyout.strokeWidth
+                                }}
+                                style={{ fill: currentTheme.tooltip.style.labels.fill }}
                             />
                     }
                     innerRadius={
@@ -159,7 +166,8 @@ export default class ArcChart extends BaseChart {
                             x="45%"
                             y="50%"
                             text={`${Math.round(pieChartData.length > 0 ? pieChartData[0].y : 0)}%`}
-                            style={{ fontSize: config.labelFontSize || 45, fill: config.labelColor || 'black' }}
+                            style={{ fontSize: config.labelFontSize || currentTheme.pie.style.presentage.fontSize,
+                                fill: config.labelColor || currentTheme.pie.style.labels.fill }}
                         /> :
                         <LegendComponent
                             height={height}

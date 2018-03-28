@@ -193,6 +193,9 @@ const victoryDarkTheme = {
                 stroke: 'transparent',
                 strokeWidth: 0,
             }),
+            presentage: {
+                fontSize: '45',
+            },
         },
     }, baseProps),
     scatter: assign({
