@@ -30,6 +30,7 @@ const blueGrey300 = '#90A4AE';
 const grey700 = '#616161';
 const grey500 = '#9E9E9E';
 const grey50 = '#FAFAFA';
+const grey900 = '#212121';
 
 const colors = [
     deepOrange600,
@@ -79,7 +80,9 @@ const victoryDarkTheme = {
     area: assign({
         style: {
             data: {
-                fill: grey700,
+                fill: grey900,
+                fillOpacity: '0.1',
+                markRadius: '4'
             },
             labels: centeredLabelStyles,
         },
@@ -275,6 +278,23 @@ const victoryDarkTheme = {
                     fill: grey500,
                     fontSize: fontSizeSmall,
                 },
+            },
+            default: {
+                fill: '#ddd',
+                stroke: '#fff',
+                strokeWidth: '0.5',
+                outline: 'none',
+            },
+            hover: {
+                fill: '#ddd',
+                opacity: '0.8',
+                stroke: '#fff',
+                strokeWidth: '0.5',
+                outline: 'none',
+            },
+            pressed: {
+                fill: '#3a79ff',
+                outline: 'none',
             },
         },
     }, baseProps),

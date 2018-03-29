@@ -78,6 +78,8 @@ const victoryLightTheme = {
         style: {
             data: {
                 fill: grey900,
+                fillOpacity: '0.1',
+                markRadius: '4'
             },
             labels: centeredLabelStyles,
         },
@@ -97,7 +99,7 @@ const victoryLightTheme = {
             }),
             grid: {
                 fill: 'transparent',
-                stroke: blueGrey300,
+                stroke: '#000',
                 strokeDasharray,
                 strokeLinecap,
                 strokeLinejoin,
@@ -270,6 +272,23 @@ const victoryLightTheme = {
                     fill: blueGrey700,
                     fontSize: fontSizeSmall,
                 },
+            },
+            default: {
+                fill: '#ddd',
+                stroke: '#fff',
+                strokeWidth: '0.5',
+                outline: 'none',
+            },
+            hover: {
+                fill: '#ddd',
+                opacity: '0.8',
+                stroke: '#fff',
+                strokeWidth: '0.5',
+                outline: 'none',
+            },
+            pressed: {
+                fill: '#3a79ff',
+                outline: 'none',
             },
         },
     }, baseProps),

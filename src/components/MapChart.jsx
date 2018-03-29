@@ -280,25 +280,24 @@ export default class MapGenerator extends React.Component {
                                                         fill: dataTip.length > 0 ?
                                                             (colorType === 'linear' ?
                                                                 this._getLinearColor(dataTip[0].y) :
-                                                                ordinalColorMap[dataTip[0].y]) : '#ddd',
-                                                        stroke: '#fff',
-                                                        strokeWidth: 0.5,
-                                                        outline: 'none',
+                                                                ordinalColorMap[dataTip[0].y]) : currentTheme.map.style.default.fill,
+                                                        stroke: currentTheme.map.style.default.stroke,
+                                                        strokeWidth: currentTheme.map.style.default.strokeWidth,
+                                                        outline: currentTheme.map.style.default.outline,
                                                     },
                                                     hover: {
                                                         fill: dataTip.length > 0 ?
                                                             (colorType === 'linear' ?
                                                                 this._getLinearColor(dataTip[0].y) :
-                                                                ordinalColorMap[dataTip[0].y]) : '#ddd',
-                                                        stroke: '#fff',
-                                                        opacity: 0.8,
-                                                        strokeWidth: 0.5,
-                                                        outline: 'none',
-
+                                                                ordinalColorMap[dataTip[0].y]) : currentTheme.map.style.hover.fill,
+                                                        stroke: currentTheme.map.style.hover.stroke,
+                                                        opacity: currentTheme.map.style.hover.opacity,
+                                                        strokeWidth: currentTheme.map.style.hover.strokeWidth,
+                                                        outline: currentTheme.map.style.hover.outline,
                                                     },
                                                     pressed: {
-                                                        fill: '#3a79ff',
-                                                        outline: 'none',
+                                                        fill: currentTheme.map.style.pressed.fill,
+                                                        outline: currentTheme.map.style.pressed.outline,
                                                     },
                                                 }}
                                                 onClick={this._handleMouseEvent}
@@ -357,13 +356,13 @@ export default class MapGenerator extends React.Component {
                                 title="Legend"
                                 style={{
                                     title: {
-                                        fontSize:   currentTheme.map.style.labels.title.fontSize,
-                                        fill:       config.style ? config.style.legendTitleColor :
-                                                        currentTheme.map.style.labels.title.fill },
+                                        fontSize: currentTheme.map.style.labels.title.fontSize,
+                                        fill: config.style ? config.style.legendTitleColor :
+                                            currentTheme.map.style.labels.title.fill },
                                     labels: {
-                                        fontSize:   currentTheme.map.style.labels.legend.fontSize,
-                                        fill:       config.style ? config.style.legendTextColor :
-                                                        currentTheme.map.style.labels.legend.fill },
+                                        fontSize: currentTheme.map.style.labels.legend.fontSize,
+                                        fill: config.style ? config.style.legendTextColor :
+                                            currentTheme.map.style.labels.legend.fill },
                                 }}
                                 data={Object.keys(ordinalColorMap).map((name) => {
                                     return { name, symbol: { fill: ordinalColorMap[name] } };
