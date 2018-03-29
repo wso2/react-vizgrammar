@@ -104,54 +104,56 @@ export default class TableChartSamples extends React.Component {
                             chart={'table'}
                             actionBar={false}
                         >
-                            metadata:
-                            <pre
-                                dangerouslySetInnerHTML={{
-                                    __html: syntaxHighlight(
-                                        JSON.stringify(this.metadata, undefined, 4)),
-                                }}
-                            />
-                            data:
-                            <pre
-                                dangerouslySetInnerHTML={{
-                                    __html: syntaxHighlight(
-                                        JSON.stringify(this.state.data, undefined, 4)),
-                                }}
-                            />
-                            <br /><br />
-                            <h3>Chart Configuration JSON structure</h3>
-                            <ul>
-                                <li>
-                                    <strong>charts</strong> - Array of Chart objects that should be visualized.
-                                    <ul>
-                                        <li>
-                                            <strong>Chart Object</strong>
-                                            <ul>
-                                                <li>
-                                                    <strong>type</strong> - Type of the chart that need to be
-                                                    visualized in this case &qoute;table&qoute;
-                                                </li>
-                                                <li>
-                                                    <strong>columns</strong> - String array of columns that the table
-                                                    should contain
-                                                </li>
-                                                <li>
-                                                    <strong>columnTitles</strong> - String array of column titles
-                                                    corresponding to the columns declared
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <strong>maxLength</strong> - maximum number of records to be shown in the table
-                                    at a time
-                                </li>
-                                <li>
-                                    <strong>colorBasedStyle</strong> - color the column data according to the type
-                                    of data in the columns(boolean value)
-                                </li>
-                            </ul>
+                            <div className="json-structure" >
+                                metadata:
+                                <pre
+                                    dangerouslySetInnerHTML={{
+                                        __html: syntaxHighlight(
+                                            JSON.stringify(this.metadata, undefined, 4)),
+                                    }}
+                                />
+                                data:
+                                <pre
+                                    dangerouslySetInnerHTML={{
+                                        __html: syntaxHighlight(
+                                            JSON.stringify(this.state.data, undefined, 4)),
+                                    }}
+                                />
+                                <br /><br />
+                                <h3>Chart Configuration JSON structure</h3>
+                                <ul>
+                                    <li>
+                                        <strong>charts</strong> - Array of Chart objects that should be visualized.
+                                        <ul>
+                                            <li>
+                                                <strong>Chart Object</strong>
+                                                <ul>
+                                                    <li>
+                                                        <strong>type</strong> - Type of the chart that need to be
+                                                        visualized in this case &qoute;table&qoute;
+                                                    </li>
+                                                    <li>
+                                                        <strong>columns</strong> - String array of columns that the table
+                                                        should contain
+                                                    </li>
+                                                    <li>
+                                                        <strong>columnTitles</strong> - String array of column titles
+                                                        corresponding to the columns declared
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <strong>maxLength</strong> - maximum number of records to be shown in the table
+                                        at a time
+                                    </li>
+                                    <li>
+                                        <strong>colorBasedStyle</strong> - color the column data according to the type
+                                        of data in the columns(boolean value)
+                                    </li>
+                                </ul>
+                            </div>
                         </ChartWrapper>
                     </Grid>
                 </Grid>

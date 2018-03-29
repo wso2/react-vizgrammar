@@ -97,36 +97,38 @@ export default class NumberChartSample extends React.Component {
                             chart={'line'}
                             title={'Number Chart Sample'}
                         >
-                            metadata:
-                            <pre
-                                dangerouslySetInnerHTML={{
-                                    __html: syntaxHighlight(
-                                        JSON.stringify(this.metadata, undefined, 4)),
-                                }}
-                            />
-                            data:
-                            <pre
-                                dangerouslySetInnerHTML={{
-                                    __html: syntaxHighlight(
-                                        JSON.stringify(this.state.data, undefined, 4)),
-                                }}
-                            />
-                            <br /><br />
-                            <h3>Chart Configuration JSON structure</h3>
-                            <ul>
-                                <li><strong>x</strong> - Datafield that should be shown in the number chart</li>
-                                <li><strong>title</strong> - Title that should be displayed in the chart</li>
-                                <li>
-                                    <strong>charts</strong> - Array of chart objects that should be visualized
-                                    <ul>
-                                        <li><strong>type</strong> - Type of the chart to be displayed</li>
-                                    </ul>
-                                </li>
-                                <li><strong>showDifference</strong> - Show difference between current value and the
-                                    previous value</li>
-                                <li><strong>showPercentage</strong> - Show difference with the previous value as a
-                                    percentage</li>
-                            </ul>
+                            <div className="json-structure" >
+                                metadata:
+                                <pre
+                                    dangerouslySetInnerHTML={{
+                                        __html: syntaxHighlight(
+                                            JSON.stringify(this.metadata, undefined, 4)),
+                                    }}
+                                />
+                                data:
+                                <pre
+                                    dangerouslySetInnerHTML={{
+                                        __html: syntaxHighlight(
+                                            JSON.stringify(this.state.data, undefined, 4)),
+                                    }}
+                                />
+                                <br /><br />
+                                <h3>Chart Configuration JSON structure</h3>
+                                <ul>
+                                    <li><strong>x</strong> - Datafield that should be shown in the number chart</li>
+                                    <li><strong>title</strong> - Title that should be displayed in the chart</li>
+                                    <li>
+                                        <strong>charts</strong> - Array of chart objects that should be visualized
+                                        <ul>
+                                            <li><strong>type</strong> - Type of the chart to be displayed</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>showDifference</strong> - Show difference between current value and the
+                                        previous value</li>
+                                    <li><strong>showPercentage</strong> - Show difference with the previous value as a
+                                        percentage</li>
+                                </ul>
+                            </div>
                         </ChartWrapper>
                     </Grid>
                 </Grid>

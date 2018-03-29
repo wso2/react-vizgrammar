@@ -138,7 +138,7 @@ class MapChartConfigSample extends Component {
                     <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper title={'Sample Dataset and Configuration structure'} chart={'scatter'}
                                       actionBar={false} media>
-                            <div>
+                            <div className="json-structure" >
                                 metadata :
                                 <pre
                                     dangerouslySetInnerHTML={{
@@ -158,32 +158,34 @@ class MapChartConfigSample extends Component {
                     </Grid>
                     <Grid item lg={6} sm={12} xs={12} >
                         <ChartWrapper title="Chart JSON structure" chart="line" media actionBar={false}>
-                            <ul>
-                                <li><strong>type</strong> - Type of the chart in this case &qoute;map&qoute;</li>
-                                <li><strong>x</strong> - Field containing Geographical data in metadata</li>
-                                <li>
-                                    <strong>charts</strong> - Array of chart objects that needs to be visualized
-                                    <ul>
-                                        <li>
-                                            <strong>Chart Object</strong>
-                                            <ul>
-                                                <li><strong>type</strong> - type of the chart</li>
-                                                <li><strong>y</strong> - Data field that needs to be visualized on the Map.</li>
-                                                <li><strong>mapType</strong> - Type of the geography (world | europe | usa)</li>
-                                                <li><strong>colorScale</strong> - Array of colors in hex form that will
-                                                    be over-riding the default color set</li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <strong>style</strong> - object containing style attributes of the chart.
-                                    <ul>
-                                        <li><strong>legendTitleColor</strong> - Color of the legend Title of the chart</li>
-                                        <li><strong>legendTextColor</strong> - Color of the legend text of the chart</li>
-                                    </ul>
-                                </li>
-                            </ul>
+                            <div className="json-structure" >
+                                <ul>
+                                    <li><strong>type</strong> - Type of the chart in this case &qoute;map&qoute;</li>
+                                    <li><strong>x</strong> - Field containing Geographical data in metadata</li>
+                                    <li>
+                                        <strong>charts</strong> - Array of chart objects that needs to be visualized
+                                        <ul>
+                                            <li>
+                                                <strong>Chart Object</strong>
+                                                <ul>
+                                                    <li><strong>type</strong> - type of the chart</li>
+                                                    <li><strong>y</strong> - Data field that needs to be visualized on the Map.</li>
+                                                    <li><strong>mapType</strong> - Type of the geography (world | europe | usa)</li>
+                                                    <li><strong>colorScale</strong> - Array of colors in hex form that will
+                                                        be over-riding the default color set</li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <strong>style</strong> - object containing style attributes of the chart.
+                                        <ul>
+                                            <li><strong>legendTitleColor</strong> - Color of the legend Title of the chart</li>
+                                            <li><strong>legendTextColor</strong> - Color of the legend text of the chart</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
                         </ChartWrapper>
                     </Grid>
                 </Grid>

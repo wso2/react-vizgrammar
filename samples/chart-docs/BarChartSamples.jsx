@@ -250,7 +250,7 @@ export default class BarChartSamples extends React.Component {
                     </Grid>
                     <Grid item lg={6} sm={12} xs={12} >
                         <ChartWrapper title="Sample Data set" chart="line" media actionBar={false}>
-                            <div>
+                            <div className="json-structure" >
                                 metadata :
                                 <pre
                                     dangerouslySetInnerHTML={{
@@ -269,94 +269,96 @@ export default class BarChartSamples extends React.Component {
                     </Grid>
                     <Grid item lg={6} sm={12} xs={12} >
                         <ChartWrapper title="Chart JSON structure" chart="line" media actionBar={false}>
-                            <ul>
-                                <li>
-                                    <strong>x</strong> - Datafield representing the independant axis in the metadata
-                                </li>
-                                <li>
-                                    <strong>charts</strong> - Array of chart objects to be visualized.
-                                    <ul>
-                                        <li>
-                                            <strong>Chart Object</strong>
-                                            <ul>
-                                                <li>
-                                                    <strong>type</strong> - type of the chart required to be visualized
-                                                </li>
-                                                <li>
-                                                    <strong>y</strong> - Data field representing y-axis in the metadata
-                                                </li>
-                                                <li>
-                                                    <strong>color</strong> - Data field representing color
-                                                    categorization data field of the metadata
-                                                </li>
-                                                <li>
-                                                    <strong>colorScale</strong> - Array of colors in hex form that will
-                                                    be over-riding the default color set
-                                                </li>
-                                                <li>
-                                                    <strong>colorDomain</strong> - If a certain color category needs to
-                                                    be plotted in a specific color.
-                                                </li>
-                                                <li>
-                                                    <strong>fill</strong> - If a color categorization field is not
-                                                    defined the color in which the data should be plotted.
-                                                </li>
-                                                <li>
-                                                    <strong>mode</strong> - mode of the chart stacked or not.
-                                                </li>
-                                                <li>
-                                                    <strong>orientation</strong> - orientation of the bars left or bottom
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>....</li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <strong>maxLength</strong> - Max length of data points to be visualized in the chart at time
-                                </li>
-                                <li>
-                                    <strong>legend</strong> - enable or disable legend (boolean) value.
-                                </li>
-                                <li>
-                                    <strong>Append</strong> - Append the incoming data to the existing dataset or
-                                    replace the existing dataset boolean value.
-                                </li>
-                                <li>
-                                    <strong>timeFormat</strong> - If the x-axis is a time series using this attribute
-                                    user can format the tick values of the x axis using regex. refer&nbsp;
-                                    <a href={'https://github.com/d3/d3-time-format/blob/master/README.md#timeFormat'}>
-                                        d3 documentation
-                                    </a> for more info
-                                </li>
-                                <li>
-                                    <strong>tipTimeFormat</strong> - If the x-axis is a time series using this attribute
-                                    user can format the tick values of the x axis using regex. refer&nbsp;
-                                    <a href={'https://github.com/d3/d3-time-format/blob/master/README.md#timeFormat'}>
-                                        d3 documentation
-                                    </a> for more info
-                                </li>
-                                <li><strong>animate</strong> - animate chart visualizations</li>
-                                <li><strong>disableVerticleGrid</strong> - Disable verticle grid of the chart(boolean value)</li>
-                                <li><strong>disableHorizontalGrid</strong> - Disable horizontal grid of the chart(boolean value)</li>
-                                <li><strong>yAxisLabel</strong> - Change the label shown along the y-axis</li>
-                                <li><strong>xAxisLabel</strong> - Change the label shown along the x-axis</li>
-                                <li><strong>yAxisTickCount</strong> - Number of ticks shown in the y-axis</li>
-                                <li><strong>xAxisTickCount</strong> - Number of ticks shown in the x-axis</li>
-                                <li><strong>legendOrientaion</strong> - Orientaion of the legend relative to the chart
-                                    (top | bottom | left | right)</li>
-                                <li><strong>brush</strong> - show a component to brush data(boolean value)</li>
-                                <li>
-                                    <strong>style</strong> - object that contain style attributes of the charts.
-                                    <ul>
-                                        <li><strong>axisColor</strong> - color of the axis lines</li>
-                                        <li><strong>axisLabelColor</strong> - color of the axis labels</li>
-                                        <li><strong>xAxisTickAngle</strong> - Tick angle of the x-axis ticks</li>
-                                        <li><strong>yAxisTickAngle</strong> - Tick angle of the y-axis ticks</li>
-                                        <li><strong>tickLabelColor</strong> - font color of the tickLabels</li>
-                                    </ul>
-                                </li>
-                            </ul>
+                            <div className="json-structure" >
+                                <ul>
+                                    <li>
+                                        <strong>x</strong> - Datafield representing the independant axis in the metadata
+                                    </li>
+                                    <li>
+                                        <strong>charts</strong> - Array of chart objects to be visualized.
+                                        <ul>
+                                            <li>
+                                                <strong>Chart Object</strong>
+                                                <ul>
+                                                    <li>
+                                                        <strong>type</strong> - type of the chart required to be visualized
+                                                    </li>
+                                                    <li>
+                                                        <strong>y</strong> - Data field representing y-axis in the metadata
+                                                    </li>
+                                                    <li>
+                                                        <strong>color</strong> - Data field representing color
+                                                        categorization data field of the metadata
+                                                    </li>
+                                                    <li>
+                                                        <strong>colorScale</strong> - Array of colors in hex form that will
+                                                        be over-riding the default color set
+                                                    </li>
+                                                    <li>
+                                                        <strong>colorDomain</strong> - If a certain color category needs to
+                                                        be plotted in a specific color.
+                                                    </li>
+                                                    <li>
+                                                        <strong>fill</strong> - If a color categorization field is not
+                                                        defined the color in which the data should be plotted.
+                                                    </li>
+                                                    <li>
+                                                        <strong>mode</strong> - mode of the chart stacked or not.
+                                                    </li>
+                                                    <li>
+                                                        <strong>orientation</strong> - orientation of the bars left or bottom
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>....</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <strong>maxLength</strong> - Max length of data points to be visualized in the chart at time
+                                    </li>
+                                    <li>
+                                        <strong>legend</strong> - enable or disable legend (boolean) value.
+                                    </li>
+                                    <li>
+                                        <strong>Append</strong> - Append the incoming data to the existing dataset or
+                                        replace the existing dataset boolean value.
+                                    </li>
+                                    <li>
+                                        <strong>timeFormat</strong> - If the x-axis is a time series using this attribute
+                                        user can format the tick values of the x axis using regex. refer&nbsp;
+                                        <a href={'https://github.com/d3/d3-time-format/blob/master/README.md#timeFormat'}>
+                                            d3 documentation
+                                        </a> for more info
+                                    </li>
+                                    <li>
+                                        <strong>tipTimeFormat</strong> - If the x-axis is a time series using this attribute
+                                        user can format the tick values of the x axis using regex. refer&nbsp;
+                                        <a href={'https://github.com/d3/d3-time-format/blob/master/README.md#timeFormat'}>
+                                            d3 documentation
+                                        </a> for more info
+                                    </li>
+                                    <li><strong>animate</strong> - animate chart visualizations</li>
+                                    <li><strong>disableVerticleGrid</strong> - Disable verticle grid of the chart(boolean value)</li>
+                                    <li><strong>disableHorizontalGrid</strong> - Disable horizontal grid of the chart(boolean value)</li>
+                                    <li><strong>yAxisLabel</strong> - Change the label shown along the y-axis</li>
+                                    <li><strong>xAxisLabel</strong> - Change the label shown along the x-axis</li>
+                                    <li><strong>yAxisTickCount</strong> - Number of ticks shown in the y-axis</li>
+                                    <li><strong>xAxisTickCount</strong> - Number of ticks shown in the x-axis</li>
+                                    <li><strong>legendOrientaion</strong> - Orientaion of the legend relative to the chart
+                                        (top | bottom | left | right)</li>
+                                    <li><strong>brush</strong> - show a component to brush data(boolean value)</li>
+                                    <li>
+                                        <strong>style</strong> - object that contain style attributes of the charts.
+                                        <ul>
+                                            <li><strong>axisColor</strong> - color of the axis lines</li>
+                                            <li><strong>axisLabelColor</strong> - color of the axis labels</li>
+                                            <li><strong>xAxisTickAngle</strong> - Tick angle of the x-axis ticks</li>
+                                            <li><strong>yAxisTickAngle</strong> - Tick angle of the y-axis ticks</li>
+                                            <li><strong>tickLabelColor</strong> - font color of the tickLabels</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
                         </ChartWrapper>
                     </Grid>
 

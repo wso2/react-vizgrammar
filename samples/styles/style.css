@@ -23,3 +23,7 @@
 .darkTheme {
     background: #2c2c2c;
 }
+
+.darkTheme .json-structure {
+    color: #ccc;
+}

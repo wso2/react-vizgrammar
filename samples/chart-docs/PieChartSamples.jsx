@@ -146,7 +146,7 @@ export default class PieChartSamples extends React.Component {
                     <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper title="Sample Dataset and Chart Configuration" chart="line" media
                                       actionBar={false}>
-                            <div>
+                            <div className="json-structure" >
                                 metadata :
                                 <pre
                                     dangerouslySetInnerHTML={
@@ -165,35 +165,35 @@ export default class PieChartSamples extends React.Component {
                                     }
                                     }
                                 />
-                            </div>
                             <br /><br />
                             <h3>JSON structure of Chart Configuration</h3>
-                            <ul>
-                                <li>
-                                    <strong>charts</strong> - Array of chart objects that needs to be visualized.
-                                    <ul>
-                                        <li><strong>type</strong> - type of the chart.(&qoute;arc&qoute;)</li>
-                                        <li><strong>x</strong> - Data field that is used for the visualization</li>
-                                        <li><strong>color</strong> - Data field by which color categorization should
-                                            be done.</li>
-                                        <li><strong>colorScale</strong> -  - Array of colors in hex form that will be
-                                            over-riding the default color set</li>
-                                        <li><strong>mode</strong> - Type of the chart ('donut' | 'pie')</li>
-                                    </ul>
-                                </li>
-                                <li><strong>append</strong> - Append dataset to the current dataset</li>
-                                <li><strong>legendOrientation</strong> - Orientation of the legend relative to
-                                    the chart.</li>
-                                <li><strong>percentage</strong> - Show the data field as a Gauge and the Value
-                                    as a percent</li>
-                                <li>
-                                    <strong>style</strong> - Object containing style attributes related to the chart
-                                    <ul>
-                                        <li><strong>legendTextColor</strong> - Text color of the legend component</li>
-                                    </ul>
-                                </li>
-                                <li><strong>labelColor</strong> - Font color of percent chart</li>
-                            </ul>
+                                <ul>
+                                    <li>
+                                        <strong>charts</strong> - Array of chart objects that needs to be visualized.
+                                        <ul>
+                                            <li><strong>type</strong> - type of the chart.(&qoute;arc&qoute;)</li>
+                                            <li><strong>x</strong> - Data field that is used for the visualization</li>
+                                            <li><strong>color</strong> - Data field by which color categorization should
+                                                be done.</li>
+                                            <li><strong>colorScale</strong> -  - Array of colors in hex form that will be
+                                                over-riding the default color set</li>
+                                            <li><strong>mode</strong> - Type of the chart ('donut' | 'pie')</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>append</strong> - Append dataset to the current dataset</li>
+                                    <li><strong>legendOrientation</strong> - Orientation of the legend relative to
+                                        the chart.</li>
+                                    <li><strong>percentage</strong> - Show the data field as a Gauge and the Value
+                                        as a percent</li>
+                                    <li>
+                                        <strong>style</strong> - Object containing style attributes related to the chart
+                                        <ul>
+                                            <li><strong>legendTextColor</strong> - Text color of the legend component</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>labelColor</strong> - Font color of percent chart</li>
+                                </ul>
+                            </div>
                         </ChartWrapper>
                     </Grid>
                     <Grid item lg={6} sm={12} xs={12} />
