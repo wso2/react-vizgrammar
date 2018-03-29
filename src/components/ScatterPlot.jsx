@@ -24,6 +24,8 @@ import BaseChart from './BaseChart';
 import VizGError from '../VizGError';
 import ChartContainer from './ChartContainer';
 import LegendComponent from './LegendComponent';
+import darkTheme from "./resources/themes/victoryDarkTheme";
+import lightTheme from "./resources/themes/victoryLightTheme";
 
 /**
  * Class to handle visualization of scatter plots.
@@ -110,6 +112,7 @@ export default class ScatterPlot extends BaseChart {
         const { chartArray, dataSets, xScale } = this.state;
         const chartComponents = [];
         const legendComponents = [];
+        const currentTheme = theme === 'light' ? lightTheme : darkTheme;
 
         chartArray.map((chart) => {
             const colorIndex = _.indexOf(metadata.names, chart.colorCategoryName);
@@ -162,8 +165,12 @@ export default class ScatterPlot extends BaseChart {
                                 orientation='top'
                                 pointerLength={4}
                                 cornerRadius={2}
-                                flyoutStyle={{ fill: '#000', fillOpacity: '0.8', strokeWidth: 0 }}
-                                style={{ fill: '#e6e6e6', textAlign: 'left' }}
+                                flyoutStyle={{
+                                    fill: currentTheme.tooltip.style.flyout.fill,
+                                    fillOpacity: currentTheme.tooltip.style.flyout.fillOpacity,
+                                    strokeWidth: currentTheme.tooltip.style.flyout.strokeWidth
+                                }}
+                                style={{ fill: currentTheme.tooltip.style.labels.fill }}
                             />
                         }
                         events={[{

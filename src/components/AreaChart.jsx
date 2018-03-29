@@ -23,9 +23,8 @@ import _ from 'lodash';
 import BaseChart from './BaseChart';
 import ChartContainer from './ChartContainer';
 import LegendComponent from './LegendComponent';
-
-const DEFAULT_MARK_RADIUS = 4;
-const DEFAULT_AREA_FILL_OPACITY = 0.1;
+import darkTheme from "./resources/themes/victoryDarkTheme";
+import lightTheme from "./resources/themes/victoryLightTheme";
 
 /**
  * Class to handle visualization of Area Charts.
@@ -48,7 +47,7 @@ export default class AreaChart extends BaseChart {
      * @param {Array} ignoreArray - array that contains dataSets to be ignored in rendering the components.
      * @returns {{chartComponents: Array, legendComponents: Array}}
      */
-    static getAreaChartComponent(chartArray, xScale, dataSets, config, onClick, ignoreArray) {
+    static getAreaChartComponent(chartArray, xScale, dataSets, config, onClick, ignoreArray, currentTheme) {
         const chartComponents = [];
         const legendComponents = [];
 
@@ -63,7 +62,8 @@ export default class AreaChart extends BaseChart {
                 if (_.indexOf(ignoreArray, dsName) === -1) {
                     localChartComp.push(
                         AreaChart
-                            .getComponent(config, chartIndex, xScale, dataSets[dsName], chart.dataSetNames[dsName], onClick));
+                            .getComponent(config, chartIndex, xScale, dataSets[dsName],
+                                chart.dataSetNames[dsName], onClick, currentTheme));
                 }
             });
 
@@ -90,7 +90,7 @@ export default class AreaChart extends BaseChart {
      * @param {Function} onClick - Function to be executed in the case of an click event.
      * @returns {Element}
      */
-    static getComponent(config, chartIndex, xScale, data, color, onClick) {
+    static getComponent(config, chartIndex, xScale, data, color, onClick, currentTheme) {
         return (
             <VictoryGroup
                 key={`area-group-${chartIndex}`}
@@ -101,8 +101,8 @@ export default class AreaChart extends BaseChart {
                     style={{
                         data: {
                             fillOpacity: config.charts[chartIndex].style ?
-                                config.charts[chartIndex].style.fillOpacity || DEFAULT_AREA_FILL_OPACITY :
-                                DEFAULT_AREA_FILL_OPACITY,
+                                config.charts[chartIndex].style.fillOpacity || currentTheme.area.style.data.fillOpacity
+                                : currentTheme.area.style.data.fillOpacity,
                         },
                     }}
                     name="blacked"
@@ -119,7 +119,8 @@ export default class AreaChart extends BaseChart {
                             } else {
                                 return (d) => {
                                     if (isNaN(d.x)) {
-                                        return `${config.x} : ${d.x}\n${config.charts[chartIndex].y} : ${Number(d.y).toFixed(2)}`;
+                                        return `${config.x} : ${d.x}\n${config.charts[chartIndex].y} : ${Number(d.y)
+                                            .toFixed(2)}`;
                                     } else {
                                         return `${config.x} : ${Number(d.x).toFixed(2)}\n` +
                                             `${config.charts[chartIndex].y} : ${Number(d.y).toFixed(2)}`;
@@ -132,13 +133,18 @@ export default class AreaChart extends BaseChart {
                         <VictoryTooltip
                             pointerLength={4}
                             cornerRadius={2}
-                            flyoutStyle={{ fill: '#000', fillOpacity: '0.8', strokeWidth: 0 }}
-                            style={{ fill: '#e6e6e6' }}
+                            flyoutStyle={{
+                                fill: currentTheme.tooltip.style.flyout.fill,
+                                fillOpacity: currentTheme.tooltip.style.flyout.fillOpacity,
+                                strokeWidth: currentTheme.tooltip.style.flyout.strokeWidth
+                            }}
+                            style={{ fill: currentTheme.tooltip.style.labels.fill }}
                         />
                     }
                     size={(
                         config.charts[chartIndex].style ?
-                            config.charts[chartIndex].style.markRadius || DEFAULT_MARK_RADIUS : DEFAULT_MARK_RADIUS
+                            config.charts[chartIndex].style.markRadius || currentTheme.area.style.data.markRadius :
+                            currentTheme.area.style.data.markRadius
                     )}
                     animate={config.animate ? { onEnter: { duration: 50 } } : null}
                     events={[{
@@ -157,9 +163,11 @@ export default class AreaChart extends BaseChart {
     render() {
         const { config, height, width, yDomain, theme } = this.props;
         const { chartArray, dataSets, xScale, ignoreArray } = this.state;
+        const currentTheme = theme === 'light' ? lightTheme : darkTheme;
 
         const { chartComponents, legendComponents } =
-            AreaChart.getAreaChartComponent(chartArray, xScale, dataSets, config, this.handleMouseEvent, ignoreArray);
+            AreaChart.getAreaChartComponent(chartArray, xScale, dataSets, config, this.handleMouseEvent, ignoreArray,
+                currentTheme);
 
         return (
             <ChartContainer
