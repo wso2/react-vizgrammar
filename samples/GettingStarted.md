@@ -76,6 +76,18 @@ Sample data table would be like following:
     ];
 ```
 
+### Themes
+
+React VizGrammar has light and dark theme types to choose from. By default, charts use the light theme type.
+
+```jsx
+    
+    <VizG theme={'dark'} config={config} data={data} metadata={metadata} />
+            
+``` 
+
+- `theme` prop accepts 'light' and 'dark' strings as type and change the theme accordingly.
+
 ## Sample in action
 
 Code :
