@@ -56,7 +56,7 @@ ChartWrapper.defaultProps = {
 ChartWrapper.propTypes = {
     title: PropTypes.string.isRequired,
     subtitle: PropTypes.string,
-    children: PropTypes.arrayOf(PropTypes.element),
+    children: PropTypes.object,
     chart: PropTypes.string.isRequired,
     actionBar: PropTypes.bool.isRequired,
     height: PropTypes.number,

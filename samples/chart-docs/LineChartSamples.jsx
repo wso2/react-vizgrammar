@@ -83,45 +83,47 @@ export default class LineChartSamples extends React.Component {
                     <Grid item lg={6} sm={12} xs={12} >
                         <ChartWrapper title="Multiline Chart Sample with Color Categorization" chart="line"
                                       media actionBar={false}>
-                            <div style={{ height: 450 }}>
-                                <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data}
-                                      theme={this.props.theme} />
-                            </div>
                             <div>
-                                <br /><br />
-                                <pre
-                                    dangerouslySetInnerHTML={
-                                    {
-                                        __html: syntaxHighlight(
-                                                JSON.stringify(this.barChartConfig, undefined, 4)),
-                                    }
-                                    }
-                                />
+                                <div style={{ height: 450 }}>
+                                    <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data}
+                                          theme={this.props.theme} />
+                                </div>
+                                <div>
+                                    <br /><br />
+                                    <pre
+                                        dangerouslySetInnerHTML={
+                                        {
+                                            __html: syntaxHighlight(
+                                                    JSON.stringify(this.barChartConfig, undefined, 4)),
+                                        }
+                                        }
+                                    />
+                                </div>
                             </div>
-
                         </ChartWrapper>
                     </Grid>
                     <Grid item lg={6} sm={12} xs={12} >
                         <ChartWrapper title="MultiLine Chart Sample with multiple chart components" chart="line"
                                       media actionBar={false}>
-                            <div style={{ height: 450 }}>
-                                <VizG
-                                    config={this.singleBarChartConfig}
-                                    metadata={this.metadata}
-                                    data={this.state.data2}
-                                    theme={this.props.theme}
-                                />
-                            </div>
                             <div>
-                                <br /><br />
-                                <pre
-                                    dangerouslySetInnerHTML={{
-                                        __html: syntaxHighlight(JSON
-                                            .stringify(this.singleBarChartConfig, undefined, 4)),
-                                    }}
-                                />
+                                <div style={{ height: 450 }}>
+                                    <VizG
+                                        config={this.singleBarChartConfig}
+                                        metadata={this.metadata}
+                                        data={this.state.data2}
+                                        theme={this.props.theme}
+                                    />
+                                </div>
+                                <div>
+                                    <br /><br />
+                                    <pre
+                                        dangerouslySetInnerHTML={{
+                                            __html: syntaxHighlight(JSON
+                                                .stringify(this.singleBarChartConfig, undefined, 4)),
+                                        }}
+                                    />
+                                </div>
                             </div>
-
                         </ChartWrapper>
                     </Grid>
                     <Grid item lg={6} sm={12} xs={12} >
@@ -221,7 +223,7 @@ export default class LineChartSamples extends React.Component {
                                     <li><strong>yAxisTickCount</strong> - Number of ticks shown in the y-axis</li>
                                     <li><strong>xAxisTickCount</strong> - Number of ticks shown in the x-axis</li>
                                     <li><strong>legendOrientaion</strong> - Orientaion of the legend relative to the
-                                        chart (top | bottom | left | right)</li>
+                                        chart(top | bottom | left | right)</li>
                                     <li><strong>brush</strong> - show a component to brush data(boolean value)</li>
                                     <li>
                                         <strong>style</strong> - object that contain style attributes of the charts.

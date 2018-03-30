@@ -141,111 +141,120 @@ export default class BarChartSamples extends React.Component {
                 <Header url={'/samples'} title={'Bar Chart Samples'} />
                 <Grid container>
                     <Grid item lg={6} sm={12} xs={12} >
-                        <ChartWrapper title="Bar Chart Sample with Color Categorization" chart="line" media actionBar={false}>
-                            <div style={{ height: 450 }}>
-                                <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data}
-                                      theme={this.props.theme} />
-                            </div>
+                        <ChartWrapper title="Bar Chart Sample with Color Categorization" chart="line" media
+                                      actionBar={false}>
                             <div>
-                                <br /><br />
-                                <pre
-                                    dangerouslySetInnerHTML={
-                                    {
-                                        __html: syntaxHighlight(
-                                                JSON.stringify(this.barChartConfig, undefined, 4)),
-                                    }
-                                    }
-                                />
+                                <div style={{ height: 450 }}>
+                                    <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data}
+                                          theme={this.props.theme} />
+                                </div>
+                                <div>
+                                    <br /><br />
+                                    <pre
+                                        dangerouslySetInnerHTML={
+                                        {
+                                            __html: syntaxHighlight(
+                                                    JSON.stringify(this.barChartConfig, undefined, 4)),
+                                        }
+                                        }
+                                    />
+                                </div>
                             </div>
 
                         </ChartWrapper>
                     </Grid>
                     <Grid item lg={6} sm={12} xs={12} >
-                        <ChartWrapper title="Bar Chart Sample with an ordinal Dataset." chart="line" media actionBar={false}>
-                            <div style={{ height: 450 }}>
-                                <VizG
-                                    config={this.ordinalDataChart}
-                                    metadata={this.ordinalMetadata}
-                                    data={this.ordinalData}
-                                    theme={this.props.theme}
-                                />
-                            </div>
+                        <ChartWrapper title="Bar Chart Sample with an ordinal Dataset." chart="line" media
+                                      actionBar={false}>
                             <div>
-                                <br /><br />
-                                <pre
-                                    dangerouslySetInnerHTML={{
-                                        __html: syntaxHighlight(JSON
-                                            .stringify(this.ordinalDataChart, undefined, 4)),
-                                    }}
-                                />
+                                <div style={{ height: 450 }}>
+                                    <VizG
+                                        config={this.ordinalDataChart}
+                                        metadata={this.ordinalMetadata}
+                                        data={this.ordinalData}
+                                        theme={this.props.theme}
+                                    />
+                                </div>
+                                <div>
+                                    <br /><br />
+                                    <pre
+                                        dangerouslySetInnerHTML={{
+                                            __html: syntaxHighlight(JSON
+                                                .stringify(this.ordinalDataChart, undefined, 4)),
+                                        }}
+                                    />
+                                </div>
                             </div>
                         </ChartWrapper>
                     </Grid>
                     <Grid item lg={6} sm={12} xs={12} >
                         <ChartWrapper title="Bar Chart Sample with Multiple Chart objects in the Config" chart="line"
                                       media actionBar={false}>
-                            <div style={{ height: 450 }}>
-                                <VizG
-                                    config={this.singleBarChartConfig}
-                                    metadata={this.metadata}
-                                    data={this.state.data2}
-                                    theme={this.props.theme}
-                                />
-                            </div>
                             <div>
-                                <br /><br />
-                                <pre
-                                    dangerouslySetInnerHTML={{
-                                        __html: syntaxHighlight(JSON
-                                            .stringify(this.singleBarChartConfig, undefined, 4)),
-                                    }}
-                                />
+                                <div style={{ height: 450 }}>
+                                    <VizG
+                                        config={this.singleBarChartConfig}
+                                        metadata={this.metadata}
+                                        data={this.state.data2}
+                                        theme={this.props.theme}
+                                    />
+                                </div>
+                                <div>
+                                    <br /><br />
+                                    <pre
+                                        dangerouslySetInnerHTML={{
+                                            __html: syntaxHighlight(JSON
+                                                .stringify(this.singleBarChartConfig, undefined, 4)),
+                                        }}
+                                    />
+                                </div>
                             </div>
-
                         </ChartWrapper>
                     </Grid>
                     <Grid item lg={6} sm={12} xs={12} >
                         <ChartWrapper title="Stacked Bar Chart Sample" chart="line" media actionBar={false}>
-                            <div style={{ height: 450 }}>
-                                <VizG
-                                    config={this.barChartStackedConfig}
-                                    metadata={this.metadata}
-                                    data={this.state.data}
-                                    theme={this.props.theme}
-                                />
-                            </div>
                             <div>
-                                <br /><br />
-                                <pre
-                                    dangerouslySetInnerHTML={{
-                                        __html: syntaxHighlight(JSON
-                                            .stringify(this.barChartStackedConfig, undefined, 4)),
-                                    }}
-                                />
+                                <div style={{ height: 450 }}>
+                                    <VizG
+                                        config={this.barChartStackedConfig}
+                                        metadata={this.metadata}
+                                        data={this.state.data}
+                                        theme={this.props.theme}
+                                    />
+                                </div>
+                                <div>
+                                    <br /><br />
+                                    <pre
+                                        dangerouslySetInnerHTML={{
+                                            __html: syntaxHighlight(JSON
+                                                .stringify(this.barChartStackedConfig, undefined, 4)),
+                                        }}
+                                    />
+                                </div>
                             </div>
-
                         </ChartWrapper>
                     </Grid>
                     <Grid item lg={6} sm={12} xs={12} >
                         <ChartWrapper title="Horizontal Bar Chart Sample" chart="line" media actionBar={false}>
-                            <div style={{ height: 450 }}>
-                                <VizG
-                                    config={this.barChartStackedConfigHorizontal}
-                                    metadata={this.metadata}
-                                    data={this.state.data}
-                                    theme={this.props.theme}
-                                />
-                            </div>
                             <div>
-                                <br /><br />
-                                <pre
-                                    dangerouslySetInnerHTML={{
-                                        __html: syntaxHighlight(JSON
-                                            .stringify(this.barChartStackedConfigHorizontal, undefined, 4)),
-                                    }}
-                                />
+                                <div style={{ height: 450 }}>
+                                    <VizG
+                                        config={this.barChartStackedConfigHorizontal}
+                                        metadata={this.metadata}
+                                        data={this.state.data}
+                                        theme={this.props.theme}
+                                    />
+                                </div>
+                                <div>
+                                    <br /><br />
+                                    <pre
+                                        dangerouslySetInnerHTML={{
+                                            __html: syntaxHighlight(JSON
+                                                .stringify(this.barChartStackedConfigHorizontal, undefined, 4)),
+                                        }}
+                                    />
+                                </div>
                             </div>
-
                         </ChartWrapper>
                     </Grid>
                     <Grid item lg={6} sm={12} xs={12} >
@@ -291,12 +300,12 @@ export default class BarChartSamples extends React.Component {
                                                         categorization data field of the metadata
                                                     </li>
                                                     <li>
-                                                        <strong>colorScale</strong> - Array of colors in hex form that will
-                                                        be over-riding the default color set
+                                                        <strong>colorScale</strong> - Array of colors in hex form that
+                                                        will be over-riding the default color set
                                                     </li>
                                                     <li>
-                                                        <strong>colorDomain</strong> - If a certain color category needs to
-                                                        be plotted in a specific color.
+                                                        <strong>colorDomain</strong> - If a certain color category needs
+                                                        to be plotted in a specific color.
                                                     </li>
                                                     <li>
                                                         <strong>fill</strong> - If a color categorization field is not
@@ -306,7 +315,8 @@ export default class BarChartSamples extends React.Component {
                                                         <strong>mode</strong> - mode of the chart stacked or not.
                                                     </li>
                                                     <li>
-                                                        <strong>orientation</strong> - orientation of the bars left or bottom
+                                                        <strong>orientation</strong> - orientation of the bars left or
+                                                        bottom
                                                     </li>
                                                 </ul>
                                             </li>
@@ -314,7 +324,8 @@ export default class BarChartSamples extends React.Component {
                                         </ul>
                                     </li>
                                     <li>
-                                        <strong>maxLength</strong> - Max length of data points to be visualized in the chart at time
+                                        <strong>maxLength</strong> - Max length of data points to be visualized in the
+                                        chart at time
                                     </li>
                                     <li>
                                         <strong>legend</strong> - enable or disable legend (boolean) value.
@@ -338,14 +349,16 @@ export default class BarChartSamples extends React.Component {
                                         </a> for more info
                                     </li>
                                     <li><strong>animate</strong> - animate chart visualizations</li>
-                                    <li><strong>disableVerticleGrid</strong> - Disable verticle grid of the chart(boolean value)</li>
-                                    <li><strong>disableHorizontalGrid</strong> - Disable horizontal grid of the chart(boolean value)</li>
+                                    <li><strong>disableVerticleGrid</strong> - Disable verticle grid of the chart
+                                        (boolean value)</li>
+                                    <li><strong>disableHorizontalGrid</strong> - Disable horizontal grid of the chart
+                                        (boolean value)</li>
                                     <li><strong>yAxisLabel</strong> - Change the label shown along the y-axis</li>
                                     <li><strong>xAxisLabel</strong> - Change the label shown along the x-axis</li>
                                     <li><strong>yAxisTickCount</strong> - Number of ticks shown in the y-axis</li>
                                     <li><strong>xAxisTickCount</strong> - Number of ticks shown in the x-axis</li>
-                                    <li><strong>legendOrientaion</strong> - Orientaion of the legend relative to the chart
-                                        (top | bottom | left | right)</li>
+                                    <li><strong>legendOrientaion</strong> - Orientaion of the legend relative to the
+                                        chart top | bottom | left | right)</li>
                                     <li><strong>brush</strong> - show a component to brush data(boolean value)</li>
                                     <li>
                                         <strong>style</strong> - object that contain style attributes of the charts.

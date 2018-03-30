@@ -90,67 +90,70 @@ export default class AreaChartSamples extends React.Component {
                     <Grid item lg={6} sm={12} xs={12} >
                         <ChartWrapper title="Area Chart Sample with color categorization" chart="line" media
                                       actionBar={false}>
-                            <div style={{ height: 450 }}>
-                                <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data}
-                                      theme={this.props.theme} />
-                            </div>
                             <div>
-                                <br /><br />
-                                <pre
-                                    dangerouslySetInnerHTML={
-                                    {
-                                        __html: syntaxHighlight(
-                                                JSON.stringify(this.barChartConfig, undefined, 4)),
-                                    }
-                                    }
-                                />
+                                <div style={{ height: 450 }}>
+                                    <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data}
+                                          theme={this.props.theme} />
+                                </div>
+                                <div>
+                                    <br /><br />
+                                    <pre
+                                        dangerouslySetInnerHTML={
+                                        {
+                                            __html: syntaxHighlight(
+                                                    JSON.stringify(this.barChartConfig, undefined, 4)),
+                                        }
+                                        }
+                                    />
+                                </div>
                             </div>
-
                         </ChartWrapper>
                     </Grid>
                     <Grid item lg={6} sm={12} xs={12} >
                         <ChartWrapper title="Area Chart Sample with multiple chart objects in the configuration"
                                       chart="line" media actionBar={false}>
-                            <div style={{ height: 450 }}>
-                                <VizG
-                                    config={this.singleBarChartConfig}
-                                    metadata={this.metadata}
-                                    data={this.state.data2}
-                                    theme={this.props.theme}
-                                />
-                            </div>
                             <div>
-                                <br /><br />
-                                <pre
-                                    dangerouslySetInnerHTML={{
-                                        __html: syntaxHighlight(JSON
-                                            .stringify(this.singleBarChartConfig, undefined, 4)),
-                                    }}
-                                />
+                                <div style={{ height: 450 }}>
+                                    <VizG
+                                        config={this.singleBarChartConfig}
+                                        metadata={this.metadata}
+                                        data={this.state.data2}
+                                        theme={this.props.theme}
+                                    />
+                                </div>
+                                <div>
+                                    <br /><br />
+                                    <pre
+                                        dangerouslySetInnerHTML={{
+                                            __html: syntaxHighlight(JSON
+                                                .stringify(this.singleBarChartConfig, undefined, 4)),
+                                        }}
+                                    />
+                                </div>
                             </div>
-
                         </ChartWrapper>
                     </Grid>
                     <Grid item lg={6} sm={12} xs={12} >
                         <ChartWrapper title="Stacked Area Chart Sample" chart="line" media actionBar={false}>
-                            <div style={{ height: 450 }}>
-                                <VizG
-                                    config={this.barChartStackedConfig}
-                                    metadata={this.metadata}
-                                    data={this.state.data}
-                                    theme={this.props.theme}
-                                />
-                            </div>
                             <div>
-                                <br /><br />
-                                <pre
-                                    dangerouslySetInnerHTML={{
-                                        __html: syntaxHighlight(JSON
-                                            .stringify(this.barChartStackedConfig, undefined, 4)),
-                                    }}
-                                />
+                                <div style={{ height: 450 }}>
+                                    <VizG
+                                        config={this.barChartStackedConfig}
+                                        metadata={this.metadata}
+                                        data={this.state.data}
+                                        theme={this.props.theme}
+                                    />
+                                </div>
+                                <div>
+                                    <br /><br />
+                                    <pre
+                                        dangerouslySetInnerHTML={{
+                                            __html: syntaxHighlight(JSON
+                                                .stringify(this.barChartStackedConfig, undefined, 4)),
+                                        }}
+                                    />
+                                </div>
                             </div>
-
                         </ChartWrapper>
                     </Grid>
                     <Grid item lg={6} sm={12} xs={12} >

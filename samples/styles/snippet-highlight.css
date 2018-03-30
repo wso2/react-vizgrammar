@@ -19,7 +19,7 @@
 pre {
     outline: 1px solid #ccc;
     padding: 5px; margin: 5px;
-    background-color: #d3d3d3
+    background-color: #d3d3d3;
 }
 .string { color: #66BB6A; }
 .number { color: #FFA726; }
@@ -32,5 +32,9 @@ pre {
 .darkTheme pre {
     outline: 1px solid #1c1c1c;
     background-color: #3a3a3a;
+    color: #ccc;
+}
+
+.darkTheme .hljs-keyword, .darkTheme .hljs-selector-tag, .darkTheme .hljs-subst {
     color: #ccc;
 }
