@@ -280,7 +280,8 @@ export default class MapGenerator extends React.Component {
                                                         fill: dataTip.length > 0 ?
                                                             (colorType === 'linear' ?
                                                                 this._getLinearColor(dataTip[0].y) :
-                                                                ordinalColorMap[dataTip[0].y]) : currentTheme.map.style.default.fill,
+                                                                ordinalColorMap[dataTip[0].y]) : currentTheme.map.style
+                                                                .default.fill,
                                                         stroke: currentTheme.map.style.default.stroke,
                                                         strokeWidth: currentTheme.map.style.default.strokeWidth,
                                                         outline: currentTheme.map.style.default.outline,
@@ -289,7 +290,8 @@ export default class MapGenerator extends React.Component {
                                                         fill: dataTip.length > 0 ?
                                                             (colorType === 'linear' ?
                                                                 this._getLinearColor(dataTip[0].y) :
-                                                                ordinalColorMap[dataTip[0].y]) : currentTheme.map.style.hover.fill,
+                                                                ordinalColorMap[dataTip[0].y]) :
+                                                                currentTheme.map.style.hover.fill,
                                                         stroke: currentTheme.map.style.hover.stroke,
                                                         opacity: currentTheme.map.style.hover.opacity,
                                                         strokeWidth: currentTheme.map.style.hover.strokeWidth,

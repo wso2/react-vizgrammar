@@ -66,19 +66,22 @@ export default class LegendComponent extends React.Component {
                     }
                     style={{
                         title: {
-                            fontSize: (config.style ? (config.style.legendTitleSize || 25) : 25),
-                            fill: config.style ? config.style.legendTitleColor : theme.axis.style.axisLabel.fill,
+                            fontSize: (config.style ? (config.style.legendTitleSize ||
+                                theme.legend.style.title.fontSize) : theme.legend.style.title.fontSize),
+                            fill: config.style ? config.style.legendTitleColor : theme.legend.style.title.fill,
                         },
                         labels: {
-                            fontSize: config.style ? (config.style.legendTextSize || 18) : 18,
-                            fill: config.style ? config.style.legendTextColor : theme.axis.style.axisLabel.fill,
+                            fontSize: config.style ? (config.style.legendTextSize ||
+                                theme.legend.style.labels.fontSize) : theme.legend.style.labels.fontSize,
+                            fill: config.style ? config.style.legendTextColor : theme.legend.style.labels.fill,
                         },
                     }}
                     data={legendItems.length > 0 ? legendItems : [{
                         name: 'undefined',
                         symbol: { fill: '#333' },
                     }]}
-                    itemsPerRow={config.legendOrientation === 'top' || config.legendOrientation === 'bottom' ? 10 : null}
+                    itemsPerRow={config.legendOrientation === 'top' || config.legendOrientation === 'bottom' ? 10
+                        : null}
                     events={[
                         {
                             target: 'data',

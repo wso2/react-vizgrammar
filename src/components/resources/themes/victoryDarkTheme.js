@@ -75,6 +75,7 @@ const strokeDasharray = 'none';
 const strokeLinecap = 'round';
 const strokeLinejoin = 'round';
 const strokeOpacity = '.15';
+const markRadius = '4';
 
 const victoryDarkTheme = {
     area: assign({
@@ -82,7 +83,7 @@ const victoryDarkTheme = {
             data: {
                 fill: grey900,
                 fillOpacity: '0.1',
-                markRadius: '4'
+                markRadius: markRadius,
             },
             labels: centeredLabelStyles,
         },
@@ -174,7 +175,8 @@ const victoryDarkTheme = {
                 fill: 'transparent',
                 opacity: 1,
                 stroke: grey500,
-                strokeWidth: 2,
+                strokeWidth: 1,
+                markRadius: markRadius,
             },
             labels: assign({}, baseLabelStyles, {
                 stroke: 'transparent',
@@ -208,6 +210,7 @@ const victoryDarkTheme = {
                 opacity: 1,
                 stroke: 'transparent',
                 strokeWidth: 0,
+                markRadius: markRadius,
             },
             labels: assign({}, centeredLabelStyles, {
                 stroke: 'transparent',
@@ -219,21 +222,24 @@ const victoryDarkTheme = {
     }, baseProps),
     tooltip: assign({
         style: {
-            data: {
-                fill: 'transparent',
-                stroke: 'transparent',
-                strokeWidth: 0,
-            },
-            labels: centeredLabelStyles,
-            flyout: {
-                stroke: grey500,
-                strokeWidth: 1,
+            labels: {
                 fill: blueGrey50,
+            },
+            flyout: {
+                fillOpacity: '0.8',
+                strokeWidth: 1,
+                fill: '#000',
             },
         },
         flyoutProps: {
             cornerRadius: 10,
             pointerLength: 10,
+        },
+    }, baseProps),
+    legend:  assign({
+        style: {
+            labels: assign({}, baseLabelStyles, { fontSize: 18 }),
+            title: assign({}, baseLabelStyles, { fontSize: 25 }),
         },
     }, baseProps),
     voronoi: assign({

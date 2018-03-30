@@ -72,6 +72,7 @@ const strokeDasharray = 'none';
 const strokeLinecap = 'round';
 const strokeLinejoin = 'round';
 const strokeOpacity = '.15';
+const markRadius = '4';
 
 const victoryLightTheme = {
     area: assign({
@@ -79,7 +80,7 @@ const victoryLightTheme = {
             data: {
                 fill: grey900,
                 fillOpacity: '0.1',
-                markRadius: '4'
+                markRadius: markRadius,
             },
             labels: centeredLabelStyles,
         },
@@ -171,7 +172,8 @@ const victoryLightTheme = {
                 fill: 'transparent',
                 opacity: 1,
                 stroke: blueGrey700,
-                strokeWidth: 2,
+                strokeWidth: 1,
+                markRadius: markRadius,
             },
             labels: assign({}, baseLabelStyles, {
                 stroke: 'transparent',
@@ -205,6 +207,7 @@ const victoryLightTheme = {
                 opacity: 1,
                 stroke: 'transparent',
                 strokeWidth: 0,
+                markRadius: markRadius,
             },
             labels: assign({}, centeredLabelStyles, {
                 stroke: 'transparent',
@@ -228,6 +231,12 @@ const victoryLightTheme = {
         flyoutProps: {
             cornerRadius: 10,
             pointerLength: 10,
+        },
+    }, baseProps),
+    legend:  assign({
+        style: {
+            labels: assign({}, baseLabelStyles, { fontSize: 18 }),
+            title: assign({}, baseLabelStyles, { fontSize: 25 }),
         },
     }, baseProps),
     voronoi: assign({
