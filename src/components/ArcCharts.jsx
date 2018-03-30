@@ -121,6 +121,8 @@ export default class ArcChart extends BaseChart {
                 arcChart
             >
                 <VictoryPie
+                    height={height}
+                    width={width}
                     randomVal={random}
                     data={pieChartData}
                     labelComponent={
@@ -140,7 +142,8 @@ export default class ArcChart extends BaseChart {
                     }
                     innerRadius={
                         this.chartMode === 'donut' || config.percentage ?
-                            ((height > width ? width : height) / 4) : 0
+                            (height > width ? width : height / 4) + (config.innerRadius ||
+                            currentTheme.pie.style.data.innerRadius) : currentTheme.pie.style.data.innerRadius
                     }
                     labels={
                         config.percentage === true ?

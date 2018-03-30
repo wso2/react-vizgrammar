@@ -189,6 +189,7 @@ const victoryLightTheme = {
                 padding,
                 stroke: blueGrey50,
                 strokeWidth: 1,
+                innerRadius: 0,
             },
             labels: assign({}, baseLabelStyles, {
                 padding: 20,

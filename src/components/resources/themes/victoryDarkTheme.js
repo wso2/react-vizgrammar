@@ -192,6 +192,7 @@ const victoryDarkTheme = {
                 padding,
                 stroke: 'transparent',
                 strokeWidth: 1,
+                innerRadius: 0,
             },
             labels: assign({}, baseLabelStyles, {
                 padding: 20,
