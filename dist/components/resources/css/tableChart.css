@@ -74,7 +74,8 @@
 }
 
 .ReactTable .rt-thead.-header {
-	box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.15)
+	box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.15);
+    font-weight: 500;
 }
 
 .ReactTable .rt-thead .rt-tr {
@@ -167,7 +168,7 @@
 }
 
 .ReactTable .rt-tbody .rt-tr-group {
-	border-bottom: 1px solid rgba(0, 0, 0, 0.02);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .ReactTable .rt-tbody .rt-tr-group:last-child {
@@ -469,4 +470,11 @@
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none
+}
+
+/*Dark theme styles*/
+
+.darkTheme .ReactTable .rt-thead.-header {
+    color: #fff;
+    background: #333;
 }
