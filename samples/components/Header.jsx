@@ -27,7 +27,7 @@ const style = {
     background: '#2196f3',
 };
 
-export default class header extends React.Component {
+export default class Header extends React.Component {
     render() {
         return (
             <AppBar style={style}>
@@ -55,7 +55,7 @@ export default class header extends React.Component {
     };
 }
 
-header.propTypes = {
+Header.propTypes = {
     url: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
 };
