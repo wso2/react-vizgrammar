@@ -16,7 +16,7 @@
  * under the License.
  */
 // TODO: Fix dynamically changing config for other charts
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import MapGenerator from './components/MapChart';
@@ -85,9 +85,9 @@ class VizG extends Component {
     _isComposed(config) {
         const chartType = config.charts[0].type;
         if ((chartType === 'line' || chartType === 'area' || chartType === 'bar') && config.charts.length > 1) {
-            const areaChart = _.find(config.charts, {type: 'area'});
-            const barChart = _.find(config.charts, {type: 'bar'});
-            const lineChart = _.find(config.charts, {type: 'line'});
+            const areaChart = _.find(config.charts, { type: 'area' });
+            const barChart = _.find(config.charts, { type: 'bar' });
+            const lineChart = _.find(config.charts, { type: 'line' });
 
             if ((!areaChart && !barChart) || (!lineChart && !areaChart) || (!barChart && !lineChart)) {
                 return chartType;
@@ -100,9 +100,9 @@ class VizG extends Component {
     }
 
     render() {
-        const {config, data, metadata, onClick} = this.props;
+        const { config, data, metadata, onClick } = this.props;
         return (
-            <div style={{height: '100%', width: '100%'}}>
+            <div style={{ height: '100%', width: '100%' }}>
                 {
                     !config || !metadata ?
                         null :
