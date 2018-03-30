@@ -24,8 +24,8 @@ import BaseChart from './BaseChart';
 import ChartContainer from './ChartContainer';
 import BarChart from './BarChart';
 import LegendComponent from './LegendComponent';
-import darkTheme from "./resources/themes/victoryDarkTheme";
-import lightTheme from "./resources/themes/victoryLightTheme";
+import lightTheme from './resources/themes/victoryLightTheme';
+import darkTheme from './resources/themes/victoryDarkTheme';
 
 /**
  * Class to handle the visualization of line charts.
@@ -82,74 +82,74 @@ export default class LineChart extends BaseChart {
      */
     static getComponent(config, chartIndex, xScale, data, color, onClick, currentTheme) {
         return [
-                (<VictoryLine
-                    key={`lineChart-${chartIndex}`}
-                    style={{
-                        data: {
-                            strokeWidth: config.charts[chartIndex].style ?
-                                config.charts[chartIndex].style.strokeWidth || currentTheme.line.style.data.strokeWidth
-                                : currentTheme.line.style.data.strokeWidth,
-                            stroke: color,
-                        },
-                    }}
-                    animate={config.animate ? { onEnter: { duration: 100 } } : null}
-                    data={data}
-                    name="blacked"
-                />),
-                (<VictoryScatter
-                    key={`lineScatter-${chartIndex}`}
-                    style={{
-                        data: {
-                            fill: color,
-                        },
-                    }}
-                    data={data}
-                    labels={
-                        (() => {
-                            if (xScale === 'time' && config.tipTimeFormat) {
-                                return (d) => {
-                                    return `${config.x} : ${timeFormat(config.tipTimeFormat)(new Date(d.x))}\n` +
+            (<VictoryLine
+                key={`lineChart-${chartIndex}`}
+                style={{
+                    data: {
+                        strokeWidth: config.charts[chartIndex].style ?
+                            config.charts[chartIndex].style.strokeWidth || currentTheme.line.style.data.strokeWidth
+                            : currentTheme.line.style.data.strokeWidth,
+                        stroke: color,
+                    },
+                }}
+                animate={config.animate ? { onEnter: { duration: 100 } } : null}
+                data={data}
+                name="blacked"
+            />),
+            (<VictoryScatter
+                key={`lineScatter-${chartIndex}`}
+                style={{
+                    data: {
+                        fill: color,
+                    },
+                }}
+                data={data}
+                labels={
+                    (() => {
+                        if (xScale === 'time' && config.tipTimeFormat) {
+                            return (d) => {
+                                return `${config.x} : ${timeFormat(config.tipTimeFormat)(new Date(d.x))}\n` +
+                                    `${config.charts[chartIndex].y} : ${Number(d.y).toFixed(2)}`;
+                            };
+                        } else {
+                            return (d) => {
+                                if (isNaN(d.x)) {
+                                    return `${config.x} : ${d.x}\n${config.charts[chartIndex].y} : ${Number(d.y)
+                                        .toFixed(2)}`;
+                                } else {
+                                    return `${config.x} : ${Number(d.x).toFixed(2)}\n` +
                                         `${config.charts[chartIndex].y} : ${Number(d.y).toFixed(2)}`;
-                                };
-                            } else {
-                                return (d) => {
-                                    if (isNaN(d.x)) {
-                                        return `${config.x} : ${d.x}\n${config.charts[chartIndex].y} : ${Number(d.y)
-                                            .toFixed(2)}`;
-                                    } else {
-                                        return `${config.x} : ${Number(d.x).toFixed(2)}\n` +
-                                            `${config.charts[chartIndex].y} : ${Number(d.y).toFixed(2)}`;
-                                    }
-                                };
-                            }
-                        })()
-                    }
-                    labelComponent={
-                        <VictoryTooltip
-                            pointerLength={4}
-                            cornerRadius={2}
-                            flyoutStyle={{
-                                fill: currentTheme.tooltip.style.flyout.fill,
-                                fillOpacity: currentTheme.tooltip.style.flyout.fillOpacity,
-                                strokeWidth: currentTheme.tooltip.style.flyout.strokeWidth
-                            }}
-                            style={{ fill: currentTheme.tooltip.style.labels.fill }}
-                        />
-                    }
-                    size={(
-                        config.charts[chartIndex].style ?
-                            config.charts[chartIndex].style.markRadius || currentTheme.scatter.style.data.markRadius
-                            : currentTheme.scatter.style.data.markRadius
-                    )}
-                    events={[{
-                        target: 'data',
-                        eventHandlers: {
-                            onClick: () => {
-                                return [{ target: 'data', mutation: onClick }];
-                            },
+                                }
+                            };
+                        }
+                    })()
+                }
+                labelComponent={
+                    <VictoryTooltip
+                        pointerLength={4}
+                        cornerRadius={2}
+                        flyoutStyle={{
+                            fill: currentTheme.tooltip.style.flyout.fill,
+                            fillOpacity: currentTheme.tooltip.style.flyout.fillOpacity,
+                            strokeWidth: currentTheme.tooltip.style.flyout.strokeWidth
+                        }}
+                        style={{ fill: currentTheme.tooltip.style.labels.fill }}
+                    />
+                }
+                size={(
+                    config.charts[chartIndex].style ?
+                        config.charts[chartIndex].style.markRadius || currentTheme.scatter.style.data.markRadius
+                        : currentTheme.scatter.style.data.markRadius
+                )}
+                events={[{
+                    target: 'data',
+                    eventHandlers: {
+                        onClick: () => {
+                            return [{ target: 'data', mutation: onClick }];
                         },
-                    }]}
-                />),
+                    },
+                }]}
+            />),
         ];
     }
 

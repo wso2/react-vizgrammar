@@ -65,7 +65,8 @@ export default class ScatterChartConfigSample extends React.Component {
     componentDidMount() {
         this.interval_id = setInterval(() => {
             this.setState({
-                scatterPlot: [[this.state.timer, Math.random() * 100, Math.random() * 10, Math.random() * 100, 'piston'], [this.state.timer, Math.random() * 100, Math.random() * 10, Math.random() * 100, 'rotary']],
+                scatterPlot: [[this.state.timer, Math.random() * 100, Math.random() * 10, Math.random() * 100, 'piston'],
+                    [this.state.timer, Math.random() * 100, Math.random() * 10, Math.random() * 100, 'rotary']],
                 timer: this.state.timer + 1,
             });
         }, 500);
@@ -84,16 +85,16 @@ export default class ScatterChartConfigSample extends React.Component {
                         <ChartWrapper title={'Scatter Plot'} chart={'scatter'} actionBar={false} media>
                             <div style={{ height: 450 }}>
                                 <VizG config={this.scatterPlotConfig} metadata={this.metadata}
-                                      data={this.state.scatterPlot} theme={this.props.theme} />
+                                    data={this.state.scatterPlot} theme={this.props.theme} />
                             </div>
                             <div>
                                 <br /><br />
                                 <pre
                                     dangerouslySetInnerHTML={
-                                    {
-                                        __html: syntaxHighlight(
+                                        {
+                                            __html: syntaxHighlight(
                                                 JSON.stringify(this.scatterPlotConfig, undefined, 4)),
-                                    }
+                                        }
                                     }
                                 />
                             </div>
@@ -101,7 +102,7 @@ export default class ScatterChartConfigSample extends React.Component {
                     </Grid>
                     <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper title={'Sample Dataset and Configuration structure'} chart={'scatter'}
-                                      actionBar={false} media>
+                            actionBar={false} media>
                             <div className="json-structure" >
                                 metadata :
                                 <pre
@@ -129,26 +130,28 @@ export default class ScatterChartConfigSample extends React.Component {
                                                 <strong>Chart Object</strong>
                                                 <ul>
                                                     <li>
-                                                        <strong>x</strong> - Data field representing x-axis in the metadata
+                                                        <strong>x</strong> - Data field representing x-axis
+                                                        in the metadata
                                                     </li>
                                                     <li>
-                                                        <strong>y</strong> - Data field representing y-axis in the metadata
+                                                        <strong>y</strong> - Data field representing y-axis
+                                                        in the metadata
                                                     </li>
                                                     <li>
                                                         <strong>color</strong> - Data field representing color
                                                         categorization data field of the metadata
                                                     </li>
                                                     <li>
-                                                        <strong>size</strong> - Data field representing size categorization
-                                                        data field of the metadata
+                                                        <strong>size</strong> - Data field representing size
+                                                        categorization data field of the metadata
                                                     </li>
                                                     <li>
-                                                        <strong>colorScale</strong> - Array of colors in hex form that will
-                                                        be over-riding the default color set
+                                                        <strong>colorScale</strong> - Array of colors in hex
+                                                        form that will be over-riding the default color set
                                                     </li>
                                                     <li>
-                                                        <strong>colorDomain</strong> - If a certain color category needs to
-                                                        be plotted in a specific color.
+                                                        <strong>colorDomain</strong> - If a certain color
+                                                        category needs to be plotted in a specific color.
                                                     </li>
                                                 </ul>
                                             </li>
@@ -156,8 +159,8 @@ export default class ScatterChartConfigSample extends React.Component {
                                         </ul>
                                     </li>
                                     <li>
-                                        <strong>maxLength</strong> - Max length of data points to be visualized in the
-                                        chart at time
+                                        <strong>maxLength</strong> - Max length of data points to be
+                                        visualized in the chart at time
                                     </li>
                                     <li>
                                         <strong>legend</strong> - enable or disable legend (boolean) value.
@@ -174,8 +177,8 @@ export default class ScatterChartConfigSample extends React.Component {
                                         </a> for more info
                                     </li>
                                     <li>
-                                        <strong>tipTimeFormat</strong> - If the x-axis is a time series using this attribute
-                                        user can format the tick values of the x axis using regex. refer&nbsp;
+                                        <strong>tipTimeFormat</strong> - If the x-axis is a time series using this
+                                        attribute user can format the tick values of the x axis using regex. refer&nbsp;
                                         <a href={'https://github.com/d3/d3-time-format/blob/master/README.md#timeFormat'}>
                                             d3 documentation
                                         </a> for more info
@@ -189,8 +192,8 @@ export default class ScatterChartConfigSample extends React.Component {
                                     <li><strong>xAxisLabel</strong> - Change the label shown along the x-axis</li>
                                     <li><strong>yAxisTickCount</strong> - Number of ticks shown in the y-axis</li>
                                     <li><strong>xAxisTickCount</strong> - Number of ticks shown in the x-axis</li>
-                                    <li><strong>legendOrientaion</strong> - Orientaion of the legend relative to the chart
-                                        (top | bottom | left | right)</li>
+                                    <li><strong>legendOrientaion</strong> - Orientaion of the legend relative
+                                        to the chart (top | bottom | left | right)</li>
                                     <li>
                                         <strong>style</strong> - object that contain style attributes of the charts.
                                         <ul>

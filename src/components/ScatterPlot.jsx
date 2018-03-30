@@ -24,8 +24,8 @@ import BaseChart from './BaseChart';
 import VizGError from '../VizGError';
 import ChartContainer from './ChartContainer';
 import LegendComponent from './LegendComponent';
-import darkTheme from "./resources/themes/victoryDarkTheme";
-import lightTheme from "./resources/themes/victoryLightTheme";
+import lightTheme from './resources/themes/victoryLightTheme';
+import darkTheme from './resources/themes/victoryDarkTheme';
 
 /**
  * Class to handle visualization of scatter plots.
@@ -206,7 +206,7 @@ export default class ScatterPlot extends BaseChart {
                             height={height}
                             width={width}
                             legendItems={legendComponents}
-                            interaction={() => {}}
+                            interaction={() => { }}
                             config={config}
                         /> : null
                 }

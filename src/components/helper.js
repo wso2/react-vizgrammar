@@ -23,5 +23,6 @@
 export function getDefaultColorScale() {
     return ['#1565C0', '#4DB6AC', '#FF9800', '#9C27B0', '#3F51B5', '#F44336', '#673AB7',
         '#E91E63', '#4CAF50', '#00BCD4', '#FFEB3B', '#FF5722', '#8BC34A', '#03A9F4',
-        '#FFC107', '#80CBC4', '#EF9A9A', '#CE93D8', '#B39DDB', '#C5E1A5'];
+        '#FFC107', '#80CBC4', '#EF9A9A', '#CE93D8', '#B39DDB', '#C5E1A5',
+    ];
 }

@@ -25,8 +25,8 @@ import AreaChart from './AreaChart';
 import BarChart from './BarChart';
 import ChartContainer from './ChartContainer';
 import LegendComponent from './LegendComponent';
-import darkTheme from "./resources/themes/victoryDarkTheme";
-import lightTheme from "./resources/themes/victoryLightTheme";
+import darkTheme from './resources/themes/victoryDarkTheme';
+import lightTheme from './resources/themes/victoryLightTheme';
 
 /**
  * Class to handle visualization of Charts consisting of Area, Bar and Line Charts.

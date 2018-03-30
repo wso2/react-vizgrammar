@@ -17,7 +17,7 @@
  */
 
 import React, { Component } from 'react';
-import {Grid} from 'material-ui';
+import { Grid } from 'material-ui';
 import VizG from '../../src/VizG';
 import ChartWrapper from '../ChartWrapper';
 import { syntaxHighlight } from './util/SyntaxHighLight';
@@ -82,16 +82,16 @@ class MapChartConfigSample extends Component {
                         <ChartWrapper title={'World Map Sample'} chart={'map'} actionBar={false} media>
                             <div style={{ height: 450 }}>
                                 <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.data}
-                                      theme={this.props.theme} />
+                                    theme={this.props.theme} />
                             </div>
                             <div>
                                 <br /><br />
                                 <pre
                                     dangerouslySetInnerHTML={
-                                    {
-                                        __html: syntaxHighlight(
+                                        {
+                                            __html: syntaxHighlight(
                                                 JSON.stringify(this.lineChartConfig, undefined, 4)),
-                                    }
+                                        }
                                     }
                                 />
                             </div>
@@ -101,16 +101,16 @@ class MapChartConfigSample extends Component {
                         <ChartWrapper title={'Europe Map Sample'} chart={'map'} actionBar={false} media>
                             <div style={{ height: 450 }}>
                                 <VizG config={this.europeConfig} metadata={this.metadata} data={this.data}
-                                      theme={this.props.theme} />
+                                    theme={this.props.theme} />
                             </div>
                             <div>
                                 <br /><br />
                                 <pre
                                     dangerouslySetInnerHTML={
-                                    {
-                                        __html: syntaxHighlight(
+                                        {
+                                            __html: syntaxHighlight(
                                                 JSON.stringify(this.europeConfig, undefined, 4)),
-                                    }
+                                        }
                                     }
                                 />
                             </div>
@@ -120,16 +120,16 @@ class MapChartConfigSample extends Component {
                         <ChartWrapper title={'Europe Map Sample'} chart={'map'} actionBar={false} media>
                             <div style={{ height: 450 }}>
                                 <VizG config={this.usaConfig} metadata={this.metadata} data={this.data2}
-                                      theme={this.props.theme} />
+                                    theme={this.props.theme} />
                             </div>
                             <div>
                                 <br /><br />
                                 <pre
                                     dangerouslySetInnerHTML={
-                                    {
-                                        __html: syntaxHighlight(
+                                        {
+                                            __html: syntaxHighlight(
                                                 JSON.stringify(this.usaConfig, undefined, 4)),
-                                    }
+                                        }
                                     }
                                 />
                             </div>
@@ -137,7 +137,7 @@ class MapChartConfigSample extends Component {
                     </Grid>
                     <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper title={'Sample Dataset and Configuration structure'} chart={'scatter'}
-                                      actionBar={false} media>
+                            actionBar={false} media>
                             <div className="json-structure" >
                                 metadata :
                                 <pre
@@ -169,10 +169,12 @@ class MapChartConfigSample extends Component {
                                                 <strong>Chart Object</strong>
                                                 <ul>
                                                     <li><strong>type</strong> - type of the chart</li>
-                                                    <li><strong>y</strong> - Data field that needs to be visualized on the Map.</li>
-                                                    <li><strong>mapType</strong> - Type of the geography (world | europe | usa)</li>
-                                                    <li><strong>colorScale</strong> - Array of colors in hex form that will
-                                                        be over-riding the default color set</li>
+                                                    <li><strong>y</strong> - Data field that needs to be
+                                                        visualized on the Map.</li>
+                                                    <li><strong>mapType</strong> - Type of the geography
+                                                        (world | europe | usa)</li>
+                                                    <li><strong>colorScale</strong> - Array of colors in hex
+                                                        form that will be over-riding the default color set</li>
                                                 </ul>
                                             </li>
                                         </ul>
@@ -180,8 +182,10 @@ class MapChartConfigSample extends Component {
                                     <li>
                                         <strong>style</strong> - object containing style attributes of the chart.
                                         <ul>
-                                            <li><strong>legendTitleColor</strong> - Color of the legend Title of the chart</li>
-                                            <li><strong>legendTextColor</strong> - Color of the legend text of the chart</li>
+                                            <li><strong>legendTitleColor</strong> - Color of the legend Title
+                                                of the chart</li>
+                                            <li><strong>legendTextColor</strong> - Color of the legend text
+                                                of the chart</li>
                                         </ul>
                                     </li>
                                 </ul>

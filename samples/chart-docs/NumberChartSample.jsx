@@ -75,16 +75,16 @@ export default class NumberChartSample extends React.Component {
                         >
                             <div style={{ height: 450 }}>
                                 <VizG config={this.numConfig} metadata={this.metadata} data={this.state.data}
-                                      theme={this.props.theme} />
+                                    theme={this.props.theme} />
                             </div>
                             <div>
                                 <br /><br />
                                 <pre
                                     dangerouslySetInnerHTML={
-                                    {
-                                        __html: syntaxHighlight(
+                                        {
+                                            __html: syntaxHighlight(
                                                 JSON.stringify(this.numConfig, undefined, 4)),
-                                    }
+                                        }
                                     }
                                 />
                             </div>

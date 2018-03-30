@@ -17,7 +17,7 @@
  */
 
 import React from 'react';
-import { Grid, Typography } from 'material-ui';
+import { Grid } from 'material-ui';
 import VizG from '../../src/VizG';
 import '../styles/snippet-highlight.css';
 import ChartWrapper from '../ChartWrapper';
@@ -57,7 +57,10 @@ export default class AreaChartSamples extends React.Component {
 
         this.barChartStackedConfig = {
             x: 'rpm',
-            charts: [{ type: 'area', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston'], mode: 'stacked' }],
+            charts: [{
+                type: 'area', y: 'torque', color: 'EngineType', colorDomain: ['', '', 'piston'],
+                mode: 'stacked'
+            }],
             maxLength: 7,
             legend: true,
         };
@@ -89,20 +92,20 @@ export default class AreaChartSamples extends React.Component {
                 <Grid container>
                     <Grid item lg={6} sm={12} xs={12} >
                         <ChartWrapper title="Area Chart Sample with color categorization" chart="line" media
-                                      actionBar={false}>
+                            actionBar={false}>
                             <div>
                                 <div style={{ height: 450 }}>
                                     <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data}
-                                          theme={this.props.theme} />
+                                        theme={this.props.theme} />
                                 </div>
                                 <div>
                                     <br /><br />
                                     <pre
                                         dangerouslySetInnerHTML={
-                                        {
-                                            __html: syntaxHighlight(
+                                            {
+                                                __html: syntaxHighlight(
                                                     JSON.stringify(this.barChartConfig, undefined, 4)),
-                                        }
+                                            }
                                         }
                                     />
                                 </div>
@@ -111,7 +114,7 @@ export default class AreaChartSamples extends React.Component {
                     </Grid>
                     <Grid item lg={6} sm={12} xs={12} >
                         <ChartWrapper title="Area Chart Sample with multiple chart objects in the configuration"
-                                      chart="line" media actionBar={false}>
+                            chart="line" media actionBar={false}>
                             <div>
                                 <div style={{ height: 450 }}>
                                     <VizG
@@ -160,7 +163,7 @@ export default class AreaChartSamples extends React.Component {
                         <ChartWrapper title="Sample Data set" chart="line" media actionBar={false}>
                             <div className="json-structure" >
                                 <div>
-                                        metadata :
+                                    metadata :
                                     <pre
                                         dangerouslySetInnerHTML={{
                                             __html: syntaxHighlight(JSON.stringify(this.metadata, undefined, 4)),
@@ -265,8 +268,8 @@ export default class AreaChartSamples extends React.Component {
                                         <strong>xAxisTickCount</strong> - Number of ticks shown in the x-axis
                                     </li>
                                     <li>
-                                        <strong>legendOrientaion</strong> - Orientaion of the legend relative to the chart
-                                        (top | bottom | left | right)
+                                        <strong>legendOrientaion</strong> - Orientaion of the legend relative to the
+                                        chart (top | bottom | left | right)
                                     </li>
                                     <li>
                                         <strong>brush</strong> - show a component to brush data(boolean value)

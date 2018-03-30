@@ -21,8 +21,6 @@ import PropTypes from 'prop-types';
 import VizGError from '../VizGError';
 import { getDefaultColorScale } from './helper';
 
-const LEGEND_DISABLED_COLOR = '#d3d3d3';
-
 /**
  * Base Chart that contain most common methods that requires for the charts.
  */
@@ -175,7 +173,8 @@ export default class BaseChart extends React.Component {
                         x: datum[xIndex],
                         y: datum[yIndex],
                         color: datum[colorIndex],
-                        yName: metadata.names[yIndex] })), d => d.color);
+                        yName: metadata.names[yIndex]
+                    })), d => d.color);
 
                 _.difference(_.keys(dataSet), _.keys(chart.dataSetNames)).forEach((key) => {
                     const colorDomIn = _.indexOf(chart.colorDomain, key);

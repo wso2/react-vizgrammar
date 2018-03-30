@@ -18,8 +18,8 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {MuiThemeProvider, createMuiTheme, Switch } from 'material-ui';
-import {HashRouter as Router, Route, Switch as RouterSwitch} from 'react-router-dom';
+import { MuiThemeProvider, createMuiTheme, Switch } from 'material-ui';
+import { HashRouter as Router, Route, Switch as RouterSwitch } from 'react-router-dom';
 import ScrollReset from './ScrollReset';
 import App from './App';
 import LineCharts from './chart-docs/LineChartSamples';
@@ -31,7 +31,7 @@ import Arcs from './chart-docs/PieChartSamples';
 import NumChart from './chart-docs/NumberChartSample';
 import Table from './chart-docs/TableChartSamples';
 import GettingStarted from './GettingStarted';
-import {FormGroup, FormControlLabel} from 'material-ui/Form';
+import { FormGroup, FormControlLabel } from 'material-ui/Form';
 import './styles/style.css';
 
 const darkTheme = createMuiTheme({
@@ -71,88 +71,88 @@ class AppRoute extends React.Component {
             <Router>
                 <div className={this.state.theme + 'Theme'}>
                     <ScrollReset>
-                        <Route exact path={'/'} component={GettingStarted}/>
+                        <Route exact path={'/'} component={GettingStarted} />
                     </ScrollReset>
                     <MuiThemeProvider theme={this.state.theme === 'light' ? lightTheme : darkTheme}>
-                            <RouterSwitch>
-                                <Route exact path={'/'} component={null}/>
-                                <Route component={( ) => (
-                                    <FormGroup style={{zIndex: '11100', position: 'fixed', right: '75px', top: '10px'}}>
-                                        <FormControlLabel
-                                            control={
-                                                <Switch
-                                                    checked={this.state.check}
-                                                    onChange={this.handleChange}
-                                                />
-                                            }
-                                            label={'Light/Dark'}
-                                        />
-                                    </FormGroup>
-                                )}/>
-                            </RouterSwitch>
-                            <ScrollReset>
-                                <Route path={'/line-charts'} component={()=>{
-                                    return(
-                                        <LineCharts theme={this.state.theme} />
-                                    )
-                                }}/>
-                            </ScrollReset>
-                            <ScrollReset>
-                                <Route path={'/area-charts'} component={()=>{
-                                    return(
-                                        <AreaCharts theme={this.state.theme} />
-                                    )
-                                }}/>
-                            </ScrollReset>
-                            <ScrollReset>
-                                <Route path={'/bar-charts'} component={()=>{
-                                    return(
-                                        <BarCharts theme={this.state.theme} />
-                                    )
-                                }}/>
-                            </ScrollReset>
-                            <ScrollReset>
-                                <Route path={'/scatter-charts'} component={()=>{
-                                    return(
-                                        <ScatterChart theme={this.state.theme} />
-                                    )
-                                }}/>
-                            </ScrollReset>
-                            <ScrollReset>
-                                <Route path="/map-charts" component={()=>{
-                                    return(
-                                        <Maps theme={this.state.theme} />
-                                    )
-                                }}/>
-                            </ScrollReset>
-                            <ScrollReset>
-                                <Route path="/pie-charts" component={()=>{
-                                    return(
-                                        <Arcs theme={this.state.theme} />
-                                    )
-                                }}/>
-                            </ScrollReset>
-                            <ScrollReset>
-                                <Route path="/number-charts" component={()=>{
-                                    return(
-                                        <NumChart theme={this.state.theme} />
-                                    )
-                                }}/>
-                            </ScrollReset>
-                            <ScrollReset>
-                                <Route path="/table-charts" component={()=>{
-                                    return(
-                                        <Table theme={this.state.theme} />
-                                    )
-                                }}/>
-                            </ScrollReset>
-                            <ScrollReset>
-                                <Route path="/samples" component={()=>{
-                                    return(
-                                        <App theme={this.state.theme} />
-                                    )
-                                }}/>
-                            </ScrollReset>
+                        <RouterSwitch>
+                            <Route exact path={'/'} component={null} />
+                            <Route component={() => (
+                                <FormGroup style={{ zIndex: '11100', position: 'fixed', right: '75px', top: '10px' }}>
+                                    <FormControlLabel
+                                        control={
+                                            <Switch
+                                                checked={this.state.check}
+                                                onChange={this.handleChange}
+                                            />
+                                        }
+                                        label={'Light/Dark'}
+                                    />
+                                </FormGroup>
+                            )} />
+                        </RouterSwitch>
+                        <ScrollReset>
+                            <Route path={'/line-charts'} component={() => {
+                                return (
+                                    <LineCharts theme={this.state.theme} />
+                                )
+                            }} />
+                        </ScrollReset>
+                        <ScrollReset>
+                            <Route path={'/area-charts'} component={() => {
+                                return (
+                                    <AreaCharts theme={this.state.theme} />
+                                )
+                            }} />
+                        </ScrollReset>
+                        <ScrollReset>
+                            <Route path={'/bar-charts'} component={() => {
+                                return (
+                                    <BarCharts theme={this.state.theme} />
+                                )
+                            }} />
+                        </ScrollReset>
+                        <ScrollReset>
+                            <Route path={'/scatter-charts'} component={() => {
+                                return (
+                                    <ScatterChart theme={this.state.theme} />
+                                )
+                            }} />
+                        </ScrollReset>
+                        <ScrollReset>
+                            <Route path="/map-charts" component={() => {
+                                return (
+                                    <Maps theme={this.state.theme} />
+                                )
+                            }} />
+                        </ScrollReset>
+                        <ScrollReset>
+                            <Route path="/pie-charts" component={() => {
+                                return (
+                                    <Arcs theme={this.state.theme} />
+                                )
+                            }} />
+                        </ScrollReset>
+                        <ScrollReset>
+                            <Route path="/number-charts" component={() => {
+                                return (
+                                    <NumChart theme={this.state.theme} />
+                                )
+                            }} />
+                        </ScrollReset>
+                        <ScrollReset>
+                            <Route path="/table-charts" component={() => {
+                                return (
+                                    <Table theme={this.state.theme} />
+                                )
+                            }} />
+                        </ScrollReset>
+                        <ScrollReset>
+                            <Route path="/samples" component={() => {
+                                return (
+                                    <App theme={this.state.theme} />
+                                )
+                            }} />
+                        </ScrollReset>
                     </MuiThemeProvider>
                 </div>
             </Router>
@@ -161,6 +161,6 @@ class AppRoute extends React.Component {
 }
 
 ReactDOM.render(
-    <AppRoute/>,
+    <AppRoute />,
     document.getElementById('samples')
 );

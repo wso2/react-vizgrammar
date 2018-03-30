@@ -27,8 +27,8 @@ import { getDefaultColorScale } from './helper';
 import { CountryInfo, EuropeMap, WorldMap, USAMap } from './resources/MapData';
 import VizGError from '../VizGError';
 import './resources/css/map-chart.css';
-import darkTheme from "./resources/themes/victoryDarkTheme";
-import lightTheme from "./resources/themes/victoryLightTheme";
+import lightTheme from './resources/themes/victoryLightTheme';
+import darkTheme from './resources/themes/victoryDarkTheme';
 
 const USA_YOFFSET_FACTOR = 2;
 const USA_XOFFSET_FACTOR = 0.8;
@@ -281,7 +281,7 @@ export default class MapGenerator extends React.Component {
                                                             (colorType === 'linear' ?
                                                                 this._getLinearColor(dataTip[0].y) :
                                                                 ordinalColorMap[dataTip[0].y]) : currentTheme.map.style
-                                                                .default.fill,
+                                                                    .default.fill,
                                                         stroke: currentTheme.map.style.default.stroke,
                                                         strokeWidth: currentTheme.map.style.default.strokeWidth,
                                                         outline: currentTheme.map.style.default.outline,
@@ -291,7 +291,7 @@ export default class MapGenerator extends React.Component {
                                                             (colorType === 'linear' ?
                                                                 this._getLinearColor(dataTip[0].y) :
                                                                 ordinalColorMap[dataTip[0].y]) :
-                                                                currentTheme.map.style.hover.fill,
+                                                            currentTheme.map.style.hover.fill,
                                                         stroke: currentTheme.map.style.hover.stroke,
                                                         opacity: currentTheme.map.style.hover.opacity,
                                                         strokeWidth: currentTheme.map.style.hover.strokeWidth,
@@ -325,24 +325,30 @@ export default class MapGenerator extends React.Component {
                                 </defs>
                                 <g className='legend'>
                                     <text
-                                        style={{ fill: config.style ? config.style.legendTitleColor :
-                                                currentTheme.map.style.labels.title.fill }}
+                                        style={{
+                                            fill: config.style ? config.style.legendTitleColor :
+                                                currentTheme.map.style.labels.title.fill
+                                        }}
                                         x={20}
                                         y={20}
                                     >
                                         {config.charts[0].y}
                                     </text>
                                     <text
-                                        style={{ fill: config.style ? config.style.legendTextColor :
-                                                currentTheme.map.style.labels.legend.fill}}
+                                        style={{
+                                            fill: config.style ? config.style.legendTextColor :
+                                                currentTheme.map.style.labels.legend.fill
+                                        }}
                                         x={37}
                                         y={37}
                                     >
                                         {this.state.mapDataRange[1]}
                                     </text>
                                     <text
-                                        style={{ fill: config.style ? config.style.legendTextColor :
-                                                currentTheme.map.style.labels.legend.fill }}
+                                        style={{
+                                            fill: config.style ? config.style.legendTextColor :
+                                                currentTheme.map.style.labels.legend.fill
+                                        }}
                                         x={37}
                                         y={132}
                                     >
@@ -360,11 +366,13 @@ export default class MapGenerator extends React.Component {
                                     title: {
                                         fontSize: currentTheme.map.style.labels.title.fontSize,
                                         fill: config.style ? config.style.legendTitleColor :
-                                            currentTheme.map.style.labels.title.fill },
+                                            currentTheme.map.style.labels.title.fill
+                                    },
                                     labels: {
                                         fontSize: currentTheme.map.style.labels.legend.fontSize,
                                         fill: config.style ? config.style.legendTextColor :
-                                            currentTheme.map.style.labels.legend.fill },
+                                            currentTheme.map.style.labels.legend.fill
+                                    },
                                 }}
                                 data={Object.keys(ordinalColorMap).map((name) => {
                                     return { name, symbol: { fill: ordinalColorMap[name] } };

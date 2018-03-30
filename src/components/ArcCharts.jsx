@@ -166,14 +166,16 @@ export default class ArcChart extends BaseChart {
                             x="45%"
                             y="50%"
                             text={`${Math.round(pieChartData.length > 0 ? pieChartData[0].y : 0)}%`}
-                            style={{ fontSize: config.labelFontSize || currentTheme.pie.style.presentage.fontSize,
-                                fill: config.labelColor || currentTheme.pie.style.labels.fill }}
+                            style={{
+                                fontSize: config.labelFontSize || currentTheme.pie.style.presentage.fontSize,
+                                fill: config.labelColor || currentTheme.pie.style.labels.fill,
+                            }}
                         /> :
                         <LegendComponent
                             height={height}
                             width={width}
                             legendItems={pieChartData.map(data => ({ name: data.x, symbol: data.symbol }))}
-                            interaction={() => {}}
+                            interaction={() => { }}
                             config={config}
                         />
                 }

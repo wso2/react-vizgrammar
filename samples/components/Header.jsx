@@ -17,7 +17,7 @@
  */
 
 import React from 'react';
-import {AppBar, Toolbar, Typography, IconButton} from 'material-ui';
+import { AppBar, Toolbar, Typography, IconButton } from 'material-ui';
 import BackIcon from 'material-ui-icons/ArrowBack';
 import GitHub from '../components/GitHub';
 import { Link } from 'react-router-dom';
@@ -32,7 +32,7 @@ export default class header extends React.Component {
         return (
             <AppBar style={style}>
                 <Toolbar>
-                    <Link to= {this.props.url} style={{textDecoration: 'none'}}>
+                    <Link to={this.props.url} style={{ textDecoration: 'none' }}>
                         <IconButton>
                             <BackIcon />
                         </IconButton>
@@ -55,8 +55,7 @@ export default class header extends React.Component {
     };
 }
 
-
 header.propTypes = {
     url: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired
+    title: PropTypes.string.isRequired,
 };

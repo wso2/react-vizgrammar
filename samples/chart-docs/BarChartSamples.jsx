@@ -17,7 +17,7 @@
  */
 
 import React from 'react';
-import { Grid,  } from 'material-ui';
+import { Grid } from 'material-ui';
 import VizG from '../../src/VizG';
 import '../styles/snippet-highlight.css';
 import ChartWrapper from '../ChartWrapper';
@@ -142,20 +142,20 @@ export default class BarChartSamples extends React.Component {
                 <Grid container>
                     <Grid item lg={6} sm={12} xs={12} >
                         <ChartWrapper title="Bar Chart Sample with Color Categorization" chart="line" media
-                                      actionBar={false}>
+                            actionBar={false}>
                             <div>
                                 <div style={{ height: 450 }}>
                                     <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data}
-                                          theme={this.props.theme} />
+                                        theme={this.props.theme} />
                                 </div>
                                 <div>
                                     <br /><br />
                                     <pre
                                         dangerouslySetInnerHTML={
-                                        {
-                                            __html: syntaxHighlight(
+                                            {
+                                                __html: syntaxHighlight(
                                                     JSON.stringify(this.barChartConfig, undefined, 4)),
-                                        }
+                                            }
                                         }
                                     />
                                 </div>
@@ -165,7 +165,7 @@ export default class BarChartSamples extends React.Component {
                     </Grid>
                     <Grid item lg={6} sm={12} xs={12} >
                         <ChartWrapper title="Bar Chart Sample with an ordinal Dataset." chart="line" media
-                                      actionBar={false}>
+                            actionBar={false}>
                             <div>
                                 <div style={{ height: 450 }}>
                                     <VizG
@@ -189,7 +189,7 @@ export default class BarChartSamples extends React.Component {
                     </Grid>
                     <Grid item lg={6} sm={12} xs={12} >
                         <ChartWrapper title="Bar Chart Sample with Multiple Chart objects in the Config" chart="line"
-                                      media actionBar={false}>
+                            media actionBar={false}>
                             <div>
                                 <div style={{ height: 450 }}>
                                     <VizG

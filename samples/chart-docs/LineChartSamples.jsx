@@ -82,20 +82,20 @@ export default class LineChartSamples extends React.Component {
                 <Grid container>
                     <Grid item lg={6} sm={12} xs={12} >
                         <ChartWrapper title="Multiline Chart Sample with Color Categorization" chart="line"
-                                      media actionBar={false}>
+                            media actionBar={false}>
                             <div>
                                 <div style={{ height: 450 }}>
                                     <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data}
-                                          theme={this.props.theme} />
+                                        theme={this.props.theme} />
                                 </div>
                                 <div>
                                     <br /><br />
                                     <pre
                                         dangerouslySetInnerHTML={
-                                        {
-                                            __html: syntaxHighlight(
+                                            {
+                                                __html: syntaxHighlight(
                                                     JSON.stringify(this.barChartConfig, undefined, 4)),
-                                        }
+                                            }
                                         }
                                     />
                                 </div>
@@ -104,7 +104,7 @@ export default class LineChartSamples extends React.Component {
                     </Grid>
                     <Grid item lg={6} sm={12} xs={12} >
                         <ChartWrapper title="MultiLine Chart Sample with multiple chart components" chart="line"
-                                      media actionBar={false}>
+                            media actionBar={false}>
                             <div>
                                 <div style={{ height: 450 }}>
                                     <VizG

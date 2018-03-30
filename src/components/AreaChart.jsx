@@ -23,8 +23,8 @@ import _ from 'lodash';
 import BaseChart from './BaseChart';
 import ChartContainer from './ChartContainer';
 import LegendComponent from './LegendComponent';
-import darkTheme from "./resources/themes/victoryDarkTheme";
-import lightTheme from "./resources/themes/victoryLightTheme";
+import darkTheme from './resources/themes/victoryDarkTheme';
+import lightTheme from './resources/themes/victoryLightTheme';
 
 /**
  * Class to handle visualization of Area Charts.

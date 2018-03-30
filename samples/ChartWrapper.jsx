@@ -34,8 +34,10 @@ export default class ChartWrapper extends React.Component {
                 {
                     this.props.actionBar ?
                         <CardContent style={{ height: 50 }}>
-                            <Link to={'/' + this.props.chart + '-charts'} style={{ textDecoration: 'none',
-                                float: 'right' }}>
+                            <Link to={'/' + this.props.chart + '-charts'} style={{
+                                textDecoration: 'none',
+                                float: 'right'
+                            }}>
                                 <Button raised color="primary">{this.props.actionBar ? 'View Usage' : ' '}</Button>
                             </Link>
                         </CardContent> : null

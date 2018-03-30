@@ -74,8 +74,10 @@ export default class ChartContainer extends React.Component {
                 padding={
                     (() => {
                         if (config.legend === true || arcChart) {
-                            if (!config.legendOrientation) return { left: 100, top: 30, bottom: xAxisPaddingBottom,
-                                right: 180 };
+                            if (!config.legendOrientation) return {
+                                left: 100, top: 30, bottom: xAxisPaddingBottom,
+                                right: 180
+                            };
                             else if (config.legendOrientation === 'left') {
                                 return { left: 300, top: 30, bottom: xAxisPaddingBottom, right: 30 };
                             } else if (config.legendOrientation === 'right') {
@@ -115,7 +117,7 @@ export default class ChartContainer extends React.Component {
                 {this.props.children}
                 {
                     disableAxes ?
-                    [
+                        [
                             (<VictoryAxis
                                 key="xAxis"
                                 crossAxis
@@ -133,8 +135,8 @@ export default class ChartContainer extends React.Component {
                                 tickLabelComponent={<g />}
                                 axisComponent={<g />}
                             />),
-                    ] :
-                    [
+                        ] :
+                        [
                             (<VictoryAxis
                                 key="xAxis"
                                 crossAxis
@@ -253,7 +255,7 @@ export default class ChartContainer extends React.Component {
                                 }
                                 tickCount={config.yAxisTickCount}
                             />),
-                    ]
+                        ]
                 }
             </VictoryChart>
         );

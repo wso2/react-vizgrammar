@@ -17,14 +17,14 @@
  */
 
 import React from 'react';
-import {VictoryBar, VictoryGroup, VictoryStack, VictoryTooltip} from 'victory';
-import {timeFormat} from 'd3';
+import { VictoryBar, VictoryGroup, VictoryStack, VictoryTooltip } from 'victory';
+import { timeFormat } from 'd3';
 import _ from 'lodash';
 import BaseChart from './BaseChart';
 import ChartContainer from './ChartContainer';
 import LegendComponent from './LegendComponent';
-import darkTheme from "./resources/themes/victoryDarkTheme";
-import lightTheme from "./resources/themes/victoryLightTheme";
+import darkTheme from './resources/themes/victoryDarkTheme';
+import lightTheme from './resources/themes/victoryLightTheme';
 
 /**
  * Class to handle visualization of Bar charts.
@@ -44,7 +44,7 @@ export default class BarChart extends BaseChart {
      * @returns {Boolean} - true in the case of the chart alignment is horizontal false if not.
      */
     static isHorizontal(config) {
-        return _.find(config.charts, {orientation: 'left'});
+        return _.find(config.charts, { orientation: 'left' });
     }
 
     /**
@@ -67,7 +67,7 @@ export default class BarChart extends BaseChart {
             _.keys(chart.dataSetNames).forEach((dsName) => {
                 legendComponents.push({
                     name: dsName,
-                    symbol: {fill: _.indexOf(ignoreArray, dsName) > -1 ? '#d3d3d3' : chart.dataSetNames[dsName]},
+                    symbol: { fill: _.indexOf(ignoreArray, dsName) > -1 ? '#d3d3d3' : chart.dataSetNames[dsName] },
                     chartIndex,
                 });
 
@@ -107,7 +107,7 @@ export default class BarChart extends BaseChart {
             dataSetLength += 1;
         }
 
-        return {chartComponents, legendComponents, dataSetLength};
+        return { chartComponents, legendComponents, dataSetLength };
     }
 
     /**
@@ -153,9 +153,9 @@ export default class BarChart extends BaseChart {
                         flyoutStyle={{
                             fill: currentTheme.tooltip.style.flyout.fill,
                             fillOpacity: currentTheme.tooltip.style.flyout.fillOpacity,
-                            strokeWidth: currentTheme.tooltip.style.flyout.strokeWidth
+                            strokeWidth: currentTheme.tooltip.style.flyout.strokeWidth,
                         }}
-                        style={{fill: currentTheme.tooltip.style.labels.fill}}
+                        style={{ fill: currentTheme.tooltip.style.labels.fill }}
                     />
                 }
                 data={data}
@@ -165,22 +165,22 @@ export default class BarChart extends BaseChart {
                         target: 'data',
                         eventHandlers: {
                             onClick: () => {
-                                return [{target: 'data', mutation: onClick}];
+                                return [{ target: 'data', mutation: onClick }];
                             },
                         },
                     },
                 ]}
-                animate={config.animate ? {onEnter: {duration: 100}} : null}
+                animate={config.animate ? { onEnter: { duration: 100 } } : null}
             />
         );
     }
 
     render() {
-        const {config, height, width, yDomain, theme} = this.props;
-        const {chartArray, dataSets, xScale, ignoreArray, isOrdinal} = this.state;
+        const { config, height, width, yDomain, theme } = this.props;
+        const { chartArray, dataSets, xScale, ignoreArray, isOrdinal } = this.state;
         const currentTheme = theme === 'light' ? lightTheme : darkTheme;
 
-        let {chartComponents, legendComponents, dataSetLength} =
+        let { chartComponents, legendComponents, dataSetLength } =
             this.getBarChartComponent(chartArray, dataSets, config, this.handleMouseEvent, xScale, ignoreArray,
                 currentTheme);
 
@@ -197,7 +197,7 @@ export default class BarChart extends BaseChart {
                 key="victoryMainGroup"
                 horizontal={BarChart.isHorizontal(config)}
                 offset={barWidth}
-                style={{data: {width: barWidth}}}
+                style={{ data: { width: barWidth } }}
             >
                 {chartComponents}
             </VictoryGroup>,
@@ -215,7 +215,7 @@ export default class BarChart extends BaseChart {
                 theme={theme}
                 isOrdinal={isOrdinal}
                 dataSets={dataSets}
-                barData={{barWidth, dataSetLength, fullBarWidth}}
+                barData={{ barWidth, dataSetLength, fullBarWidth }}
             >
                 {
                     config.legend === true ?
