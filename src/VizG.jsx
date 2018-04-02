@@ -61,17 +61,19 @@ class VizG extends Component {
 
         const ChartComponent = component[chartType];
 
-        return (<ChartComponent
-            config={config}
-            metadata={metadata}
-            data={data}
-            onClick={onClick}
-            yDomain={this.props.yDomain}
-            append={config.append}
-            theme={this.props.theme}
-            width={this.props.width}
-            height={this.props.height}
-        />);
+        return (
+            <ChartComponent
+                config={config}
+                metadata={metadata}
+                data={data}
+                onClick={onClick}
+                yDomain={this.props.yDomain}
+                append={config.append}
+                theme={this.props.theme}
+                width={this.props.width}
+                height={this.props.height}
+            />
+        );
     }
 
     /**
@@ -113,7 +115,7 @@ class VizG extends Component {
 
 VizG.defaultProps = {
     append: true,
-    theme: 'materialLight',
+    theme: 'light',
     width: 800,
     height: 450,
 };

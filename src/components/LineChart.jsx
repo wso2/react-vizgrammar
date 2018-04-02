@@ -24,8 +24,8 @@ import BaseChart from './BaseChart';
 import ChartContainer from './ChartContainer';
 import BarChart from './BarChart';
 import LegendComponent from './LegendComponent';
-
-const DEFAULT_MARK_RADIUS = 4;
+import lightTheme from './resources/themes/victoryLightTheme';
+import darkTheme from './resources/themes/victoryDarkTheme';
 
 /**
  * Class to handle the visualization of line charts.
@@ -48,7 +48,7 @@ export default class LineChart extends BaseChart {
      * @param {Array} ignoreArray - array that contains dataSets to be ignored in rendering the components.
      * @returns {{chartComponents: Array, legendComponents: Array}}
      */
-    static getLineChartComponent(chartArray, xScale, dataSets, config, onClick, ignoreArray) {
+    static getLineChartComponent(chartArray, xScale, dataSets, config, onClick, ignoreArray, currentTheme) {
         const chartComponents = [];
         const legendComponents = [];
 
@@ -61,7 +61,8 @@ export default class LineChart extends BaseChart {
                 });
                 if (_.indexOf(ignoreArray, dsName) === -1) {
                     chartComponents.push(...LineChart
-                        .getComponent(config, chartIndex, xScale, dataSets[dsName], chart.dataSetNames[dsName], onClick));
+                        .getComponent(config, chartIndex, xScale, dataSets[dsName], chart.dataSetNames[dsName],
+                            onClick, currentTheme));
                 }
             });
         });
@@ -79,78 +80,87 @@ export default class LineChart extends BaseChart {
      * @param {Function} onClick - Function to be executed in the case of an click event.
      * @returns {Element}
      */
-    static getComponent(config, chartIndex, xScale, data, color, onClick) {
+    static getComponent(config, chartIndex, xScale, data, color, onClick, currentTheme) {
         return [
-                (<VictoryLine
-                    key={`lineChart-${chartIndex}`}
-                    style={{
-                        data: {
-                            strokeWidth: config.charts[chartIndex].style ?
-                                config.charts[chartIndex].style.strokeWidth || null : null,
-                            stroke: color,
-                        },
-                    }}
-                    animate={config.animate ? { onEnter: { duration: 100 } } : null}
-                    data={data}
-                    name="blacked"
-                />),
-                (<VictoryScatter
-                    key={`lineScatter-${chartIndex}`}
-                    style={{
-                        data: {
-                            fill: color,
-                        },
-                    }}
-                    data={data}
-                    labels={
-                        (() => {
-                            if (xScale === 'time' && config.tipTimeFormat) {
-                                return (d) => {
-                                    return `${config.x} : ${timeFormat(config.tipTimeFormat)(new Date(d.x))}\n` +
+            (<VictoryLine
+                key={`lineChart-${chartIndex}`}
+                style={{
+                    data: {
+                        strokeWidth: config.charts[chartIndex].style ?
+                            config.charts[chartIndex].style.strokeWidth || currentTheme.line.style.data.strokeWidth
+                            : currentTheme.line.style.data.strokeWidth,
+                        stroke: color,
+                    },
+                }}
+                animate={config.animate ? { onEnter: { duration: 100 } } : null}
+                data={data}
+                name="blacked"
+            />),
+            (<VictoryScatter
+                key={`lineScatter-${chartIndex}`}
+                style={{
+                    data: {
+                        fill: color,
+                    },
+                }}
+                data={data}
+                labels={
+                    (() => {
+                        if (xScale === 'time' && config.tipTimeFormat) {
+                            return (d) => {
+                                return `${config.x} : ${timeFormat(config.tipTimeFormat)(new Date(d.x))}\n` +
+                                    `${config.charts[chartIndex].y} : ${Number(d.y).toFixed(2)}`;
+                            };
+                        } else {
+                            return (d) => {
+                                if (isNaN(d.x)) {
+                                    return `${config.x} : ${d.x}\n${config.charts[chartIndex].y} : ${Number(d.y)
+                                        .toFixed(2)}`;
+                                } else {
+                                    return `${config.x} : ${Number(d.x).toFixed(2)}\n` +
                                         `${config.charts[chartIndex].y} : ${Number(d.y).toFixed(2)}`;
-                                };
-                            } else {
-                                return (d) => {
-                                    if (isNaN(d.x)) {
-                                        return `${config.x} : ${d.x}\n${config.charts[chartIndex].y} : ${Number(d.y).toFixed(2)}`;
-                                    } else {
-                                        return `${config.x} : ${Number(d.x).toFixed(2)}\n` +
-                                            `${config.charts[chartIndex].y} : ${Number(d.y).toFixed(2)}`;
-                                    }
-                                };
-                            }
-                        })()
-                    }
-                    labelComponent={
-                        <VictoryTooltip
-                            pointerLength={4}
-                            cornerRadius={2}
-                            flyoutStyle={{ fill: '#000', fillOpacity: '0.8', strokeWidth: 0 }}
-                            style={{ fill: '#e6e6e6' }}
-                        />
-                    }
-                    size={(
-                        config.charts[chartIndex].style ?
-                            config.charts[chartIndex].style.markRadius || DEFAULT_MARK_RADIUS : DEFAULT_MARK_RADIUS
-                    )}
-                    events={[{
-                        target: 'data',
-                        eventHandlers: {
-                            onClick: () => {
-                                return [{ target: 'data', mutation: onClick }];
-                            },
+                                }
+                            };
+                        }
+                    })()
+                }
+                labelComponent={
+                    <VictoryTooltip
+                        pointerLength={4}
+                        cornerRadius={2}
+                        flyoutStyle={{
+                            fill: currentTheme.tooltip.style.flyout.fill,
+                            fillOpacity: currentTheme.tooltip.style.flyout.fillOpacity,
+                            strokeWidth: currentTheme.tooltip.style.flyout.strokeWidth
+                        }}
+                        style={{ fill: currentTheme.tooltip.style.labels.fill }}
+                    />
+                }
+                size={(
+                    config.charts[chartIndex].style ?
+                        config.charts[chartIndex].style.markRadius || currentTheme.scatter.style.data.markRadius
+                        : currentTheme.scatter.style.data.markRadius
+                )}
+                events={[{
+                    target: 'data',
+                    eventHandlers: {
+                        onClick: () => {
+                            return [{ target: 'data', mutation: onClick }];
                         },
-                    }]}
-                />),
+                    },
+                }]}
+            />),
         ];
     }
 
     render() {
-        const { config, height, width } = this.props;
+        const { config, height, width, yDomain, theme } = this.props;
         const { chartArray, dataSets, xScale, ignoreArray } = this.state;
+        const currentTheme = theme === 'light' ? lightTheme : darkTheme;
 
         const { chartComponents, legendComponents } =
-            LineChart.getLineChartComponent(chartArray, xScale, dataSets, config, this.handleMouseEvent, ignoreArray);
+            LineChart.getLineChartComponent(chartArray, xScale, dataSets, config, this.handleMouseEvent, ignoreArray,
+                currentTheme);
 
         return (
             <ChartContainer
@@ -159,7 +169,8 @@ export default class LineChart extends BaseChart {
                 xScale={xScale}
                 config={config}
                 horizontal={BarChart.isHorizontal(config)}
-                yDomain={this.props.yDomain}
+                yDomain={yDomain}
+                theme={theme}
             >
                 {
                     config.legend === true ?
@@ -169,6 +180,7 @@ export default class LineChart extends BaseChart {
                             legendItems={legendComponents}
                             interaction={this.handleLegendInteraction}
                             config={config}
+                            theme={theme}
                         /> : null
 
                 }

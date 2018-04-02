@@ -17,13 +17,11 @@
  */
 
 import React from 'react';
-import { AppBar, Toolbar, Typography, Grid, IconButton, Button } from 'material-ui';
-import HomeIcon from 'material-ui-icons/ArrowBack';
-import { Link } from 'react-router-dom';
+import { Grid } from 'material-ui';
 import ChartWrapper from '../ChartWrapper';
 import VizG from '../../src/VizG';
 import { syntaxHighlight } from './util/SyntaxHighLight';
-import GitHub from '../components/GitHub';
+import Header from '../components/Header';
 
 export default class NumberChartSample extends React.Component {
     constructor(props) {
@@ -66,30 +64,7 @@ export default class NumberChartSample extends React.Component {
     render() {
         return (
             <div>
-                <AppBar>
-                    <Toolbar >
-                        <Link to='/samples' >
-                            <IconButton color="contrast" aria-label="Menu">
-                                <HomeIcon />
-                            </IconButton>
-                        </Link>
-                        <Typography type="title" color="inherit" style={{ flex: 1 }} >
-                            React-VizGrammar - Pie Chart Samples
-                        </Typography>
-                        <Link to={'/'} style={{ textDecoration: 'none' }}>
-                            <Button style={{color: '#fff'}}>
-                                Getting Started
-                            </Button>
-                        </Link>
-                        <IconButton
-                            color="inherit"
-                            onClick={() => { window.location.href = 'https://github.com/wso2/react-vizgrammar'; }}
-                            title="See the source on GitHub"
-                        >
-                            <GitHub />
-                        </IconButton>
-                    </Toolbar>
-                </AppBar>
+                <Header url={'/samples'} title={'Number Chart Samples'} />
                 <Grid container>
                     <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper
@@ -99,16 +74,17 @@ export default class NumberChartSample extends React.Component {
                             title={'Number Chart Sample'}
                         >
                             <div style={{ height: 450 }}>
-                                <VizG config={this.numConfig} metadata={this.metadata} data={this.state.data} />
+                                <VizG config={this.numConfig} metadata={this.metadata} data={this.state.data}
+                                    theme={this.props.theme} />
                             </div>
                             <div>
                                 <br /><br />
                                 <pre
                                     dangerouslySetInnerHTML={
-                                    {
-                                        __html: syntaxHighlight(
+                                        {
+                                            __html: syntaxHighlight(
                                                 JSON.stringify(this.numConfig, undefined, 4)),
-                                    }
+                                        }
                                     }
                                 />
                             </div>
@@ -121,34 +97,38 @@ export default class NumberChartSample extends React.Component {
                             chart={'line'}
                             title={'Number Chart Sample'}
                         >
-                            metadata:
-                            <pre
-                                dangerouslySetInnerHTML={{
-                                    __html: syntaxHighlight(
-                                        JSON.stringify(this.metadata, undefined, 4)),
-                                }}
-                            />
-                            data:
-                            <pre
-                                dangerouslySetInnerHTML={{
-                                    __html: syntaxHighlight(
-                                        JSON.stringify(this.state.data, undefined, 4)),
-                                }}
-                            />
-                            <br /><br />
-                            <h3>Chart Configuration JSON structure</h3>
-                            <ul>
-                                <li><strong>x</strong> - Datafield that should be shown in the number chart</li>
-                                <li><strong>title</strong> - Title that should be displayed in the chart</li>
-                                <li>
-                                    <strong>charts</strong> - Array of chart objects that should be visualized
-                                    <ul>
-                                        <li><strong>type</strong> - Type of the chart to be displayed</li>
-                                    </ul>
-                                </li>
-                                <li><strong>showDifference</strong> - Show difference between current value and the previous value</li>
-                                <li><strong>showPercentage</strong> - Show difference with the previous value as a percentage</li>
-                            </ul>
+                            <div className="json-structure" >
+                                metadata:
+                                <pre
+                                    dangerouslySetInnerHTML={{
+                                        __html: syntaxHighlight(
+                                            JSON.stringify(this.metadata, undefined, 4)),
+                                    }}
+                                />
+                                data:
+                                <pre
+                                    dangerouslySetInnerHTML={{
+                                        __html: syntaxHighlight(
+                                            JSON.stringify(this.state.data, undefined, 4)),
+                                    }}
+                                />
+                                <br /><br />
+                                <h3>Chart Configuration JSON structure</h3>
+                                <ul>
+                                    <li><strong>x</strong> - Datafield that should be shown in the number chart</li>
+                                    <li><strong>title</strong> - Title that should be displayed in the chart</li>
+                                    <li>
+                                        <strong>charts</strong> - Array of chart objects that should be visualized
+                                        <ul>
+                                            <li><strong>type</strong> - Type of the chart to be displayed</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>showDifference</strong> - Show difference between current value and the
+                                        previous value</li>
+                                    <li><strong>showPercentage</strong> - Show difference with the previous value as a
+                                        percentage</li>
+                                </ul>
+                            </div>
                         </ChartWrapper>
                     </Grid>
                 </Grid>

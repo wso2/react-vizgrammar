@@ -72,12 +72,15 @@ const strokeDasharray = 'none';
 const strokeLinecap = 'round';
 const strokeLinejoin = 'round';
 const strokeOpacity = '.15';
+const markRadius = '4';
 
 const victoryLightTheme = {
     area: assign({
         style: {
             data: {
                 fill: grey900,
+                fillOpacity: '0.1',
+                markRadius: markRadius,
             },
             labels: centeredLabelStyles,
         },
@@ -97,7 +100,7 @@ const victoryLightTheme = {
             }),
             grid: {
                 fill: 'transparent',
-                stroke: blueGrey300,
+                stroke: '#000',
                 strokeDasharray,
                 strokeLinecap,
                 strokeLinejoin,
@@ -169,7 +172,8 @@ const victoryLightTheme = {
                 fill: 'transparent',
                 opacity: 1,
                 stroke: blueGrey700,
-                strokeWidth: 2,
+                strokeWidth: 1,
+                markRadius: markRadius,
             },
             labels: assign({}, baseLabelStyles, {
                 stroke: 'transparent',
@@ -185,12 +189,16 @@ const victoryLightTheme = {
                 padding,
                 stroke: blueGrey50,
                 strokeWidth: 1,
+                innerRadius: 0,
             },
             labels: assign({}, baseLabelStyles, {
                 padding: 20,
                 stroke: 'transparent',
                 strokeWidth: 0,
             }),
+            presentage: {
+                fontSize: '45',
+            },
         },
     }, baseProps),
     scatter: assign({
@@ -200,6 +208,7 @@ const victoryLightTheme = {
                 opacity: 1,
                 stroke: 'transparent',
                 strokeWidth: 0,
+                markRadius: markRadius,
             },
             labels: assign({}, centeredLabelStyles, {
                 stroke: 'transparent',
@@ -211,21 +220,24 @@ const victoryLightTheme = {
     }, baseProps),
     tooltip: assign({
         style: {
-            data: {
-                fill: 'transparent',
-                stroke: 'transparent',
-                strokeWidth: 0,
-            },
-            labels: centeredLabelStyles,
-            flyout: {
-                stroke: blueGrey700,
-                strokeWidth: 1,
+            labels: {
                 fill: blueGrey50,
+            },
+            flyout: {
+                fillOpacity: '0.8',
+                strokeWidth: 1,
+                fill: '#000',
             },
         },
         flyoutProps: {
             cornerRadius: 10,
             pointerLength: 10,
+        },
+    }, baseProps),
+    legend:  assign({
+        style: {
+            labels: assign({}, baseLabelStyles, { fontSize: 18 }),
+            title: assign({}, baseLabelStyles, { fontSize: 25 }),
         },
     }, baseProps),
     voronoi: assign({
@@ -236,6 +248,58 @@ const victoryLightTheme = {
                 strokeWidth: 0,
             },
             labels: centeredLabelStyles,
+        },
+    }, baseProps),
+    number: assign({
+        style: {
+            labels: {
+                title: {
+                    fill: blueGrey700,
+                },
+                highValue: {
+                    fill: lightGreen500,
+                },
+                lowValue: {
+                    fill: deepOrange600,
+                },
+                mainValue: {
+                    fill: blueGrey700,
+                },
+                difference: {
+                    fill: blueGrey300,
+                },
+            },
+        },
+    }, baseProps),
+    map: assign({
+        style: {
+            labels: {
+                title: {
+                    fill: blueGrey700,
+                    fontSize: fontSize,
+                },
+                legend: {
+                    fill: blueGrey700,
+                    fontSize: fontSizeSmall,
+                },
+            },
+            default: {
+                fill: '#ddd',
+                stroke: '#fff',
+                strokeWidth: '0.5',
+                outline: 'none',
+            },
+            hover: {
+                fill: '#ddd',
+                opacity: '0.8',
+                stroke: '#fff',
+                strokeWidth: '0.5',
+                outline: 'none',
+            },
+            pressed: {
+                fill: '#3a79ff',
+                outline: 'none',
+            },
         },
     }, baseProps),
 };

@@ -1,6 +1,40 @@
-pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; background-color: #d3d3d383 }
-.string { color: green; }
-.number { color: darkorange; }
-.boolean { color: blue; }
-.null { color: magenta; }
-.key { color: red; }
+/*
+ * Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+pre {
+    outline: 1px solid #ccc;
+    padding: 5px; margin: 5px;
+    background-color: #d3d3d3;
+}
+.string { color: #66BB6A; }
+.number { color: #FFA726; }
+.boolean { color: #42A5F5; }
+.null { color: #EC407A; }
+.key { color: #EF5350; }
+
+/*Dark theme styles*/
+
+.darkTheme pre {
+    outline: 1px solid #1c1c1c;
+    background-color: #3a3a3a;
+    color: #ccc;
+}
+
+.darkTheme .hljs-keyword, .darkTheme .hljs-selector-tag, .darkTheme .hljs-subst {
+    color: #ccc;
+}

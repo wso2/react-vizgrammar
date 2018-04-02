@@ -34,7 +34,10 @@ export default class ChartWrapper extends React.Component {
                 {
                     this.props.actionBar ?
                         <CardContent style={{ height: 50 }}>
-                            <Link to={'/' + this.props.chart + '-charts'} style={{ textDecoration: 'none', float: 'right' }}>
+                            <Link to={'/' + this.props.chart + '-charts'} style={{
+                                textDecoration: 'none',
+                                float: 'right'
+                            }}>
                                 <Button raised color="primary">{this.props.actionBar ? 'View Usage' : ' '}</Button>
                             </Link>
                         </CardContent> : null
@@ -55,7 +58,7 @@ ChartWrapper.defaultProps = {
 ChartWrapper.propTypes = {
     title: PropTypes.string.isRequired,
     subtitle: PropTypes.string,
-    children: PropTypes.element,
+    children: PropTypes.object,
     chart: PropTypes.string.isRequired,
     actionBar: PropTypes.bool.isRequired,
     height: PropTypes.number,

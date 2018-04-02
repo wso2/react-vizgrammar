@@ -17,13 +17,11 @@
  */
 
 import React from 'react';
-import { AppBar, Toolbar, Typography, Grid, IconButton, Button } from 'material-ui';
-import HomeIcon from 'material-ui-icons/ArrowBack';
-import { Link } from 'react-router-dom';
+import { Grid } from 'material-ui';
 import VizG from '../../src/VizG';
 import ChartWrapper from '../ChartWrapper';
 import { syntaxHighlight } from './util/SyntaxHighLight';
-import GitHub from '../components/GitHub';
+import Header from '../components/Header';
 
 export default class PieChartSamples extends React.Component {
     constructor(props) {
@@ -83,44 +81,22 @@ export default class PieChartSamples extends React.Component {
     render() {
         return (
             <div>
-                <AppBar>
-                    <Toolbar >
-                        <Link to='/samples' >
-                            <IconButton color="contrast" aria-label="Menu">
-                                <HomeIcon />
-                            </IconButton>
-                        </Link>
-                        <Typography type="title" color="inherit" style={{ flex: 1 }} >
-                            React-VizGrammar - Pie Chart Samples
-                        </Typography>
-                        <Link to={'/'} style={{ textDecoration: 'none' }}>
-                            <Button style={{color: '#fff'}}>
-                                Getting Started
-                            </Button>
-                        </Link>
-                        <IconButton
-                            color="inherit"
-                            onClick={() => { window.location.href = 'https://github.com/wso2/react-vizgrammar'; }}
-                            title="See the source on GitHub"
-                        >
-                            <GitHub />
-                        </IconButton>
-                    </Toolbar>
-                </AppBar>
+                <Header url={'/samples'} title={'Pie Chart Samples'} />
                 <Grid container>
                     <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper title="Pie Chart Sample" chart="line" media actionBar={false}>
                             <div style={{ height: 450 }}>
-                                <VizG config={this.pieChartConfig} metadata={this.metadata} data={this.state.data} />
+                                <VizG config={this.pieChartConfig} metadata={this.metadata} data={this.state.data}
+                                    theme={this.props.theme} />
                             </div>
                             <div>
                                 <br /><br />
                                 <pre
                                     dangerouslySetInnerHTML={
-                                    {
-                                        __html: syntaxHighlight(
+                                        {
+                                            __html: syntaxHighlight(
                                                 JSON.stringify(this.pieChartConfig, undefined, 4)),
-                                    }
+                                        }
                                     }
                                 />
                             </div>
@@ -130,16 +106,17 @@ export default class PieChartSamples extends React.Component {
                     <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper title="Donut Chart Sample" chart="line" media actionBar={false}>
                             <div style={{ height: 450 }}>
-                                <VizG config={this.donutChartConfig} metadata={this.metadata} data={this.state.data} />
+                                <VizG config={this.donutChartConfig} metadata={this.metadata} data={this.state.data}
+                                    theme={this.props.theme} />
                             </div>
                             <div>
                                 <br /><br />
                                 <pre
                                     dangerouslySetInnerHTML={
-                                    {
-                                        __html: syntaxHighlight(
+                                        {
+                                            __html: syntaxHighlight(
                                                 JSON.stringify(this.donutChartConfig, undefined, 4)),
-                                    }
+                                        }
                                     }
                                 />
                             </div>
@@ -149,16 +126,17 @@ export default class PieChartSamples extends React.Component {
                     <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper title="Donut Chart Sample" chart="line" media actionBar={false}>
                             <div style={{ height: 450 }}>
-                                <VizG config={this.percentChartConfig} metadata={this.metadata} data={this.state.data2} />
+                                <VizG config={this.percentChartConfig} metadata={this.metadata} data={this.state.data2}
+                                    theme={this.props.theme} />
                             </div>
                             <div>
                                 <br /><br />
                                 <pre
                                     dangerouslySetInnerHTML={
-                                    {
-                                        __html: syntaxHighlight(
+                                        {
+                                            __html: syntaxHighlight(
                                                 JSON.stringify(this.percentChartConfig, undefined, 4)),
-                                    }
+                                        }
                                     }
                                 />
                             </div>
@@ -166,51 +144,57 @@ export default class PieChartSamples extends React.Component {
                         </ChartWrapper>
                     </Grid>
                     <Grid item lg={6} sm={12} xs={12}>
-                        <ChartWrapper title="Sample Dataset and Chart Configuration" chart="line" media actionBar={false}>
-                            <div>
+                        <ChartWrapper title="Sample Dataset and Chart Configuration" chart="line" media
+                            actionBar={false}>
+                            <div className="json-structure" >
                                 metadata :
                                 <pre
                                     dangerouslySetInnerHTML={
-                                    {
-                                        __html: syntaxHighlight(
+                                        {
+                                            __html: syntaxHighlight(
                                                 JSON.stringify(this.metadata, undefined, 4)),
-                                    }
+                                        }
                                     }
                                 />
                                 data:
                                 <pre
                                     dangerouslySetInnerHTML={
-                                    {
-                                        __html: syntaxHighlight(
+                                        {
+                                            __html: syntaxHighlight(
                                                 JSON.stringify(this.state.data, undefined, 4)),
-                                    }
+                                        }
                                     }
                                 />
+                                <br /><br />
+                                <h3>JSON structure of Chart Configuration</h3>
+                                <ul>
+                                    <li>
+                                        <strong>charts</strong> - Array of chart objects that needs to be visualized.
+                                        <ul>
+                                            <li><strong>type</strong> - type of the chart.(&qoute;arc&qoute;)</li>
+                                            <li><strong>x</strong> - Data field that is used for the visualization</li>
+                                            <li><strong>color</strong> - Data field by which color
+                                                categorization should be done.</li>
+                                            <li><strong>colorScale</strong> -  - Array of colors in hex form
+                                                that will be over-riding the default color set</li>
+                                            <li><strong>mode</strong> - Type of the chart ('donut' | 'pie')</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>append</strong> - Append dataset to the current dataset</li>
+                                    <li><strong>legendOrientation</strong> - Orientation of the legend relative to
+                                        the chart.</li>
+                                    <li><strong>percentage</strong> - Show the data field as a Gauge and the Value
+                                        as a percent</li>
+                                    <li>
+                                        <strong>style</strong> - Object containing style attributes related to the chart
+                                        <ul>
+                                            <li><strong>legendTextColor</strong> - Text color of the
+                                                legend component</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>labelColor</strong> - Font color of percent chart</li>
+                                </ul>
                             </div>
-                            <br /><br />
-                            <h3>JSON structure of Chart Configuration</h3>
-                            <ul>
-                                <li>
-                                    <strong>charts</strong> - Array of chart objects that needs to be visualized.
-                                    <ul>
-                                        <li><strong>type</strong> - type of the chart.(&qoute;arc&qoute;)</li>
-                                        <li><strong>x</strong> - Data field that is used for the visualization</li>
-                                        <li><strong>color</strong> - Data field by which color categorization should be done.</li>
-                                        <li><strong>colorScale</strong> -  - Array of colors in hex form that will be over-riding the default color set</li>
-                                        <li><strong>mode</strong> - Type of the chart ('donut' | 'pie')</li>
-                                    </ul>
-                                </li>
-                                <li><strong>append</strong> - Append dataset to the current dataset</li>
-                                <li><strong>legendOrientation</strong> - Orientation of the legend relative to the chart.</li>
-                                <li><strong>percentage</strong> - Show the data field as a Gauge and the Value as a percent</li>
-                                <li>
-                                    <strong>style</strong> - Object containing style attributes related to the chart
-                                    <ul>
-                                        <li><strong>legendTextColor</strong> - Text color of the legend component</li>
-                                    </ul>
-                                </li>
-                                <li><strong>labelColor</strong> - Font color of percent chart</li>
-                            </ul>
                         </ChartWrapper>
                     </Grid>
                     <Grid item lg={6} sm={12} xs={12} />

@@ -29,6 +29,9 @@ const blueGrey50 = '#ECEFF1';
 const blueGrey300 = '#90A4AE';
 const grey700 = '#616161';
 const grey500 = '#9E9E9E';
+const grey50 = '#FAFAFA';
+const grey900 = '#212121';
+
 const colors = [
     deepOrange600,
     yellow200,
@@ -72,12 +75,15 @@ const strokeDasharray = 'none';
 const strokeLinecap = 'round';
 const strokeLinejoin = 'round';
 const strokeOpacity = '.15';
+const markRadius = '4';
 
 const victoryDarkTheme = {
     area: assign({
         style: {
             data: {
-                fill: grey700,
+                fill: grey900,
+                fillOpacity: '0.1',
+                markRadius: markRadius,
             },
             labels: centeredLabelStyles,
         },
@@ -86,7 +92,7 @@ const victoryDarkTheme = {
         style: {
             axis: {
                 fill: 'transparent',
-                stroke: grey700,
+                stroke: grey500,
                 strokeWidth: 1,
                 strokeLinecap,
                 strokeLinejoin,
@@ -97,7 +103,7 @@ const victoryDarkTheme = {
             }),
             grid: {
                 fill: 'transparent',
-                stroke: grey700,
+                stroke: blueGrey50,
                 strokeDasharray,
                 strokeLinecap,
                 strokeLinejoin,
@@ -114,7 +120,7 @@ const victoryDarkTheme = {
             },
             tickLabels: assign({}, baseLabelStyles, {
                 fontSize: fontSizeSmall,
-                fill: grey700,
+                fill: grey500,
                 stroke: 'transparent',
                 padding: tickLabelpadding,
             }),
@@ -169,7 +175,8 @@ const victoryDarkTheme = {
                 fill: 'transparent',
                 opacity: 1,
                 stroke: grey500,
-                strokeWidth: 2,
+                strokeWidth: 1,
+                markRadius: markRadius,
             },
             labels: assign({}, baseLabelStyles, {
                 stroke: 'transparent',
@@ -185,12 +192,16 @@ const victoryDarkTheme = {
                 padding,
                 stroke: 'transparent',
                 strokeWidth: 1,
+                innerRadius: 0,
             },
             labels: assign({}, baseLabelStyles, {
                 padding: 20,
                 stroke: 'transparent',
                 strokeWidth: 0,
             }),
+            presentage: {
+                fontSize: '45',
+            },
         },
     }, baseProps),
     scatter: assign({
@@ -200,6 +211,7 @@ const victoryDarkTheme = {
                 opacity: 1,
                 stroke: 'transparent',
                 strokeWidth: 0,
+                markRadius: markRadius,
             },
             labels: assign({}, centeredLabelStyles, {
                 stroke: 'transparent',
@@ -211,21 +223,24 @@ const victoryDarkTheme = {
     }, baseProps),
     tooltip: assign({
         style: {
-            data: {
-                fill: 'transparent',
-                stroke: 'transparent',
-                strokeWidth: 0,
-            },
-            labels: centeredLabelStyles,
-            flyout: {
-                stroke: grey500,
-                strokeWidth: 1,
+            labels: {
                 fill: blueGrey50,
+            },
+            flyout: {
+                fillOpacity: '0.8',
+                strokeWidth: 1,
+                fill: '#000',
             },
         },
         flyoutProps: {
             cornerRadius: 10,
             pointerLength: 10,
+        },
+    }, baseProps),
+    legend:  assign({
+        style: {
+            labels: assign({}, baseLabelStyles, { fontSize: 18 }),
+            title: assign({}, baseLabelStyles, { fontSize: 25 }),
         },
     }, baseProps),
     voronoi: assign({
@@ -236,6 +251,58 @@ const victoryDarkTheme = {
                 strokeWidth: 0,
             },
             labels: centeredLabelStyles,
+        },
+    }, baseProps),
+    number: assign({
+        style: {
+            labels: {
+                title: {
+                    fill: grey50,
+                },
+                highValue: {
+                    fill: lightGreen500,
+                },
+                lowValue: {
+                    fill: deepOrange600,
+                },
+                mainValue: {
+                    fill: blueGrey300,
+                },
+                difference: {
+                    fill: grey500,
+                },
+            },
+        },
+    }, baseProps),
+    map: assign({
+        style: {
+            labels: {
+                title: {
+                    fill: grey500,
+                    fontSize: fontSize,
+                },
+                legend: {
+                    fill: grey500,
+                    fontSize: fontSizeSmall,
+                },
+            },
+            default: {
+                fill: '#ddd',
+                stroke: '#fff',
+                strokeWidth: '0.5',
+                outline: 'none',
+            },
+            hover: {
+                fill: '#ddd',
+                opacity: '0.8',
+                stroke: '#fff',
+                strokeWidth: '0.5',
+                outline: 'none',
+            },
+            pressed: {
+                fill: '#3a79ff',
+                outline: 'none',
+            },
         },
     }, baseProps),
 };

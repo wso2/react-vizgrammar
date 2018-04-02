@@ -25,6 +25,8 @@ import AreaChart from './AreaChart';
 import BarChart from './BarChart';
 import ChartContainer from './ChartContainer';
 import LegendComponent from './LegendComponent';
+import darkTheme from './resources/themes/victoryDarkTheme';
+import lightTheme from './resources/themes/victoryLightTheme';
 
 /**
  * Class to handle visualization of Charts consisting of Area, Bar and Line Charts.
@@ -40,8 +42,9 @@ export default class ComposedChart extends BaseChart {
     render() {
         const finalLegend = [];
         const chartComponents = [];
-        const { config, height, width } = this.props;
+        const { config, height, width, theme } = this.props;
         const { chartArray, dataSets, xScale, ignoreArray } = this.state;
+        const currentTheme = theme === 'light' ? lightTheme : darkTheme;
 
         chartArray.forEach((chart, chartIndex) => {
             const localChartSet = [];
@@ -56,15 +59,18 @@ export default class ComposedChart extends BaseChart {
                 const component = {
                     line: () => {
                         return LineChart
-                            .getComponent(config, chartIndex, xScale, dataSets[dsName], chart.dataSetNames[dsName], null);
+                            .getComponent(config, chartIndex, xScale, dataSets[dsName], chart.dataSetNames[dsName],
+                                null, currentTheme);
                     },
                     area: () => {
                         return AreaChart
-                            .getComponent(config, chartIndex, xScale, dataSets[dsName], chart.dataSetNames[dsName], null);
+                            .getComponent(config, chartIndex, xScale, dataSets[dsName], chart.dataSetNames[dsName],
+                                null, currentTheme);
                     },
                     bar: () => {
                         return BarChart
-                            .getComponent(config, chartIndex, xScale, dataSets[dsName], chart.dataSetNames[dsName], null);
+                            .getComponent(config, chartIndex, xScale, dataSets[dsName], chart.dataSetNames[dsName],
+                                null, currentTheme);
                     },
                 };
 
@@ -98,7 +104,8 @@ export default class ComposedChart extends BaseChart {
         });
 
         return (
-            <ChartContainer width={width} height={height} xScale={xScale} config={config} disableContainer>
+            <ChartContainer width={width} height={height} xScale={xScale} config={config} theme={theme}
+                            disableContainer>
                 {
                     config.legend === true ?
                         <LegendComponent

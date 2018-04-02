@@ -32,7 +32,7 @@ export default class ChartContainer extends React.Component {
     render() {
         const { width, height, xScale,
             theme, config, horizontal, disableAxes, yDomain, isOrdinal, dataSets, barData, arcChart } = this.props;
-        const currentTheme = theme === 'materialLight' ? lightTheme : darkTheme;
+        const currentTheme = theme === 'light' ? lightTheme : darkTheme;
         let arr = null;
         let xDomain = null;
         const xAxisPaddingBottom = config.style ? config.style.xAxisPaddingBottom || 50 : 50;
@@ -74,7 +74,10 @@ export default class ChartContainer extends React.Component {
                 padding={
                     (() => {
                         if (config.legend === true || arcChart) {
-                            if (!config.legendOrientation) return { left: 100, top: 30, bottom: xAxisPaddingBottom, right: 180 };
+                            if (!config.legendOrientation) return {
+                                left: 100, top: 30, bottom: xAxisPaddingBottom,
+                                right: 180
+                            };
                             else if (config.legendOrientation === 'left') {
                                 return { left: 300, top: 30, bottom: xAxisPaddingBottom, right: 30 };
                             } else if (config.legendOrientation === 'right') {
@@ -114,7 +117,7 @@ export default class ChartContainer extends React.Component {
                 {this.props.children}
                 {
                     disableAxes ?
-                    [
+                        [
                             (<VictoryAxis
                                 key="xAxis"
                                 crossAxis
@@ -132,8 +135,8 @@ export default class ChartContainer extends React.Component {
                                 tickLabelComponent={<g />}
                                 axisComponent={<g />}
                             />),
-                    ] :
-                    [
+                        ] :
+                        [
                             (<VictoryAxis
                                 key="xAxis"
                                 crossAxis
@@ -155,10 +158,10 @@ export default class ChartContainer extends React.Component {
                                     <line
                                         style={{
                                             stroke: config.style ?
-                                                config.style.gridColor || currentTheme.line.style.data.stroke :
-                                                currentTheme.line.style.data.stroke,
-                                            strokeOpacity: 0.1,
-                                            fill: 'transparent',
+                                                config.style.gridColor || currentTheme.axis.style.grid.stroke :
+                                                currentTheme.axis.style.grid.stroke,
+                                            strokeOpacity: currentTheme.axis.style.grid.strokeOpacity,
+                                            fill: currentTheme.axis.style.grid.fill,
                                         }}
                                     />
                                 }
@@ -220,9 +223,9 @@ export default class ChartContainer extends React.Component {
                                         <g /> :
                                         <line
                                             style={{
-                                                stroke: config.gridColor || currentTheme.line.style.data.stroke,
-                                                strokeOpacity: 0.1,
-                                                fill: 'transparent',
+                                                stroke: config.gridColor || currentTheme.axis.style.grid.stroke,
+                                                strokeOpacity: currentTheme.axis.style.grid.strokeOpacity,
+                                                fill: currentTheme.axis.style.grid.fill,
                                             }}
                                         />
                                 }
@@ -252,7 +255,7 @@ export default class ChartContainer extends React.Component {
                                 }
                                 tickCount={config.yAxisTickCount}
                             />),
-                    ]
+                        ]
                 }
             </VictoryChart>
         );
@@ -262,7 +265,6 @@ export default class ChartContainer extends React.Component {
 ChartContainer.defaultProps = {
     yDomain: null,
     xDomain: null,
-    theme: 'materialLight',
     children: [],
     disableContainer: false,
     horizontal: false,
@@ -273,7 +275,6 @@ ChartContainer.propTypes = {
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
     xScale: PropTypes.string.isRequired,
-    theme: PropTypes.string,
     yDomain: PropTypes.arrayOf(PropTypes.number),
     xDomain: PropTypes.arrayOf(PropTypes.number),
     children: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node])),

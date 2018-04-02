@@ -17,13 +17,11 @@
  */
 
 import React from 'react';
-import { AppBar, Toolbar, Typography, Grid, Button, IconButton } from 'material-ui';
 import Table, { TableCell, TableBody, TableHead, TableRow } from 'material-ui/Table';
-import Code from 'material-ui-icons/Code';
-import { Link } from 'react-router-dom';
+import { Grid } from 'material-ui';
 import ChartWrapper from './ChartWrapper';
+import Header from './components/Header';
 import VizG from '../src/VizG';
-import GitHub from './components/GitHub';
 
 export default class App extends React.Component {
     constructor(props) {
@@ -203,25 +201,7 @@ export default class App extends React.Component {
     render() {
         return (
             <div style={{ padding: 10 }}>
-                <AppBar>
-                    <Toolbar >
-                        <Typography type="title" color="inherit" style={{ flex: 1 }}>
-                            React-VizGrammar
-                        </Typography>
-                        <Link to={'/'} style={{ textDecoration: 'none' }}>
-                            <Button style={{color: '#fff'}}>
-                            Getting Started
-                            </Button>
-                        </Link>
-                        <IconButton
-                            color="inherit"
-                            onClick={() => { window.location.href = 'https://github.com/wso2/react-vizgrammar'; }}
-                            title="See the source on GitHub"
-                        >
-                            <GitHub />
-                        </IconButton>
-                    </Toolbar>
-                </AppBar>
+                <Header url={'/'} title={'React-VizGrammar'} />
                 <Grid container spacing={24} >
                     <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper
@@ -231,7 +211,8 @@ export default class App extends React.Component {
                             actionBar
                         >
                             <div style={{ height: 450 }}>
-                                <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data} />
+                                <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data}
+                                    theme={this.props.theme} />
                             </div>
                         </ChartWrapper>
                     </Grid>
@@ -243,7 +224,8 @@ export default class App extends React.Component {
                             actionBar
                         >
                             <div style={{ height: 450 }}>
-                                <VizG config={this.areaChartConfig} metadata={this.metadata} data={this.state.data} />
+                                <VizG config={this.areaChartConfig} metadata={this.metadata} data={this.state.data}
+                                    theme={this.props.theme} />
                             </div>
                         </ChartWrapper>
                     </Grid>
@@ -255,7 +237,8 @@ export default class App extends React.Component {
                             actionBar
                         >
                             <div style={{ height: 450 }}>
-                                <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data} />
+                                <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data}
+                                    theme={this.props.theme} />
                             </div>
                         </ChartWrapper>
                     </Grid>
@@ -272,6 +255,7 @@ export default class App extends React.Component {
                                     metadata={this.metadata}
                                     data={this.state.scatterPlot}
                                     height={360}
+                                    theme={this.props.theme}
                                 />
                             </div>
                         </ChartWrapper>
@@ -284,7 +268,8 @@ export default class App extends React.Component {
                             actionBar
                         >
                             <div style={{ height: 450 }}>
-                                <VizG config={this.mapConfig} metadata={this.mapMetadata} data={this.state.mapData} />
+                                <VizG config={this.mapConfig} metadata={this.mapMetadata} data={this.state.mapData}
+                                    theme={this.props.theme} />
                             </div>
                         </ChartWrapper>
                     </Grid>
@@ -296,7 +281,8 @@ export default class App extends React.Component {
                             actionBar
                         >
                             <div style={{ height: 450 }}>
-                                <VizG config={this.numConfig} metadata={this.metadata} data={this.state.data} />
+                                <VizG config={this.numConfig} metadata={this.metadata} data={this.state.data}
+                                    theme={this.props.theme} />
                             </div>
                         </ChartWrapper>
                     </Grid>
@@ -308,7 +294,8 @@ export default class App extends React.Component {
                             actionBar
                         >
                             <div style={{ height: 450 }}>
-                                <VizG config={this.pieChartConfig} metadata={this.metadata} data={this.state.data} />
+                                <VizG config={this.pieChartConfig} metadata={this.metadata} data={this.state.data}
+                                    theme={this.props.theme} />
                             </div>
                         </ChartWrapper>
                     </Grid>

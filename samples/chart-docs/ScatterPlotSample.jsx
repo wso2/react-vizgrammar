@@ -17,13 +17,11 @@
  */
 
 import React from 'react';
-import { AppBar, Toolbar, Typography, Grid, IconButton, Button } from 'material-ui';
-import HomeIcon from 'material-ui-icons/ArrowBack';
-import { Link } from 'react-router-dom';
+import { Grid } from 'material-ui';
 import ChartWrapper from '../ChartWrapper';
 import VizG from '../../src/VizG';
 import { syntaxHighlight } from './util/SyntaxHighLight';
-import GitHub from '../components/GitHub';
+import Header from '../components/Header';
 
 /**
  * This class will render a page that contains samples on how to use Scatter plots.
@@ -67,7 +65,8 @@ export default class ScatterChartConfigSample extends React.Component {
     componentDidMount() {
         this.interval_id = setInterval(() => {
             this.setState({
-                scatterPlot: [[this.state.timer, Math.random() * 100, Math.random() * 10, Math.random() * 100, 'piston'], [this.state.timer, Math.random() * 100, Math.random() * 10, Math.random() * 100, 'rotary']],
+                scatterPlot: [[this.state.timer, Math.random() * 100, Math.random() * 10, Math.random() * 100, 'piston'],
+                    [this.state.timer, Math.random() * 100, Math.random() * 10, Math.random() * 100, 'rotary']],
                 timer: this.state.timer + 1,
             });
         }, 500);
@@ -80,52 +79,31 @@ export default class ScatterChartConfigSample extends React.Component {
     render() {
         return (
             <div>
-                <AppBar>
-                    <Toolbar >
-                        <Link to='/samples' >
-                            <IconButton color="contrast" aria-label="Menu">
-                                <HomeIcon />
-                            </IconButton>
-                        </Link>
-                        <Typography type="title" color="inherit" style={{ flex: 1 }}>
-                            React-VizGrammar - Scatter Plot Sample
-                        </Typography>
-                        <Link to={'/'} style={{ textDecoration: 'none' }}>
-                            <Button style={{color: '#fff'}}>
-                                Getting Started
-                            </Button>
-                        </Link>
-                        <IconButton
-                            color="inherit"
-                            onClick={() => { window.location.href = 'https://github.com/wso2/react-vizgrammar'; }}
-                            title="See the source on GitHub"
-                        >
-                            <GitHub />
-                        </IconButton>
-                    </Toolbar>
-                </AppBar>
+                <Header url={'/samples'} title={'Scatter Plot Sample'} />
                 <Grid container>
                     <Grid item lg={6} sm={12} xs={12} >
                         <ChartWrapper title={'Scatter Plot'} chart={'scatter'} actionBar={false} media>
                             <div style={{ height: 450 }}>
-                                <VizG config={this.scatterPlotConfig} metadata={this.metadata} data={this.state.scatterPlot} />
+                                <VizG config={this.scatterPlotConfig} metadata={this.metadata}
+                                    data={this.state.scatterPlot} theme={this.props.theme} />
                             </div>
                             <div>
                                 <br /><br />
                                 <pre
                                     dangerouslySetInnerHTML={
-                                    {
-                                        __html: syntaxHighlight(
+                                        {
+                                            __html: syntaxHighlight(
                                                 JSON.stringify(this.scatterPlotConfig, undefined, 4)),
-                                    }
+                                        }
                                     }
                                 />
                             </div>
                         </ChartWrapper>
                     </Grid>
                     <Grid item lg={6} sm={12} xs={12}>
-                        <ChartWrapper title={'Sample Dataset and Configuration structure'} chart={'scatter'} actionBar={false} media>
-                            <div>
+                        <ChartWrapper title={'Sample Dataset and Configuration structure'} chart={'scatter'}
+                            actionBar={false} media>
+                            <div className="json-structure" >
                                 metadata :
                                 <pre
                                     dangerouslySetInnerHTML={{
@@ -139,84 +117,95 @@ export default class ScatterChartConfigSample extends React.Component {
                                         __html: syntaxHighlight(JSON.stringify(this.state.scatterPlot, undefined, 4)),
                                     }}
                                 />
+                                <br /><br />
+                                <h3>Chart JSON Structure</h3>
+                                <ul>
+                                    <li>
+                                        <strong>type</strong> - Type of the Chart in this case &quot;scatter&quot;
+                                    </li>
+                                    <li>
+                                        <strong>charts</strong> - Array of chart objects to be visualized.
+                                        <ul>
+                                            <li>
+                                                <strong>Chart Object</strong>
+                                                <ul>
+                                                    <li>
+                                                        <strong>x</strong> - Data field representing x-axis
+                                                        in the metadata
+                                                    </li>
+                                                    <li>
+                                                        <strong>y</strong> - Data field representing y-axis
+                                                        in the metadata
+                                                    </li>
+                                                    <li>
+                                                        <strong>color</strong> - Data field representing color
+                                                        categorization data field of the metadata
+                                                    </li>
+                                                    <li>
+                                                        <strong>size</strong> - Data field representing size
+                                                        categorization data field of the metadata
+                                                    </li>
+                                                    <li>
+                                                        <strong>colorScale</strong> - Array of colors in hex
+                                                        form that will be over-riding the default color set
+                                                    </li>
+                                                    <li>
+                                                        <strong>colorDomain</strong> - If a certain color
+                                                        category needs to be plotted in a specific color.
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>....</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <strong>maxLength</strong> - Max length of data points to be
+                                        visualized in the chart at time
+                                    </li>
+                                    <li>
+                                        <strong>legend</strong> - enable or disable legend (boolean) value.
+                                    </li>
+                                    <li>
+                                        <strong>Append</strong> - Append the incoming data to the existing dataset or
+                                        replace the existing dataset boolean value.
+                                    </li>
+                                    <li>
+                                        <strong>timeFormat</strong> - If the x-axis is a time series using this attribute
+                                        user can format the tick values of the x axis using regex. refer&nbsp;
+                                        <a href={'https://github.com/d3/d3-time-format/blob/master/README.md#timeFormat'}>
+                                            d3 documentation
+                                        </a> for more info
+                                    </li>
+                                    <li>
+                                        <strong>tipTimeFormat</strong> - If the x-axis is a time series using this
+                                        attribute user can format the tick values of the x axis using regex. refer&nbsp;
+                                        <a href={'https://github.com/d3/d3-time-format/blob/master/README.md#timeFormat'}>
+                                            d3 documentation
+                                        </a> for more info
+                                    </li>
+                                    <li><strong>animate</strong> - animate chart visualizations</li>
+                                    <li><strong>disableVerticleGrid</strong> - Disable verticle grid of the chart
+                                        (boolean value)</li>
+                                    <li><strong>disableHorizontalGrid</strong> - Disable horizontal grid of the chart
+                                        (boolean value)</li>
+                                    <li><strong>yAxisLabel</strong> - Change the label shown along the y-axis</li>
+                                    <li><strong>xAxisLabel</strong> - Change the label shown along the x-axis</li>
+                                    <li><strong>yAxisTickCount</strong> - Number of ticks shown in the y-axis</li>
+                                    <li><strong>xAxisTickCount</strong> - Number of ticks shown in the x-axis</li>
+                                    <li><strong>legendOrientaion</strong> - Orientaion of the legend relative
+                                        to the chart (top | bottom | left | right)</li>
+                                    <li>
+                                        <strong>style</strong> - object that contain style attributes of the charts.
+                                        <ul>
+                                            <li><strong>axisColor</strong> - color of the axis lines</li>
+                                            <li><strong>axisLabelColor</strong> - color of the axis labels</li>
+                                            <li><strong>xAxisTickAngle</strong> - Tick angle of the x-axis ticks</li>
+                                            <li><strong>yAxisTickAngle</strong> - Tick angle of the y-axis ticks</li>
+                                            <li><strong>tickLabelColor</strong> - font color of the tickLabels</li>
+                                        </ul>
+                                    </li>
+                                </ul>
                             </div>
-                            <br /><br />
-                            <h3>Chart JSON Structure</h3>
-                            <ul>
-                                <li>
-                                    <strong>type</strong> - Type of the Chart in this case &quot;scatter&quot;
-                                </li>
-                                <li>
-                                    <strong>charts</strong> - Array of chart objects to be visualized.
-                                    <ul>
-                                        <li>
-                                            <strong>Chart Object</strong>
-                                            <ul>
-                                                <li>
-                                                    <strong>x</strong> - Data field representing x-axis in the metadata
-                                                </li>
-                                                <li>
-                                                    <strong>y</strong> - Data field representing y-axis in the metadata
-                                                </li>
-                                                <li>
-                                                    <strong>color</strong> - Data field representing color categorization data field of the metadata
-                                                </li>
-                                                <li>
-                                                    <strong>size</strong> - Data field representing size categorization data field of the metadata
-                                                </li>
-                                                <li>
-                                                    <strong>colorScale</strong> - Array of colors in hex form that will be over-riding the default color set
-                                                </li>
-                                                <li>
-                                                    <strong>colorDomain</strong> - If a certain color category needs to be plotted in a specific color.
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>....</li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <strong>maxLength</strong> - Max length of data points to be visualized in the chart at time
-                                </li>
-                                <li>
-                                    <strong>legend</strong> - enable or disable legend (boolean) value.
-                                </li>
-                                <li>
-                                    <strong>Append</strong> - Append the incoming data to the existing dataset or replace the existing dataset boolean value.
-                                </li>
-                                <li>
-                                    <strong>timeFormat</strong> - If the x-axis is a time series using this attribute
-                                    user can format the tick values of the x axis using regex. refer&nbsp;
-                                    <a href={'https://github.com/d3/d3-time-format/blob/master/README.md#timeFormat'}>
-                                        d3 documentation
-                                    </a> for more info
-                                </li>
-                                <li>
-                                    <strong>tipTimeFormat</strong> - If the x-axis is a time series using this attribute
-                                    user can format the tick values of the x axis using regex. refer&nbsp;
-                                    <a href={'https://github.com/d3/d3-time-format/blob/master/README.md#timeFormat'}>
-                                        d3 documentation
-                                    </a> for more info
-                                </li>
-                                <li><strong>animate</strong> - animate chart visualizations</li>
-                                <li><strong>disableVerticleGrid</strong> - Disable verticle grid of the chart(boolean value)</li>
-                                <li><strong>disableHorizontalGrid</strong> - Disable horizontal grid of the chart(boolean value)</li>
-                                <li><strong>yAxisLabel</strong> - Change the label shown along the y-axis</li>
-                                <li><strong>xAxisLabel</strong> - Change the label shown along the x-axis</li>
-                                <li><strong>yAxisTickCount</strong> - Number of ticks shown in the y-axis</li>
-                                <li><strong>xAxisTickCount</strong> - Number of ticks shown in the x-axis</li>
-                                <li><strong>legendOrientaion</strong> - Orientaion of the legend relative to the chart (top | bottom | left | right)</li>
-                                <li>
-                                    <strong>style</strong> - object that contain style attributes of the charts.
-                                    <ul>
-                                        <li><strong>axisColor</strong> - color of the axis lines</li>
-                                        <li><strong>axisLabelColor</strong> - color of the axis labels</li>
-                                        <li><strong>xAxisTickAngle</strong> - Tick angle of the x-axis ticks</li>
-                                        <li><strong>yAxisTickAngle</strong> - Tick angle of the y-axis ticks</li>
-                                        <li><strong>tickLabelColor</strong> - font color of the tickLabels</li>
-                                    </ul>
-                                </li>
-                            </ul>
                         </ChartWrapper>
                     </Grid>
                     <Grid item lg={6} sm={12} xs={12} />

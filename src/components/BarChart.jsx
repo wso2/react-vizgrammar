@@ -17,12 +17,14 @@
  */
 
 import React from 'react';
-import { VictoryBar, VictoryTooltip, VictoryStack, VictoryGroup } from 'victory';
+import { VictoryBar, VictoryGroup, VictoryStack, VictoryTooltip } from 'victory';
 import { timeFormat } from 'd3';
 import _ from 'lodash';
 import BaseChart from './BaseChart';
 import ChartContainer from './ChartContainer';
 import LegendComponent from './LegendComponent';
+import darkTheme from './resources/themes/victoryDarkTheme';
+import lightTheme from './resources/themes/victoryLightTheme';
 
 /**
  * Class to handle visualization of Bar charts.
@@ -55,7 +57,7 @@ export default class BarChart extends BaseChart {
      * @param {Array} ignoreArray - array that contains dataSets to be ignored in rendering the components.
      * @returns {{chartComponents: Array, legendComponents: Array}}
      */
-    getBarChartComponent(chartArray, dataSets, config, onClick, xScale, ignoreArray) {
+    getBarChartComponent(chartArray, dataSets, config, onClick, xScale, ignoreArray, currentTheme) {
         const chartComponents = [];
         const legendComponents = [];
         let dataSetLength = 1;
@@ -72,7 +74,8 @@ export default class BarChart extends BaseChart {
                 if (dataSetLength < dataSets[dsName].length) dataSetLength = dataSets[dsName].length;
                 if ((_.indexOf(ignoreArray, dsName)) === -1) {
                     localSet.push((
-                        BarChart.getComponent(config, chartIndex, xScale, dataSets[dsName], chart.dataSetNames[dsName], onClick)
+                        BarChart.getComponent(config, chartIndex, xScale, dataSets[dsName],
+                            chart.dataSetNames[dsName], onClick, currentTheme)
                     ));
                 }
             });
@@ -117,7 +120,7 @@ export default class BarChart extends BaseChart {
      * @param {Function} onClick - Function to be executed in the case of an click event.
      * @returns {Element}
      */
-    static getComponent(config, chartIndex, xScale, data, color, onClick) {
+    static getComponent(config, chartIndex, xScale, data, color, onClick, currentTheme) {
         return (
             <VictoryBar
                 key={`bar-${chartIndex}`}
@@ -132,7 +135,8 @@ export default class BarChart extends BaseChart {
                         } else {
                             return (d) => {
                                 if (isNaN(d.x)) {
-                                    return `${config.x} : ${d.x}\n${config.charts[chartIndex].y} : ${Number(d.y).toFixed(2)}`;
+                                    return `${config.x} : ${d.x}\n${config.charts[chartIndex].y} : ${Number(d.y)
+                                        .toFixed(2)}`;
                                 } else {
                                     return `${config.x} : ${Number(d.x).toFixed(2)}\n` +
                                         `${config.charts[chartIndex].y} : ${Number(d.y).toFixed(2)}`;
@@ -146,8 +150,12 @@ export default class BarChart extends BaseChart {
                         orientation='top'
                         pointerLength={4}
                         cornerRadius={2}
-                        flyoutStyle={{ fill: '#000', fillOpacity: '0.8', strokeWidth: 0 }}
-                        style={{ fill: '#e6e6e6' }}
+                        flyoutStyle={{
+                            fill: currentTheme.tooltip.style.flyout.fill,
+                            fillOpacity: currentTheme.tooltip.style.flyout.fillOpacity,
+                            strokeWidth: currentTheme.tooltip.style.flyout.strokeWidth,
+                        }}
+                        style={{ fill: currentTheme.tooltip.style.labels.fill }}
                     />
                 }
                 data={data}
@@ -168,11 +176,13 @@ export default class BarChart extends BaseChart {
     }
 
     render() {
-        const { config, height, width } = this.props;
-        const { chartArray, dataSets, xScale, ignoreArray } = this.state;
+        const { config, height, width, yDomain, theme } = this.props;
+        const { chartArray, dataSets, xScale, ignoreArray, isOrdinal } = this.state;
+        const currentTheme = theme === 'light' ? lightTheme : darkTheme;
 
         let { chartComponents, legendComponents, dataSetLength } =
-            this.getBarChartComponent(chartArray, dataSets, config, this.handleMouseEvent, xScale, ignoreArray);
+            this.getBarChartComponent(chartArray, dataSets, config, this.handleMouseEvent, xScale, ignoreArray,
+                currentTheme);
 
         let fullBarWidth = ((BarChart.isHorizontal(config) ?
             (height - 120) : (width - 280)) / (dataSetLength)) - 1;
@@ -201,8 +211,9 @@ export default class BarChart extends BaseChart {
                 config={config}
                 disableContainer
                 horizontal={BarChart.isHorizontal(config)}
-                yDomain={this.props.yDomain}
-                isOrdinal={this.state.isOrdinal}
+                yDomain={yDomain}
+                theme={theme}
+                isOrdinal={isOrdinal}
                 dataSets={dataSets}
                 barData={{ barWidth, dataSetLength, fullBarWidth }}
             >
