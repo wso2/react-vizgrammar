@@ -478,3 +478,16 @@
     color: #fff;
     background: #333;
 }
+
+.darkTheme .ReactTable .rt-tbody .rt-tr-group {
+    border-bottom: 1px solid #818181;
+}
+
+.rt-td .cell-data {
+    text-align: center;
+}
+
+.darkTheme .rt-td .cell-data {
+    text-align: center;
+    color: #ffffff;
+}

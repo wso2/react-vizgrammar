@@ -18,125 +18,134 @@
 
 import React, { Component } from 'react';
 import ReactTable from 'react-table';
-import PropTypes from 'prop-types';
-import { scaleLinear } from 'd3';
+import { scaleLinear, timeFormat } from 'd3';
 import 'react-table/react-table.css';
+import _ from 'lodash';
 import './resources/css/tableChart.css';
 import { getDefaultColorScale } from './helper';
 import VizGError from '../VizGError';
+import BaseChart from './BaseChart';
 
 /**
  * Class to handle visualization of table charts.
  */
-class TableChart extends Component {
-
+export default class TableChart extends BaseChart {
     constructor(props) {
         super(props);
         this.state = {
-            columnArray: [],
-            dataSet: [],
+            dataSets: [],
+            config: props.config,
+            chartArray: [],
             initialized: false,
-            columnColorIndex: 0,
-            colorScale: [],
         };
+
+        this.sortDataBasedOnConfig = this.sortDataBasedOnConfig.bind(this);
+        this._getLinearColor = this._getLinearColor.bind(this);
     }
 
     componentDidMount() {
-        if (this.props.metadata !== null) {
-            this._handleData(this.props);
+        if (this.props.config && this.props.metadata) {
+            this.sortDataBasedOnConfig(this.props);
         }
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.metadata !== null) {
-            this._handleData(nextProps);
+        if (!_.isEqual(nextProps.config, this.state.config)) {
+            this.state.config = nextProps.config;
+            this.state.initialized = false;
+            this.state.dataSets = [];
         }
+
+        this.sortDataBasedOnConfig(nextProps);
     }
 
-    /**
-     * handles data received by the props and populate the table
-     * @param props
-     * @private
-     */
-    _handleData(props) {
+    sortDataBasedOnConfig(props) {
         let { config, metadata, data } = props;
-        const tableConfig = config.charts[0];
-        let { dataSet, columnArray, initialized, columnColorIndex, colorScale } = this.state;
-        colorScale = Array.isArray(tableConfig.colorScale) ? tableConfig.colorScale : getDefaultColorScale();
-
-        if (columnColorIndex >= colorScale.length) {
-            columnColorIndex = 0;
-        }
-
-        tableConfig.columns.map((column, i) => {
-            const colIndex = metadata.names.indexOf(column);
-
-            if (colIndex === -1) {
-                throw new VizGError('TableChart', 'Unknown data column defined in the table chart configuration');
-            }
-
-            if (!initialized) {
-                columnArray.push({
-                    datIndex: colIndex,
-                    title: tableConfig.columnTitles[i] || column,
-                    accessor: column,
-                });
-            }
-
-            data.map((datum) => {
-                if (metadata.types[colIndex].toLowerCase() === 'linear') {
-                    if (!columnArray[i].hasOwnProperty('range')) {
-                        columnArray[i].range = [datum[colIndex], datum[colIndex]];
-                        columnArray[i].color = colorScale[columnColorIndex++];
-                    }
-
-                    if (datum[colIndex] > columnArray[i].range[1]) {
-                        columnArray[i].range[1] = datum[colIndex];
-                    }
-
-                    if (datum[colIndex] < columnArray[i].range[0]) {
-                        columnArray[i].range[0] = datum[colIndex];
-                    }
-                } else {
-                    if (!columnArray[i].hasOwnProperty('colorMap')) {
-                        columnArray[i].colorIndex = 0;
-                        columnArray[i].colorMap = {};
-                    }
-
-                    if (columnArray[i].colorIndex >= colorScale.length) {
-                        columnArray[i].colorIndex = 0;
-                    }
-
-                    if (!columnArray[i].colorMap.hasOwnProperty(datum[colIndex])) {
-                        columnArray[i].colorMap[datum[colIndex]] = colorScale[columnArray[i].colorIndex++];
-                    }
-                }
-            });
-        });
+        let { dataSets, chartArray, initialized } = this.state;
 
         data = data.map((d) => {
             const tmp = {};
             for (let i = 0; i < metadata.names.length; i++) {
                 tmp[metadata.names[i]] = d[i];
             }
-
             return tmp;
         });
 
-        initialized = true;
-        dataSet = dataSet.concat(data);
+        dataSets = dataSets.concat(data);
 
-        while (dataSet.length > config.maxLength) {
-            dataSet.shift();
+        while (dataSets.length > config.maxLength) {
+            dataSets.shift();
         }
 
-        this.setState({
-            dataSet,
-            columnColorIndex,
-            columnArray,
-            initialized,
-            colorScale,
+        config.charts.forEach((chart) => {
+            chart.columns.forEach((column, i) => {
+                const colIndex = _.indexOf(metadata.names, column.name);
+
+                if (colIndex === -1) {
+                    throw new VizGError('TableChart', 'Unknown column name defined in the chart config.');
+                }
+
+                if (!initialized) {
+                    chartArray.push({
+                        name: column.name,
+                        title: column.title || column.name,
+                        colorBasedStyle: column.colorBasedStyle,
+                        colorScale: column.colorBasedStyle === true ?
+                            column.colorScale || getDefaultColorScale() : undefined,
+                        colorDomain: column.colorDomain,
+                        isTime: metadata.types[colIndex].toLowerCase() === 'time',
+                        colorIndex: 0,
+                        timeFormat: column.timeFormat,
+                        textColor: column.textColor,
+                    });
+                }
+
+                if (column.colorBasedStyle === true) {
+                    if (metadata.types[colIndex].toLowerCase() === 'linear' ||
+                        metadata.types[colIndex].toLowerCase() === 'time') {
+                        const max = _.max(dataSets.map(datum => datum[metadata.names[colIndex]]));
+                        const min = _.min(dataSets.map(datum => datum[metadata.names[colIndex]]));
+
+                        if (!Object.prototype.hasOwnProperty.call(chartArray[i], 'range')) {
+                            chartArray[i].range = [min, max];
+                        } else if (!_.isEqual(chartArray[i].range, [min, max])) {
+                            chartArray[i].range = [min, max];
+                        }
+                    } else {
+                        if (!Object.prototype.hasOwnProperty.call(chartArray[i], 'colorMap')) {
+                            chartArray[i].colorIndex = 0;
+                            chartArray[i].colorMap = {};
+                        }
+
+                        _.map(dataSets, column.name).forEach((category) => {
+                            if (!Object.prototype.hasOwnProperty.call(chartArray[i].colorMap, category)) {
+                                if (chartArray[i].colorIndex >= chartArray[i].colorScale.length) {
+                                    chartArray[i].colorIndex = 0;
+                                }
+
+                                if (column.colorDomain) {
+                                    const domainIndex = _.indexOf(column.colorDomain, category);
+
+                                    if (domainIndex >= 0 && domainIndex < chartArray[i].colorScale.length) {
+                                        chartArray[i].colorMap[category] = chartArray[i].colorScale[domainIndex];
+                                    } else {
+                                        chartArray[i].colorMap[category] =
+                                            chartArray[i].colorScale[chartArray[i].colorIndex++];
+                                    }
+                                } else {
+                                    chartArray[i].colorMap[category] =
+                                        chartArray[i].colorScale[chartArray[i].colorIndex++];
+                                }
+                            }
+                        });
+                    }
+                }
+            });
         });
+
+        initialized = true;
+
+        this.setState({ dataSets, chartArray, initialized });
     }
 
     _getLinearColor(color, range, value) {
@@ -144,16 +153,18 @@ class TableChart extends Component {
     }
 
     render() {
-        const { config, metadata } = this.props;
-        const { dataSet, columnArray } = this.state;
-        const chartConfig = [];
+        const { config } = this.props;
+        const { dataSets, chartArray } = this.state;
 
-        columnArray.map((column, i) => {
+        console.info(this.state);
+
+        const tableConfig = chartArray.map((column) => {
             const columnConfig = {
                 Header: column.title,
-                accessor: column.accessor,
+                accessor: column.name,
             };
-            if (config.colorBasedStyle) {
+
+            if (column.colorBasedStyle === true) {
                 columnConfig.Cell = props => (
                     <div
                         style={{
@@ -161,29 +172,46 @@ class TableChart extends Component {
                             height: '100%',
                             backgroundColor:
                                 column.range ?
-                                    this._getLinearColor(column.color, column.range, props.value) :
+                                    this._getLinearColor(
+                                        column.colorScale[column.colorIndex], column.range, props.value) :
                                     column.colorMap[props.value],
                             margin: 0,
                             textAlign: 'center',
                         }}
                     >
-                        <span>{props.value}</span>
-                    </div>);
+                        <span
+                            style={{
+                                color: column.textColor || null,
+                            }}
+                        >
+                            {
+                                column.isTime && column.timeFormat ?
+                                    timeFormat(column.timeFormat)(props.value) : props.value
+                            }
+                        </span>
+                    </div>
+                );
             } else {
                 columnConfig.Cell = props => (
-                    <div>
-                        <span>{props.value}</span>
-                    </div>);
+                    <div className={this.props.theme === 'light' ? 'rt-td cell-data' : 'darkTheme rt-td cell-data'}>
+                        <span>
+                            {
+                                column.isTime && column.timeFormat ?
+                                    timeFormat(column.timeFormat)(props.value) : props.value
+                            }
+                        </span>
+                    </div>
+                );
             }
 
-            chartConfig.push(columnConfig);
+            return columnConfig;
         });
 
         return (
             <div style={{ height: 40 }}>
                 <ReactTable
-                    data={dataSet}
-                    columns={chartConfig}
+                    data={dataSets}
+                    columns={tableConfig}
                     showPagination={false}
                     minRows={config.maxLength}
                 />
@@ -191,11 +219,3 @@ class TableChart extends Component {
         );
     }
 }
-
-TableChart.propTypes = {
-    config: PropTypes.object.isRequired,
-    metadata: PropTypes.object.isRequired,
-    data: PropTypes.array,
-};
-
-export default TableChart;
