@@ -37,8 +37,23 @@ export default class TableChartSamples extends React.Component {
             charts: [
                 {
                     type: 'table',
-                    columns: ['EngineType', 'torque', 'rpm'],
-                    columnTitles: ['Engine Type', 'Engine Torque', 'Engine RPM'],
+                    columns: [
+                        {
+                            name: 'EngineType',
+                            title: 'EngineType',
+                            colorBasedStyle: true,
+                        },
+                        {
+                            name: 'torque',
+                            title: 'Engine Torque',
+                        },
+                        {
+                            name: 'rpm',
+                            title: 'Engine RPM',
+                            colorBasedStyle: true,
+                            colorScale: ['red'],
+                        },
+                    ],
                 },
             ],
             maxLength: 7,
@@ -82,8 +97,12 @@ export default class TableChartSamples extends React.Component {
                         >
                             <div style={{ height: 400 }}>
                                 <div style={{ height: 40 }}>
-                                    <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data}
-                                          theme={this.props.theme} />
+                                    <VizG
+                                        config={this.lineChartConfig}
+                                        metadata={this.metadata}
+                                        data={this.state.data}
+                                        theme={this.props.theme}
+                                    />
                                 </div>
                             </div>
                             <div>
@@ -133,12 +152,41 @@ export default class TableChartSamples extends React.Component {
                                                         visualized in this case &qoute;table&qoute;
                                                     </li>
                                                     <li>
-                                                        <strong>columns</strong> - String array of columns that the table
-                                                        should contain
-                                                    </li>
-                                                    <li>
-                                                        <strong>columnTitles</strong> - String array of column titles
-                                                        corresponding to the columns declared
+                                                        <strong>columns</strong> - Array of objects containing
+                                                        column data
+                                                        <ul>
+                                                            <li>
+                                                                <strong>name</strong> - name provided in metadata
+                                                            </li>
+                                                            <li>
+                                                                <strong>title</strong> - Title of the column
+                                                            </li>
+                                                            <li>
+                                                                <strong>colorScale</strong> - Set of colors to be used
+                                                                for the color categorization of the column
+                                                            </li>
+                                                            <li >
+                                                                <strong>colorDomain</strong> - If a certain color category
+                                                                needs to be highlighted in a specific color.
+                                                            </li>
+                                                            <li>
+                                                                <strong>timeFormat</strong> - If data in the column are
+                                                                &nbsp;timestamps the user can use this attribute to&nbsp;
+                                                                format
+                                                                the time stamp.refer&nbsp;
+                                                                <a href={'https://github.com/d3/d3-time-format/blob/master/README.md#timeFormat'}>
+                                                                    d3 documentation
+                                                                </a> for more info
+                                                            </li>
+                                                            <li>
+                                                                <strong>textColor</strong> - Color of the text in the&nbsp;
+                                                                cell(* if the column use colorBased categorizing this option is recommended)
+                                                            </li>
+                                                            <li>
+                                                                <strong>colorBasedStyle</strong> - color the column data according to the type
+                                                                of data in the columns(boolean value)
+                                                            </li>
+                                                        </ul>
                                                     </li>
                                                 </ul>
                                             </li>
@@ -147,10 +195,6 @@ export default class TableChartSamples extends React.Component {
                                     <li>
                                         <strong>maxLength</strong> - maximum number of records to be shown in the table
                                         at a time
-                                    </li>
-                                    <li>
-                                        <strong>colorBasedStyle</strong> - color the column data according to the type
-                                        of data in the columns(boolean value)
                                     </li>
                                 </ul>
                             </div>
