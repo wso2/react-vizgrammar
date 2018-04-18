@@ -118,22 +118,20 @@ export default class App extends React.Component {
                 {
                     type: 'table',
                     y: 'torque',
-		    columns: [
-		        {
-			    name: 'EngineType',
-			    title: 'Engine Type',	
-			},
-			{
-			    name: 'torque',
-			    title: 'Engine Torque',	
-			},
-			{
-			    name: 'rpm',
-			    title: 'Engine RPM',
-			},
-		    ],	
-                    //columns: ['EngineType', 'torque', 'rpm'],
-                    //columnTitles: ['Engine Type', 'Engine Torque', 'Engine RPM'],
+                    columns: [
+                        {
+                            name: 'EngineType',
+                            title: 'Engine Type',
+                        },
+                        {
+                            name: 'torque',
+                            title: 'Engine Torque',
+                        },
+                        {
+                            name: 'rpm',
+                            title: 'Engine RPM',
+                        },
+                    ],
                 },
             ],
             maxLength: 7,
@@ -216,7 +214,7 @@ export default class App extends React.Component {
         return (
             <div style={{ padding: 10 }}>
                 <Header url={'/'} title={'React-VizGrammar'} />
-                <Grid container spacing={24} >
+                <Grid container spacing={24}>
                     <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper
                             media
@@ -225,8 +223,12 @@ export default class App extends React.Component {
                             actionBar
                         >
                             <div style={{ height: 450 }}>
-                                <VizG config={this.lineChartConfig} metadata={this.metadata} data={this.state.data}
-                                    theme={this.props.theme} />
+                                <VizG
+                                    config={this.lineChartConfig}
+                                    metadata={this.metadata}
+                                    data={this.state.data}
+                                    theme={this.props.theme}
+                                />
                             </div>
                         </ChartWrapper>
                     </Grid>
@@ -238,8 +240,12 @@ export default class App extends React.Component {
                             actionBar
                         >
                             <div style={{ height: 450 }}>
-                                <VizG config={this.areaChartConfig} metadata={this.metadata} data={this.state.data}
-                                    theme={this.props.theme} />
+                                <VizG
+                                    config={this.areaChartConfig}
+                                    metadata={this.metadata}
+                                    data={this.state.data}
+                                    theme={this.props.theme}
+                                />
                             </div>
                         </ChartWrapper>
                     </Grid>
@@ -251,12 +257,16 @@ export default class App extends React.Component {
                             actionBar
                         >
                             <div style={{ height: 450 }}>
-                                <VizG config={this.barChartConfig} metadata={this.metadata} data={this.state.data}
-                                    theme={this.props.theme} />
+                                <VizG
+                                    config={this.barChartConfig}
+                                    metadata={this.metadata}
+                                    data={this.state.data}
+                                    theme={this.props.theme}
+                                />
                             </div>
                         </ChartWrapper>
                     </Grid>
-                    <Grid item lg={6} sm={12} xs={12} >
+                    <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper
                             media
                             chart={'scatter'}
@@ -274,7 +284,7 @@ export default class App extends React.Component {
                             </div>
                         </ChartWrapper>
                     </Grid>
-                    <Grid item lg={6} sm={12} xs={12} >
+                    <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper
                             media
                             chart={'map'}
@@ -282,12 +292,16 @@ export default class App extends React.Component {
                             actionBar
                         >
                             <div style={{ height: 450 }}>
-                                <VizG config={this.mapConfig} metadata={this.mapMetadata} data={this.state.mapData}
-                                    theme={this.props.theme} />
+                                <VizG
+                                    config={this.mapConfig}
+                                    metadata={this.mapMetadata}
+                                    data={this.state.mapData}
+                                    theme={this.props.theme}
+                                />
                             </div>
                         </ChartWrapper>
                     </Grid>
-                    <Grid item lg={6} sm={12} xs={12} >
+                    <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper
                             media
                             chart={'number'}
@@ -295,12 +309,16 @@ export default class App extends React.Component {
                             actionBar
                         >
                             <div style={{ height: 450 }}>
-                                <VizG config={this.numConfig} metadata={this.metadata} data={this.state.data}
-                                    theme={this.props.theme} />
+                                <VizG
+                                    config={this.numConfig}
+                                    metadata={this.metadata}
+                                    data={this.state.data}
+                                    theme={this.props.theme}
+                                />
                             </div>
                         </ChartWrapper>
                     </Grid>
-                    <Grid item lg={6} sm={12} xs={12} >
+                    <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper
                             media
                             chart={'pie'}
@@ -308,12 +326,16 @@ export default class App extends React.Component {
                             actionBar
                         >
                             <div style={{ height: 450 }}>
-                                <VizG config={this.pieChartConfig} metadata={this.metadata} data={this.state.data}
-                                    theme={this.props.theme} />
+                                <VizG
+                                    config={this.pieChartConfig}
+                                    metadata={this.metadata}
+                                    data={this.state.data}
+                                    theme={this.props.theme}
+                                />
                             </div>
                         </ChartWrapper>
                     </Grid>
-                    <Grid item lg={6} sm={12} xs={12} >
+                    <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper
                             media
                             chart={'table'}
@@ -327,7 +349,7 @@ export default class App extends React.Component {
                             </div>
                         </ChartWrapper>
                     </Grid>
-                    <Grid item lg={6} sm={12} xs={12} >
+                    <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper
                             media
                             chart={'table'}

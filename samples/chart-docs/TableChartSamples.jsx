@@ -54,8 +54,6 @@ export default class TableChartSamples extends React.Component {
                             colorScale: ['red'],
                         },
                     ],
-                    // columns: ['EngineType', 'torque', 'rpm'],
-                    // columnTitles: ['Engine Type', 'Engine Torque', 'Engine RPM'],
                 },
             ],
             maxLength: 7,
