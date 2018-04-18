@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx babel src -d dist",
-    "samples": "webpack-dev-server --progress"
+    "samples": "webpack-dev-server --progress",
+    "generate-docs": "webpack -p --progress"
   },
   "repository": {
     "type": "git",
@@ -59,6 +60,7 @@
     "style-loader": "^0.19.0",
     "url-loader": "^0.6.2",
     "webpack": "^3.8.1",
+    "webpack-cli": "^2.0.14",
     "webpack-dev-server": "^2.9.3"
   }
 }
