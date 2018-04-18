@@ -118,8 +118,22 @@ export default class App extends React.Component {
                 {
                     type: 'table',
                     y: 'torque',
-                    columns: ['EngineType', 'torque', 'rpm'],
-                    columnTitles: ['Engine Type', 'Engine Torque', 'Engine RPM'],
+		    columns: [
+		        {
+			    name: 'EngineType',
+			    title: 'Engine Type',	
+			},
+			{
+			    name: 'torque',
+			    title: 'Engine Torque',	
+			},
+			{
+			    name: 'rpm',
+			    title: 'Engine RPM',
+			},
+		    ],	
+                    //columns: ['EngineType', 'torque', 'rpm'],
+                    //columnTitles: ['Engine Type', 'Engine Torque', 'Engine RPM'],
                 },
             ],
             maxLength: 7,
