@@ -14,6 +14,8 @@ where the props
 - `data` is the array of data sets fed to the charts.
 - `metadata` is the JSON object that contains information about the provided dataset.
 
+checkout the [samples and documentation](https://wso2.github.io/react-vizgrammar)
+
 ### Chart `config` prop
 Users have to provide parameters for the widget using config object inorder to create the chart type they require. It is a JSON object that has a well defined configuration attributes to customize the chart.
 
