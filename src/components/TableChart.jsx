@@ -162,8 +162,6 @@ export default class TableChart extends BaseChart {
         const { config } = this.props;
         const { dataSets, chartArray } = this.state;
 
-        console.info(this.state);
-
         const tableConfig = chartArray.map((column) => {
             const columnConfig = {
                 Header: column.title,
