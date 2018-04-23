@@ -49,6 +49,12 @@ export default class TableChart extends BaseChart {
         }
     }
 
+    handleRowSelect(e, row) {
+        const { onClick } = this.props;
+
+        return onClick && onClick(e, row);
+    }
+
     componentWillReceiveProps(nextProps) {
         if (!_.isEqual(nextProps.config, this.state.config)) {
             this.state.config = nextProps.config;
@@ -214,6 +220,15 @@ export default class TableChart extends BaseChart {
                     columns={tableConfig}
                     showPagination={false}
                     minRows={config.maxLength}
+                    getTrProps={
+                        (state, rowInfo) => {
+                            return {
+                                onClick: (e) => {
+                                    return this.handleRowSelect(e, rowInfo);
+                                },
+                            };
+                        }
+                    }
                 />
             </div>
         );
