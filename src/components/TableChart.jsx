@@ -26,6 +26,8 @@ import { getDefaultColorScale } from './helper';
 import VizGError from '../VizGError';
 import BaseChart from './BaseChart';
 
+const DAFAULT_ROW_COUNT_FOR_PAGINATION = 5;
+
 /**
  * Class to handle visualization of table charts.
  */
@@ -217,7 +219,7 @@ export default class TableChart extends BaseChart {
                     data={dataSets}
                     columns={tableConfig}
                     showPagination={config.pagination === true}
-                    minRows={5}
+                    minRows={DAFAULT_ROW_COUNT_FOR_PAGINATION}
                     getTrProps={
                         (state, rowInfo) => {
                             return {
@@ -227,7 +229,7 @@ export default class TableChart extends BaseChart {
                             };
                         }
                     }
-                    defaultPageSize={config.pagination === true ? 5 : config.maxLength}
+                    defaultPageSize={config.pagination === true ? DAFAULT_ROW_COUNT_FOR_PAGINATION : config.maxLength}
                 />
             </div>
         );
