@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import React, { Component } from 'react';
+import React from 'react';
 import ReactTable from 'react-table';
 import { scaleLinear, timeFormat } from 'd3';
 import 'react-table/react-table.css';
@@ -25,6 +25,8 @@ import './resources/css/tableChart.css';
 import { getDefaultColorScale } from './helper';
 import VizGError from '../VizGError';
 import BaseChart from './BaseChart';
+
+const DAFAULT_ROW_COUNT_FOR_PAGINATION = 5;
 
 /**
  * Class to handle visualization of table charts.
@@ -216,8 +218,8 @@ export default class TableChart extends BaseChart {
                 <ReactTable
                     data={dataSets}
                     columns={tableConfig}
-                    showPagination={false}
-                    minRows={config.maxLength}
+                    showPagination={config.pagination === true}
+                    minRows={DAFAULT_ROW_COUNT_FOR_PAGINATION}
                     getTrProps={
                         (state, rowInfo) => {
                             return {
@@ -227,6 +229,7 @@ export default class TableChart extends BaseChart {
                             };
                         }
                     }
+                    defaultPageSize={config.pagination === true ? DAFAULT_ROW_COUNT_FOR_PAGINATION : config.maxLength}
                 />
             </div>
         );

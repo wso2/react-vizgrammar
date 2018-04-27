@@ -58,6 +58,7 @@ export default class TableChartSamples extends React.Component {
             ],
             maxLength: 7,
             colorBasedStyle: true,
+            pagination: true,
         };
 
         this.metadata = {
@@ -195,6 +196,10 @@ export default class TableChartSamples extends React.Component {
                                     <li>
                                         <strong>maxLength</strong> - maximum number of records to be shown in the table
                                         at a time
+                                    </li>
+                                    <li>
+                                        <strong>pagination</strong> - boolean value to show pagination for table chart
+                                        or not default: false
                                     </li>
                                 </ul>
                             </div>
