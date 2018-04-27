@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import React, { Component } from 'react';
+import React from 'react';
 import ReactTable from 'react-table';
 import { scaleLinear, timeFormat } from 'd3';
 import 'react-table/react-table.css';
@@ -216,8 +216,8 @@ export default class TableChart extends BaseChart {
                 <ReactTable
                     data={dataSets}
                     columns={tableConfig}
-                    showPagination={false}
-                    minRows={config.maxLength}
+                    showPagination={config.pagination === true}
+                    minRows={5}
                     getTrProps={
                         (state, rowInfo) => {
                             return {
@@ -227,6 +227,7 @@ export default class TableChart extends BaseChart {
                             };
                         }
                     }
+                    defaultPageSize={config.pagination === true ? 5 : null}
                 />
             </div>
         );

@@ -58,6 +58,7 @@ export default class TableChartSamples extends React.Component {
             ],
             maxLength: 7,
             colorBasedStyle: true,
+            pagination: true,
         };
 
         this.metadata = {
