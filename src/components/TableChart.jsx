@@ -227,7 +227,7 @@ export default class TableChart extends BaseChart {
                             };
                         }
                     }
-                    defaultPageSize={config.pagination === true ? 5 : null}
+                    defaultPageSize={config.pagination === true ? 5 : config.maxLength}
                 />
             </div>
         );
