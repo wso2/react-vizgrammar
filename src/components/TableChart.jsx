@@ -71,7 +71,7 @@ export default class TableChart extends BaseChart {
         let { config, metadata, data } = props;
         let { dataSets, chartArray, initialized } = this.state;
 
-        let key = config.charts[0].key;
+        let key = config.charts[0].deduplicationColumn;
 
         data = data.map((d) => {
             const tmp = {};
