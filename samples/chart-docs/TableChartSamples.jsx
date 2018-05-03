@@ -109,10 +109,10 @@ export default class TableChartSamples extends React.Component {
                             <div>
                                 <pre
                                     dangerouslySetInnerHTML={
-                                    {
-                                        __html: syntaxHighlight(
+                                        {
+                                            __html: syntaxHighlight(
                                                 JSON.stringify(this.lineChartConfig, undefined, 4)),
-                                    }
+                                        }
                                     }
                                 />
                             </div>
@@ -151,6 +151,9 @@ export default class TableChartSamples extends React.Component {
                                                     <li>
                                                         <strong>type</strong> - Type of the chart that need to be
                                                         visualized in this case &qoute;table&qoute;
+                                                    </li>
+                                                    <li>
+                                                        <strong>key</strong> - To stop duplication of data
                                                     </li>
                                                     <li>
                                                         <strong>columns</strong> - Array of objects containing

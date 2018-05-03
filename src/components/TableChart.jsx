@@ -71,6 +71,8 @@ export default class TableChart extends BaseChart {
         let { config, metadata, data } = props;
         let { dataSets, chartArray, initialized } = this.state;
 
+        let key = config.charts[0].key;
+
         data = data.map((d) => {
             const tmp = {};
             for (let i = 0; i < metadata.names.length; i++) {
@@ -79,7 +81,11 @@ export default class TableChart extends BaseChart {
             return tmp;
         });
 
-        dataSets = dataSets.concat(data);
+        if (key) {
+            dataSets = _.unionBy(dataSets, data, key);
+        } else {
+            dataSets = dataSets.concat(data);
+        }
 
         while (dataSets.length > config.maxLength) {
             dataSets.shift();
