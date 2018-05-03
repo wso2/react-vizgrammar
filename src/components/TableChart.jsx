@@ -58,10 +58,11 @@ export default class TableChart extends BaseChart {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (!_.isEqual(nextProps.config, this.state.config)) {
+        if (!_.isEqual(nextProps.config, this.state.config) || !this.props.append) {
             this.state.config = nextProps.config;
             this.state.initialized = false;
             this.state.dataSets = [];
+            this.state.chartArray = [];
         }
 
         this.sortDataBasedOnConfig(nextProps);

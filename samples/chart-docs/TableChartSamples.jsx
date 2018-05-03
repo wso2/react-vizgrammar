@@ -204,6 +204,10 @@ export default class TableChartSamples extends React.Component {
                                         <strong>pagination</strong> - boolean value to show pagination for table chart
                                         or not default: false
                                     </li>
+                                    <li>
+                                        <strong>append</strong> -  Append the incoming data to the existing dataset or
+                                        replace the existing dataset boolean value.
+                                    </li>
                                 </ul>
                             </div>
                         </ChartWrapper>
