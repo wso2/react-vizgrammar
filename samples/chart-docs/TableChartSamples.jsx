@@ -153,7 +153,7 @@ export default class TableChartSamples extends React.Component {
                                                         visualized in this case &qoute;table&qoute;
                                                     </li>
                                                     <li>
-                                                        <strong>deduplicationColumn</strong> - To stop duplication of data
+                                                        <strong>uniquePropertyColumn</strong> - To stop duplication of data
                                                     </li>
                                                     <li>
                                                         <strong>columns</strong> - Array of objects containing
