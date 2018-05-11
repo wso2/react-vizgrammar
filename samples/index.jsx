@@ -80,7 +80,7 @@ class AppRoute extends React.Component {
                             <Route component={() => (
                                 <div style={{ zIndex: '11100', position: 'fixed', right: '75px', top: '10px' }}>
                                     <IconButton
-                                        style={{color: '#fff'}}
+                                        style={{ color: '#fff' }}
                                         onClick={this.handleChange}
                                         title="Toggle Light/Dark theme"
                                     >
