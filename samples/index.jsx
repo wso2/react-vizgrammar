@@ -79,15 +79,15 @@ class AppRoute extends React.Component {
                         <RouterSwitch>
                             <Route exact path={'/'} component={null} />
                             <Route component={() => (
-                                <FormGroup style={{ zIndex: '11100', position: 'fixed', right: '75px', top: '10px' }}>
+                                <div style={{ zIndex: '11100', position: 'fixed', right: '75px', top: '10px' }}>
                                     <IconButton
-                                        color="inherit"
+                                        style={{color: '#fff'}}
                                         onClick={this.handleChange}
                                         title="Toggle Light/Dark theme"
                                     >
                                         {this.state.theme === `dark` ? <LightBulbFill /> : <LightBulbOutline />}
                                     </IconButton>
-                                </FormGroup>
+                                </div>
                             )} />
                         </RouterSwitch>
                         <ScrollReset>
