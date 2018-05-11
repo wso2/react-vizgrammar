@@ -33,7 +33,6 @@ import Arcs from './chart-docs/PieChartSamples';
 import NumChart from './chart-docs/NumberChartSample';
 import Table from './chart-docs/TableChartSamples';
 import GettingStarted from './GettingStarted';
-import { FormGroup } from 'material-ui/Form';
 import './styles/style.css';
 
 const darkTheme = createMuiTheme({
