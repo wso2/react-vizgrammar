@@ -54,7 +54,7 @@ export default class TableChart extends BaseChart {
     handleRowSelect(e, row) {
         const { onClick } = this.props;
 
-        return onClick && onClick(e, row);
+        return onClick && onClick(row.original);
     }
 
     componentWillReceiveProps(nextProps) {

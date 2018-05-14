@@ -40,7 +40,7 @@ export default class ScatterPlot extends BaseChart {
         };
 
         this.sortDataBasedOnConfig = this.sortDataBasedOnConfig.bind(this);
-        this.handleMouseEvent = this.handleMouseEvent.bind(this);
+        this.handleMouseClickEvent = this.handleMouseClickEvent.bind(this);
     }
 
     sortDataBasedOnConfig(props) {
@@ -49,7 +49,7 @@ export default class ScatterPlot extends BaseChart {
 
         if (chartArray.length === 0) chartArray = BaseChart.generateChartArray(config.charts);
 
-        chartArray.forEach((chart) => {
+        chartArray.forEach((chart, i) => {
             const xIndex = _.indexOf(metadata.names, chart.x);
             const yIndex = _.indexOf(metadata.names, chart.y);
             const sizeIndex = _.indexOf(metadata.names, chart.size);
@@ -93,6 +93,7 @@ export default class ScatterPlot extends BaseChart {
                         y: datum[yIndex],
                         color: datum[colorIndex],
                         amount: datum[sizeIndex],
+                        chartIndex: i,
                     }))));
             }
             if (config.charts[chart.id].maxLength) {
@@ -105,6 +106,21 @@ export default class ScatterPlot extends BaseChart {
         });
 
         this.setState({ chartArray, dataSets, xScale });
+    }
+
+    handleMouseClickEvent(props) {
+        const { onClick } = this.props;
+
+        const chartInfo = this.state.chartArray[props.datum.chartIndex];
+
+        const data = {};
+
+        data[chartInfo.x] = props.datum.x;
+        data[chartInfo.y] = props.datum.y;
+        data.colorCategory = props.datum.color;
+        data.size = props.datum.amount;
+
+        return onClick && onClick(data);
     }
 
     render() {
@@ -177,7 +193,7 @@ export default class ScatterPlot extends BaseChart {
                             target: 'data',
                             eventHandlers: {
                                 onClick: () => {
-                                    return [{ target: 'data', mutation: this.handleMouseEvent }];
+                                    return [{ target: 'data', mutation: this.handleMouseClickEvent }];
                                 },
                             },
                         }]}

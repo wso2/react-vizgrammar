@@ -42,6 +42,17 @@ export default class ArcChart extends BaseChart {
         };
     }
 
+    handleMouseEvent(props) {
+        const { onClick } = this.props;
+
+        const data = {
+            category: props.datum.x,
+            value: props.datum.y
+        };
+
+        return onClick && onClick(data);
+    }
+
     sortDataBasedOnConfig(props) {
         const { config, metadata, data } = props;
         let { chartInfo, pieChartData, random } = this.state;
@@ -135,7 +146,7 @@ export default class ArcChart extends BaseChart {
                                 flyoutStyle={{
                                     fill: currentTheme.tooltip.style.flyout.fill,
                                     fillOpacity: currentTheme.tooltip.style.flyout.fillOpacity,
-                                    strokeWidth: currentTheme.tooltip.style.flyout.strokeWidth
+                                    strokeWidth: currentTheme.tooltip.style.flyout.strokeWidth,
                                 }}
                                 style={{ fill: currentTheme.tooltip.style.labels.fill }}
                             />
