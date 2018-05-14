@@ -18,7 +18,9 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { MuiThemeProvider, createMuiTheme, Switch } from 'material-ui';
+import { MuiThemeProvider, createMuiTheme, IconButton } from 'material-ui';
+import LightBulbFill from './components/LightBulbFill'
+import LightBulbOutline from './components/LightBulbOutline';
 import { HashRouter as Router, Route, Switch as RouterSwitch } from 'react-router-dom';
 import ScrollReset from './ScrollReset';
 import App from './App';
@@ -31,7 +33,6 @@ import Arcs from './chart-docs/PieChartSamples';
 import NumChart from './chart-docs/NumberChartSample';
 import Table from './chart-docs/TableChartSamples';
 import GettingStarted from './GettingStarted';
-import { FormGroup, FormControlLabel } from 'material-ui/Form';
 import './styles/style.css';
 
 const darkTheme = createMuiTheme({
@@ -77,17 +78,15 @@ class AppRoute extends React.Component {
                         <RouterSwitch>
                             <Route exact path={'/'} component={null} />
                             <Route component={() => (
-                                <FormGroup style={{ zIndex: '11100', position: 'fixed', right: '75px', top: '10px' }}>
-                                    <FormControlLabel
-                                        control={
-                                            <Switch
-                                                checked={this.state.check}
-                                                onChange={this.handleChange}
-                                            />
-                                        }
-                                        label={'Light/Dark'}
-                                    />
-                                </FormGroup>
+                                <div style={{ zIndex: '11100', position: 'fixed', right: '75px', top: '10px' }}>
+                                    <IconButton
+                                        style={{ color: '#fff' }}
+                                        onClick={this.handleChange}
+                                        title="Toggle Light/Dark theme"
+                                    >
+                                        {this.state.theme === `dark` ? <LightBulbFill /> : <LightBulbOutline />}
+                                    </IconButton>
+                                </div>
                             )} />
                         </RouterSwitch>
                         <ScrollReset>
