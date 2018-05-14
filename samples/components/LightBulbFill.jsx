@@ -15,15 +15,17 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import React from 'react';
+import React, { Component } from 'react';
 import SvgIcon from 'material-ui/SvgIcon';
 
-function LightBulbFill(props) {
-    return (
-        <SvgIcon {...props}>
-            <path d="M12,2A7,7 0 0,0 5,9C5,11.38 6.19,13.47 8,14.74V17A1,1 0 0,0 9,18H15A1,1 0 0,0 16,17V14.74C17.81,13.47 19,11.38 19,9A7,7 0 0,0 12,2M9,21A1,1 0 0,0 10,22H14A1,1 0 0,0 15,21V20H9V21Z" />
-        </SvgIcon>
-    );
+class LightBulbFill extends Component {
+    render() {
+        return (
+            <SvgIcon {...this.props}>
+                <path d="M12,2A7,7 0 0,0 5,9C5,11.38 6.19,13.47 8,14.74V17A1,1 0 0,0 9,18H15A1,1 0 0,0 16,17V14.74C17.81,13.47 19,11.38 19,9A7,7 0 0,0 12,2M9,21A1,1 0 0,0 10,22H14A1,1 0 0,0 15,21V20H9V21Z" />
+            </SvgIcon>
+        );
+    }
 }
 
 LightBulbFill.muiName = 'SvgIcon';
