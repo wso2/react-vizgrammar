@@ -22,6 +22,7 @@ import ChartWrapper from '../ChartWrapper';
 import VizG from '../../src/VizG';
 import { syntaxHighlight } from './util/SyntaxHighLight';
 import Header from '../components/Header';
+import { makeData } from './util/MakeData';
 
 export default class TableChartSamples extends React.Component {
     constructor(props) {
@@ -33,7 +34,7 @@ export default class TableChartSamples extends React.Component {
             timer: 1,
         };
 
-        this.lineChartConfig = {
+        this.tableChartConfig = {
             charts: [
                 {
                     type: 'table',
@@ -61,12 +62,51 @@ export default class TableChartSamples extends React.Component {
             pagination: true,
         };
 
+        this.normalTableConfig = {
+            charts: [
+                {
+                    type: 'table',
+                    columns: [
+                        {
+                            name: 'firstName',
+                            title: 'First Name',
+                        },
+                        {
+                            name: 'lastName',
+                            title: 'Last Name',
+                        },
+                        {
+                            name: 'age',
+                            title: 'Age',
+                        },
+                        {
+                            name: 'visits',
+                            title: 'Visits',
+                        },
+                        {
+                            name: 'status',
+                            title: 'status',
+                        },
+                    ],
+                },
+            ],
+            pagination: true,
+            filterable: true,
+            append: false,
+        };
+
         this.metadata = {
             names: ['rpm', 'torque', 'horsepower', 'EngineType'],
             types: ['linear', 'linear', 'ordinal', 'ordinal'],
         };
 
         this.intervalObj = null;
+
+        this.normalDataSet = makeData();
+        this.normalDataSetMetadata = {
+            names: ['firstName', 'lastName', 'age', 'visits', 'status'],
+            types: ['ordinal', 'ordinal', 'linear', 'linear', 'ordinal'],
+        };
     }
 
     componentDidMount() {
@@ -85,7 +125,9 @@ export default class TableChartSamples extends React.Component {
         clearInterval(this.intervalObj);
     }
 
+
     render() {
+
         return (
             <div>
                 <Header url={'/samples'} title={'Table Chart Samples'} />
@@ -99,7 +141,7 @@ export default class TableChartSamples extends React.Component {
                             <div style={{ height: 400 }}>
                                 <div style={{ height: 40 }}>
                                     <VizG
-                                        config={this.lineChartConfig}
+                                        config={this.tableChartConfig}
                                         metadata={this.metadata}
                                         data={this.state.data}
                                         theme={this.props.theme}
@@ -109,9 +151,37 @@ export default class TableChartSamples extends React.Component {
                             <div>
                                 <pre
                                     dangerouslySetInnerHTML={
+                                    {
+                                        __html: syntaxHighlight(
+                                                JSON.stringify(this.tableChartConfig, undefined, 4)),
+                                    }
+                                    }
+                                />
+                            </div>
+                        </ChartWrapper>
+                    </Grid>
+                    <Grid item lg={6} sm={12} xs={12}>
+                        <ChartWrapper
+                            title={'Data Table Chart Sample'}
+                            chart={'table'}
+                            actionBar={false}
+                        >
+                            <div style={{ height: 400 }}>
+                                <div style={{ height: 40 }}>
+                                    <VizG
+                                        config={this.normalTableConfig}
+                                        metadata={this.normalDataSetMetadata}
+                                        data={this.normalDataSet}
+                                        theme={this.props.theme}
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <pre
+                                    dangerouslySetInnerHTML={
                                         {
                                             __html: syntaxHighlight(
-                                                JSON.stringify(this.lineChartConfig, undefined, 4)),
+                                                JSON.stringify(this.normalTableConfig, undefined, 4)),
                                         }
                                     }
                                 />
@@ -207,6 +277,9 @@ export default class TableChartSamples extends React.Component {
                                     <li>
                                         <strong>append</strong> -  Append the incoming data to the existing dataset or
                                         replace the existing dataset boolean value.
+                                    </li>
+                                    <li>
+                                        <strong>filterable</strong> -  Boolean value to specify whether the data in the table are filterable.
                                     </li>
                                 </ul>
                             </div>
