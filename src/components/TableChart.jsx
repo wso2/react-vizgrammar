@@ -39,6 +39,7 @@ export default class TableChart extends BaseChart {
             config: props.config,
             chartArray: [],
             initialized: false,
+            filterValue: '',
         };
 
         this.sortDataBasedOnConfig = this.sortDataBasedOnConfig.bind(this);
@@ -169,7 +170,7 @@ export default class TableChart extends BaseChart {
 
     render() {
         const { config } = this.props;
-        const { dataSets, chartArray } = this.state;
+        const { dataSets, chartArray, filterValue } = this.state;
 
         const tableConfig = chartArray.map((column) => {
             const columnConfig = {
@@ -220,24 +221,48 @@ export default class TableChart extends BaseChart {
             return columnConfig;
         });
 
+
+        const filteredData = _.filter(dataSets, (obj) => {
+            return _.values(obj).toString().toLowerCase().includes(filterValue);
+        });
+
         return (
-            <div style={{ height: 40 }}>
-                <ReactTable
-                    data={dataSets}
-                    columns={tableConfig}
-                    showPagination={config.pagination === true}
-                    minRows={DAFAULT_ROW_COUNT_FOR_PAGINATION}
-                    getTrProps={
-                        (state, rowInfo) => {
-                            return {
-                                onClick: (e) => {
-                                    return this.handleRowSelect(e, rowInfo);
-                                },
-                            };
+            <div>
+                {
+                    config.filterable ?
+                        <div style={{ width: '100%', marginBottom: 2 }} >
+                            <input
+                                type="text"
+                                onChange={(evt) => {
+                                    this.setState({ filterValue: evt.target.value });
+                                }}
+                                style={{
+                                    marginBottom: 2,
+                                    width: '30%',
+                                    marginLeft: '70%',
+                                }}
+                                placeholder="Enter value to filter data"
+                            />
+                        </div> : null
+                }
+                <div style={{ height: 40 }}>
+                    <ReactTable
+                        data={filteredData}
+                        columns={tableConfig}
+                        showPagination={config.pagination === true}
+                        minRows={DAFAULT_ROW_COUNT_FOR_PAGINATION}
+                        getTrProps={
+                            (state, rowInfo) => {
+                                return {
+                                    onClick: (e) => {
+                                        return this.handleRowSelect(e, rowInfo);
+                                    },
+                                };
+                            }
                         }
-                    }
-                    defaultPageSize={config.pagination === true ? DAFAULT_ROW_COUNT_FOR_PAGINATION : config.maxLength}
-                />
+                        defaultPageSize={config.pagination === true ? DAFAULT_ROW_COUNT_FOR_PAGINATION : config.maxLength}
+                    />
+                </div>
             </div>
         );
     }
