@@ -55,6 +55,17 @@ export default class ArcChart extends BaseChart {
         return onClick && onClick(data);
     }
 
+    handleMouseEvent(props) {
+        const { onClick } = this.props;
+
+        const data = {
+            category: props.datum.x,
+            value: props.datum.y
+        };
+
+        return onClick && onClick(data);
+    }
+
     sortDataBasedOnConfig(props) {
         const { config, metadata, data } = props;
         let { chartInfo, pieChartData, random } = this.state;

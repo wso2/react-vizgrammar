@@ -113,9 +113,15 @@ export default class BaseChart extends React.Component {
      * @param evt - event associated with the interaction.
      * @returns {*}
      */
-    handleMouseEvent(evt) {
+    handleMouseEvent(props) {
         const { onClick } = this.props;
-        return onClick && onClick(evt);
+        const data = {};
+
+        data[this.chartConfig.x] = props.datum.x;
+        data[props.datum.yName] = props.datum.y;
+        data.colorCategory = props.datum.color;
+
+        return onClick && onClick(data);
     }
 
     /**

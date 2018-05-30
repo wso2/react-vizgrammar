@@ -1,6 +1,6 @@
 {
   "name": "react-vizgrammar",
-  "version": "0.7.4",
+  "version": "0.7.8",
   "description": "React-VizGrammar is a charting library that makes charting easy by adding required boilerplate code so that developers/designers can get started in few minutes.",
   "main": "index.js",
   "scripts": {
@@ -31,6 +31,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.0.1",
+    "namor": "^1.0.1",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
     "babel-preset-es2015": "^6.24.1",
