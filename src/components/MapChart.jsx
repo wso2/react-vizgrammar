@@ -92,18 +92,12 @@ export default class MapGenerator extends React.Component {
         const { onClick } = this.props;
         const { mapData } = this.state;
         const data = mapData.filter(d => d.x === evt.id)[0];
-
-        if (data.x) {
-            data.geography = data.x;
-            delete data.x;
+        let dat = {};
+        if (data) {
+            dat = {};
+            dat[data.x] = data.y;
+            return onClick && onClick(dat);
         }
-
-        if (data.y) {
-            data[this.props.config.charts[0].y] = data.y;
-            delete data.y;
-        }
-
-        return onClick && onClick(data);
     }
 
     /**
