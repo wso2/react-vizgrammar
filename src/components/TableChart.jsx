@@ -36,14 +36,18 @@ export default class TableChart extends BaseChart {
         super(props);
         this.state = {
             dataSets: [],
-            config: props.config,
             chartArray: [],
             initialized: false,
             filterValue: '',
+            number: 0,
+            selected: null,
         };
+
+        this.chartConfig = props.config;
 
         this.sortDataBasedOnConfig = this.sortDataBasedOnConfig.bind(this);
         this._getLinearColor = this._getLinearColor.bind(this);
+        this.idColumn = this.uuidv4();
     }
 
     componentDidMount() {
@@ -55,15 +59,18 @@ export default class TableChart extends BaseChart {
     handleRowSelect(e, row) {
         const { onClick } = this.props;
 
+        this.setState({ selected: row.original[this.idColumn] });
+
         return onClick && onClick(row.original);
     }
 
     componentWillReceiveProps(nextProps) {
-        if (!_.isEqual(nextProps.config, this.state.config) || !this.props.append) {
-            this.state.config = nextProps.config;
+        if (!this.chartConfig || !_.isEqual(nextProps.config, this.chartConfig) || !this.props.append) {
             this.state.initialized = false;
             this.state.dataSets = [];
             this.state.chartArray = [];
+            this.state.selected = null;
+            this.chartConfig = nextProps.config;
         }
 
         this.sortDataBasedOnConfig(nextProps);
@@ -71,7 +78,7 @@ export default class TableChart extends BaseChart {
 
     sortDataBasedOnConfig(props) {
         let { config, metadata, data } = props;
-        let { dataSets, chartArray, initialized } = this.state;
+        let { dataSets, chartArray, initialized, number } = this.state;
 
         let key = config.charts[0].uniquePropertyColumn;
 
@@ -80,6 +87,7 @@ export default class TableChart extends BaseChart {
             for (let i = 0; i < metadata.names.length; i++) {
                 tmp[metadata.names[i]] = d[i];
             }
+            tmp[this.idColumn] = number++;
             return tmp;
         });
 
@@ -161,7 +169,7 @@ export default class TableChart extends BaseChart {
 
         initialized = true;
 
-        this.setState({ dataSets, chartArray, initialized });
+        this.setState({ dataSets, chartArray, initialized, number });
     }
 
     _getLinearColor(color, range, value) {
@@ -170,7 +178,7 @@ export default class TableChart extends BaseChart {
 
     render() {
         const { config } = this.props;
-        const { dataSets, chartArray, filterValue } = this.state;
+        const { dataSets, chartArray, filterValue, selected } = this.state;
 
         const tableConfig = chartArray.map((column) => {
             const columnConfig = {
@@ -185,10 +193,12 @@ export default class TableChart extends BaseChart {
                             width: '100%',
                             height: '100%',
                             backgroundColor:
-                                column.range ?
-                                    this._getLinearColor(
-                                        column.colorScale[column.colorIndex], column.range, props.value) :
-                                    column.colorMap[props.value],
+                                props.original[this.idColumn] === selected ?
+                                    config.selectedBackground || '#4286f4' :
+                                    column.range ?
+                                        this._getLinearColor(
+                                            column.colorScale[column.colorIndex], column.range, props.value) :
+                                        column.colorMap[props.value],
                             margin: 0,
                             textAlign: 'center',
                         }}
@@ -207,7 +217,15 @@ export default class TableChart extends BaseChart {
                 );
             } else {
                 columnConfig.Cell = props => (
-                    <div className={this.props.theme === 'light' ? 'rt-td cell-data' : 'darkTheme rt-td cell-data'}>
+                    <div
+                        className={this.props.theme === 'light' ? 'rt-td cell-data' : 'darkTheme rt-td cell-data'}
+                        style={{
+                            background: props.original[this.idColumn] === selected ?
+                                config.selectedBackground || '#4286f4' : null,
+                            height: '100%',
+                            color: config.selectedTextColor || null,
+                        }}
+                    >
                         <span>
                             {
                                 column.isTime && column.timeFormat ?
@@ -265,5 +283,12 @@ export default class TableChart extends BaseChart {
                 </div>
             </div>
         );
+    }
+
+    uuidv4() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            let r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
     }
 }

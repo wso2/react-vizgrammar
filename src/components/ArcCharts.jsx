@@ -47,21 +47,8 @@ export default class ArcChart extends BaseChart {
     handleMouseEvent(props) {
         const { onClick } = this.props;
 
-        const data = {
-            category: props.datum.x,
-            value: props.datum.y,
-        };
-
-        return onClick && onClick(data);
-    }
-
-    handleMouseEvent(props) {
-        const { onClick } = this.props;
-
-        const data = {
-            category: props.datum.x,
-            value: props.datum.y
-        };
+        const data = {};
+        data[props.datum.x] = props.datum.y;
 
         return onClick && onClick(data);
     }
