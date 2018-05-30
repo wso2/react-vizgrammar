@@ -40,6 +40,19 @@ export default class ArcChart extends BaseChart {
             pieChartData: [],
             random: 0,
         };
+
+        this.sortDataBasedOnConfig = this.sortDataBasedOnConfig.bind(this);
+    }
+
+    handleMouseEvent(props) {
+        const { onClick } = this.props;
+
+        const data = {
+            category: props.datum.x,
+            value: props.datum.y,
+        };
+
+        return onClick && onClick(data);
     }
 
     sortDataBasedOnConfig(props) {
@@ -105,10 +118,23 @@ export default class ArcChart extends BaseChart {
         this.setState({ chartInfo, pieChartData, random });
     }
 
+    componentWillReceiveProps(nextProps) {
+        const { config } = nextProps;
+
+        if (!this.chartConfig || !_.isEqual(this.chartConfig, config) || !this.chartConfig.append) {
+            this.state.chartInfo = [];
+            this.state.pieChartData = [];
+            this.chartConfig = config;
+        }
+
+        this.sortDataBasedOnConfig(nextProps);
+    }
+
     render() {
         const { config, theme, height, width } = this.props;
         const { pieChartData, random } = this.state;
         const currentTheme = theme === 'light' ? lightTheme : darkTheme;
+
         return (
             <ChartContainer
                 height={height}
@@ -135,7 +161,7 @@ export default class ArcChart extends BaseChart {
                                 flyoutStyle={{
                                     fill: currentTheme.tooltip.style.flyout.fill,
                                     fillOpacity: currentTheme.tooltip.style.flyout.fillOpacity,
-                                    strokeWidth: currentTheme.tooltip.style.flyout.strokeWidth
+                                    strokeWidth: currentTheme.tooltip.style.flyout.strokeWidth,
                                 }}
                                 style={{ fill: currentTheme.tooltip.style.labels.fill }}
                             />
@@ -143,7 +169,7 @@ export default class ArcChart extends BaseChart {
                     innerRadius={
                         this.chartMode === 'donut' || config.percentage ?
                             (height > width ? width : height / 4) + (config.innerRadius ||
-                            currentTheme.pie.style.data.innerRadius) : currentTheme.pie.style.data.innerRadius
+                                currentTheme.pie.style.data.innerRadius) : currentTheme.pie.style.data.innerRadius
                     }
                     labels={
                         config.percentage === true ?

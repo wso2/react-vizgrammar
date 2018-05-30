@@ -23,6 +23,7 @@ import { VictoryLegend, VictoryContainer } from 'victory';
 import ReactToolTip from 'react-tooltip';
 import * as d3 from 'd3';
 import feature from 'topojson-client/src/feature';
+import _ from 'lodash';
 import { getDefaultColorScale } from './helper';
 import { CountryInfo, EuropeMap, WorldMap, USAMap } from './resources/MapData';
 import VizGError from '../VizGError';
@@ -53,19 +54,34 @@ export default class MapGenerator extends React.Component {
             colorIndex: 0,
             colorScale: [],
         };
+        this.chartConfig = null;
         this._handleMouseEvent = this._handleMouseEvent.bind(this);
     }
 
     componentDidMount() {
-        if (this.props.metadata !== null) {
+        const { metadata, config } = this.props;
+
+        if (metadata !== null && config !== null) {
+            this.chartConfig = config;
             this._handleDataReceived(this.props);
         }
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.metadata !== null) {
-            this._handleDataReceived(nextProps);
+        const { config } = nextProps;
+
+        if (!this.chartConfig || !_.isEqual(config, this.chartConfig) || !(this.chartConfig.append === false)) {
+            this.chartConfig = config;
+            this.state.mapData = [];
+            this.state.projectionConfig = {};
+            this.state.mapType = nextProps.config.charts[0].mapType || 'world';
+            this.state.mapDataRange = [];
+            this.state.colorType = 'linear';
+            this.state.ordinalColorMap = {};
+            this.state.colorIndex = 0;
+            this.state.colorScale = [];
         }
+        this._handleDataReceived(nextProps);
     }
 
     componentWillUnmount() {
