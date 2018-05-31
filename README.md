@@ -9,7 +9,7 @@ A chart can be embedded in a React environment simply by using the VizG react co
 
     <VizG config={config} data={data} metadata={metadata} />
 ``` 
-where the props
+Where the props?
 - `config` is the widget configurations specified as a JSON object.
 - `data` is the array of data sets fed to the charts.
 - `metadata` is the JSON object that contains information about the provided dataset.
