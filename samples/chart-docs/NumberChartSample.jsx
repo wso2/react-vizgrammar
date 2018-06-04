@@ -39,6 +39,7 @@ export default class NumberChartSample extends React.Component {
             charts: [{ type: 'number' }],
             showDifference: true,
             showPercentage: true,
+            showDecimal: false,
         };
 
         this.metadata = {
@@ -127,6 +128,7 @@ export default class NumberChartSample extends React.Component {
                                         previous value</li>
                                     <li><strong>showPercentage</strong> - Show difference with the previous value as a
                                         percentage</li>
+                                    <li><strong>showDifference</strong> - Show Decimal places in the Number</li>
                                 </ul>
                             </div>
                         </ChartWrapper>
