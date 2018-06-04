@@ -177,7 +177,7 @@ export default class TableChart extends BaseChart {
     }
 
     render() {
-        const { config } = this.props;
+        const { config, metadata } = this.props;
         const { dataSets, chartArray, filterValue, selected } = this.state;
 
         const tableConfig = chartArray.map((column) => {
@@ -200,12 +200,16 @@ export default class TableChart extends BaseChart {
                                             column.colorScale[column.colorIndex], column.range, props.value) :
                                         column.colorMap[props.value],
                             margin: 0,
-                            textAlign: 'center',
+                            textAlign: metadata.types[metadata.names.indexOf(props.column.id)] === 'linear' ||
+                                metadata.types[metadata.names.indexOf(props.column.id)] === 'time' ?
+                                'right' : 'left',
+                            borderRight: '1px solid rgba(0,0,0,0.02)',
                         }}
                     >
                         <span
                             style={{
                                 color: column.textColor || null,
+                                width: '100%',
                             }}
                         >
                             {
@@ -224,9 +228,17 @@ export default class TableChart extends BaseChart {
                                 config.selectedBackground || '#4286f4' : null,
                             height: '100%',
                             color: config.selectedTextColor || null,
+                            width: '100%',
+                            textAlign: metadata.types[metadata.names.indexOf(props.column.id)] === 'linear' ||
+                                metadata.types[metadata.names.indexOf(props.column.id)] === 'time' ?
+                                'right' : 'left',
                         }}
                     >
-                        <span>
+                        <span
+                            style={{
+                                width: '100%',
+                            }}
+                        >
                             {
                                 column.isTime && column.timeFormat ?
                                     timeFormat(column.timeFormat)(props.value) : props.value
@@ -248,16 +260,12 @@ export default class TableChart extends BaseChart {
             <div>
                 {
                     config.filterable ?
-                        <div style={{ width: '100%', marginBottom: 2 }} >
+                        <div className={'filter-search-container'} style={{ width: '100%', marginBottom: 2 }} >
                             <input
+                                className={'filter-search'}
                                 type="text"
                                 onChange={(evt) => {
                                     this.setState({ filterValue: evt.target.value });
-                                }}
-                                style={{
-                                    marginBottom: 2,
-                                    width: '30%',
-                                    marginLeft: '70%',
                                 }}
                                 placeholder="Enter value to filter data"
                             />
@@ -278,7 +286,10 @@ export default class TableChart extends BaseChart {
                                 };
                             }
                         }
-                        defaultPageSize={config.pagination === true ? DAFAULT_ROW_COUNT_FOR_PAGINATION : config.maxLength}
+                        defaultPageSize={
+                            config.pagination === true ?
+                                DAFAULT_ROW_COUNT_FOR_PAGINATION : config.maxLength
+                        }
                     />
                 </div>
             </div>

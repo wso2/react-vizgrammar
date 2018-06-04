@@ -176,11 +176,19 @@
 }
 
 .ReactTable .rt-tbody .rt-td {
-	border-right: 0;
+	border-right: 1px solid rgba(0,0,0,0.06);
 }
 
 .ReactTable .rt-tbody .rt-td:last-child {
-	border-right: 0;
+	border-right: 1px solid rgba(0,0,0,0.06);
+}
+
+.darkTheme .ReactTable .rt-tbody .rt-td {	
+	border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.darkTheme .ReactTable .rt-tbody .rt-td:last-child {
+	border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .ReactTable .rt-tbody .rt-expandable {
@@ -484,9 +492,96 @@
 }
 
 .rt-td .cell-data {
-    text-align: center;
+	text-align: center;
 }
 
 .darkTheme .rt-td .cell-data {
+	color: #fff;
+}
+
+.darkTheme .ReactTable .-pagination .-pageInfo  {
+	color: #cccccc;
+}
+
+.darkTheme .ReactTable .-pagination .-pageInfo .-pageJump {
+	color: #333333;
+}
+
+.darkTheme .ReactTable .-pagination .-pageInfo .-totalPages {
+	color: #cccccc;
+}
+
+.darkTheme .ReactTable .-pagination .-btn {
+    color: #ffffff;
+    background: #757575;
+}
+
+.darkTheme .ReactTable .-pagination .-pageInfo .-pageJump input {
+    background: #424242;
+    color: #ccc;
+}
+
+.darkTheme .ReactTable .-pagination .-pageSizeOptions select {
+    background: #424242;
+    color: #ccc;
+}
+
+.filter-search-container::before {
+    content: "\A0";
+    position: absolute;
+    transition: border-bottom-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+    pointer-events: none;
+    width: 29%;
+    margin-left: 67%;
+    margin-top: 3px;
+}
+
+.darkTheme .filter-search-container::before {
+    content: "\A0";
+    position: absolute;
+    transition: border-bottom-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    border-bottom: 1px solid #cccccc;
+    pointer-events: none;
+    width: 29%;
+    margin-left: 67%;
+    margin-top: 3px;
+}
+
+.filter-search {
+    width: 30%;
+    font: inherit;
+    border: 0;
+    margin: 0 0 0 70%;
+    padding: 6px 0 7px;
+    display: block;
+    min-width: 0;
+    flex-grow: 1;
+    box-sizing: content-box;
+    background: none;
+    vertical-align: middle;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.darkTheme .filter-search {
+    width: 30%;
+    font: inherit;
+    border: 0;
+    margin: 0 0 0 70%;
+    padding: 6px 0 7px;
+    display: block;
+    min-width: 0;
+    flex-grow: 1;
+    box-sizing: content-box;
+    background: none;
+    vertical-align: middle;
+    -webkit-tap-highlight-color: transparent;
     color: #fff;
 }
+
+.filter-search:focus {
+    outline: none;
+}
+
+
+
