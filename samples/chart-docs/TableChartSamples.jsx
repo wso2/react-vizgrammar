@@ -105,7 +105,7 @@ export default class TableChartSamples extends React.Component {
         this.normalDataSet = makeData();
         this.normalDataSetMetadata = {
             names: ['firstName', 'lastName', 'age', 'visits', 'status'],
-            types: ['ordinal', 'ordinal', 'linear', 'linear', 'ordinal'],
+            types: ['ordinal', 'ordinal', 'linear', 'linear', 'linear'],
         };
     }
 

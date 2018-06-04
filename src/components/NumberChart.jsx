@@ -91,7 +91,7 @@ export default class NumberCharts extends React.Component {
                     verticalAnchor="middle"
                     x="50%"
                     y="40%"
-                    text={(value === null ? value : value.toFixed(3))}
+                    text={(value === null ? value : (config.showDecimal === true ? value.toFixed(3) : value.toFixed(0)))}
                     style={{ fill: currentTheme.number.style.labels.mainValue.fill, fontSize: width / 15 }}
                 />
                 {
@@ -118,7 +118,11 @@ export default class NumberCharts extends React.Component {
                                 verticalAnchor="middle"
                                 x="50%"
                                 y="50%"
-                                text={(Math.abs(Number((prevValue - value)))).toFixed(3)}
+                                text={
+                                    config.showDecimal === true ?
+                                        (Math.abs(Number((prevValue - value)))).toFixed(3) :
+                                        (Math.abs(Number((prevValue - value)))).toFixed(0)
+                                }
                                 style={{ fill: currentTheme.number.style.labels.difference.fill, fontSize: width / 30 }}
                             />
                         )] : null
