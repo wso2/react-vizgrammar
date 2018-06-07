@@ -222,7 +222,7 @@ export default class TableChart extends BaseChart {
             } else {
                 columnConfig.Cell = props => (
                     <div
-                        className={this.props.theme === 'light' ? 'rt-td cell-data' : 'darkTheme rt-td cell-data'}
+                        className={this.props.theme === 'light' ? 'rt-td' : 'cell-data'}
                         style={{
                             background: props.original[this.idColumn] === selected ?
                                 config.selectedBackground || '#4286f4' : null,
@@ -277,6 +277,7 @@ export default class TableChart extends BaseChart {
                         columns={tableConfig}
                         showPagination={config.pagination === true}
                         minRows={DAFAULT_ROW_COUNT_FOR_PAGINATION}
+                        className={this.props.theme === 'light' ? 'lightTheme' : 'darkTheme'}
                         getTrProps={
                             (state, rowInfo) => {
                                 return {
