@@ -75,11 +75,11 @@
 
 .ReactTable .rt-thead.-header {
 	box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.15);
-    font-weight: 500;
+	font-weight: 500;
 }
 
 .ReactTable .rt-thead .rt-tr {
-	text-align: center
+	text-align: left;
 }
 
 .ReactTable .rt-thead .rt-th, .ReactTable .rt-thead .rt-td {
@@ -176,11 +176,19 @@
 }
 
 .ReactTable .rt-tbody .rt-td {
-	border-right: 0;
+	border-right: 1px solid rgba(0,0,0,0.06);
 }
 
 .ReactTable .rt-tbody .rt-td:last-child {
-	border-right: 0;
+	border-right: 1px solid rgba(0,0,0,0.06);
+}
+
+.darkTheme .ReactTable .rt-tbody .rt-td {	
+	border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.darkTheme .ReactTable .rt-tbody .rt-td:last-child {
+	border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .ReactTable .rt-tbody .rt-expandable {
@@ -416,7 +424,7 @@
 	top: 50%;
 	-webkit-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
-	background: rgba(255, 255, 255, 0.8);
+	background: #FAFAFA;
 	transition: all .3s ease;
 	z-index: 1;
 	pointer-events: none;
@@ -474,7 +482,84 @@
 
 /*Dark theme styles*/
 
-.darkTheme .ReactTable .rt-thead.-header {
+.darkTheme.ReactTable .rt-thead.-header {
     color: #fff;
     background: #333;
+}
+
+.darkTheme.ReactTable .rt-tbody .rt-tr-group {
+    border-bottom: 1px solid #818181;
+}
+
+.rt-td .cell-data {
+	text-align: left;
+}
+
+.darkTheme .rt-td .cell-data {
+	color: #F5F5F5;
+}
+
+.darkTheme.ReactTable .-pagination .-pageInfo{
+	color: #ccc;
+}
+
+.darkTheme.ReactTable .-pagination .-pageInfo .-pageJump {
+	color: #333;
+}
+
+.darkTheme.ReactTable .-pagination .-pageInfo .-totalPages {
+	color: #ccc;
+}
+
+.darkTheme.ReactTable .-pagination .-btn{
+    color: #fff;
+    background: #757575;
+}
+
+.darkTheme.ReactTable .-pagination .-pageInfo .-pageJump input,
+.darkTheme.ReactTable .-pagination .-pageSizeOptions select {
+    background: #424242;
+    color: #ccc;
+}
+
+.filter-search-container::before {
+    content: "\A0";
+    position: absolute;
+    transition: border-bottom-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+    pointer-events: none;
+    width: 29%;
+    margin-left: 67%;
+    margin-top: 3px;
+}
+
+.darkTheme .filter-search-container::before {
+    border-bottom: 1px solid #ccc;
+}
+
+.filter-search {
+    width: 30%;
+    font: inherit;
+    border: 0;
+    margin: 0 0 10px 70%;
+    padding: 0;
+    display: block;
+	border-bottom: 1px solid #ccc;
+    box-sizing: content-box;
+    background: none;
+    vertical-align: middle;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.darkTheme .filter-search {
+    color: #fff;
+}
+
+.filter-search:focus {
+    outline: none;
+}
+
+.darkTheme.ReactTable .rt-noData {
+	background: #616161;
+	color: #FAFAFA;
 }

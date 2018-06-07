@@ -344,7 +344,12 @@ export default class App extends React.Component {
                         >
                             <div style={{ height: 450 }}>
                                 <div style={{ height: 40 }}>
-                                    <VizG config={this.tableConfig} metadata={this.metadata} data={this.state.data} />
+                                    <VizG
+                                        config={this.tableConfig}
+                                        metadata={this.metadata}
+                                        data={this.state.data}
+                                        theme={this.props.theme}
+                                    />
                                 </div>
                             </div>
                         </ChartWrapper>
@@ -372,6 +377,7 @@ export default class App extends React.Component {
                                                         config={this.sparkAreaChart}
                                                         metadata={this.metadata}
                                                         data={this.state.data}
+                                                        theme={this.props.theme}
                                                         height={20}
                                                         width={300}
                                                     />
@@ -386,6 +392,7 @@ export default class App extends React.Component {
                                                         config={this.sparkLineChart}
                                                         metadata={this.metadata}
                                                         data={this.state.data}
+                                                        theme={this.props.theme}
                                                         height={20}
                                                         width={300}
                                                     />

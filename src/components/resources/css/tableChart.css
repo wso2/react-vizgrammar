@@ -79,7 +79,7 @@
 }
 
 .ReactTable .rt-thead .rt-tr {
-	text-align: center
+	text-align: left;
 }
 
 .ReactTable .rt-thead .rt-th, .ReactTable .rt-thead .rt-td {
@@ -424,7 +424,7 @@
 	top: 50%;
 	-webkit-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
-	background: rgba(255, 255, 255, 0.8);
+	background: #FAFAFA;
 	transition: all .3s ease;
 	z-index: 1;
 	pointer-events: none;
@@ -482,46 +482,42 @@
 
 /*Dark theme styles*/
 
-.darkTheme .ReactTable .rt-thead.-header {
+.darkTheme.ReactTable .rt-thead.-header {
     color: #fff;
     background: #333;
 }
 
-.darkTheme .ReactTable .rt-tbody .rt-tr-group {
+.darkTheme.ReactTable .rt-tbody .rt-tr-group {
     border-bottom: 1px solid #818181;
 }
 
 .rt-td .cell-data {
-	text-align: center;
+	text-align: left;
 }
 
 .darkTheme .rt-td .cell-data {
-	color: #fff;
+	color: #F5F5F5;
 }
 
-.darkTheme .ReactTable .-pagination .-pageInfo  {
-	color: #cccccc;
+.darkTheme.ReactTable .-pagination .-pageInfo{
+	color: #ccc;
 }
 
-.darkTheme .ReactTable .-pagination .-pageInfo .-pageJump {
-	color: #333333;
+.darkTheme.ReactTable .-pagination .-pageInfo .-pageJump {
+	color: #333;
 }
 
-.darkTheme .ReactTable .-pagination .-pageInfo .-totalPages {
-	color: #cccccc;
+.darkTheme.ReactTable .-pagination .-pageInfo .-totalPages {
+	color: #ccc;
 }
 
-.darkTheme .ReactTable .-pagination .-btn {
-    color: #ffffff;
+.darkTheme.ReactTable .-pagination .-btn{
+    color: #fff;
     background: #757575;
 }
 
-.darkTheme .ReactTable .-pagination .-pageInfo .-pageJump input {
-    background: #424242;
-    color: #ccc;
-}
-
-.darkTheme .ReactTable .-pagination .-pageSizeOptions select {
+.darkTheme.ReactTable .-pagination .-pageInfo .-pageJump input,
+.darkTheme.ReactTable .-pagination .-pageSizeOptions select {
     background: #424242;
     color: #ccc;
 }
@@ -538,25 +534,17 @@
 }
 
 .darkTheme .filter-search-container::before {
-    content: "\A0";
-    position: absolute;
-    transition: border-bottom-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-    border-bottom: 1px solid #cccccc;
-    pointer-events: none;
-    width: 29%;
-    margin-left: 67%;
-    margin-top: 3px;
+    border-bottom: 1px solid #ccc;
 }
 
 .filter-search {
     width: 30%;
     font: inherit;
     border: 0;
-    margin: 0 0 0 70%;
-    padding: 6px 0 7px;
+    margin: 0 0 10px 70%;
+    padding: 0;
     display: block;
-    min-width: 0;
-    flex-grow: 1;
+	border-bottom: 1px solid #ccc;
     box-sizing: content-box;
     background: none;
     vertical-align: middle;
@@ -564,21 +552,14 @@
 }
 
 .darkTheme .filter-search {
-    width: 30%;
-    font: inherit;
-    border: 0;
-    margin: 0 0 0 70%;
-    padding: 6px 0 7px;
-    display: block;
-    min-width: 0;
-    flex-grow: 1;
-    box-sizing: content-box;
-    background: none;
-    vertical-align: middle;
-    -webkit-tap-highlight-color: transparent;
     color: #fff;
 }
 
 .filter-search:focus {
     outline: none;
+}
+
+.darkTheme.ReactTable .rt-noData {
+	background: #616161;
+	color: #FAFAFA;
 }
