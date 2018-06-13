@@ -29,8 +29,19 @@ import darkTheme from './resources/themes/victoryDarkTheme';
  */
 export default class ChartContainer extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            counter: 0,
+        };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({ counter: this.state.counter + 1 });
+    }
+
     render() {
-        const { width, height, xScale,
+        let { width, height, xScale,
             theme, config, horizontal, disableAxes, yDomain, isOrdinal, dataSets, barData, arcChart } = this.props;
         const currentTheme = theme === 'light' ? lightTheme : darkTheme;
         let arr = null;
@@ -38,6 +49,7 @@ export default class ChartContainer extends React.Component {
         const xAxisPaddingBottom = config.style ? config.style.xAxisPaddingBottom || 50 : 50;
 
         if (isOrdinal && ((_.findIndex(config.charts, o => o.type === 'bar')) > -1)) {
+            width += 1;
             arr = dataSets[Object.keys(dataSets)[0]];
         } else if ((_.findIndex(config.charts, o => o.type === 'bar')) > -1) {
             const found0 = _.findIndex(_.values(dataSets), (o) => {
@@ -200,6 +212,7 @@ export default class ChartContainer extends React.Component {
                                 }
                                 tickCount={(isOrdinal && config.charts[0].type === 'bar') ? arr.length :
                                     config.xAxisTickCount}
+                                counter={this.state.counter}
                             />),
                             (<VictoryAxis
                                 key="yAxis"
