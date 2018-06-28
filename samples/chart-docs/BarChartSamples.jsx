@@ -359,6 +359,11 @@ export default class BarChartSamples extends React.Component {
                                     <li><strong>xAxisTickCount</strong> - Number of ticks shown in the x-axis</li>
                                     <li><strong>legendOrientaion</strong> - Orientaion of the legend relative to the
                                         chart top | bottom | left | right)</li>
+                                    <li><strong>timeStep</strong> - Define the interval between two tick values in the 
+                                    series('day' | 'month' | 'year' | 'minute' | 'hour' | 'second' | 'millisecond') 
+                                    *Only for timeSeries bar chart</li>
+                                    <li><strong>linearSeriesStep</strong> - Define the interval between two tick values
+                                     in the series(Number) *Only for linearSeries bar chart</li>
                                     <li><strong>brush</strong> - show a component to brush data(boolean value)</li>
                                     <li>
                                         <strong>style</strong> - object that contain style attributes of the charts.
