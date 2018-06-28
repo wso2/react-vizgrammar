@@ -25,6 +25,7 @@ import ChartContainer from './ChartContainer';
 import LegendComponent from './LegendComponent';
 import darkTheme from './resources/themes/victoryDarkTheme';
 import lightTheme from './resources/themes/victoryLightTheme';
+import Constants from './util/Constants';
 
 /**
  * Class to handle visualization of Bar charts.
@@ -177,7 +178,7 @@ export default class BarChart extends BaseChart {
 
     render() {
         const { config, height, width, yDomain, theme } = this.props;
-        const { chartArray, dataSets, xScale, ignoreArray, isOrdinal } = this.state;
+        const { chartArray, dataSets, xScale, ignoreArray, isOrdinal, xAxisRange, xAxisType } = this.state;
         const currentTheme = theme === 'light' ? lightTheme : darkTheme;
 
         let { chartComponents, legendComponents, dataSetLength } =
@@ -187,10 +188,50 @@ export default class BarChart extends BaseChart {
         let fullBarWidth = ((BarChart.isHorizontal(config) ?
             (height - 120) : (width - 280)) / (dataSetLength)) - 1;
 
+
+        if (!isOrdinal) {
+            if (xScale === 'time' && config.timeStep && xAxisRange[0]) {
+                switch (config.timeStep.toLowerCase()) {
+                    case 'day':
+                        fullBarWidth = ((BarChart.isHorizontal(config) ?
+                            (height - 120) : (width - 280)) / ((xAxisRange[1] - xAxisRange[0]) / Constants.MILLISECONDS_FOR_DAY)) + 1;
+                        break;
+                    case 'month':
+                        fullBarWidth = ((BarChart.isHorizontal(config) ?
+                            (height - 120) : (width - 280)) / ((xAxisRange[1] - xAxisRange[0]) / Constants.MILLISECONDS_FOR_MONTH)) + 1;
+                        break;
+                    case 'year':
+                        fullBarWidth = ((BarChart.isHorizontal(config) ?
+                            (height - 120) : (width - 280)) / ((xAxisRange[1] - xAxisRange[0]) / Constants.MILLISECONDS_FOR_YEAR)) + 1;
+                        break;
+                    case 'hour':
+                        fullBarWidth = ((BarChart.isHorizontal(config) ?
+                            (height - 120) : (width - 280)) / ((xAxisRange[1] - xAxisRange[0]) / Constants.MILLISECONDS_FOR_HOUR)) + 1;
+                        break;
+                    case 'minute':
+                        fullBarWidth = ((BarChart.isHorizontal(config) ?
+                            (height - 120) : (width - 280)) / ((xAxisRange[1] - xAxisRange[0]) / Constants.MILLISECONDS_FOR_MINUTE)) + 1;
+                        break;
+                    case 'second':
+                        fullBarWidth = ((BarChart.isHorizontal(config) ?
+                            (height - 120) : (width - 280)) / ((xAxisRange[1] - xAxisRange[0]) / Constants.MILLISECONDS_FOR_SECOND)) + 1;
+                        break;
+                    case 'millisecond':
+                        fullBarWidth = ((BarChart.isHorizontal(config) ?
+                            (height - 120) : (width - 280)) / (xAxisRange[1] - xAxisRange[0])) + 1;
+                        break;
+                    default:
+                        return;
+                }
+            } else {
+                fullBarWidth = ((BarChart.isHorizontal(config) ?
+                    (height - 120) : (width - 280)) / ((xAxisRange[1] - xAxisRange[0] + (2 * (config.linearSeriesStep || 1))) / (config.linearSeriesStep || 1)));
+            }
+        }
+
         fullBarWidth = (fullBarWidth > 100) ? fullBarWidth * 0.8 : fullBarWidth;
 
         const barWidth = Math.floor(fullBarWidth / chartComponents.length);
-
         chartComponents = [
             <VictoryGroup
                 name="blacked"
