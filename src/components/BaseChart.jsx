@@ -85,6 +85,8 @@ export default class BaseChart extends React.Component {
             ignoreArray: [],
             isOrdinal: false,
             stacked: false,
+            xAxisRange: [null, null],
+            xAxisType: 'linear',
         };
 
         this.chartConfig = undefined;
@@ -149,13 +151,15 @@ export default class BaseChart extends React.Component {
      */
     sortDataBasedOnConfig(props) {
         const { config, metadata, data } = props;
-        let { chartArray, dataSets, xScale, isOrdinal } = this.state;
+        let { chartArray, dataSets, xScale, isOrdinal, xAxisType } = this.state;
         // generate chart array from the config.
         if (chartArray.length === 0) chartArray = BaseChart.generateChartArray(config.charts);
+
         const xIndex = metadata.names.indexOf(config.x);
         if (_.keys(dataSets).length === 0) {
             if (!isOrdinal) isOrdinal = metadata.types[xIndex].toLowerCase() === 'ordinal';
             xScale = BaseChart.getXScale(metadata.types[xIndex]);
+            xAxisType = metadata.types[xIndex];
         }
         if (xScale !== BaseChart.getXScale(metadata.types[xIndex])) {
             throw VizGError('BasicChart', "Provided metadata doesn't match the previous metadata.");
@@ -177,10 +181,10 @@ export default class BaseChart extends React.Component {
                 }
                 dataSet = _.groupBy(data.map(
                     datum => ({
-                        x: datum[xIndex],
+                        x: datum[xIndex] instanceof Date ? datum[xIndex].getTime() : datum[xIndex],
                         y: datum[yIndex],
                         color: datum[colorIndex],
-                        yName: metadata.names[yIndex]
+                        yName: metadata.names[yIndex],
                     })), d => d.color);
 
                 _.difference(_.keys(dataSet), _.keys(chart.dataSetNames)).forEach((key) => {
@@ -228,6 +232,40 @@ export default class BaseChart extends React.Component {
             if (config.maxLength) BaseChart.trimDataSet(prevState.dataSets, config.maxLength);
             prevState.isOrdinal = isOrdinal;
             prevState.xScale = xScale;
+
+
+            if (!isOrdinal) {
+                let range = [null, null];
+
+                Object.keys(prevState.dataSets).forEach((key) => {
+                    let dataSetRange = [];
+                    dataSetRange[0] = _.minBy(prevState.dataSets[key], 'x');
+                    dataSetRange[1] = _.maxBy(prevState.dataSets[key], 'x');
+
+                    if (dataSetRange[0]) {
+                        dataSetRange[0] = dataSetRange[0].x;
+                    }
+                    if (dataSetRange[1]) {
+                        dataSetRange[1] = dataSetRange[1].x;
+                    }
+                    if (!range[0]) {
+                        range = dataSetRange;
+                    } else {
+                        if (dataSetRange[0] < range[0]) {
+                            range[0] = dataSetRange[0];
+                        }
+
+                        if (dataSetRange[1] > range[1]) {
+                            range[1] = dataSetRange[1];
+                        }
+                    }
+                });
+
+                prevState.xAxisRange = range;
+            }
+
+            prevState.xAxisType = xAxisType;
+
             return prevState;
         });
     }
