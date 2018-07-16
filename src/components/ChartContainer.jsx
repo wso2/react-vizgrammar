@@ -103,7 +103,7 @@ export default class ChartContainer extends React.Component {
                         }
                     })()
                 }
-                scale={{ x: xScale, y: 'linear' }}
+                scale={horizontal ? { x: 'linear', y: xScale } : { x: xScale, y: 'linear' }}
                 theme={currentTheme}
                 containerComponent={
                     this.props.disableContainer ?
@@ -191,7 +191,7 @@ export default class ChartContainer extends React.Component {
                                             if ((data - Math.floor(data)) !== 0) {
                                                 return '';
                                             } else {
-                                                return Number(data) <= arr.length ? arr[Number(data) - 1].x : '';
+                                                return Number(data) <= arr.length ? arr[Number(data) - 1].x : data;
                                             }
                                         };
                                     } else {
@@ -258,6 +258,23 @@ export default class ChartContainer extends React.Component {
                                         }}
                                     />
                                 }
+                                tickFormat={(() => {
+                                    if (xScale === 'time' && config.timeFormat) {
+                                        return (date) => {
+                                            return timeFormat(config.timeFormat)(new Date(date));
+                                        };
+                                    } else if (isOrdinal && config.charts[0].type === 'bar' && horizontal) {
+                                        return (data) => {
+                                            if ((data - Math.floor(data)) !== 0) {
+                                                return '';
+                                            } else {
+                                                return Number(data) <= arr.length ? arr[Number(data) - 1].x : data;
+                                            }
+                                        };
+                                    } else {
+                                        return null;
+                                    }
+                                })()}
                                 axisLabelComponent={
                                     <VictoryLabel
                                         angle={0}
