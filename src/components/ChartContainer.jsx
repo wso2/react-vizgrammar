@@ -17,7 +17,14 @@
  */
 
 import React from 'react';
-import { VictoryChart, VictoryZoomContainer, VictoryVoronoiContainer, VictoryContainer, VictoryAxis, VictoryLabel } from 'victory';
+import {
+    VictoryChart,
+    VictoryZoomContainer,
+    VictoryVoronoiContainer,
+    VictoryContainer,
+    VictoryAxis,
+    VictoryLabel,
+} from 'victory';
 import { timeFormat } from 'd3';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
@@ -186,7 +193,7 @@ export default class ChartContainer extends React.Component {
                                         return (date) => {
                                             return timeFormat(config.timeFormat)(new Date(date));
                                         };
-                                    } else if (isOrdinal && config.charts[0].type === 'bar') {
+                                    } else if (isOrdinal && config.charts[0].type === 'bar' && !horizontal) {
                                         return (data) => {
                                             if ((data - Math.floor(data)) !== 0) {
                                                 return '';
