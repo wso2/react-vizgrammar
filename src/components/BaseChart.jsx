@@ -76,8 +76,8 @@ export default class BaseChart extends React.Component {
         });
     }
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             chartArray: [],
             dataSets: {},
@@ -89,7 +89,7 @@ export default class BaseChart extends React.Component {
             xAxisType: 'linear',
         };
 
-        this.chartConfig = undefined;
+        this.chartConfig = this.props.config;
 
         this.sortDataBasedOnConfig = this.sortDataBasedOnConfig.bind(this);
     }
