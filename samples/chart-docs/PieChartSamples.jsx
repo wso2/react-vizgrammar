@@ -47,6 +47,11 @@ export default class PieChartSamples extends React.Component {
         this.pieChartConfig = {
             charts: [{ type: 'arc', x: 'torque', color: 'EngineType', mode: 'pie' }],
         };
+        this.semiPieChartConfig = {
+            charts: [{ type: 'arc', x: 'torque', color: 'EngineType', mode: 'pie' }],
+            startAngle: 90,
+            endAngle: -90,
+        };
 
         this.percentChartConfig = {
             charts: [{ type: 'arc', x: 'torque', color: 'EngineType', colorScale: ['steelblue', '#80ccff'] }],
@@ -104,6 +109,26 @@ export default class PieChartSamples extends React.Component {
                         </ChartWrapper>
                     </Grid>
                     <Grid item lg={6} sm={12} xs={12}>
+                        <ChartWrapper title="Semi Circle Pie Chart Sample" chart="line" media actionBar={false}>
+                            <div style={{ height: 450 }}>
+                                <VizG config={this.semiPieChartConfig} metadata={this.metadata} data={this.state.data}
+                                      theme={this.props.theme} />
+                            </div>
+                            <div>
+                                <br /><br />
+                                <pre
+                                    dangerouslySetInnerHTML={
+                                        {
+                                            __html: syntaxHighlight(
+                                                JSON.stringify(this.semiPieChartConfig, undefined, 4)),
+                                        }
+                                    }
+                                />
+                            </div>
+
+                        </ChartWrapper>
+                    </Grid>
+                    <Grid item lg={6} sm={12} xs={12}>
                         <ChartWrapper title="Donut Chart Sample" chart="line" media actionBar={false}>
                             <div style={{ height: 450 }}>
                                 <VizG config={this.donutChartConfig} metadata={this.metadata} data={this.state.data}
@@ -124,7 +149,7 @@ export default class PieChartSamples extends React.Component {
                         </ChartWrapper>
                     </Grid>
                     <Grid item lg={6} sm={12} xs={12}>
-                        <ChartWrapper title="Donut Chart Sample" chart="line" media actionBar={false}>
+                        <ChartWrapper title="Donut Chart Sample with Percentage" chart="line" media actionBar={false}>
                             <div style={{ height: 450 }}>
                                 <VizG config={this.percentChartConfig} metadata={this.metadata} data={this.state.data2}
                                     theme={this.props.theme} />
