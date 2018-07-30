@@ -169,6 +169,14 @@ export default class ArcChart extends BaseChart {
                             (height > width ? width : height / 4) + (config.innerRadius ||
                                 currentTheme.pie.style.data.innerRadius) : currentTheme.pie.style.data.innerRadius
                     }
+                    startAngle={
+                        config.startAngle ?
+                            config.startAngle : 0
+                    }
+                    endAngle={
+                        config.endAngle ?
+                            config.endAngle : 360
+                    }
                     labels={
                         config.percentage === true ?
                             '' :
@@ -191,7 +199,7 @@ export default class ArcChart extends BaseChart {
                         <VictoryLabel
                             textAnchor="middle"
                             x="55%"
-                            y="50%"
+                            y="48%"
                             text={`${Math.round(pieChartData.length > 0 ? pieChartData[0].y : 0)}%`}
                             style={{
                                 fontSize: config.labelFontSize || currentTheme.pie.style.presentage.fontSize,
