@@ -22,7 +22,7 @@ pre {
     background-color: #d3d3d3;
 }
 .string { color: #66BB6A; }
-.number { color: #FFA726; }
+.number { color: #ff6501; }
 .boolean { color: #42A5F5; }
 .null { color: #EC407A; }
 .key { color: #EF5350; }

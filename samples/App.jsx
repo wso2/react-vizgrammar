@@ -110,7 +110,7 @@ export default class App extends React.Component {
         };
 
         this.pieChartConfig = {
-            charts: [{ type: 'arc', x: 'torque', color: 'EngineType', mode: 'donut' }],
+            charts: [{ type: 'arc', x: 'torque', color: 'EngineType', mode: 'pie' }],
         };
 
         this.tableConfig = {
