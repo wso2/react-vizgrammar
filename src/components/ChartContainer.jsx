@@ -189,7 +189,7 @@ export default class ChartContainer extends React.Component {
                                         config.xAxisLabel || config.x
                                 }
                                 tickFormat={(() => {
-                                    if (xScale === 'time' && config.timeFormat) {
+                                    if (xScale === 'time' && config.timeFormat && !horizontal) {
                                         return (date) => {
                                             return timeFormat(config.timeFormat)(new Date(date));
                                         };
@@ -266,7 +266,7 @@ export default class ChartContainer extends React.Component {
                                     />
                                 }
                                 tickFormat={(() => {
-                                    if (xScale === 'time' && config.timeFormat) {
+                                    if (xScale === 'time' && config.timeFormat && horizontal) {
                                         return (date) => {
                                             return timeFormat(config.timeFormat)(new Date(date));
                                         };

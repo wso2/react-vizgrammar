@@ -176,6 +176,36 @@ export default class BarChart extends BaseChart {
         );
     }
 
+    calculateBarWidth(horizontal, height, width, range, timeStep) {
+        let timeInterval;
+
+        switch (timeStep) {
+            case 'day':
+                timeInterval = Constants.MILLISECONDS_FOR_DAY;
+                break;
+            case 'month':
+                timeInterval = Constants.MILLISECONDS_FOR_MONTH;
+                break;
+            case 'year':
+                timeInterval = Constants.MILLISECONDS_FOR_YEAR;
+                break;
+            case 'hour':
+                timeInterval = Constants.MILLISECONDS_FOR_HOUR;
+                break;
+            case 'minute':
+                timeInterval = Constants.MILLISECONDS_FOR_MINUTE;
+                break;
+            case 'second':
+                timeInterval = Constants.MILLISECONDS_FOR_SECOND;
+                break;
+            default:
+                timeInterval = 1;
+        }
+
+
+        return (horizontal ? (height - 120) : (width - 280)) / ((range / timeInterval) + 1);
+    }
+
     render() {
         const { config, height, width, yDomain, theme } = this.props;
         const { chartArray, dataSets, xScale, ignoreArray, isOrdinal, xAxisRange, xAxisType } = this.state;
@@ -191,38 +221,8 @@ export default class BarChart extends BaseChart {
 
         if (!isOrdinal) {
             if (xScale === 'time' && config.timeStep && xAxisRange[0]) {
-                switch (config.timeStep.toLowerCase()) {
-                    case 'day':
-                        fullBarWidth = ((BarChart.isHorizontal(config) ?
-                            (height - 120) : (width - 280)) / ((xAxisRange[1] - xAxisRange[0]) / Constants.MILLISECONDS_FOR_DAY)) + 1;
-                        break;
-                    case 'month':
-                        fullBarWidth = ((BarChart.isHorizontal(config) ?
-                            (height - 120) : (width - 280)) / ((xAxisRange[1] - xAxisRange[0]) / Constants.MILLISECONDS_FOR_MONTH)) + 1;
-                        break;
-                    case 'year':
-                        fullBarWidth = ((BarChart.isHorizontal(config) ?
-                            (height - 120) : (width - 280)) / ((xAxisRange[1] - xAxisRange[0]) / Constants.MILLISECONDS_FOR_YEAR)) + 1;
-                        break;
-                    case 'hour':
-                        fullBarWidth = ((BarChart.isHorizontal(config) ?
-                            (height - 120) : (width - 280)) / ((xAxisRange[1] - xAxisRange[0]) / Constants.MILLISECONDS_FOR_HOUR)) + 1;
-                        break;
-                    case 'minute':
-                        fullBarWidth = ((BarChart.isHorizontal(config) ?
-                            (height - 120) : (width - 280)) / ((xAxisRange[1] - xAxisRange[0]) / Constants.MILLISECONDS_FOR_MINUTE)) + 1;
-                        break;
-                    case 'second':
-                        fullBarWidth = ((BarChart.isHorizontal(config) ?
-                            (height - 120) : (width - 280)) / ((xAxisRange[1] - xAxisRange[0]) / Constants.MILLISECONDS_FOR_SECOND)) + 1;
-                        break;
-                    case 'millisecond':
-                        fullBarWidth = ((BarChart.isHorizontal(config) ?
-                            (height - 120) : (width - 280)) / (xAxisRange[1] - xAxisRange[0])) + 1;
-                        break;
-                    default:
-                        return;
-                }
+                fullBarWidth = this.calculateBarWidth(BarChart.isHorizontal(config), height, width,
+                    (xAxisRange[1] - xAxisRange[0]), config.timeStep.toLowerCase());
             } else {
                 fullBarWidth = ((BarChart.isHorizontal(config) ?
                     (height - 120) : (width - 280)) / ((xAxisRange[1] - xAxisRange[0] + (2 * (config.linearSeriesStep || 1))) / (config.linearSeriesStep || 1)));
