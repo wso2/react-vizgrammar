@@ -130,17 +130,34 @@ export default class BarChart extends BaseChart {
                     (() => {
                         if (xScale === 'time' && config.tipTimeFormat) {
                             return (d) => {
+                                if (config.yAxisNumberType === 'Double') {
+                                    return `${config.x} : ${timeFormat(config.tipTimeFormat)(new Date(d.x))}\n` +
+                                        `${config.charts[chartIndex].y} : ${Number(d.y).toFixed(2)}`;
+                                }
                                 return `${config.x} : ${timeFormat(config.tipTimeFormat)(new Date(d.x))}\n` +
-                                    `${config.charts[chartIndex].y} : ${Number(d.y).toFixed(2)}`;
+                                    `${config.charts[chartIndex].y} : ${Number(d.y)}`;
                             };
                         } else {
                             return (d) => {
                                 if (isNaN(d.x)) {
-                                    return `${config.x} : ${d.x}\n${config.charts[chartIndex].y} : ${Number(d.y)
-                                        .toFixed(2)}`;
+                                    if (config.yAxisNumberType === 'Double') {
+                                        return `${config.x} : ${d.x}\n${config.charts[chartIndex].y} : ${Number(d.y)
+                                            .toFixed(2)}`;
+                                    }
+                                    return `${config.x} : ${d.x}\n${config.charts[chartIndex].y} : ${Number(d.y)}`;
                                 } else {
-                                    return `${config.x} : ${Number(d.x).toFixed(2)}\n` +
-                                        `${config.charts[chartIndex].y} : ${Number(d.y).toFixed(2)}`;
+                                    if (config.yAxisNumberType === 'Double' && config.xAxisNumberType === 'Double') {
+                                        return `${config.x} : ${Number(d.x).toFixed(2)}\n` +
+                                            `${config.charts[chartIndex].y} : ${Number(d.y).toFixed(2)}`;
+                                    } else if (config.yAxisNumberType === 'Double') {
+                                        return `${config.x} : ${Number(d.x)}\n` +
+                                            `${config.charts[chartIndex].y} : ${Number(d.y).toFixed(2)}`;
+                                    } else if (config.xAxisNumberType === 'Double') {
+                                        return `${config.x} : ${Number(d.x).toFixed(2)}\n` +
+                                            `${config.charts[chartIndex].y} : ${Number(d.y)}`;
+                                    }
+                                    return `${config.x} : ${Number(d.x)}\n` +
+                                        `${config.charts[chartIndex].y} : ${Number(d.y)}`;
                                 }
                             };
                         }
