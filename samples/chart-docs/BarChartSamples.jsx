@@ -357,6 +357,10 @@ export default class BarChartSamples extends React.Component {
                                     <li><strong>xAxisLabel</strong> - Change the label shown along the x-axis</li>
                                     <li><strong>yAxisTickCount</strong> - Number of ticks shown in the y-axis</li>
                                     <li><strong>xAxisTickCount</strong> - Number of ticks shown in the x-axis</li>
+                                    <li><strong>xAxisNumberType</strong> - Type of Number format to show in x Axis ticks
+                                        ("Int" | "Double") - Default: Double</li>
+                                    <li><strong>yAxisNumberType</strong> - Type of Number format to show in y Axis ticks
+                                        ("Int" | "Double") - Default: Double</li>
                                     <li><strong>legendOrientaion</strong> - Orientaion of the legend relative to the
                                         chart top | bottom | left | right)</li>
                                     <li><strong>timeStep</strong> - Define the interval between two tick values in the 
