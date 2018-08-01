@@ -130,30 +130,32 @@ export default class BarChart extends BaseChart {
                     (() => {
                         if (xScale === 'time' && config.tipTimeFormat) {
                             return (d) => {
-                                if (config.yAxisNumberType === 'Int') {
+                                if (Number(d.y) == Number(d.y).toFixed(2)) {
                                     return `${config.x} : ${timeFormat(config.tipTimeFormat)(new Date(d.x))}\n` +
                                         `${config.charts[chartIndex].y} : ${Number(d.y)}`;
                                 }
-                                return `${config.x} : ${timeFormat(config.tipTimeFormat)(new Date(d.x))}\n` +
-                                    `${config.charts[chartIndex].y} : ${Number(d.y).toFixed(2)}`;
+                                else {
+                                    return `${config.x} : ${timeFormat(config.tipTimeFormat)(new Date(d.x))}\n` +
+                                        `${config.charts[chartIndex].y} : ${Number(d.y).toFixed(2)}`;
+                                }
                             };
                         } else {
                             return (d) => {
                                 if (isNaN(d.x)) {
-                                    if (config.yAxisNumberType === 'Int') {
+                                    if (Number(d.y) == Number(d.y).toFixed(2)) {
                                         return `${config.x} : ${d.x}\n${config.charts[chartIndex].y} : ${Number(d.y)}`;
                                     } else {
                                         return `${config.x} : ${d.x}\n${config.charts[chartIndex].y} : ${Number(d.y)
                                             .toFixed(2)}`;
                                     }
                                 } else {
-                                    if (config.yAxisNumberType === 'Int' && config.xAxisNumberType === 'Int') {
+                                    if (Number(d.y) == Number(d.y).toFixed(2) && Number(d.x) == Number(d.x).toFixed(2)) {
                                         return `${config.x} : ${Number(d.x)}\n` +
                                             `${config.charts[chartIndex].y} : ${Number(d.y)}`;
-                                    } else if (config.yAxisNumberType === 'Int') {
+                                    } else if (Number(d.y) == Number(d.y).toFixed(2)) {
                                         return `${config.x} : ${Number(d.x).toFixed(2)}\n` +
                                             `${config.charts[chartIndex].y} : ${Number(d.y)}`;
-                                    } else if (config.xAxisNumberType === 'Int') {
+                                    } else if (Number(d.x) == Number(d.x).toFixed(2)) {
                                         return `${config.x} : ${Number(d.x)}\n` +
                                             `${config.charts[chartIndex].y} : ${Number(d.y).toFixed(2)}`;
                                     } else {
