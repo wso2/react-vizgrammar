@@ -77,14 +77,14 @@ export default class NumberCharts extends React.Component {
         const lowValueColor = config.lowValueColor || currentTheme.number.style.labels.lowValue.fill;
 
         return (
-            <svg height="100%" width="100%" viewBox={`0 0 ${width} ${height}`}>
+            <svg height="100%" width="100%" viewBox={`0 0 800 450`}>
                 <VictoryLabel
                     textAnchor="middle"
                     verticalAnchor="middle"
                     x="50%"
                     y="25%"
                     text={config.title}
-                    style={{ fill: currentTheme.number.style.labels.title.fill, fontSize: width / 20 }}
+                    style={{ fill: currentTheme.number.style.labels.title.fill, fontSize: 40 }}
                 />
                 <VictoryLabel
                     textAnchor="middle"
@@ -92,7 +92,7 @@ export default class NumberCharts extends React.Component {
                     x="50%"
                     y="40%"
                     text={(value === null ? value : (config.showDecimal === true ? value.toFixed(3) : value.toFixed(0)))}
-                    style={{ fill: currentTheme.number.style.labels.mainValue.fill, fontSize: width / 15 }}
+                    style={{ fill: currentTheme.number.style.labels.mainValue.fill, fontSize: 53 }}
                 />
                 {
                     config.showDifference ? [
@@ -110,7 +110,7 @@ export default class NumberCharts extends React.Component {
                                     return '-';
                                 }
                             })()}
-                            style={{ fill: currentTheme.number.style.labels.difference.fill, fontSize: width / 30 }}
+                            style={{ fill: currentTheme.number.style.labels.difference.fill, fontSize: 26 }}
                         />),
                         (
                             <VictoryLabel
@@ -123,7 +123,7 @@ export default class NumberCharts extends React.Component {
                                         (Math.abs(Number((prevValue - value)))).toFixed(3) :
                                         (Math.abs(Number((prevValue - value)))).toFixed(0)
                                 }
-                                style={{ fill: currentTheme.number.style.labels.difference.fill, fontSize: width / 30 }}
+                                style={{ fill: currentTheme.number.style.labels.difference.fill, fontSize: 26 }}
                             />
                         )] : null
                 }
@@ -136,7 +136,7 @@ export default class NumberCharts extends React.Component {
                             x="49%"
                             y="58%"
                             text={(Math.abs((100 * ((value - prevValue) / prevValue))).toFixed(2)) + '%'}
-                            style={{ fill: prevValue < value ? highValueColor : lowValueColor, fontSize: width / 30 }}
+                            style={{ fill: prevValue < value ? highValueColor : lowValueColor, fontSize: 26 }}
                         />),
                         (<VictoryLabel
                             key="incrementDecrementSymbol"
@@ -153,7 +153,7 @@ export default class NumberCharts extends React.Component {
                                     return '↓';
                                 }
                             })()}
-                            style={{ fill: prevValue < value ? highValueColor : lowValueColor, fontSize: width / 30 }}
+                            style={{ fill: prevValue < value ? highValueColor : lowValueColor, fontSize: 26 }}
                         />)] : null
                 }
 
