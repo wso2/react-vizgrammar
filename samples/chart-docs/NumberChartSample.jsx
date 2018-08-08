@@ -131,6 +131,11 @@ export default class NumberChartSample extends React.Component {
                                     <li><strong>showDifference</strong> - Show Decimal places in the Number</li>
                                 </ul>
                             </div>
+                            <div>
+                                <h3>Style</h3>
+                                Number Chart scales to available outer wrapper width/height, preserving aspect ratio.
+                                Set outer wrapper width and height to scale Number Chart accordingly.
+                            </div>
                         </ChartWrapper>
                     </Grid>
                 </Grid>
