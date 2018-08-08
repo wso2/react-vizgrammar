@@ -75,9 +75,10 @@ export default class NumberCharts extends React.Component {
         const { prevValue, value } = this.state;
         const highValueColor = config.highValueColor || currentTheme.number.style.labels.highValue.fill;
         const lowValueColor = config.lowValueColor || currentTheme.number.style.labels.lowValue.fill;
+        const viewBoxWidth = config.title.length * 20;
 
         return (
-            <svg height="100%" width="100%" viewBox={`0 0 800 450`}>
+            <svg height="100%" width="100%" viewBox={`0 0 ${viewBoxWidth} 400`}>
                 <VictoryLabel
                     textAnchor="middle"
                     verticalAnchor="middle"
@@ -99,7 +100,7 @@ export default class NumberCharts extends React.Component {
                         (<VictoryLabel
                             textAnchor="middle"
                             verticalAnchor="middle"
-                            x="56%"
+                            x={(viewBoxWidth / 2) + 40}
                             y="49.6%"
                             text={(() => {
                                 if (prevValue < value) {
@@ -142,7 +143,7 @@ export default class NumberCharts extends React.Component {
                             key="incrementDecrementSymbol"
                             textAnchor="middle"
                             verticalAnchor="middle"
-                            x="58%"
+                            x={(viewBoxWidth / 2) + 60}
                             y="57.4%"
                             text={(() => {
                                 if (prevValue < value) {
