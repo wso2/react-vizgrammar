@@ -47,6 +47,32 @@ export default class ChartContainer extends React.Component {
         this.setState({ counter: this.state.counter + 1 });
     }
 
+    xAxisTickFormat(xScale, config, isOrdinal, arr) {
+        if (xScale === 'time' && config.timeFormat) {
+            return (date) => {
+                return timeFormat(config.timeFormat)(new Date(date));
+            };
+        } else if (isOrdinal && config.charts[0].type === 'bar') {
+            return (data) => {
+                if ((data - Math.floor(data)) !== 0) {
+                    return '';
+                } else {
+                    return Number(data) <= arr.length ? arr[Number(data) - 1].x : data;
+                }
+            };
+        } else if (xScale === 'linear') {
+            return (data) => {
+                if (data % 1 !== 0) {
+                    return data;
+                } else {
+                    return Number(data).toFixed(0);
+                }
+            };
+        } else {
+            return null;
+        }
+    }
+
     render() {
         const { width, height, xScale,
             theme, config, horizontal, disableAxes, yDomain, isOrdinal, dataSets, barData, arcChart } = this.props;
@@ -56,7 +82,7 @@ export default class ChartContainer extends React.Component {
         const xAxisPaddingBottom = config.style ? config.style.xAxisPaddingBottom || 50 : 50;
 
         if (isOrdinal && ((_.findIndex(config.charts, o => o.type === 'bar')) > -1)) {
-            arr = dataSets[Object.keys(dataSets)[0]];
+            arr = dataSets[Object.keys(dataSets)[0]] || [];
         } else if ((_.findIndex(config.charts, o => o.type === 'bar')) > -1) {
             const found0 = _.findIndex(_.values(dataSets), (o) => {
                 if (o.length > 0) {
@@ -188,23 +214,7 @@ export default class ChartContainer extends React.Component {
                                         config.yAxisLabel || ((config.charts.length > 1 ? '' : config.charts[0].y)) :
                                         config.xAxisLabel || config.x
                                 }
-                                tickFormat={(() => {
-                                    if (xScale === 'time' && config.timeFormat && !horizontal) {
-                                        return (date) => {
-                                            return timeFormat(config.timeFormat)(new Date(date));
-                                        };
-                                    } else if (isOrdinal && config.charts[0].type === 'bar' && !horizontal) {
-                                        return (data) => {
-                                            if ((data - Math.floor(data)) !== 0) {
-                                                return '';
-                                            } else {
-                                                return Number(data) <= arr.length ? arr[Number(data) - 1].x : data;
-                                            }
-                                        };
-                                    } else {
-                                        return null;
-                                    }
-                                })()}
+                                tickFormat={horizontal ? null : this.xAxisTickFormat(xScale, config, isOrdinal, arr)}
                                 standalone={false}
                                 tickLabelComponent={
                                     <VictoryLabel
@@ -265,23 +275,7 @@ export default class ChartContainer extends React.Component {
                                         }}
                                     />
                                 }
-                                tickFormat={(() => {
-                                    if (xScale === 'time' && config.timeFormat && horizontal) {
-                                        return (date) => {
-                                            return timeFormat(config.timeFormat)(new Date(date));
-                                        };
-                                    } else if (isOrdinal && config.charts[0].type === 'bar' && horizontal) {
-                                        return (data) => {
-                                            if ((data - Math.floor(data)) !== 0) {
-                                                return '';
-                                            } else {
-                                                return Number(data) <= arr.length ? arr[Number(data) - 1].x : data;
-                                            }
-                                        };
-                                    } else {
-                                        return null;
-                                    }
-                                })()}
+                                tickFormat={!horizontal ? null : this.xAxisTickFormat(xScale, config, isOrdinal, arr)}
                                 axisLabelComponent={
                                     <VictoryLabel
                                         angle={0}
