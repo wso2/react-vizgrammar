@@ -1,6 +1,6 @@
 {
   "name": "react-vizgrammar",
-  "version": "0.7.19",
+  "version": "0.7.20",
   "description": "React-VizGrammar is a charting library that makes charting easy by adding required boilerplate code so that developers/designers can get started in few minutes.",
   "main": "index.js",
   "scripts": {
