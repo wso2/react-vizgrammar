@@ -58,10 +58,40 @@ export default class BarChart extends BaseChart {
      * @param {Array} ignoreArray - array that contains dataSets to be ignored in rendering the components.
      * @returns {{chartComponents: Array, legendComponents: Array}}
      */
-    getBarChartComponent(chartArray, dataSets, config, onClick, xScale, ignoreArray, currentTheme) {
+    getBarChartComponent(chartArray, dataSets, config, onClick, xScale, ignoreArray, currentTheme, isOrdinal) {
         const chartComponents = [];
         const legendComponents = [];
         let dataSetLength = 1;
+
+        if (isOrdinal) {
+            let xValueCollection = [];
+
+            _.keys(dataSets).forEach((key) => {
+                dataSets[key].forEach((d) => {
+                    if (_.indexOf(xValueCollection, d.x) === -1) {
+                        xValueCollection.push(d.x);
+                    }
+                });
+            });
+
+            xValueCollection = _.sortBy(xValueCollection);
+
+            _.keys(dataSets).forEach((key) => {
+                const tempValueSet = [];
+
+                xValueCollection.forEach((xValue) => {
+                    const arrayIndex = _.findIndex(dataSets[key], obj => obj.x === xValue);
+
+                    if (arrayIndex > -1) {
+                        tempValueSet.push(dataSets[key][arrayIndex]);
+                    } else {
+                        tempValueSet.push({ x: xValue, y: 0 });
+                    }
+                });
+
+                dataSets[key] = tempValueSet;
+            });
+        }
 
         chartArray.forEach((chart, chartIndex) => {
             const localSet = [];
@@ -223,7 +253,6 @@ export default class BarChart extends BaseChart {
                 timeInterval = 1;
         }
 
-
         return (horizontal ? (height - 120) : (width - 280)) / ((range / timeInterval) + 1);
     }
 
@@ -234,7 +263,7 @@ export default class BarChart extends BaseChart {
 
         let { chartComponents, legendComponents, dataSetLength } =
             this.getBarChartComponent(chartArray, dataSets, config, this.handleMouseEvent, xScale, ignoreArray,
-                currentTheme);
+                currentTheme, isOrdinal);
 
         let fullBarWidth = ((BarChart.isHorizontal(config) ?
             (height - 120) : (width - 280)) / (dataSetLength)) - 1;
