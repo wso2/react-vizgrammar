@@ -49,12 +49,12 @@ export default class PieChartSamples extends React.Component {
         };
         this.semiPieChartConfig = {
             charts: [{ type: 'arc', x: 'torque', color: 'EngineType', mode: 'pie' }],
-            startAngle: 90,
-            endAngle: -90,
+            startAngle: -90,
+            endAngle: 90,
         };
 
         this.percentChartConfig = {
-            charts: [{ type: 'arc', x: 'torque', color: 'EngineType', colorScale: ['steelblue', '#80ccff'] }],
+            charts: [{ type: 'arc', x: 'torque', color: 'EngineType', colorScale: ['#4DB6AC', '#E0E0E0'] }],
             percentage: true,
             width: 300,
             height: 300,
@@ -149,7 +149,7 @@ export default class PieChartSamples extends React.Component {
                         </ChartWrapper>
                     </Grid>
                     <Grid item lg={6} sm={12} xs={12}>
-                        <ChartWrapper title="Donut Chart Sample with Percentage" chart="line" media actionBar={false}>
+                        <ChartWrapper title="Progress Donut Chart" chart="line" media actionBar={false}>
                             <div style={{ height: 450 }}>
                                 <VizG config={this.percentChartConfig} metadata={this.metadata} data={this.state.data2}
                                     theme={this.props.theme} />
