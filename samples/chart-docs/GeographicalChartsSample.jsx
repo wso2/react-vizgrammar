@@ -53,6 +53,7 @@ class MapChartConfigSample extends Component {
         this.lineChartConfig = {
             x: 'Country',
             charts: [{ type: 'map', y: 'Inflation', mapType: 'world', colorScale: ['#1565C0', '#4DB6AC'] }],
+            chloropethRange: [0, 100],
         };
 
         this.europeConfig = {
@@ -187,6 +188,11 @@ class MapChartConfigSample extends Component {
                                             <li><strong>legendTextColor</strong> - Color of the legend text
                                                 of the chart</li>
                                         </ul>
+                                    </li>
+                                    <li>
+                                        <strong>chloropethValueRange</strong> - If the range of values is known, user
+                                            can define the range of values that will be used for the colorScale of the
+                                            chloropeth map as an array. ex: [minVal, maxVal].
                                     </li>
                                 </ul>
                             </div>
