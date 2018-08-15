@@ -175,17 +175,22 @@ export default class MapGenerator extends React.Component {
         colorType = metadata.types[yIndex].toLowerCase();
         if (metadata.types[yIndex].toLowerCase() === 'linear') {
             data.map((datum) => {
-                if (mapDataRange.length === 0) {
-                    mapDataRange = [datum[yIndex], datum[yIndex]];
+                if (config.chloropethValueRange) {
+                    mapDataRange = config.chloropethRange;
+                } else {
+                    if (mapDataRange.length === 0) {
+                        mapDataRange = [datum[yIndex], datum[yIndex]];
+                    }
+
+                    if (mapDataRange[0] > datum[yIndex]) {
+                        mapDataRange[0] = datum[yIndex];
+                    }
+
+                    if (mapDataRange[1] < datum[yIndex]) {
+                        mapDataRange[1] = datum[yIndex];
+                    }
                 }
 
-                if (mapDataRange[0] > datum[yIndex]) {
-                    mapDataRange[0] = datum[yIndex];
-                }
-
-                if (mapDataRange[1] < datum[yIndex]) {
-                    mapDataRange[1] = datum[yIndex];
-                }
 
                 const dataIndex = mapData.findIndex(obj => obj.x === this._convertCountryNamesToCode(datum[xIndex]));
                 if (dataIndex >= 0) {
