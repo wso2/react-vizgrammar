@@ -76,6 +76,15 @@ Sample data table would be like following:
     ];
 ```
 
+### Events
+React VizGrammar supports `onClick` events, to use the onClick events user has to submit a function to the `onClick` prop of the react component.
+
+```jsx
+    <VizG config={config} data={data} metadata={metadata} onClick={(data) => { /* function to perform */ }} />
+```
+
+The submitted function should have a parameter if user wishes to retrieve the data related to the data point.
+
 ### Themes
 
 React VizGrammar has light and dark theme types to choose from. By default, charts use the light theme type.
