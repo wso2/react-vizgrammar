@@ -253,7 +253,7 @@ export default class TableChart extends BaseChart {
 
 
         const filteredData = _.filter(dataSets, (obj) => {
-            return _.values(obj).toString().toLowerCase().includes(filterValue);
+            return _.values(obj).toString().toLowerCase().includes(filterValue.toLowerCase());
         });
 
         return (
