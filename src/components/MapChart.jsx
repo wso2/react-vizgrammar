@@ -174,24 +174,7 @@ export default class MapGenerator extends React.Component {
         }
         colorType = metadata.types[yIndex].toLowerCase();
         if (metadata.types[yIndex].toLowerCase() === 'linear') {
-            data.map((datum) => {
-                if (config.chloropethValueRange) {
-                    mapDataRange = config.chloropethRange;
-                } else {
-                    if (mapDataRange.length === 0) {
-                        mapDataRange = [datum[yIndex], datum[yIndex]];
-                    }
-
-                    if (mapDataRange[0] > datum[yIndex]) {
-                        mapDataRange[0] = datum[yIndex];
-                    }
-
-                    if (mapDataRange[1] < datum[yIndex]) {
-                        mapDataRange[1] = datum[yIndex];
-                    }
-                }
-
-
+            data.forEach((datum) => {
                 const dataIndex = mapData.findIndex(obj => obj.x === this._convertCountryNamesToCode(datum[xIndex]));
                 if (dataIndex >= 0) {
                     mapData[dataIndex].y = datum[yIndex];
@@ -203,8 +186,15 @@ export default class MapGenerator extends React.Component {
                     });
                 }
             });
+
+            const chloropethMaxVal = config.chloropethRangeUpperbound ||
+                (mapData.length > 0 ? _.maxBy(mapData, obj => obj.y).y : 0);
+            const chloropethMinVal = config.chloropethRangeLowerbound ||
+                (mapData.length > 0 ? _.minBy(mapData, obj => obj.y).y : 0);
+
+            mapDataRange = [chloropethMinVal, chloropethMaxVal];
         } else {
-            data.map((datum) => {
+            data.forEach((datum) => {
                 if (!ordinalColorMap.hasOwnProperty(datum[yIndex])) {
                     if (colorIndex >= colorScale.length) {
                         colorIndex = 0;
@@ -337,75 +327,77 @@ export default class MapGenerator extends React.Component {
                     </ComposableMap>
                     <ReactToolTip class="fontClass" />
                 </div>
+                {
+                    mapData.length > 0 ?
+                        <div style={{ width: '15%', height: '100%', display: 'inline', float: 'right' }}>
+                            {
+                                colorType === 'linear' ?
+                                    <svg width="100%" height="100%">
+                                        <defs>
+                                            <linearGradient id="grad1" x1="0%" y1="100%" x2="0%" y2="0%">
+                                                <stop offset="0%" stopColor={this.state.colorScale[0]} stopOpacity={1} />
 
-                <div style={{ width: '15%', height: '100%', display: 'inline', float: 'right' }}>
-                    {
-                        colorType === 'linear' ?
-                            <svg width="100%" height="100%">
-                                <defs>
-                                    <linearGradient id="grad1" x1="0%" y1="100%" x2="0%" y2="0%">
-                                        <stop offset="0%" stopColor={this.state.colorScale[0]} stopOpacity={1} />
-
-                                        <stop offset="100%" stopColor={this.state.colorScale[1]} stopOpacity={1} />
-                                    </linearGradient>
-                                </defs>
-                                <g className='legend'>
-                                    <text
+                                                <stop offset="100%" stopColor={this.state.colorScale[1]} stopOpacity={1} />
+                                            </linearGradient>
+                                        </defs>
+                                        <g className='legend'>
+                                            <text
+                                                style={{
+                                                    fill: config.style ? config.style.legendTitleColor :
+                                                        currentTheme.map.style.labels.title.fill
+                                                }}
+                                                x={20}
+                                                y={20}
+                                            >
+                                                {config.charts[0].y}
+                                            </text>
+                                            <text
+                                                style={{
+                                                    fill: config.style ? config.style.legendTextColor :
+                                                        currentTheme.map.style.labels.legend.fill
+                                                }}
+                                                x={37}
+                                                y={37}
+                                            >
+                                                {this.state.mapDataRange[1]}
+                                            </text>
+                                            <text
+                                                style={{
+                                                    fill: config.style ? config.style.legendTextColor :
+                                                        currentTheme.map.style.labels.legend.fill
+                                                }}
+                                                x={37}
+                                                y={132}
+                                            >
+                                                {this.state.mapDataRange[0]}
+                                            </text>
+                                            <rect x={20} y={30} fill='url(#grad1)' height={100} width={15} />
+                                        </g>
+                                    </svg>
+                                    : <VictoryLegend
+                                        containerComponent={<VictoryContainer responsive />}
+                                        height={this.state.height}
+                                        width={300}
+                                        title="Legend"
                                         style={{
-                                            fill: config.style ? config.style.legendTitleColor :
-                                                currentTheme.map.style.labels.title.fill
+                                            title: {
+                                                fontSize: currentTheme.map.style.labels.title.fontSize,
+                                                fill: config.style ? config.style.legendTitleColor :
+                                                    currentTheme.map.style.labels.title.fill
+                                            },
+                                            labels: {
+                                                fontSize: currentTheme.map.style.labels.legend.fontSize,
+                                                fill: config.style ? config.style.legendTextColor :
+                                                    currentTheme.map.style.labels.legend.fill
+                                            },
                                         }}
-                                        x={20}
-                                        y={20}
-                                    >
-                                        {config.charts[0].y}
-                                    </text>
-                                    <text
-                                        style={{
-                                            fill: config.style ? config.style.legendTextColor :
-                                                currentTheme.map.style.labels.legend.fill
-                                        }}
-                                        x={37}
-                                        y={37}
-                                    >
-                                        {this.state.mapDataRange[1]}
-                                    </text>
-                                    <text
-                                        style={{
-                                            fill: config.style ? config.style.legendTextColor :
-                                                currentTheme.map.style.labels.legend.fill
-                                        }}
-                                        x={37}
-                                        y={132}
-                                    >
-                                        {this.state.mapDataRange[0]}
-                                    </text>
-                                    <rect x={20} y={30} fill='url(#grad1)' height={100} width={15} />
-                                </g>
-                            </svg>
-                            : <VictoryLegend
-                                containerComponent={<VictoryContainer responsive />}
-                                height={this.state.height}
-                                width={300}
-                                title="Legend"
-                                style={{
-                                    title: {
-                                        fontSize: currentTheme.map.style.labels.title.fontSize,
-                                        fill: config.style ? config.style.legendTitleColor :
-                                            currentTheme.map.style.labels.title.fill
-                                    },
-                                    labels: {
-                                        fontSize: currentTheme.map.style.labels.legend.fontSize,
-                                        fill: config.style ? config.style.legendTextColor :
-                                            currentTheme.map.style.labels.legend.fill
-                                    },
-                                }}
-                                data={Object.keys(ordinalColorMap).map((name) => {
-                                    return { name, symbol: { fill: ordinalColorMap[name] } };
-                                })}
-                            />
-                    }
-                </div>
+                                        data={Object.keys(ordinalColorMap).map((name) => {
+                                            return { name, symbol: { fill: ordinalColorMap[name] } };
+                                        })}
+                                    />
+                            }
+                        </div> : null
+                }
             </div>
         );
     }
