@@ -52,10 +52,13 @@ export default class ChartContainer extends React.Component {
             return (date) => {
                 return timeFormat(config.timeFormat)(new Date(date));
             };
-        } else if (isOrdinal && config.charts[0].type === 'bar') {
+        } else if (isOrdinal) {
             return (data) => {
                 if ((data - Math.floor(data)) !== 0) {
                     return '';
+                } else if ((arr[Number(data) - 1].x).length > (config.axisTickLength ? config.axisTickLength : 13)) {
+                    return (arr[Number(data) - 1].x).slice(0, config.axisTickLength ? config.axisTickLength :
+                        10) + '...';
                 } else {
                     return Number(data) <= arr.length ? arr[Number(data) - 1].x : data;
                 }
@@ -336,6 +339,7 @@ ChartContainer.propTypes = {
         yAxisLabel: PropTypes.string,
         yAxisTickCount: PropTypes.number,
         xAxisTickCount: PropTypes.number,
+        axisTickLength: PropTypes.number,
         height: PropTypes.number,
         width: PropTypes.number,
         maxLength: PropTypes.number,
