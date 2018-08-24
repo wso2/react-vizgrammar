@@ -52,7 +52,7 @@ export default class ChartContainer extends React.Component {
             return (date) => {
                 return timeFormat(config.timeFormat)(new Date(date));
             };
-        } else if (isOrdinal) {
+        } else if (isOrdinal && config.charts[0].type === 'bar') {
             return (data) => {
                 if ((data - Math.floor(data)) !== 0) {
                     return '';
