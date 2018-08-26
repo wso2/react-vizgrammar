@@ -17,12 +17,13 @@
  */
 
 import React from 'react';
-import { Grid } from 'material-ui';
+import { Grid, Button } from 'material-ui';
 import ChartWrapper from '../ChartWrapper';
 import VizG from '../../src/VizG';
 import { syntaxHighlight } from './util/SyntaxHighLight';
 import Header from '../components/Header';
 import { makeData } from './util/MakeData';
+import ServerSidePagination from './TableChartServerSidePagination';
 
 export default class TableChartSamples extends React.Component {
     constructor(props) {
@@ -151,10 +152,10 @@ export default class TableChartSamples extends React.Component {
                             <div>
                                 <pre
                                     dangerouslySetInnerHTML={
-                                    {
-                                        __html: syntaxHighlight(
+                                        {
+                                            __html: syntaxHighlight(
                                                 JSON.stringify(this.tableChartConfig, undefined, 4)),
-                                    }
+                                        }
                                     }
                                 />
                             </div>
@@ -185,6 +186,24 @@ export default class TableChartSamples extends React.Component {
                                         }
                                     }
                                 />
+                            </div>
+                        </ChartWrapper>
+                    </Grid>
+                    <Grid item lg={6} sm={12} xs={12}>
+                        <ChartWrapper
+                            title={'Server Side pagination Sample'}
+                            chart={'table'}
+                            actionBar={false}
+                        >
+                            <div style={{ height: 400 }}>
+                                <div style={{ height: 40 }}>
+                                    <ServerSidePagination />
+                                </div>
+                            </div>
+                            <div>
+                                <a href="https://github.com/wso2/react-vizgrammar/blob/master/samples/chart-docs/TableChartServerSidePagination.jsx">
+                                    <Button raised color="primary">View Source</Button>
+                                </a>
                             </div>
                         </ChartWrapper>
                     </Grid>

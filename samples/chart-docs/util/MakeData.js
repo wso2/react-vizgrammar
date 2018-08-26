@@ -43,7 +43,17 @@ const newPerson = () => {
 export function makeData() {
     const dataSet = [];
 
-    for (let i = 0; i < 100 ; i++) {
+    for (let i = 0; i < 100; i++) {
+        dataSet.push(newPerson());
+    }
+
+    return dataSet;
+}
+
+export function makeDataWithSize(size) {
+    const dataSet = [];
+
+    for (let i = 0; i < size; i++) {
         dataSet.push(newPerson());
     }
 
