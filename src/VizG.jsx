@@ -15,7 +15,6 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-// TODO: Fix dynamically changing config for other charts
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
@@ -39,9 +38,13 @@ class VizG extends Component {
      * @param {Array} data Data provided by the user
      * @param {Object} metadata Metadata related to the data provided
      * @param {Function} onClick OnClick function provided by the user
+     * @param {Boolean} manual indicates if the user handle data manually
+     * @param {Function} onFetchData function to be executed when fetching data(only for table charts with
+     * server-side pagination)
+     * @param {Number} pages Total number of pages(only for table charts)
      * @private
      */
-    _getChartComponent(chartType, config, data, metadata, onClick) {
+    _getChartComponent(chartType, config, data, metadata, onClick, manual, onFetchData, pages) {
         if (chartType === 'spark-line' || chartType === 'spark-area' || chartType === 'spark-bar') chartType = 'inline';
 
         const component = {
@@ -72,6 +75,11 @@ class VizG extends Component {
                 theme={this.props.theme}
                 width={this.props.width}
                 height={this.props.height}
+
+                // table chart specific props
+                manual={manual} // to let the component know all the sorting and handling of data will be done by the user
+                onFetchData={onFetchData} // function to be executed when fetching data (only when serverside pagination enabled)
+                pages={pages} // Total number of pages that will be there in the table(only when serverside pagination enabled)
             />
         );
     }
@@ -100,13 +108,14 @@ class VizG extends Component {
     }
 
     render() {
-        const { config, data, metadata, onClick } = this.props;
+        const { config, data, metadata, onClick, manual, onFetchData, pages } = this.props;
         return (
             <div style={{ height: '100%', width: '100%' }}>
                 {
                     !config || !metadata ?
                         null :
-                        this._getChartComponent(this._isComposed(config), config, data, metadata, onClick)
+                        this._getChartComponent(this._isComposed(config), config, data, metadata, onClick, manual,
+                            onFetchData, pages)
                 }
             </div>
         );
@@ -118,6 +127,8 @@ VizG.defaultProps = {
     theme: 'light',
     width: 800,
     height: 450,
+    manual: false,
+    pages: -1,
 };
 
 VizG.propTypes = {
@@ -129,6 +140,9 @@ VizG.propTypes = {
     theme: PropTypes.string,
     height: PropTypes.number,
     width: PropTypes.number,
+    manual: PropTypes.bool,
+    onFetchData: PropTypes.func,
+    pages: PropTypes.number,
 };
 
 export default VizG;
