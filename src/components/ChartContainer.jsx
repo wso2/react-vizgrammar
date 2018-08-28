@@ -157,7 +157,7 @@ export default class ChartContainer extends React.Component {
                                 voronoiBlacklist={['blacked']}
                             />
                 }
-                domain={{ x: xDomain, y: yDomain }}
+                domain={{ x: config.xDomain ? config.xDomain : xDomain, y: config.yDomain ? config.yDomain : yDomain }}
                 style={{ parent: { overflow: 'visible' } }}
 
             >

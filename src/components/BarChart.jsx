@@ -199,7 +199,7 @@ export default class BarChart extends BaseChart {
                 }
                 labelComponent={
                     <VictoryTooltip
-                        orientation='top'
+                        orientation={BarChart.isHorizontal(config) ? 'left' : 'top'}
                         pointerLength={4}
                         cornerRadius={2}
                         flyoutStyle={{
