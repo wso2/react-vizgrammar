@@ -64,7 +64,7 @@ export default class BarChart extends BaseChart {
         let dataSetLength = 1;
 
         if (isOrdinal) {
-            let xValueCollection = [];
+            const xValueCollection = [];
 
             _.keys(dataSets).forEach((key) => {
                 dataSets[key].forEach((d) => {
@@ -73,8 +73,6 @@ export default class BarChart extends BaseChart {
                     }
                 });
             });
-
-            xValueCollection = _.sortBy(xValueCollection);
 
             _.keys(dataSets).forEach((key) => {
                 const tempValueSet = [];
