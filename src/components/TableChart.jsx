@@ -41,6 +41,7 @@ export default class TableChart extends BaseChart {
             filterValue: '',
             number: 0,
             selected: null,
+            loading: props.manual, // for loading animation when server-side pagination enabled
         };
 
         this.chartConfig = props.config;
@@ -73,6 +74,7 @@ export default class TableChart extends BaseChart {
             this.chartConfig = nextProps.config;
         }
 
+        this.setState({ loading: false });
         this.sortDataBasedOnConfig(nextProps);
     }
 
@@ -177,7 +179,7 @@ export default class TableChart extends BaseChart {
     }
 
     render() {
-        const { config, metadata } = this.props;
+        const { config, metadata, manual, onFetchData, pages } = this.props;
         const { dataSets, chartArray, filterValue, selected } = this.state;
 
         const tableConfig = chartArray.map((column) => {
@@ -256,6 +258,18 @@ export default class TableChart extends BaseChart {
             return _.values(obj).toString().toLowerCase().includes(filterValue.toLowerCase());
         });
 
+        let manualProps = {};
+
+        if (manual) {
+            manualProps = {
+                onFetchData: (state, instance) => {
+                    this.setState({ loading: true });
+                    return onFetchData(state, instance);
+                },
+                pages,
+            };
+        }
+
         return (
             <div>
                 {
@@ -291,6 +305,9 @@ export default class TableChart extends BaseChart {
                             config.pagination === true ?
                                 DAFAULT_ROW_COUNT_FOR_PAGINATION : config.maxLength
                         }
+                        manual={manual}
+                        {...manualProps}
+                        loading={this.state.loading}
                     />
                 </div>
             </div>
