@@ -197,7 +197,9 @@ export default class TableChartSamples extends React.Component {
                         >
                             <div style={{ height: 400 }}>
                                 <div style={{ height: 40 }}>
-                                    <ServerSidePagination />
+                                    <ServerSidePagination
+                                        theme={this.props.theme}
+                                    />
                                 </div>
                             </div>
                             <div>

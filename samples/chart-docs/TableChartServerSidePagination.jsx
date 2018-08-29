@@ -99,6 +99,7 @@ export default class ServerSidePaginationTableChart extends React.Component {
                             });
                         });
                 }}
+                theme={this.props.theme}
             />
         );
     }
