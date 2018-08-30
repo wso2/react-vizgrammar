@@ -56,7 +56,7 @@ export default class ChartContainer extends React.Component {
             return (data) => {
                 if ((data - Math.floor(data)) !== 0) {
                     return '';
-                } else if ((arr[Number(data) - 1].x).length > (config.axisTickLength ? config.axisTickLength : 13)) {
+                } else if (arr.length && (arr[Number(data) - 1].x).length > (config.axisTickLength ? config.axisTickLength : 13)) {
                     return (arr[Number(data) - 1].x).slice(0, config.axisTickLength ? config.axisTickLength :
                         10) + '...';
                 } else {
