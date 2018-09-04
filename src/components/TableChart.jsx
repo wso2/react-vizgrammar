@@ -115,6 +115,7 @@ export default class TableChart extends BaseChart {
                     chartArray.push({
                         name: column.name,
                         title: column.title || column.name,
+                        highLight: !!column.highlight,
                         colorBasedStyle: column.colorBasedStyle,
                         colorScale: column.colorBasedStyle === true ?
                             column.colorScale || getDefaultColorScale() : undefined,
@@ -186,7 +187,9 @@ export default class TableChart extends BaseChart {
             const columnConfig = {
                 Header: column.title,
                 accessor: column.name,
-            };
+                getProps: (state, rowInfo) => column.highLight &&
+                    typeof config.dataFunction === 'function' ? config.dataFunction(state, rowInfo) : '',
+                };
 
             if (column.colorBasedStyle === true) {
                 columnConfig.Cell = props => (
