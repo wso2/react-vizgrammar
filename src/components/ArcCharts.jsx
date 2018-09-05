@@ -205,14 +205,14 @@ export default class ArcChart extends BaseChart {
                                 fontSize: config.labelFontSize || currentTheme.pie.style.presentage.fontSize,
                                 fill: config.labelColor || currentTheme.pie.style.labels.fill,
                             }}
-                        /> :
+                        /> : config.legend === true ?
                         <LegendComponent
                             height={height}
                             width={width}
                             legendItems={pieChartData.map(data => ({ name: data.x, symbol: data.symbol }))}
                             interaction={() => { }}
                             config={config}
-                        />
+                        /> : null
                 }
             </ChartContainer>
         );

@@ -42,15 +42,18 @@ export default class PieChartSamples extends React.Component {
         this.donutChartConfig = {
             charts: [{ type: 'arc', x: 'torque', color: 'EngineType', mode: 'donut' }],
             legendOrientation: 'top',
+            legend: true,
         };
 
         this.pieChartConfig = {
             charts: [{ type: 'arc', x: 'torque', color: 'EngineType', mode: 'pie' }],
+            legend: true,
         };
         this.semiPieChartConfig = {
             charts: [{ type: 'arc', x: 'torque', color: 'EngineType', mode: 'pie' }],
             startAngle: -90,
             endAngle: 90,
+            legend: true,
         };
 
         this.percentChartConfig = {
