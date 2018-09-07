@@ -268,7 +268,9 @@ export default class BarChart extends BaseChart {
 
 
         if (!isOrdinal) {
-            if (xScale === 'time' && config.timeStep && xAxisRange[0]) {
+            if (xScale === 'time' && dataSetLength === 1) {
+                fullBarWidth = 30;
+            } else if (xScale === 'time' && config.timeStep && xAxisRange[0]) {
                 fullBarWidth = this.calculateBarWidth(BarChart.isHorizontal(config), height, width,
                     (xAxisRange[1] - xAxisRange[0]), config.timeStep.toLowerCase());
             } else {
