@@ -53,6 +53,8 @@ class MapChartConfigSample extends Component {
         this.lineChartConfig = {
             x: 'Country',
             charts: [{ type: 'map', y: 'Inflation', mapType: 'world', colorScale: ['#1565C0', '#4DB6AC'] }],
+            chloropethRangeUpperbound: [20],
+            chloropethRangeLowerbound: [0],
         };
 
         this.europeConfig = {
@@ -189,13 +191,13 @@ class MapChartConfigSample extends Component {
                                         </ul>
                                     </li>
                                     <li>
-                                        <strong>chloropethRangeUpperBound</strong> - If the range of values is known, user
+                                        <strong>chloropethRangeUpperbound</strong> - If the range of values is known, user
                                             can define the upper bound of values that will be used for the colorScale of the
                                             chloropeth map as an array. if only upper bound is given library will calculate
                                             the lower bound based on input data.
                                     </li>
                                     <li>
-                                        <strong>chloropethRangeLowerBound</strong> - If the range of values is known, user
+                                        <strong>chloropethRangeLowerbound</strong> - If the range of values is known, user
                                                 can define the lower bound of values that will be used for the colorScale of the
                                                 chloropeth map as an array. if only lower bound is given library will calculate
                                                 the upper bound based on input data.
