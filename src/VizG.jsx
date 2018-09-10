@@ -107,15 +107,30 @@ class VizG extends Component {
         }
     }
 
+    warningMessage(message) {
+        return (
+            <div style={{ display: 'flex', justifyContent: 'center', background: '#9E9E9E', color: '#000',
+                fontWeight: 500 }}>
+                {message}
+            </div>
+        )
+    };
+
     render() {
         const { config, data, metadata, onClick, manual, onFetchData, pages } = this.props;
         return (
             <div style={{ height: '100%', width: '100%' }}>
                 {
-                    !config || !metadata ?
-                        null :
-                        this._getChartComponent(this._isComposed(config), config, data, metadata, onClick, manual,
-                            onFetchData, pages)
+                    (() => {
+                        if (!config || !metadata) {
+                            return this.warningMessage('No configurations available');
+                        } else if ((typeof (data) === 'undefined') || (!data.length && !manual)) {
+                            return this.warningMessage('No data available');
+                        } else {
+                            return this._getChartComponent(this._isComposed(config), config, data, metadata, onClick,
+                                manual, onFetchData, pages)
+                        }
+                    })()
                 }
             </div>
         );
