@@ -208,7 +208,8 @@
 	flex-direction: column;
 	-webkit-box-align: stretch;
 	-ms-flex-align: stretch;
-	align-items: stretch
+	align-items: stretch;
+	line-height: 30px;
 }
 
 .ReactTable .rt-tr {
@@ -232,7 +233,7 @@
 	transition-property: width, min-width, padding, opacity;
 }
 .ReactTable .rt-th div, .ReactTable .rt-td div{
-	padding: 7px 5px;
+	padding: 0 5px;
 }
 
 .ReactTable .rt-th.-hidden, .ReactTable .rt-td.-hidden {
@@ -357,6 +358,7 @@
 	transition: all .1s ease;
 	cursor: pointer;
 	outline: none;
+	height: 40px;
 }
 
 .ReactTable .-pagination .-btn[disabled] {

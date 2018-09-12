@@ -288,7 +288,7 @@ export default class TableChart extends BaseChart {
                             />
                         </div> : null
                 }
-                <div style={{ height: 40 }}>
+                <div style={{ height: 30 }}>
                     <ReactTable
                         data={filteredData}
                         columns={tableConfig}
