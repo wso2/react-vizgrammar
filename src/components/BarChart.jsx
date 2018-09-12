@@ -100,6 +100,20 @@ export default class BarChart extends BaseChart {
                     chartIndex,
                 });
 
+                if (xScale === 'time' && dataSets[dsName].length === 1) {
+                    for (let i = 0; i < 2; i++) {
+                        const simulatedDataSet = Object.assign({}, dataSets[dsName][0]);
+                        simulatedDataSet.y = 0;
+                        if (i === 0) {
+                            simulatedDataSet.x += 10000;
+                            dataSets[dsName].push(simulatedDataSet);
+                        } else if (i === 1) {
+                            simulatedDataSet.x -= 10000;
+                            dataSets[dsName].push(simulatedDataSet);
+                        }
+                    }
+                }
+
                 if (dataSetLength < dataSets[dsName].length) dataSetLength = dataSets[dsName].length;
                 if ((_.indexOf(ignoreArray, dsName)) === -1) {
                     localSet.push((
@@ -266,21 +280,17 @@ export default class BarChart extends BaseChart {
         let fullBarWidth = ((BarChart.isHorizontal(config) ?
             (height - 120) : (width - 280)) / (dataSetLength)) - 1;
 
-
         if (!isOrdinal) {
-            if (xScale === 'time' && dataSetLength === 1) {
-                fullBarWidth = 30;
-            } else if (xScale === 'time' && config.timeStep && xAxisRange[0]) {
+            if (xScale === 'time' && config.timeStep && xAxisRange[0]) {
                 fullBarWidth = this.calculateBarWidth(BarChart.isHorizontal(config), height, width,
                     (xAxisRange[1] - xAxisRange[0]), config.timeStep.toLowerCase());
             } else {
                 fullBarWidth = ((BarChart.isHorizontal(config) ?
-                    (height - 120) : (width - 280)) / ((xAxisRange[1] - xAxisRange[0] + (2 * (config.linearSeriesStep || 1))) / (config.linearSeriesStep || 1)));
+                    (height - 120) : (width - 280)) / ((dataSetLength + (2 * (config.linearSeriesStep || 1))) / (config.linearSeriesStep || 1)));
             }
         }
 
         fullBarWidth = (fullBarWidth > 100) ? fullBarWidth * 0.8 : fullBarWidth;
-
         const barWidth = Math.floor(fullBarWidth / chartComponents.length);
         chartComponents = [
             <VictoryGroup
