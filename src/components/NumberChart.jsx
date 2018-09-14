@@ -76,14 +76,21 @@ export default class NumberCharts extends React.Component {
         const highValueColor = config.highValueColor || currentTheme.number.style.labels.highValue.fill;
         const lowValueColor = config.lowValueColor || currentTheme.number.style.labels.lowValue.fill;
         const viewBoxWidth = config.title.length * 20;
+        let viewBoxHeight = 120;
+
+        if (config.showDifference && config.showPercentage) {
+            viewBoxHeight = 180;
+        } else if (config.showDifference || config.showPercentage) {
+            viewBoxHeight = 160;
+        }
 
         return (
-            <svg height="100%" width="100%" viewBox={`0 0 ${viewBoxWidth} 400`}>
+            <svg height="100%" width="100%" viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`}>
                 <VictoryLabel
                     textAnchor="middle"
                     verticalAnchor="middle"
                     x="50%"
-                    y="25%"
+                    y="30"
                     text={config.title}
                     style={{ fill: currentTheme.number.style.labels.title.fill, fontSize: 40 }}
                 />
@@ -91,7 +98,7 @@ export default class NumberCharts extends React.Component {
                     textAnchor="middle"
                     verticalAnchor="middle"
                     x="50%"
-                    y="40%"
+                    y="85"
                     text={(value === null ? value : (config.showDecimal === true ? value.toFixed(3) : value.toFixed(0)))}
                     style={{ fill: currentTheme.number.style.labels.mainValue.fill, fontSize: 53 }}
                 />
@@ -101,7 +108,7 @@ export default class NumberCharts extends React.Component {
                             textAnchor="middle"
                             verticalAnchor="middle"
                             x={(viewBoxWidth / 2) + 40}
-                            y="49.6%"
+                            y="128"
                             text={(() => {
                                 if (prevValue < value) {
                                     return '+';
@@ -118,7 +125,7 @@ export default class NumberCharts extends React.Component {
                                 textAnchor="middle"
                                 verticalAnchor="middle"
                                 x="50%"
-                                y="50%"
+                                y="130"
                                 text={
                                     config.showDecimal === true ?
                                         (Math.abs(Number((prevValue - value)))).toFixed(3) :
@@ -135,7 +142,7 @@ export default class NumberCharts extends React.Component {
                             textAnchor="middle"
                             verticalAnchor="middle"
                             x="49%"
-                            y="58%"
+                            y={config.showDifference ? 160 : 130}
                             text={(Math.abs((100 * ((value - prevValue) / prevValue))).toFixed(2)) + '%'}
                             style={{ fill: prevValue < value ? highValueColor : lowValueColor, fontSize: 26 }}
                         />),
@@ -144,7 +151,7 @@ export default class NumberCharts extends React.Component {
                             textAnchor="middle"
                             verticalAnchor="middle"
                             x={(viewBoxWidth / 2) + 60}
-                            y="57.4%"
+                            y={config.showDifference ? 158 : 128}
                             text={(() => {
                                 if (prevValue < value) {
                                     return '↑';
