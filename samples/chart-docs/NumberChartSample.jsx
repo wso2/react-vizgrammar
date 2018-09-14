@@ -74,7 +74,7 @@ export default class NumberChartSample extends React.Component {
                             chart={'line'}
                             title={'Number Chart Sample'}
                         >
-                            <div style={{ height: 450 }}>
+                            <div style={{ height: 250 }}>
                                 <VizG config={this.numConfig} metadata={this.metadata} data={this.state.data}
                                     theme={this.props.theme} />
                             </div>
