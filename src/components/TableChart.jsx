@@ -196,7 +196,6 @@ export default class TableChart extends BaseChart {
                     <div
                         style={{
                             width: '100%',
-                            height: '100%',
                             backgroundColor:
                                 props.original[this.idColumn] === selected ?
                                     config.selectedBackground || '#4286f4' :
@@ -231,7 +230,6 @@ export default class TableChart extends BaseChart {
                         style={{
                             background: props.original[this.idColumn] === selected ?
                                 config.selectedBackground || '#4286f4' : null,
-                            height: '100%',
                             color: config.selectedTextColor || null,
                             width: '100%',
                             textAlign: metadata.types[metadata.names.indexOf(props.column.id)] === 'linear' ||
@@ -288,7 +286,7 @@ export default class TableChart extends BaseChart {
                             />
                         </div> : null
                 }
-                <div style={{ height: 30 }}>
+                <div>
                     <ReactTable
                         data={filteredData}
                         columns={tableConfig}
