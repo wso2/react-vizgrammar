@@ -109,17 +109,21 @@ class VizG extends Component {
 
     warningMessage(message) {
         return (
-            <div style={{ display: 'flex', justifyContent: 'center', background: '#9E9E9E', color: '#000',
-                fontWeight: 500 }}>
+            <div
+                style={{
+                    display: 'flex', justifyContent: 'center', background: '#9E9E9E', color: '#000',
+                    fontWeight: 500,
+                }}
+            >
                 {message}
             </div>
-        )
-    };
+        );
+    }
 
     render() {
         const { config, data, metadata, onClick, manual, onFetchData, pages } = this.props;
         return (
-            <div style={{ height: '100%', width: '100%' }}>
+            <div style={{ height: this._isComposed(config) === 'table' ? 'auto' : '100%', width: '100%' }}>
                 {
                     (() => {
                         if (!config || !metadata) {
@@ -128,7 +132,7 @@ class VizG extends Component {
                             return this.warningMessage('No data available');
                         } else {
                             return this._getChartComponent(this._isComposed(config), config, data, metadata, onClick,
-                                manual, onFetchData, pages)
+                                manual, onFetchData, pages);
                         }
                     })()
                 }
