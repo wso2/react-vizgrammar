@@ -30,12 +30,13 @@ export default class LegendComponent extends React.Component {
                 <VictoryLegend
                     x={
                         (() => {
-                            if (!config.legendOrientation) return (width - 150);
-                            else if (config.legendOrientation === 'right') {
-                                return (width - 100);
+                            if (!config.legendOrientation) {
+                                return (width - (150 + (config.legendOffset ? config.legendOffset : 0)));
+                            } else if (config.legendOrientation === 'right') {
+                                return (width - (100 + (config.legendOffset ? config.legendOffset : 0)));
                             } else if (config.legendOrientation === 'left') {
-                                return 0;
-                            } else return 100;
+                                return config.legendOffset ? config.legendOffset : 0;
+                            } else return config.legendOffset ? config.legendOffset : 100;
                         })()
                     }
                     y={
