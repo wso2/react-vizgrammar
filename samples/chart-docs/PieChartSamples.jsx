@@ -54,6 +54,7 @@ export default class PieChartSamples extends React.Component {
             startAngle: -90,
             endAngle: 90,
             legend: true,
+            legendOffset: 30,
         };
 
         this.percentChartConfig = {
@@ -211,6 +212,7 @@ export default class PieChartSamples extends React.Component {
                                     <li><strong>append</strong> - Append dataset to the current dataset</li>
                                     <li><strong>legendOrientation</strong> - Orientation of the legend relative to
                                         the chart.</li>
+                                    <li><strong>legendOffset</strong> - Set a vertical offset for legend</li>
                                     <li><strong>percentage</strong> - Show the data field as a Gauge and the Value
                                         as a percent</li>
                                     <li>

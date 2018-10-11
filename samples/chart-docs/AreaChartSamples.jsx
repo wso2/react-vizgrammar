@@ -271,6 +271,7 @@ export default class AreaChartSamples extends React.Component {
                                         <strong>legendOrientaion</strong> - Orientaion of the legend relative to the
                                         chart (top | bottom | left | right)
                                     </li>
+                                    <li><strong>legendOffset</strong> - Set a vertical offset for legend</li>
                                     <li>
                                         <strong>brush</strong> - show a component to brush data(boolean value)
                                     </li>
