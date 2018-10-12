@@ -71,9 +71,6 @@ export default class LegendComponent extends React.Component {
                                 theme.legend.style.title.fontSize) : theme.legend.style.title.fontSize),
                             fill: config.style ? config.style.legendTitleColor : theme.legend.style.title.fill,
                         },
-                        labels: {
-                            fill: config.style ? config.style.legendTextColor : theme.legend.style.labels.fill,
-                        },
                     }}
                     data={legendItems.length > 0 ? legendItems : [{
                         name: 'undefined',
@@ -96,6 +93,7 @@ export default class LegendComponent extends React.Component {
                             style={{
                                 fontSize: config.style ? (config.style.legendTextSize ||
                                     theme.legend.style.labels.fontSize) : theme.legend.style.labels.fontSize,
+                                fill: config.style ? config.style.legendTextColor : theme.legend.style.labels.fill,
                             }}
                             text={(datum) => {
                                 return this.breakLegendLines(
