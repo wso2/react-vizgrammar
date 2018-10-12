@@ -17,7 +17,7 @@
  */
 
 import React from 'react';
-import { VictoryLegend, VictoryPortal, VictoryContainer } from 'victory';
+import { VictoryLegend, VictoryPortal, VictoryContainer, VictoryLabel } from 'victory';
 
 /**
  * Class to handle the visualization of legends.
@@ -72,8 +72,6 @@ export default class LegendComponent extends React.Component {
                             fill: config.style ? config.style.legendTitleColor : theme.legend.style.title.fill,
                         },
                         labels: {
-                            fontSize: config.style ? (config.style.legendTextSize ||
-                                theme.legend.style.labels.fontSize) : theme.legend.style.labels.fontSize,
                             fill: config.style ? config.style.legendTextColor : theme.legend.style.labels.fill,
                         },
                     }}
@@ -93,8 +91,34 @@ export default class LegendComponent extends React.Component {
                             },
                         },
                     ]}
+                    labelComponent={
+                        <VictoryLabel
+                            style={{
+                                fontSize: config.style ? (config.style.legendTextSize ||
+                                    theme.legend.style.labels.fontSize) : theme.legend.style.labels.fontSize,
+                            }}
+                            text={(datum) => {
+                                return this.breakLegendLines(
+                                    config.style ? config.style.legendTextBreakLength || 16 : 16, datum.name);
+                            }}
+                        />
+                    }
                 />
             </VictoryPortal>
         );
+    }
+
+    breakLegendLines(characterLength, text) {
+        if (text.length > characterLength) {
+            const ret = [];
+
+            for (let i = 0, len = text.length; i < len; i += characterLength) {
+                ret.push(text.substr(i, characterLength));
+            }
+
+            return ret.join('\n');
+        } else {
+            return text;
+        }
     }
 }
