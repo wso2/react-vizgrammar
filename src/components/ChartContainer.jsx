@@ -282,7 +282,7 @@ export default class ChartContainer extends React.Component {
                                 axisLabelComponent={
                                     <VictoryLabel
                                         angle={0}
-                                        x={100}
+                                        x={config.legendOrientation === 'left' ? 300 : 100}
                                         y={25}
                                     />
                                 }
