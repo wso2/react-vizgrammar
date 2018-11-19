@@ -275,9 +275,9 @@ export default class TableChart extends BaseChart {
             <div>
                 {
                     config.filterable ?
-                        <div className={'filter-search-container'} style={{ width: '100%', marginBottom: 2 }} >
+                        <div className={this.props.theme === 'light' ? 'lightTheme filter-search-container' : 'darkTheme filter-search-container'} style={{ width: '100%', marginBottom: 2 }} >
                             <input
-                                className={'filter-search'}
+                                className={this.props.theme === 'light' ? 'lightTheme filter-search' : 'darkTheme filter-search'}
                                 type="text"
                                 onChange={(evt) => {
                                     this.setState({ filterValue: evt.target.value });

@@ -540,10 +540,11 @@
 }
 
 .filter-search {
-    width: 30%;
+	width: 30%;
+	min-width: 200px;
     font: inherit;
     border: 0;
-    margin: 0 0 10px 70%;
+    margin: 0 0 10px 65%;
     padding: 0;
     display: block;
 	border-bottom: 1px solid #ccc;
