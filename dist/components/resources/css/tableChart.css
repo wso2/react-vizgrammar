@@ -524,6 +524,12 @@
     color: #ccc;
 }
 
+.filter-search-container{
+    display: table;
+    width: 100%;
+    margin-bottom: 2px;
+}
+
 .filter-search-container::before {
     content: "\A0";
     position: absolute;
@@ -541,12 +547,14 @@
 
 .filter-search {
     width: 30%;
+    min-width: 200px;
     font: inherit;
     border: 0;
-    margin: 0 0 10px 70%;
+    margin: 0 0 10px 0;
+    float: right;
     padding: 0;
     display: block;
-	border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
     box-sizing: content-box;
     background: none;
     vertical-align: middle;
