@@ -34,9 +34,9 @@ import darkTheme from './resources/themes/victoryDarkTheme';
 const USA_YOFFSET_FACTOR = 2;
 const USA_XOFFSET_FACTOR = 0.8;
 const USA_PROJECTION_SCALE = 600;
-const EUROPE_PROJECTION_SCALE = 400;
+const EUROPE_PROJECTION_SCALE = 350;
 const EUROPE_YOFFSET_FACTOR = 2;
-const WORLD_PROJECTION_SCALE = 120;
+const WORLD_PROJECTION_SCALE = 80;
 
 export default class MapGenerator extends React.Component {
 
@@ -242,13 +242,11 @@ export default class MapGenerator extends React.Component {
         }
 
         return (
-            <div style={{ overflow: 'hidden', height: '100%' }}>
+            <div style={{ overflow: 'hidden', height: '100%', display: 'flex' }}>
                 <div
                     style={{
-                        float: 'left',
                         width: '85%',
                         height: '100%',
-                        display: 'inline',
                     }}
                 >
                     <ComposableMap
@@ -329,7 +327,7 @@ export default class MapGenerator extends React.Component {
                 </div>
                 {
                     mapData.length > 0 ?
-                        <div style={{ width: '15%', height: '100%', display: 'inline', float: 'right' }}>
+                        <div style={{ width: '15%', height: '100%'}}>
                             {
                                 colorType === 'linear' ?
                                     <svg width="100%" height="100%">
@@ -343,8 +341,12 @@ export default class MapGenerator extends React.Component {
                                         <g className='legend'>
                                             <text
                                                 style={{
-                                                    fill: config.style ? config.style.legendTitleColor :
-                                                        currentTheme.map.style.labels.title.fill
+                                                    fill: config.style ? (config.style.legendTitleColor ||
+                                                        currentTheme.map.style.labels.title.fill) :
+                                                        currentTheme.map.style.labels.title.fill,
+                                                    fontSize: config.style ? (config.style.legendTitleSize ||
+                                                        currentTheme.map.style.labels.title.fontSize) :
+                                                        currentTheme.map.style.labels.title.fontSize,
                                                 }}
                                                 x={20}
                                                 y={20}
@@ -353,8 +355,12 @@ export default class MapGenerator extends React.Component {
                                             </text>
                                             <text
                                                 style={{
-                                                    fill: config.style ? config.style.legendTextColor :
-                                                        currentTheme.map.style.labels.legend.fill
+                                                    fill: config.style ? (config.style.legendTextColor ||
+                                                        currentTheme.map.style.labels.legend.fill) :
+                                                        currentTheme.map.style.labels.legend.fill,
+                                                    fontSize: config.style ? (config.style.legendTextSize ||
+                                                        currentTheme.map.style.labels.legend.fontSize) :
+                                                        currentTheme.map.style.labels.legend.fontSize,
                                                 }}
                                                 x={37}
                                                 y={37}
@@ -363,8 +369,12 @@ export default class MapGenerator extends React.Component {
                                             </text>
                                             <text
                                                 style={{
-                                                    fill: config.style ? config.style.legendTextColor :
-                                                        currentTheme.map.style.labels.legend.fill
+                                                    fill: config.style ? (config.style.legendTextColor ||
+                                                        currentTheme.map.style.labels.legend.fill) :
+                                                        currentTheme.map.style.labels.legend.fill,
+                                                    fontSize: config.style ? (config.style.legendTextSize ||
+                                                        currentTheme.map.style.labels.legend.fontSize) :
+                                                        currentTheme.map.style.labels.legend.fontSize,
                                                 }}
                                                 x={37}
                                                 y={132}
@@ -381,14 +391,20 @@ export default class MapGenerator extends React.Component {
                                         title="Legend"
                                         style={{
                                             title: {
-                                                fontSize: currentTheme.map.style.labels.title.fontSize,
-                                                fill: config.style ? config.style.legendTitleColor :
-                                                    currentTheme.map.style.labels.title.fill
+                                                fontSize: config.style ? (config.style.legendTitleSize ||
+                                                    currentTheme.map.style.labels.title.fontSize) :
+                                                    currentTheme.map.style.labels.title.fontSize,
+                                                fill: config.style ? (config.style.legendTitleColor ||
+                                                    currentTheme.map.style.labels.title.fill) :
+                                                    currentTheme.map.style.labels.title.fill,
                                             },
                                             labels: {
-                                                fontSize: currentTheme.map.style.labels.legend.fontSize,
-                                                fill: config.style ? config.style.legendTextColor :
-                                                    currentTheme.map.style.labels.legend.fill
+                                                fontSize: config.style ? (config.style.legendTextSize ||
+                                                    currentTheme.map.style.labels.legend.fontSize) :
+                                                    currentTheme.map.style.labels.legend.fontSize,
+                                                fill: config.style ? (config.style.legendTextColor ||
+                                                    currentTheme.map.style.labels.legend.fill) :
+                                                    currentTheme.map.style.labels.legend.fill,
                                             },
                                         }}
                                         data={Object.keys(ordinalColorMap).map((name) => {
