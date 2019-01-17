@@ -316,6 +316,9 @@ export default class TableChartSamples extends React.Component {
                                         <strong>filterable</strong> -  Boolean value to specify whether the data in the table are filterable.
                                     </li>
                                     <li>
+                                        <strong>sortable</strong> -  Boolean value to specify whether the data in the table are sortable.
+                                    </li>
+                                    <li>
                                         <strong>dataFunction</strong> -  function to match data and do styling.
                                     </li>
                                 </ul>
