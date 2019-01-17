@@ -30,22 +30,26 @@ export default class LegendComponent extends React.Component {
                 <VictoryLegend
                     x={
                         (() => {
-                            if (!config.legendOrientation) {
+                            if (!config.legendOrientation && legendItems.length < 13) {
                                 return (width - (150 + (config.legendOffset ? config.legendOffset : 0)));
                             } else if (config.legendOrientation === 'right') {
-                                return (width - (100 + (config.legendOffset ? config.legendOffset : 0)));
+                                return (width - (150 + (config.legendOffset ? config.legendOffset : 0)));
                             } else if (config.legendOrientation === 'left') {
                                 return config.legendOffset ? config.legendOffset : 0;
+                            } else if (legendItems.length > 12) {
+                                return config.legendOffset ? config.legendOffset : 20;
                             } else return config.legendOffset ? config.legendOffset : 100;
                         })()
                     }
                     y={
                         (() => {
-                            if (!config.legendOrientation) return 0;
+                            if (!config.legendOrientation && legendItems.length < 13) return 0;
                             else if (config.legendOrientation === 'top') {
                                 return 0;
-                            } else if (config.legendOrientation === 'bottom') {
-                                return height - 100;
+                            } else if (config.legendOrientation === 'bottom' || legendItems.length > 12) {
+                                return height - (Math.ceil(legendItems.length / (config.style ?
+                                    config.style.legendColumns || theme.legend.style.columns :
+                                    theme.legend.style.columns)) * 30);
                             } else return 0;
                         })()
                     }
@@ -56,7 +60,13 @@ export default class LegendComponent extends React.Component {
                     width={width}
                     orientation={
                         !config.legendOrientation ?
-                            'vertical' :
+                            (() => {
+                                if (legendItems.length > 12 ) {
+                                    return 'horizontal';
+                                } else {
+                                    return 'vertical';
+                                }
+                            })() :
                             (() => {
                                 if (config.legendOrientation === 'left' || config.legendOrientation === 'right') {
                                     return 'vertical';
@@ -76,8 +86,9 @@ export default class LegendComponent extends React.Component {
                         name: 'undefined',
                         symbol: { fill: '#333' },
                     }]}
-                    itemsPerRow={config.legendOrientation === 'top' || config.legendOrientation === 'bottom' ? 10
-                        : null}
+                    itemsPerRow={config.legendOrientation === 'top' || config.legendOrientation === 'bottom' ||
+                        legendItems.length > 12 ? (config.style ? (config.style.legendColumns ||
+                        theme.legend.style.columns) : theme.legend.style.columns) : null}
                     events={[
                         {
                             target: 'data',

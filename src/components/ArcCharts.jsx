@@ -132,6 +132,9 @@ export default class ArcChart extends BaseChart {
         const { config, theme, height, width } = this.props;
         const { pieChartData, random } = this.state;
         const currentTheme = theme === 'light' ? lightTheme : darkTheme;
+        const legendOffset = config.legend === true && pieChartData.length > 12 ?
+            ((Math.ceil(pieChartData.length / (config.style ? config.style.legendColumns ||
+                currentTheme.legend.style.columns : currentTheme.legend.style.columns)) * 28) + 70) : 50;
 
         return (
             <ChartContainer
@@ -143,6 +146,7 @@ export default class ArcChart extends BaseChart {
                 disableAxes
                 disableContainer
                 arcChart={!config.percentage}
+                legendOffset={legendOffset}
             >
                 <VictoryPie
                     height={height}

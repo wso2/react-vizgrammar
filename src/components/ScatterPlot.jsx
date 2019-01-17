@@ -203,6 +203,10 @@ export default class ScatterPlot extends BaseChart {
             });
         });
 
+        const legendOffset = config.legend === true && legendComponents.length > 12 ?
+            ((Math.ceil(legendComponents.length / (config.style ? config.style.legendColumns ||
+                currentTheme.legend.style.columns : currentTheme.legend.style.columns)) * 28) + 70) : 50;
+
         return (
             <ChartContainer
                 width={this.props.width || width || 800}
@@ -214,6 +218,7 @@ export default class ScatterPlot extends BaseChart {
                 xRange={this.xRange}
                 dataSets={dataSets}
                 theme={theme}
+                legendOffset={legendOffset}
             >
                 {chartComponents}
                 {

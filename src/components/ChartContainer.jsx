@@ -77,12 +77,12 @@ export default class ChartContainer extends React.Component {
     }
 
     render() {
-        const { width, height, xScale,
+        const { width, height, xScale, legendOffset,
             theme, config, horizontal, disableAxes, yDomain, isOrdinal, dataSets, barData, arcChart } = this.props;
         const currentTheme = theme === 'light' ? lightTheme : darkTheme;
         let arr = null;
         let xDomain = null;
-        const xAxisPaddingBottom = config.style ? config.style.xAxisPaddingBottom || 50 : 50;
+        const xAxisPaddingBottom = config.style ? config.style.xAxisPaddingBottom || legendOffset : legendOffset;
 
         if (isOrdinal && ((_.findIndex(config.charts, o => o.type === 'bar')) > -1)) {
             arr = dataSets[Object.keys(dataSets)[0]] || [];
@@ -122,8 +122,7 @@ export default class ChartContainer extends React.Component {
                     (() => {
                         if (config.legend === true || arcChart) {
                             if (!config.legendOrientation) return {
-                                left: 100, top: 30, bottom: xAxisPaddingBottom,
-                                right: 180
+                                left: 100, top: 30, bottom: xAxisPaddingBottom, right: 180,
                             };
                             else if (config.legendOrientation === 'left') {
                                 return { left: 300, top: 30, bottom: xAxisPaddingBottom, right: 30 };

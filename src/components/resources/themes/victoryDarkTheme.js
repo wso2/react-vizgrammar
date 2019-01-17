@@ -44,6 +44,7 @@ const colors = [
 // Typography
 const sansSerif = "'Roboto', 'Helvetica Neue', Helvetica, sans-serif";
 const letterSpacing = 'normal';
+const titleFontSize = 16;
 const fontSize = 14;
 const fontSizeSmall = 12;
 
@@ -237,10 +238,11 @@ const victoryDarkTheme = {
             pointerLength: 10,
         },
     }, baseProps),
-    legend:  assign({
+    legend: assign({
         style: {
-            labels: assign({}, baseLabelStyles, { fontSize: 18 }),
-            title: assign({}, baseLabelStyles, { fontSize: 25 }),
+            labels: assign({}, baseLabelStyles, { fontSize: fontSize }),
+            title: assign({}, baseLabelStyles, { fontSize: titleFontSize }),
+            columns: 5,
         },
     }, baseProps),
     voronoi: assign({
@@ -279,11 +281,11 @@ const victoryDarkTheme = {
             labels: {
                 title: {
                     fill: grey500,
-                    fontSize: fontSize,
+                    fontSize: titleFontSize,
                 },
                 legend: {
                     fill: grey500,
-                    fontSize: fontSizeSmall,
+                    fontSize: fontSize,
                 },
             },
             default: {
