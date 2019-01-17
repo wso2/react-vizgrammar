@@ -225,15 +225,19 @@ export default class LineChartSamples extends React.Component {
                                     <li><strong>legendOrientaion</strong> - Orientaion of the legend relative to the
                                         chart(top | bottom | left | right)</li>
                                     <li><strong>legendOffset</strong> - Set a vertical offset for legend</li>
-                                    <li><strong>brush</strong> - show a component to brush data(boolean value)</li>
+                                    <li><strong>brush</strong> - Show a component to brush data(boolean value)</li>
                                     <li>
-                                        <strong>style</strong> - object that contain style attributes of the charts.
+                                        <strong>style</strong> - Object that contain style attributes of the charts.
                                         <ul>
                                             <li><strong>axisColor</strong> - color of the axis lines</li>
                                             <li><strong>axisLabelColor</strong> - color of the axis labels</li>
                                             <li><strong>xAxisTickAngle</strong> - Tick angle of the x-axis ticks</li>
                                             <li><strong>yAxisTickAngle</strong> - Tick angle of the y-axis ticks</li>
                                             <li><strong>tickLabelColor</strong> - font color of the tickLabels</li>
+                                            <li><strong>legendColumns</strong> - Number of columns in the legend,
+                                                default is 5. If the legend items are greater than 12, legend will
+                                                be shown at the bottom with 5 columns
+                                            </li>
                                         </ul>
                                     </li>
                                 </ul>

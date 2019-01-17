@@ -220,6 +220,10 @@ export default class PieChartSamples extends React.Component {
                                         <ul>
                                             <li><strong>legendTextColor</strong> - Text color of the
                                                 legend component</li>
+                                            <li><strong>legendColumns</strong> - Number of columns in the legend,
+                                                default is 5. If the legend items are greater than 12, legend will
+                                                be shown at the bottom with 5 columns
+                                            </li>
                                         </ul>
                                     </li>
                                     <li><strong>labelColor</strong> - Font color of percent chart</li>
