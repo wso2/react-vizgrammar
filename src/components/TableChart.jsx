@@ -270,6 +270,10 @@ export default class TableChart extends BaseChart {
                 pages,
             };
         }
+        let sortable = true;
+        if (config.sortable === false) {
+            sortable = false;
+        }
 
         return (
             <div>
@@ -291,6 +295,7 @@ export default class TableChart extends BaseChart {
                         data={filteredData}
                         columns={tableConfig}
                         showPagination={config.pagination === true}
+                        sortable={sortable}
                         minRows={DAFAULT_ROW_COUNT_FOR_PAGINATION}
                         className={this.props.theme === 'light' ? 'lightTheme' : 'darkTheme'}
                         getTrProps={
