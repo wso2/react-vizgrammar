@@ -209,11 +209,13 @@ export default class BaseChart extends React.Component {
         this.setState((prevState) => {
             prevState.chartArray.push(...(_.differenceWith(chartArray, prevState.chartArray, _.isEqual)));
             if (!isOrdinal) {
-                _.mergeWith(prevState.dataSets, dataSet, (objValue, srcValue) => {
+                if (_.isEmpty(prevState.dataSets) || !_.isEqual(_.sortBy(prevState.dataSets), _.sortBy(dataSet))) {
+                    _.mergeWith(prevState.dataSets, dataSet, (objValue, srcValue) => {
                     if (_.isArray(objValue)) {
                         return objValue.concat(srcValue);
                     }
                 });
+                }
             } else {
                 _.keys(dataSet).forEach((key) => {
                     prevState.dataSets[key] = prevState.dataSets[key] || [];
@@ -238,7 +240,7 @@ export default class BaseChart extends React.Component {
                 let range = [null, null];
 
                 Object.keys(prevState.dataSets).forEach((key) => {
-                    let dataSetRange = [];
+                    const dataSetRange = [];
                     dataSetRange[0] = _.minBy(prevState.dataSets[key], 'x');
                     dataSetRange[1] = _.maxBy(prevState.dataSets[key], 'x');
 
