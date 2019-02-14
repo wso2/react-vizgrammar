@@ -37,6 +37,10 @@ export default class ScatterPlot extends BaseChart {
             dataSets: {},
             chartArray: [],
             xScale: 'linear',
+            yDomain: [0, 1],     // Range of y axis
+            xDomain: [0, 1],     // Range of x axis values
+            isOrdinal: false,    // x Axsis Ordinality
+            domainPadding: 50,
         };
 
         this.sortDataBasedOnConfig = this.sortDataBasedOnConfig.bind(this);
@@ -45,8 +49,7 @@ export default class ScatterPlot extends BaseChart {
 
     sortDataBasedOnConfig(props) {
         const { config, data, metadata } = props;
-        let { dataSets, chartArray, xScale } = this.state;
-
+        let { dataSets, chartArray, xScale, yDomain, xDomain, isOrdinal } = this.state;
         if (chartArray.length === 0) chartArray = BaseChart.generateChartArray(config.charts);
 
         chartArray.forEach((chart, i) => {
@@ -61,11 +64,25 @@ export default class ScatterPlot extends BaseChart {
             if (chart.colorCategoryName && colorIndex === -1) throw new VizGError('ScatterPlot', `color dimension name '${chart.colorCategoryName}' is not found among metadata.`);
             if (chart.size && sizeIndex === -1) throw new VizGError('ScatterPlot', `Size dimension name '${chart.size}' not found among metadata`);
 
-            if (chart.colorCategoryName && metadata.types[colorIndex] === 'ordinal') {
-                const dataSet = _.groupBy(data.map(
-                    datum => ({ x: datum[xIndex], y: datum[yIndex], color: datum[colorIndex], amount: datum[sizeIndex] })), d => d.color);
+            // Forming the dataSet by mapping the dataset
+            dataSets[chart.y] = dataSets[chart.y] || [];
+            const dataSet = data.map(datum => ({
+                x: datum[xIndex],
+                y: datum[yIndex],
+                color: datum[colorIndex],
+                amount: datum[sizeIndex],
+                chartIndex: i,
+            }));
 
-                _.difference(_.keys(dataSet), _.keys(chart.dataSetNames)).forEach((key) => {
+            // DataSet would not be added to DataSets if DataSets already include that.
+            if (_.isEmpty(dataSets) || !_.isEqual(_.sortBy(dataSets[chart.y]), _.sortBy(dataSet))) {
+                dataSet.forEach((element) => {
+                    dataSets[chart.y].push(element);
+                });
+            }
+            if (chart.colorCategoryName && metadata.types[colorIndex] === 'ordinal') {
+                const distinctColorValues = _.uniq(dataSet.map(record => record.color));
+                _.difference(distinctColorValues, _.keys(chart.dataSetNames)).forEach((key) => {
                     const colorDomIn = _.indexOf(chart.colorDomain, key);
                     if (chart.colorIndex >= chart.colorScale.length) {
                         chart.colorIndex = 0;
@@ -78,23 +95,15 @@ export default class ScatterPlot extends BaseChart {
                         chart.dataSetNames[key] = chart.colorScale[colorDomIn];
                     }
                 });
-
-                _.mergeWith(dataSets, dataSet, (objValue, srcValue) => {
-                    if (_.isArray(objValue)) {
-                        return objValue.concat(srcValue);
-                    }
-                });
+                if (_.isEmpty(dataSets)) {
+                    _.mergeWith(dataSets, dataSet, (objValue, srcValue) => {
+                        if (_.isArray(objValue)) {
+                            return objValue.concat(srcValue);
+                        }
+                    });
+                }
             } else {
                 chart.dataSetNames[chart.y] = chart.colorScale[0];
-                dataSets[chart.y] = dataSets[chart.y] || [];
-                dataSets[chart.y]
-                    .push(...(data.map(datum => ({
-                        x: datum[xIndex],
-                        y: datum[yIndex],
-                        color: datum[colorIndex],
-                        amount: datum[sizeIndex],
-                        chartIndex: i,
-                    }))));
             }
             if (config.charts[chart.id].maxLength) {
                 const maxLength = config.charts[chart.id].maxLength;
@@ -103,9 +112,53 @@ export default class ScatterPlot extends BaseChart {
                     dataSets[key].splice(0, lengthDiff);
                 });
             }
+            /**
+             * Setting up y range
+             * Fix Reason - if there are only one y value in the chart,
+             *  it will make the y axis tick points contain decimal values
+             */
+            if (metadata.types[yIndex] === 'linear') {
+                const yRange = { min: null, max: null };
+                Object.values(dataSets).forEach((dataSetElement, index) => {
+                    const yValueSet = dataSetElement.map(val => val.y);
+                    if (index === 0) {
+                        yRange.min = _.min(yValueSet);
+                        yRange.max = _.max(yValueSet);
+                    } else {
+                        yRange.min = _.min([yRange.min, _.min(yValueSet)]);
+                        yRange.max = _.max([yRange.max, _.max(yValueSet)]);
+                    }
+                    yDomain = [yRange.min, yRange.max];
+                    if (yRange.min === yRange.max) { yDomain = [yRange.min - (yRange.min / 2), yRange.max + (yRange.max / 2)]; }
+                });
+            }
+            /**
+             * Setting up x range
+             * Fix Reason - if there are only one x value in the chart it will make the y axis tick points contain decimal values
+             */
+            if (metadata.types[xIndex] === 'linear') {
+                const xRange = { min: null, max: null };
+                Object.values(dataSets).forEach((dataSetElement, i) => {
+                    const xValueSet = dataSetElement.map(val => val.x);
+                    if (i === 0) {
+                        xRange.min = _.min(xValueSet);
+                        xRange.max = _.max(xValueSet);
+                    } else {
+                        xRange.min = _.min([xRange.min, _.min(xValueSet)]);
+                        xRange.max = _.max([xRange.max, _.max(xValueSet)]);
+                    }
+                    xDomain = [xRange.min, xRange.max];
+                    if (xRange.min === xRange.max) { xDomain = [xRange.min - (xRange.min / 2), xRange.max + (xRange.max / 2)]; }
+                });
+            } else {
+                xDomain = null;
+            }
+
+            // checking whether x Axis contain ordinal data
+            isOrdinal = metadata.types[xIndex] === 'ordinal';
         });
 
-        this.setState({ chartArray, dataSets, xScale });
+        this.setState({ chartArray, dataSets, xScale, yDomain, xDomain, isOrdinal });
     }
 
     handleMouseClickEvent(props) {
@@ -125,16 +178,35 @@ export default class ScatterPlot extends BaseChart {
 
     render() {
         const { config, metadata, theme, width, height } = this.props;
-        const { chartArray, dataSets, xScale } = this.state;
+        const { chartArray, dataSets, xScale, isOrdinal } = this.state;
         const chartComponents = [];
         const legendComponents = [];
         const currentTheme = theme === 'light' ? lightTheme : darkTheme;
 
-        chartArray.map((chart) => {
+        chartArray.forEach((chart) => {
             const colorIndex = _.indexOf(metadata.names, chart.colorCategoryName);
 
-            _.keys(chart.dataSetNames).forEach((key) => {
-                legendComponents.push({ name: key, symbol: { fill: chart.dataSetNames[key] } });
+            _.keys(dataSets).forEach((key) => {
+                /**
+                 * Adding a null record if scatter plot dataset contains single data
+                 *
+                 * #Fix For - If the a dataset contain single record Victory has an issue,
+                 * which is not being able to compare two values in the dataset
+                 *
+                 */
+                if (_.uniq(dataSets[key].map(record => record.amount)).length === 1) {
+                    if (isOrdinal) {
+                        const changedRecord = { ...dataSets[key][0] };
+                        changedRecord.amount = null;
+                        dataSets[key].unshift(changedRecord);
+                    } else {
+                        dataSets[key].unshift({ x: null, y: null, color: null, amount: null });
+                    }
+                }
+                // Adding Legend records
+                _.keys(chart.dataSetNames).forEach((colorColumn) => {
+                    legendComponents.push({ name: colorColumn, symbol: { fill: chart.dataSetNames[colorColumn] } });
+                });
                 chartComponents.push((
                     <VictoryScatter
                         key={'scatter-plot-' + chart.id}
@@ -154,7 +226,7 @@ export default class ScatterPlot extends BaseChart {
                                                     _.max(dataSets[key].map(obj => obj.color))])(d.color);
                                         };
                                     } else if (colorIndex > -1) {
-                                        return chart.dataSetNames[key];
+                                        return d => chart.dataSetNames[d.color];
                                     } else {
                                         return null;
                                     }
@@ -209,11 +281,12 @@ export default class ScatterPlot extends BaseChart {
                 height={this.props.height || height || 800}
                 config={config}
                 xScale={xScale}
-                yDomain={this.props.yDomain}
+                yDomain={this.state.yDomain}
                 xDomain={this.state.xDomain}
-                xRange={this.xRange}
                 dataSets={dataSets}
                 theme={theme}
+                isOrdinal={this.state.isOrdinal}
+                domainPadding={this.state.domainPadding}
             >
                 {chartComponents}
                 {

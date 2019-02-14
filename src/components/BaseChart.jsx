@@ -32,8 +32,14 @@ export default class BaseChart extends React.Component {
      * @returns {string} type of the xScale that should be used in the chart.
      */
     static getXScale(type) {
-        if (type.toLowerCase() === 'linear' || type.toLowerCase() === 'ordinal') return 'linear';
-        else return 'time';
+        switch (type.toLowerCase()) {
+            case 'linear':
+                return 'linear';
+            case 'ordinal':
+                return 'ordinal';
+            default:
+                return 'time';
+        }
     }
 
     /**

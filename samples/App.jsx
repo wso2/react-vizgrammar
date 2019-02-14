@@ -198,8 +198,8 @@ export default class App extends React.Component {
                     [this.state.index, Math.random() * 100, 10, 'rotary'],
                 ],
                 scatterPlot: [
-                    [this.state.timer, Math.random() * 100, Math.random(), 'rotary', Math.random()],
-                    [this.state.timer, Math.random() * 100, Math.random(), 'rotary', Math.random()],
+                    [this.state.index, Math.random() * 100, Math.random(), 'rotary', Math.random()],
+                    [this.state.index, Math.random() * 100, Math.random(), 'rotary', Math.random()],
                 ],
                 index: this.state.index + 1,
             });
