@@ -180,7 +180,13 @@ export default class ArcChart extends BaseChart {
                     labels={
                         config.percentage === true ?
                             '' :
-                            d => `${d.x} : ${((d.y / (_.sumBy(pieChartData, o => o.y))) * 100).toFixed(2)}%`
+                            (d) => {
+                                let percentageValue = ((d.y / (_.sumBy(pieChartData, o => o.y))) * 100).toFixed(2);
+                                if (percentageValue - Math.floor(percentageValue) === 0.00) {
+                                    percentageValue = Math.floor(percentageValue);
+                                }
+                                return `${d.x} :${d.y} (${percentageValue}%)`;
+                            }
                     }
                     style={{ labels: { fontSize: 6 }, data: { strokeWidth: 0 } }}
                     labelRadius={height / 3}
@@ -206,13 +212,13 @@ export default class ArcChart extends BaseChart {
                                 fill: config.labelColor || currentTheme.pie.style.labels.fill,
                             }}
                         /> : config.legend === true ?
-                        <LegendComponent
-                            height={height}
-                            width={width}
-                            legendItems={pieChartData.map(data => ({ name: data.x, symbol: data.symbol }))}
-                            interaction={() => { }}
-                            config={config}
-                        /> : null
+                            <LegendComponent
+                                height={height}
+                                width={width}
+                                legendItems={pieChartData.map(data => ({ name: data.x, symbol: data.symbol }))}
+                                interaction={() => { }}
+                                config={config}
+                            /> : null
                 }
             </ChartContainer>
         );
