@@ -79,11 +79,12 @@ export default class ChartContainer extends React.Component {
 
     render() {
         const { width, height, xScale, legendOffset,
-            theme, config, horizontal, disableAxes, yDomain, isOrdinal, dataSets, barData, arcChart } = this.props;
+            theme, config, horizontal, disableAxes, yDomain, isOrdinal, dataSets, barData, arcChart, xDomain } = this.props;
         const currentTheme = theme === 'light' ? lightTheme : darkTheme;
-        let arr = null;
-        let xDomain = null;
+        let arr = [];
+        let xDomainValue = xDomain;
         const xAxisPaddingBottom = config.style ? config.style.xAxisPaddingBottom || legendOffset : legendOffset;
+        let domainPadding = this.props.domainPadding || 0;
 
         if (isOrdinal && ((_.findIndex(config.charts, o => o.type === 'bar')) > -1)) {
             arr = dataSets[Object.keys(dataSets)[0]] || [];
@@ -103,11 +104,9 @@ export default class ChartContainer extends React.Component {
                     if (!maxOne) maxOne = max.x;
                     else if (maxOne < max) maxOne = max.x;
                 });
-                xDomain = [-1, maxOne];
+                xDomainValue = [-1, maxOne];
             }
         }
-
-        let domainPadding = null;
 
         if (barData) {
             domainPadding = Math.floor(barData.fullBarWidth / 2) + 1;
@@ -158,7 +157,7 @@ export default class ChartContainer extends React.Component {
                                     voronoiBlacklist={['blacked']}
                                 />
                     }
-                    domain={{ x: config.xDomain ? config.xDomain : xDomain, y: config.yDomain ? config.yDomain : yDomain }}
+                    domain={{ x: config.xDomain ? config.xDomain : xDomainValue, y: config.yDomain ? config.yDomain : yDomain }}
                     style={{ parent: { overflow: 'visible' } }}
 
                 >
@@ -307,6 +306,7 @@ ChartContainer.defaultProps = {
     disableContainer: false,
     horizontal: false,
     disableAxes: false,
+    domainPadding: 0,
 };
 
 ChartContainer.propTypes = {
@@ -315,6 +315,7 @@ ChartContainer.propTypes = {
     xScale: PropTypes.string.isRequired,
     yDomain: PropTypes.arrayOf(PropTypes.number),
     xDomain: PropTypes.arrayOf(PropTypes.number),
+    domainPadding: PropTypes.number,
     children: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node])),
     config: PropTypes.shape({
         x: PropTypes.string,
