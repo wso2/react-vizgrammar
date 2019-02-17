@@ -292,6 +292,10 @@ export default class BarChart extends BaseChart {
 
         fullBarWidth = (fullBarWidth > 100) ? fullBarWidth * 0.8 : fullBarWidth;
         const barWidth = Math.floor(fullBarWidth / chartComponents.length);
+        const legendColumns = Math.floor(width / 160);
+        const maxLegendItems = Math.floor((height - 100) / 25);
+        const legendOffset = config.legend === true && legendComponents.length > maxLegendItems ?
+            (((Math.ceil(legendComponents.length / legendColumns)) * 30) + 50) : 50;
         chartComponents = [
             <VictoryGroup
                 name="blacked"
@@ -317,6 +321,7 @@ export default class BarChart extends BaseChart {
                 isOrdinal={isOrdinal}
                 dataSets={dataSets}
                 barData={{ barWidth, dataSetLength, fullBarWidth }}
+                legendOffset={legendOffset}
             >
                 {
                     config.legend === true ?

@@ -55,6 +55,10 @@ class MapChartConfigSample extends Component {
             charts: [{ type: 'map', y: 'Inflation', mapType: 'world', colorScale: ['#1565C0', '#4DB6AC'] }],
             chloropethRangeUpperbound: [20],
             chloropethRangeLowerbound: [0],
+            style: {
+                    legendTitleColor: '#0D47A1',
+                    legendTitleSize: 15,
+                },
         };
 
         this.europeConfig = {
@@ -119,7 +123,7 @@ class MapChartConfigSample extends Component {
                         </ChartWrapper>
                     </Grid>
                     <Grid item lg={6} sm={12} xs={12}>
-                        <ChartWrapper title={'Europe Map Sample'} chart={'map'} actionBar={false} media>
+                        <ChartWrapper title={'USA Map Sample'} chart={'map'} actionBar={false} media>
                             <div style={{ height: 450 }}>
                                 <VizG config={this.usaConfig} metadata={this.metadata} data={this.data2}
                                     theme={this.props.theme} />
@@ -184,9 +188,13 @@ class MapChartConfigSample extends Component {
                                     <li>
                                         <strong>style</strong> - object containing style attributes of the chart.
                                         <ul>
-                                            <li><strong>legendTitleColor</strong> - Color of the legend Title
+                                            <li><strong>legendTitleColor</strong> - Color of the legend title
                                                 of the chart</li>
                                             <li><strong>legendTextColor</strong> - Color of the legend text
+                                                of the chart</li>
+                                            <li><strong>legendTitleSize</strong> - Font size of the legend title
+                                                of the chart</li>
+                                            <li><strong>legendTextSize</strong> - Font size of the legend text
                                                 of the chart</li>
                                         </ul>
                                     </li>

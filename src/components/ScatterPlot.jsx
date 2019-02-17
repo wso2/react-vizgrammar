@@ -275,6 +275,11 @@ export default class ScatterPlot extends BaseChart {
             });
         });
 
+        const legendColumns = Math.floor(width / 160);
+        const maxLegendItems = Math.floor((height - 100) / 25);
+        const legendOffset = config.legend === true && legendComponents.length > maxLegendItems ?
+            (((Math.ceil(legendComponents.length / legendColumns)) * 30) + 50) : 50;
+
         return (
             <ChartContainer
                 width={this.props.width || width || 800}
@@ -287,6 +292,7 @@ export default class ScatterPlot extends BaseChart {
                 theme={theme}
                 isOrdinal={this.state.isOrdinal}
                 domainPadding={this.state.domainPadding}
+                legendOffset={legendOffset}
             >
                 {chartComponents}
                 {

@@ -161,6 +161,10 @@ export default class LineChart extends BaseChart {
         const { chartComponents, legendComponents } =
             LineChart.getLineChartComponent(chartArray, xScale, dataSets, config, this.handleMouseEvent, ignoreArray,
                 currentTheme);
+        const legendColumns = Math.floor(width / 160);
+        const maxLegendItems = Math.floor((height - 100) / 25);
+        const legendOffset = config.legend === true && legendComponents.length > maxLegendItems ?
+            (((Math.ceil(legendComponents.length / legendColumns)) * 30) + 50) : 50;
 
         return (
             <ChartContainer
@@ -171,6 +175,7 @@ export default class LineChart extends BaseChart {
                 horizontal={BarChart.isHorizontal(config)}
                 yDomain={yDomain}
                 theme={theme}
+                legendOffset={legendOffset}
             >
                 {
                     config.legend === true ?

@@ -189,6 +189,10 @@ export default class AreaChart extends BaseChart {
         const { chartComponents, legendComponents } =
             AreaChart.getAreaChartComponent(chartArray, xScale, dataSets, config, this.handleMouseEvent, ignoreArray,
                 currentTheme);
+        const legendColumns = Math.floor(width / 160);
+        const maxLegendItems = Math.floor((height - 100) / 25);
+        const legendOffset = config.legend === true && legendComponents.length > maxLegendItems ?
+            (((Math.ceil(legendComponents.length / legendColumns)) * 30) + 50) : 50;
 
         return (
             <ChartContainer
@@ -198,6 +202,7 @@ export default class AreaChart extends BaseChart {
                 config={config}
                 yDomain={yDomain}
                 theme={theme}
+                legendOffset={legendOffset}
             >
                 {
                     config.legend === true ?

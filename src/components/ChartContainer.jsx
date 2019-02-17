@@ -30,6 +30,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import lightTheme from './resources/themes/victoryLightTheme';
 import darkTheme from './resources/themes/victoryDarkTheme';
+import ReactToolTip from 'react-tooltip';
 
 /**
  * React component that contains the logic for VictoryChart component.
@@ -58,7 +59,7 @@ export default class ChartContainer extends React.Component {
                     return '';
                 } else if (arr.length && (arr[Number(data) - 1].x).length > (config.axisTickLength ? config.axisTickLength : 13)) {
                     return (arr[Number(data) - 1].x).slice(0, config.axisTickLength ? config.axisTickLength :
-                        10) + '...';
+                        12) + '...';
                 } else {
                     return Number(data) <= arr.length ? arr[Number(data) - 1].x : data;
                 }
@@ -77,12 +78,12 @@ export default class ChartContainer extends React.Component {
     }
 
     render() {
-        const { width, height, xScale,
+        const { width, height, xScale, legendOffset,
             theme, config, horizontal, disableAxes, yDomain, isOrdinal, dataSets, barData, arcChart, xDomain } = this.props;
         const currentTheme = theme === 'light' ? lightTheme : darkTheme;
         let arr = [];
         let xDomainValue = xDomain;
-        const xAxisPaddingBottom = config.style ? config.style.xAxisPaddingBottom || 50 : 50;
+        const xAxisPaddingBottom = config.style ? config.style.xAxisPaddingBottom || legendOffset : legendOffset;
         let domainPadding = this.props.domainPadding || 0;
 
         if (isOrdinal && ((_.findIndex(config.charts, o => o.type === 'bar')) > -1)) {
@@ -113,183 +114,187 @@ export default class ChartContainer extends React.Component {
         }
 
         return (
-            <VictoryChart
-                width={width}
-                height={height}
-                domainPadding={{ x: horizontal ? 20 : domainPadding, y: horizontal ? domainPadding : 20 }}
-                padding={
-                    (() => {
-                        if (config.legend === true || arcChart) {
-                            if (!config.legendOrientation) {return {
-                                left: 100, top: 30, bottom: xAxisPaddingBottom,
-                                right: 180
-                            };}
-                            else if (config.legendOrientation === 'left') {
-                                return { left: 300, top: 30, bottom: xAxisPaddingBottom, right: 30 };
-                            } else if (config.legendOrientation === 'right') {
-                                return { left: 100, top: 30, bottom: xAxisPaddingBottom, right: 180 };
-                            } else if (config.legendOrientation === 'top') {
-                                return { left: 100, top: 100, bottom: xAxisPaddingBottom, right: 30 };
-                            } else if (config.legendOrientation === 'bottom') {
-                                return { left: 100, top: 30, bottom: (100 + xAxisPaddingBottom), right: 30 };
-                            } else return { left: 100, top: 30, bottom: xAxisPaddingBottom, right: 180 };
-                        } else {
-                            return { left: 100, top: 30, bottom: xAxisPaddingBottom, right: 30 };
-                        }
-                    })()
-                }
-                scale={horizontal ? { x: 'linear', y: xScale } : { x: xScale, y: 'linear' }}
-                theme={currentTheme}
-                containerComponent={
-                    this.props.disableContainer ?
-                        config.brush ?
-                            <VictoryZoomContainer
-                                dimension="x"
-                            /> :
-                            <VictoryContainer /> :
-                        config.brush ?
-                            <VictoryZoomContainer
-                                dimension="x"
-                            /> :
-                            <VictoryVoronoiContainer
-                                voronoiDimension="x"
-                                voronoiBlacklist={['blacked']}
-                            />
-                }
-                domain={{ x: config.xDomain ? config.xDomain : xDomainValue, y: config.yDomain ? config.yDomain : yDomain }}
-                style={{ parent: { overflow: 'visible' } }}
+            <div>
+                <VictoryChart
+                    width={width}
+                    height={height}
+                    domainPadding={{ x: horizontal ? 20 : domainPadding, y: horizontal ? domainPadding : 20 }}
+                    padding={
+                        (() => {
+                            if (config.legend === true || arcChart) {
+                                if (!config.legendOrientation) return {
+                                    left: 100, top: 30, bottom: xAxisPaddingBottom, right: 180,
+                                };
+                                else if (config.legendOrientation === 'left') {
+                                    return { left: 300, top: 30, bottom: xAxisPaddingBottom, right: 30 };
+                                } else if (config.legendOrientation === 'right') {
+                                    return { left: 100, top: 30, bottom: xAxisPaddingBottom, right: 180 };
+                                } else if (config.legendOrientation === 'top') {
+                                    return { left: 100, top: 100, bottom: xAxisPaddingBottom, right: 30 };
+                                } else if (config.legendOrientation === 'bottom') {
+                                    return { left: 100, top: 30, bottom: (100 + xAxisPaddingBottom), right: 30 };
+                                } else return { left: 100, top: 30, bottom: xAxisPaddingBottom, right: 180 };
+                            } else {
+                                return { left: 100, top: 30, bottom: xAxisPaddingBottom, right: 30 };
+                            }
+                        })()
+                    }
+                    scale={horizontal ? { x: 'linear', y: xScale } : { x: xScale, y: 'linear' }}
+                    theme={currentTheme}
+                    containerComponent={
+                        this.props.disableContainer ?
+                            config.brush ?
+                                <VictoryZoomContainer
+                                    dimension="x"
+                                /> :
+                                <VictoryContainer /> :
+                            config.brush ?
+                                <VictoryZoomContainer
+                                    dimension="x"
+                                /> :
+                                <VictoryVoronoiContainer
+                                    voronoiDimension="x"
+                                    voronoiBlacklist={['blacked']}
+                                />
+                    }
+                    domain={{ x: config.xDomain ? config.xDomain : xDomainValue, y: config.yDomain ? config.yDomain : yDomain }}
+                    style={{ parent: { overflow: 'visible' } }}
 
-            >
-                {this.props.children}
-                {
-                    disableAxes ?
-                        [
-                            (<VictoryAxis
-                                key="xAxis"
-                                crossAxis
-                                gridComponent={<g />}
-                                tickComponent={<g />}
-                                tickLabelComponent={<g />}
-                                axisComponent={<g />}
-                            />),
-                            (<VictoryAxis
-                                key="yAxis"
-                                dependentAxis
-                                crossAxis
-                                gridComponent={<g />}
-                                tickComponent={<g />}
-                                tickLabelComponent={<g />}
-                                axisComponent={<g />}
-                            />),
-                        ] :
-                        [
-                            (<VictoryAxis
-                                key="xAxis"
-                                crossAxis
-                                theme={currentTheme}
-                                style={{
-                                    axis: {
-                                        stroke: config.style ?
-                                            config.style.axisColor :
-                                            currentTheme.axis.style.axis.stroke,
-                                    },
-                                    axisLabel: {
-                                        fill: config.style ?
-                                            config.style.axisLabelColor :
-                                            currentTheme.axis.style.axisLabel.fill,
-                                    },
-                                }}
-                                gridComponent={config.disableVerticalGrid ?
-                                    <g /> :
-                                    <line
-                                        style={{
+                >
+                    {this.props.children}
+                    {
+                        disableAxes ?
+                            [
+                                (<VictoryAxis
+                                    key="xAxis"
+                                    crossAxis
+                                    gridComponent={<g />}
+                                    tickComponent={<g />}
+                                    tickLabelComponent={<g />}
+                                    axisComponent={<g />}
+                                />),
+                                (<VictoryAxis
+                                    key="yAxis"
+                                    dependentAxis
+                                    crossAxis
+                                    gridComponent={<g />}
+                                    tickComponent={<g />}
+                                    tickLabelComponent={<g />}
+                                    axisComponent={<g />}
+                                />),
+                            ] :
+                            [
+                                (<VictoryAxis
+                                    key="xAxis"
+                                    crossAxis
+                                    theme={currentTheme}
+                                    style={{
+                                        axis: {
                                             stroke: config.style ?
-                                                config.style.gridColor || currentTheme.axis.style.grid.stroke :
-                                                currentTheme.axis.style.grid.stroke,
-                                            strokeOpacity: currentTheme.axis.style.grid.strokeOpacity,
-                                            fill: currentTheme.axis.style.grid.fill,
-                                        }}
-                                    />
-                                }
-                                label={
-                                    horizontal ?
-                                        config.yAxisLabel || ((config.charts.length > 1 ? '' : config.charts[0].y)) :
-                                        config.xAxisLabel || config.x
-                                }
-                                tickFormat={horizontal ? null : this.xAxisTickFormat(xScale, config, isOrdinal, arr)}
-                                standalone={false}
-                                tickLabelComponent={
-                                    <VictoryLabel
-                                        angle={config.style ? config.style.xAxisTickAngle || 0 : 0}
-                                        theme={currentTheme}
-                                        style={{
+                                                config.style.axisColor :
+                                                currentTheme.axis.style.axis.stroke,
+                                        },
+                                        axisLabel: {
                                             fill: config.style ?
-                                                config.style.tickLabelColor : currentTheme.axis.style.tickLabels.fill,
-                                        }}
-                                    />
-                                }
-                                tickCount={(isOrdinal && config.charts[0].type === 'bar') ? arr.length :
-                                    config.xAxisTickCount}
-                                counter={this.state.counter}
-                            />),
-                            (<VictoryAxis
-                                key="yAxis"
-                                dependentAxis
-                                crossAxis
-                                theme={currentTheme}
-                                style={{
-                                    axis: {
-                                        stroke: config.style ?
-                                            config.style.axisColor :
-                                            currentTheme.axis.style.axis.stroke,
-                                    },
-                                    axisLabel: {
-                                        fill: config.style ?
-                                            config.style.axisLabelColor :
-                                            currentTheme.axis.style.axisLabel.fill,
-                                    },
-                                }}
-                                gridComponent={
-                                    config.disableHorizontalGrid ?
+                                                config.style.axisLabelColor :
+                                                currentTheme.axis.style.axisLabel.fill,
+                                        },
+                                    }}
+                                    gridComponent={config.disableVerticalGrid ?
                                         <g /> :
                                         <line
                                             style={{
-                                                stroke: config.gridColor || currentTheme.axis.style.grid.stroke,
+                                                stroke: config.style ?
+                                                    config.style.gridColor || currentTheme.axis.style.grid.stroke :
+                                                    currentTheme.axis.style.grid.stroke,
                                                 strokeOpacity: currentTheme.axis.style.grid.strokeOpacity,
                                                 fill: currentTheme.axis.style.grid.fill,
                                             }}
                                         />
-                                }
-                                label={
-                                    horizontal ?
-                                        config.xAxisLabel || config.x :
-                                        config.yAxisLabel || (config.charts.length > 1 ? '' : config.charts[0].y)
-                                }
-                                standalone={false}
-                                tickLabelComponent={
-                                    <VictoryLabel
-                                        angle={config.style ? config.style.yAxisTickAngle || 0 : 0}
-                                        theme={currentTheme}
-                                        style={{
+                                    }
+                                    label={
+                                        horizontal ?
+                                            config.yAxisLabel || ((config.charts.length > 1 ? '' : config.charts[0].y)) :
+                                            config.xAxisLabel || config.x
+                                    }
+                                    axisLabelComponent={<VictoryLabel dy={0} />}
+                                    tickFormat={horizontal ? null : this.xAxisTickFormat(xScale, config, isOrdinal, arr)}
+                                    standalone={false}
+                                    tickLabelComponent={
+                                        <VictoryLabel
+                                            angle={config.style ? config.style.xAxisTickAngle || 0 : 0}
+                                            theme={currentTheme}
+                                            textAnchor={'middle'}
+                                            style={{
+                                                fill: config.style ?
+                                                    config.style.tickLabelColor : currentTheme.axis.style.tickLabels.fill,
+                                            }}
+                                        />
+                                    }
+                                    tickCount={(isOrdinal && config.charts[0].type === 'bar') ? arr.length :
+                                        config.xAxisTickCount}
+                                    counter={this.state.counter}
+                                />),
+                                (<VictoryAxis
+                                    key="yAxis"
+                                    dependentAxis
+                                    crossAxis
+                                    theme={currentTheme}
+                                    style={{
+                                        axis: {
+                                            stroke: config.style ?
+                                                config.style.axisColor :
+                                                currentTheme.axis.style.axis.stroke,
+                                        },
+                                        axisLabel: {
                                             fill: config.style ?
-                                                config.style.tickLabelColor :
-                                                currentTheme.axis.style.tickLabels.fill,
-                                        }}
-                                    />
-                                }
-                                tickFormat={!horizontal ? null : this.xAxisTickFormat(xScale, config, isOrdinal, arr)}
-                                axisLabelComponent={
-                                    <VictoryLabel
-                                        angle={0}
-                                        x={config.legendOrientation === 'left' ? 300 : 100}
-                                        y={25}
-                                    />
-                                }
-                                tickCount={config.yAxisTickCount}
-                            />),
-                        ]
-                }
-            </VictoryChart>
+                                                config.style.axisLabelColor :
+                                                currentTheme.axis.style.axisLabel.fill,
+                                        },
+                                    }}
+                                    gridComponent={
+                                        config.disableHorizontalGrid ?
+                                            <g /> :
+                                            <line
+                                                style={{
+                                                    stroke: config.gridColor || currentTheme.axis.style.grid.stroke,
+                                                    strokeOpacity: currentTheme.axis.style.grid.strokeOpacity,
+                                                    fill: currentTheme.axis.style.grid.fill,
+                                                }}
+                                            />
+                                    }
+                                    label={
+                                        horizontal ?
+                                            config.xAxisLabel || config.x :
+                                            config.yAxisLabel || (config.charts.length > 1 ? '' : config.charts[0].y)
+                                    }
+                                    standalone={false}
+                                    tickLabelComponent={
+                                        <VictoryLabel
+                                            angle={config.style ? config.style.yAxisTickAngle || 0 : 0}
+                                            theme={currentTheme}
+                                            style={{
+                                                fill: config.style ?
+                                                    config.style.tickLabelColor :
+                                                    currentTheme.axis.style.tickLabels.fill,
+                                            }}
+                                        />
+                                    }
+                                    tickFormat={!horizontal ? null : this.xAxisTickFormat(xScale, config, isOrdinal,arr)}
+                                    axisLabelComponent={
+                                        <VictoryLabel
+                                            angle={0}
+                                            x={config.legendOrientation === 'left' ? 300 : 100}
+                                            y={25}
+                                        />
+                                    }
+                                    tickCount={config.yAxisTickCount}
+                                />),
+                            ]
+                    }
+                </VictoryChart>
+                <ReactToolTip />
+            </div>
         );
     }
 }
