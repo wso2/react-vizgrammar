@@ -132,9 +132,10 @@ export default class ArcChart extends BaseChart {
         const { config, theme, height, width } = this.props;
         const { pieChartData, random } = this.state;
         const currentTheme = theme === 'light' ? lightTheme : darkTheme;
-        const legendOffset = config.legend === true && pieChartData.length > 12 ?
-            ((Math.ceil(pieChartData.length / (config.style ? config.style.legendColumns ||
-                currentTheme.legend.style.columns : currentTheme.legend.style.columns)) * 28) + 70) : 50;
+        const legendColumns = Math.floor(width / 160);
+        const maxLegendItems = Math.floor((height - 100) / 25);
+        const legendOffset = config.legend === true && pieChartData.length > maxLegendItems ?
+            (((Math.ceil(pieChartData.length / legendColumns)) * 30) + 50) : 50;
 
         return (
             <ChartContainer

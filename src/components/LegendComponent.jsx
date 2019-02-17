@@ -17,7 +17,8 @@
  */
 
 import React from 'react';
-import { VictoryLegend, VictoryPortal, VictoryContainer, VictoryLabel } from 'victory';
+import { VictoryLegend, VictoryPortal, VictoryContainer } from 'victory';
+import CustomLegend from './CustomLegend';
 
 /**
  * Class to handle the visualization of legends.
@@ -25,31 +26,32 @@ import { VictoryLegend, VictoryPortal, VictoryContainer, VictoryLabel } from 'vi
 export default class LegendComponent extends React.Component {
     render() {
         const { config, height, width, legendItems, interaction, theme } = this.props;
+        const maxLegendItems = Math.floor((height - 100) / 25);
+        const legendColumns = Math.floor(width / 160);
         return (
             <VictoryPortal>
                 <VictoryLegend
                     x={
                         (() => {
-                            if (!config.legendOrientation && legendItems.length < 13) {
+                            if (!config.legendOrientation && legendItems.length < maxLegendItems) {
                                 return (width - (150 + (config.legendOffset ? config.legendOffset : 0)));
                             } else if (config.legendOrientation === 'right') {
                                 return (width - (150 + (config.legendOffset ? config.legendOffset : 0)));
                             } else if (config.legendOrientation === 'left') {
                                 return config.legendOffset ? config.legendOffset : 0;
-                            } else if (legendItems.length > 12) {
+                            } else if (legendItems.length > (maxLegendItems - 1)) {
                                 return config.legendOffset ? config.legendOffset : 20;
                             } else return config.legendOffset ? config.legendOffset : 100;
                         })()
                     }
                     y={
                         (() => {
-                            if (!config.legendOrientation && legendItems.length < 13) return 0;
+                            if (!config.legendOrientation && legendItems.length < maxLegendItems) return 0;
                             else if (config.legendOrientation === 'top') {
                                 return 0;
-                            } else if (config.legendOrientation === 'bottom' || legendItems.length > 12) {
-                                return height - (Math.ceil(legendItems.length / (config.style ?
-                                    config.style.legendColumns || theme.legend.style.columns :
-                                    theme.legend.style.columns)) * 30);
+                            } else if (config.legendOrientation === 'bottom' || legendItems.length >
+                                (maxLegendItems - 1)) {
+                                return height - (Math.ceil(legendItems.length / legendColumns) * 30);
                             } else return 0;
                         })()
                     }
@@ -61,7 +63,7 @@ export default class LegendComponent extends React.Component {
                     orientation={
                         !config.legendOrientation ?
                             (() => {
-                                if (legendItems.length > 12 ) {
+                                if (legendItems.length > (maxLegendItems - 1) ) {
                                     return 'horizontal';
                                 } else {
                                     return 'vertical';
@@ -87,8 +89,7 @@ export default class LegendComponent extends React.Component {
                         symbol: { fill: '#333' },
                     }]}
                     itemsPerRow={config.legendOrientation === 'top' || config.legendOrientation === 'bottom' ||
-                        legendItems.length > 12 ? (config.style ? (config.style.legendColumns ||
-                        theme.legend.style.columns) : theme.legend.style.columns) : null}
+                        legendItems.length > maxLegendItems ? legendColumns : null}
                     events={[
                         {
                             target: 'data',
@@ -100,34 +101,13 @@ export default class LegendComponent extends React.Component {
                         },
                     ]}
                     labelComponent={
-                        <VictoryLabel
-                            style={{
-                                fontSize: config.style ? (config.style.legendTextSize ||
-                                    theme.legend.style.labels.fontSize) : theme.legend.style.labels.fontSize,
-                                fill: config.style ? config.style.legendTextColor : theme.legend.style.labels.fill,
-                            }}
-                            text={(datum) => {
-                                return this.breakLegendLines(
-                                    config.style ? config.style.legendTextBreakLength || 16 : 16, datum.name);
-                            }}
+                        <CustomLegend
+                            config={config}
+                            theme={theme}
                         />
                     }
                 />
             </VictoryPortal>
         );
-    }
-
-    breakLegendLines(characterLength, text) {
-        if (text.length > characterLength) {
-            const ret = [];
-
-            for (let i = 0, len = text.length; i < len; i += characterLength) {
-                ret.push(text.substr(i, characterLength));
-            }
-
-            return ret.join('\n');
-        } else {
-            return text;
-        }
     }
 }

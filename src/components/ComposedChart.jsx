@@ -103,9 +103,10 @@ export default class ComposedChart extends BaseChart {
             }
         });
 
-        const legendOffset = config.legend === true && finalLegend.length > 12 ?
-            ((Math.ceil(finalLegend.length / (config.style ? config.style.legendColumns ||
-                currentTheme.legend.style.columns : currentTheme.legend.style.columns)) * 28) + 70) : 50;
+        const legendColumns = Math.floor(width / 160);
+        const maxLegendItems = Math.floor((height - 100) / 25);
+        const legendOffset = config.legend === true && finalLegend.length > maxLegendItems ?
+            (((Math.ceil(finalLegend.length / legendColumns)) * 30) + 50) : 50;
 
         return (
             <ChartContainer

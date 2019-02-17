@@ -161,9 +161,10 @@ export default class LineChart extends BaseChart {
         const { chartComponents, legendComponents } =
             LineChart.getLineChartComponent(chartArray, xScale, dataSets, config, this.handleMouseEvent, ignoreArray,
                 currentTheme);
-        const legendOffset = config.legend === true && legendComponents.length > 12 ?
-            ((Math.ceil(legendComponents.length / (config.style ? config.style.legendColumns ||
-                currentTheme.legend.style.columns : currentTheme.legend.style.columns)) * 28) + 70) : 50;
+        const legendColumns = Math.floor(width / 160);
+        const maxLegendItems = Math.floor((height - 100) / 25);
+        const legendOffset = config.legend === true && legendComponents.length > maxLegendItems ?
+            (((Math.ceil(legendComponents.length / legendColumns)) * 30) + 50) : 50;
 
         return (
             <ChartContainer
