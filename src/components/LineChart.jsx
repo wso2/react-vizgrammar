@@ -164,7 +164,7 @@ export default class LineChart extends BaseChart {
         const legendColumns = Math.floor(width / 160);
         const maxLegendItems = Math.floor((height - 100) / 25);
         const legendOffset = config.legend === true && legendComponents.length > maxLegendItems ?
-            (((Math.ceil(legendComponents.length / legendColumns)) * 30) + 50) : 50;
+            (((Math.ceil(legendComponents.length / legendColumns)) * 30) + 50) : 0;
 
         return (
             <ChartContainer

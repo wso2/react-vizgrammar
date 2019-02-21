@@ -83,8 +83,12 @@ export default class ChartContainer extends React.Component {
         const currentTheme = theme === 'light' ? lightTheme : darkTheme;
         let arr = [];
         let xDomainValue = xDomain;
-        const xAxisPaddingBottom = config.style ? config.style.xAxisPaddingBottom || legendOffset : legendOffset;
+        let xAxisPaddingBottom = config.style ? config.style.xAxisPaddingBottom || legendOffset : legendOffset;
         let domainPadding = this.props.domainPadding || 0;
+
+        if (config.style ? !!config.style.xAxisTickAngle : false) {
+            xAxisPaddingBottom = xAxisPaddingBottom + 50;
+        }
 
         if (isOrdinal && ((_.findIndex(config.charts, o => o.type === 'bar')) > -1)) {
             arr = dataSets[Object.keys(dataSets)[0]] || [];
@@ -217,14 +221,24 @@ export default class ChartContainer extends React.Component {
                                             config.yAxisLabel || ((config.charts.length > 1 ? '' : config.charts[0].y)) :
                                             config.xAxisLabel || config.x
                                     }
-                                    axisLabelComponent={<VictoryLabel dy={0} />}
+                                    axisLabelComponent={
+                                        <VictoryLabel
+                                            dy={(config.style ? !!config.style.xAxisTickAngle : false ) ? 50 : 0}
+                                            style={{
+                                                fill: config.style ?
+                                                    config.style.axisLabelColor :
+                                                    currentTheme.axis.style.axisLabel.fill,
+                                            }}
+                                        />
+                                    }
                                     tickFormat={horizontal ? null : this.xAxisTickFormat(xScale, config, isOrdinal, arr)}
                                     standalone={false}
                                     tickLabelComponent={
                                         <VictoryLabel
                                             angle={config.style ? config.style.xAxisTickAngle || 0 : 0}
                                             theme={currentTheme}
-                                            textAnchor={'middle'}
+                                            textAnchor={config.style ? config.style.xAxisTickAngle ? 'start' :
+                                                'middle' : 'middle'}
                                             style={{
                                                 fill: config.style ?
                                                     config.style.tickLabelColor : currentTheme.axis.style.tickLabels.fill,
