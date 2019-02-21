@@ -106,7 +106,7 @@ export default class ComposedChart extends BaseChart {
         const legendColumns = Math.floor(width / 160);
         const maxLegendItems = Math.floor((height - 100) / 25);
         const legendOffset = config.legend === true && finalLegend.length > maxLegendItems ?
-            (((Math.ceil(finalLegend.length / legendColumns)) * 30) + 50) : 50;
+            (((Math.ceil(finalLegend.length / legendColumns)) * 30) + 50) : 0;
 
         return (
             <ChartContainer

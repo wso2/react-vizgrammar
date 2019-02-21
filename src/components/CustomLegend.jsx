@@ -30,9 +30,9 @@ export default class CustomLegend extends React.Component {
 
     static defaultEvents = VictoryTooltip.defaultEvents;
     render() {
-        const { config, theme } = this.props;
+        const { config, theme, datum } = this.props;
         return (
-            <g data-tip={this.props.text}>
+            <g data-tip={datum.initialName}>
                 <VictoryLabel
                     {...this.props}
                     style={{
@@ -40,20 +40,8 @@ export default class CustomLegend extends React.Component {
                             theme.legend.style.labels.fontSize) : theme.legend.style.labels.fontSize,
                         fill: config.style ? config.style.legendTextColor : theme.legend.style.labels.fill,
                     }}
-                    text={(datum) => {
-                        return this.trimLegendLabel(
-                            config.style ? config.style.legendTextBreakLength || 16 : 16, datum.name);
-                    }}
                 />
             </g>
         );
-    }
-
-    trimLegendLabel(characterLength, text) {
-        if (text.length > characterLength) {
-            return text.slice(0, 6) + '...' + text.slice(-(characterLength - 7));
-        } else {
-            return text;
-        }
     }
 }
