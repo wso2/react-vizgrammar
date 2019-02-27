@@ -38,7 +38,8 @@ export default class CustomLegend extends React.Component {
                     style={{
                         fontSize: config.style ? (config.style.legendTextSize ||
                             theme.legend.style.labels.fontSize) : theme.legend.style.labels.fontSize,
-                        fill: config.style ? config.style.legendTextColor : theme.legend.style.labels.fill,
+                        fill: config.style ? config.style.legendTextColor || theme.legend.style.labels.fill :
+                            theme.legend.style.labels.fill,
                     }}
                 />
             </g>

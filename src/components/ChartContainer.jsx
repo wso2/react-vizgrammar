@@ -226,7 +226,7 @@ export default class ChartContainer extends React.Component {
                                             dy={(config.style ? !!config.style.xAxisTickAngle : false ) ? 50 : 0}
                                             style={{
                                                 fill: config.style ?
-                                                    config.style.axisLabelColor :
+                                                    config.style.axisLabelColor || currentTheme.axis.style.axisLabel.fill :
                                                     currentTheme.axis.style.axisLabel.fill,
                                             }}
                                         />
@@ -241,7 +241,8 @@ export default class ChartContainer extends React.Component {
                                                 'middle' : 'middle'}
                                             style={{
                                                 fill: config.style ?
-                                                    config.style.tickLabelColor : currentTheme.axis.style.tickLabels.fill,
+                                                    config.style.tickLabelColor || currentTheme.axis.style.tickLabels.fill :
+                                                    currentTheme.axis.style.tickLabels.fill,
                                             }}
                                         />
                                     }
@@ -257,12 +258,12 @@ export default class ChartContainer extends React.Component {
                                     style={{
                                         axis: {
                                             stroke: config.style ?
-                                                config.style.axisColor :
+                                                config.style.axisColor || currentTheme.axis.style.axis.stroke :
                                                 currentTheme.axis.style.axis.stroke,
                                         },
                                         axisLabel: {
                                             fill: config.style ?
-                                                config.style.axisLabelColor :
+                                                config.style.axisLabelColor || currentTheme.axis.style.axisLabel.fill :
                                                 currentTheme.axis.style.axisLabel.fill,
                                         },
                                     }}
@@ -289,7 +290,7 @@ export default class ChartContainer extends React.Component {
                                             theme={currentTheme}
                                             style={{
                                                 fill: config.style ?
-                                                    config.style.tickLabelColor :
+                                                    config.style.tickLabelColor || currentTheme.axis.style.tickLabels.fill :
                                                     currentTheme.axis.style.tickLabels.fill,
                                             }}
                                         />
