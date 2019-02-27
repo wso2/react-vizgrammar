@@ -123,7 +123,7 @@ export default class LegendComponent extends React.Component {
         if (text.length > characterLength) {
             return text.slice(0, 6) + '...' + text.slice(-(characterLength - 7));
         } else {
-            return text;
+            return text + new Array(16 - text.length).join(' ');
         }
     }
 }
