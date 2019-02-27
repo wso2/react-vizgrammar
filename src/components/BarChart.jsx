@@ -229,7 +229,7 @@ export default class BarChart extends BaseChart {
                         target: 'data',
                         eventHandlers: {
                             onClick: () => {
-                                return [{ target: 'data', mutation: onClick }];
+                                return [{ target: 'data', mutation: props => onClick(props) }];
                             },
                         },
                     },

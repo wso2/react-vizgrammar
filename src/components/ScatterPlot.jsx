@@ -265,7 +265,7 @@ export default class ScatterPlot extends BaseChart {
                             target: 'data',
                             eventHandlers: {
                                 onClick: () => {
-                                    return [{ target: 'data', mutation: this.handleMouseClickEvent }];
+                                    return [{ target: 'data', mutation: props => this.handleMouseClickEvent(props) }];
                                 },
                             },
                         }]}
