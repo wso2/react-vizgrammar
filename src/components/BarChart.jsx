@@ -322,6 +322,7 @@ export default class BarChart extends BaseChart {
                 dataSets={dataSets}
                 barData={{ barWidth, dataSetLength, fullBarWidth }}
                 legendOffset={legendOffset}
+                legendItems={legendComponents}
             >
                 {
                     config.legend === true ?

@@ -148,6 +148,7 @@ export default class ArcChart extends BaseChart {
                 disableContainer
                 arcChart={!config.percentage}
                 legendOffset={legendOffset}
+                legendItems={pieChartData.map(data => ({ name: data.x, symbol: data.symbol }))}
             >
                 <VictoryPie
                     height={height}

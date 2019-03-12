@@ -78,16 +78,27 @@ export default class ChartContainer extends React.Component {
     }
 
     render() {
-        const { width, height, xScale, legendOffset,
+        const { width, height, xScale, legendOffset,legendItems,
             theme, config, horizontal, disableAxes, yDomain, isOrdinal, dataSets, barData, arcChart, xDomain } = this.props;
         const currentTheme = theme === 'light' ? lightTheme : darkTheme;
+        const maxLegendItems = Math.floor((height - 100) / 25);
         let arr = [];
         let xDomainValue = xDomain;
         let xAxisPaddingBottom = config.style ? config.style.xAxisPaddingBottom || legendOffset : legendOffset;
         let domainPadding = this.props.domainPadding || 0;
 
         if (config.style ? !!config.style.xAxisTickAngle : false) {
-            xAxisPaddingBottom = xAxisPaddingBottom + 50;
+            if (xAxisPaddingBottom == 0 && config.legendOrientation === 'bottom'){
+                xAxisPaddingBottom = 120;
+            } else {
+                xAxisPaddingBottom = xAxisPaddingBottom + 50;
+            }
+        } else if ( xAxisPaddingBottom == 0) {
+            if (config.legendOrientation === 'bottom') {
+                xAxisPaddingBottom = 80;
+            } else {
+                xAxisPaddingBottom = 50;
+            }
         }
 
         if (isOrdinal && ((_.findIndex(config.charts, o => o.type === 'bar')) > -1)) {
@@ -126,18 +137,19 @@ export default class ChartContainer extends React.Component {
                     padding={
                         (() => {
                             if (config.legend === true || arcChart) {
-                                if (!config.legendOrientation) return {
-                                    left: 100, top: 30, bottom: xAxisPaddingBottom, right: 180,
-                                };
+                                if (!config.legendOrientation && legendItems ? legendItems.length < maxLegendItems : false)
+                                    return {
+                                        left: 100, top: 30, bottom: xAxisPaddingBottom, right: 180,
+                                    };
                                 else if (config.legendOrientation === 'left') {
-                                    return { left: 300, top: 30, bottom: xAxisPaddingBottom, right: 30 };
+                                    return { left: 210, top: 30, bottom: xAxisPaddingBottom, right: 30 };
                                 } else if (config.legendOrientation === 'right') {
                                     return { left: 100, top: 30, bottom: xAxisPaddingBottom, right: 180 };
                                 } else if (config.legendOrientation === 'top') {
-                                    return { left: 100, top: 100, bottom: xAxisPaddingBottom, right: 30 };
+                                    return { left: 100, top: xAxisPaddingBottom, bottom: 50, right: 30 };
                                 } else if (config.legendOrientation === 'bottom') {
-                                    return { left: 100, top: 30, bottom: (100 + xAxisPaddingBottom), right: 30 };
-                                } else return { left: 100, top: 30, bottom: xAxisPaddingBottom, right: 180 };
+                                    return { left: 100, top: 30, bottom: (xAxisPaddingBottom), right: 30 };
+                                } else return { left: 100, top: 30, bottom: xAxisPaddingBottom, right: 30 };
                             } else {
                                 return { left: 100, top: 30, bottom: xAxisPaddingBottom, right: 30 };
                             }
@@ -299,8 +311,8 @@ export default class ChartContainer extends React.Component {
                                     axisLabelComponent={
                                         <VictoryLabel
                                             angle={0}
-                                            x={config.legendOrientation === 'left' ? 300 : 100}
-                                            y={25}
+                                            x={config.legendOrientation === 'left' ? 210 : 100}
+                                            y={config.legendOrientation === 'top' ? xAxisPaddingBottom : 25}
                                         />
                                     }
                                     tickCount={config.yAxisTickCount}

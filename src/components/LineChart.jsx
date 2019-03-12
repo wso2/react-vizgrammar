@@ -176,6 +176,7 @@ export default class LineChart extends BaseChart {
                 yDomain={yDomain}
                 theme={theme}
                 legendOffset={legendOffset}
+                legendItems={legendComponents}
             >
                 {
                     config.legend === true ?

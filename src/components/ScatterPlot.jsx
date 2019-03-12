@@ -293,6 +293,7 @@ export default class ScatterPlot extends BaseChart {
                 isOrdinal={this.state.isOrdinal}
                 domainPadding={this.state.domainPadding}
                 legendOffset={legendOffset}
+                legendItems={legendComponents}
             >
                 {chartComponents}
                 {
