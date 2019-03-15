@@ -210,7 +210,7 @@ export default class ArcChart extends BaseChart {
                     config.percentage ?
                         <VictoryLabel
                             textAnchor="middle"
-                            x="55%"
+                            x="50%"
                             y="48%"
                             text={`${Math.round(pieChartData.length > 0 ? pieChartData[0].y : 0)}%`}
                             style={{

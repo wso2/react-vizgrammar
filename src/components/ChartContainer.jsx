@@ -154,7 +154,7 @@ export default class ChartContainer extends React.Component {
                     domainPadding={{ x: horizontal ? 20 : domainPadding, y: horizontal ? domainPadding : 20 }}
                     padding={
                         (() => {
-                            if (config.legend === true || arcChart) {
+                            if (config.legend === true) {
                                 if (!config.legendOrientation && legendItems ? legendItems.length < maxLegendItems : false)
                                     return {
                                         left: 100, top: 30, bottom: xAxisPaddingBottom, right: 180,
@@ -164,12 +164,20 @@ export default class ChartContainer extends React.Component {
                                 } else if (config.legendOrientation === 'right') {
                                     return { left: 100, top: 30, bottom: xAxisPaddingBottom, right: 180 };
                                 } else if (config.legendOrientation === 'top') {
-                                    return { left: 100, top: xAxisPaddingBottom, bottom: 50, right: 30 };
+                                    return { left: 100, top: xAxisPaddingBottom, bottom: 50,
+                                        right: ((_.findIndex(config.charts, o => o.type === 'arc')) > -1) ?
+                                            100 : 30 };
                                 } else if (config.legendOrientation === 'bottom') {
-                                    return { left: 100, top: 30, bottom: (xAxisPaddingBottom), right: 30 };
-                                } else return { left: 100, top: 30, bottom: xAxisPaddingBottom, right: 30 };
+                                    return { left: 100, top: 30, bottom: (xAxisPaddingBottom),
+                                        right: ((_.findIndex(config.charts, o => o.type === 'arc')) > -1) ?
+                                            100 : 30 };
+                                } else return { left: 100, top: 30, bottom: xAxisPaddingBottom,
+                                    right: ((_.findIndex(config.charts, o => o.type === 'arc')) > -1) ?
+                                        100 : 30 };
                             } else {
-                                return { left: 100, top: 30, bottom: xAxisPaddingBottom, right: 30 };
+                                return { left: 100, top: 30, bottom: xAxisPaddingBottom,
+                                    right: ((_.findIndex(config.charts, o => o.type === 'arc')) > -1) ?
+                                        100 : 30 };
                             }
                         })()
                     }
