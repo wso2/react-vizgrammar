@@ -31,6 +31,7 @@ import _ from 'lodash';
 import lightTheme from './resources/themes/victoryLightTheme';
 import darkTheme from './resources/themes/victoryDarkTheme';
 import ReactToolTip from 'react-tooltip';
+import CustomXaxisLabel from './CustomXaxisLabel';
 
 /**
  * React component that contains the logic for VictoryChart component.
@@ -53,13 +54,10 @@ export default class ChartContainer extends React.Component {
             return (date) => {
                 return timeFormat(config.timeFormat)(new Date(date));
             };
-        } else if (isOrdinal && config.charts[0].type === 'bar') {
+        } else if (isOrdinal) {
             return (data) => {
                 if ((data - Math.floor(data)) !== 0) {
                     return '';
-                } else if (arr.length && (arr[Number(data) - 1].x).length > (config.axisTickLength ? config.axisTickLength : 13)) {
-                    return (arr[Number(data) - 1].x).slice(0, config.axisTickLength ? config.axisTickLength :
-                        12) + '...';
                 } else {
                     return Number(data) <= arr.length ? arr[Number(data) - 1].x : data;
                 }
@@ -83,11 +81,31 @@ export default class ChartContainer extends React.Component {
         const currentTheme = theme === 'light' ? lightTheme : darkTheme;
         const maxLegendItems = Math.floor((height - 100) / 25);
         let arr = [];
+        let arrTickLabel = [];
+        let tickAngle = 0;
         let xDomainValue = xDomain;
         let xAxisPaddingBottom = config.style ? config.style.xAxisPaddingBottom || legendOffset : legendOffset;
         let domainPadding = this.props.domainPadding || 0;
 
-        if (config.style ? !!config.style.xAxisTickAngle : false) {
+        if (isOrdinal) {
+            Object.keys(dataSets).forEach(function(e) {
+                dataSets[e].forEach(function(t) {
+                    Object.keys(t).forEach(function(k){
+                        if (k === "x") {
+                            if (!arrTickLabel.includes(t[k])) {
+                                arrTickLabel.push(t[k])
+                            }
+                        }
+                    });
+                });
+            });
+        }
+
+        if (arrTickLabel.toString().length * 7.5 > (width - 100)) {
+            tickAngle = 45;
+        }
+
+        if ((config.style && config.style.xAxisTickAngle) || tickAngle === 45) {
             if (xAxisPaddingBottom == 0 && config.legendOrientation === 'bottom'){
                 xAxisPaddingBottom = 120;
             } else {
@@ -235,7 +253,7 @@ export default class ChartContainer extends React.Component {
                                     }
                                     axisLabelComponent={
                                         <VictoryLabel
-                                            dy={(config.style ? !!config.style.xAxisTickAngle : false ) ? 50 : 0}
+                                            dy={(config.style && config.style.xAxisTickAngle) || tickAngle === 45 ? 50 : 0}
                                             style={{
                                                 fill: config.style ?
                                                     config.style.axisLabelColor || currentTheme.axis.style.axisLabel.fill :
@@ -246,16 +264,10 @@ export default class ChartContainer extends React.Component {
                                     tickFormat={horizontal ? null : this.xAxisTickFormat(xScale, config, isOrdinal, arr)}
                                     standalone={false}
                                     tickLabelComponent={
-                                        <VictoryLabel
-                                            angle={config.style ? config.style.xAxisTickAngle || 0 : 0}
+                                        <CustomXaxisLabel
+                                            config={config}
                                             theme={currentTheme}
-                                            textAnchor={config.style ? config.style.xAxisTickAngle ? 'start' :
-                                                'middle' : 'middle'}
-                                            style={{
-                                                fill: config.style ?
-                                                    config.style.tickLabelColor || currentTheme.axis.style.tickLabels.fill :
-                                                    currentTheme.axis.style.tickLabels.fill,
-                                            }}
+                                            tickAngle={tickAngle}
                                         />
                                     }
                                     tickCount={(isOrdinal && config.charts[0].type === 'bar') ? arr.length :
