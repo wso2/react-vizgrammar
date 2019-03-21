@@ -32,6 +32,7 @@ import lightTheme from './resources/themes/victoryLightTheme';
 import darkTheme from './resources/themes/victoryDarkTheme';
 import ReactToolTip from 'react-tooltip';
 import CustomXaxisLabel from './CustomXaxisLabel';
+import CustomYaxisLabel from './CustomYaxisLabel';
 
 /**
  * React component that contains the logic for VictoryChart component.
@@ -317,14 +318,9 @@ export default class ChartContainer extends React.Component {
                                     }
                                     standalone={false}
                                     tickLabelComponent={
-                                        <VictoryLabel
-                                            angle={config.style ? config.style.yAxisTickAngle || 0 : 0}
+                                        <CustomYaxisLabel
+                                            config={config}
                                             theme={currentTheme}
-                                            style={{
-                                                fill: config.style ?
-                                                    config.style.tickLabelColor || currentTheme.axis.style.tickLabels.fill :
-                                                    currentTheme.axis.style.tickLabels.fill,
-                                            }}
                                         />
                                     }
                                     tickFormat={!horizontal ? null : this.xAxisTickFormat(xScale, config, isOrdinal,arr)}
