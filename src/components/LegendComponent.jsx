@@ -96,8 +96,7 @@ export default class LegendComponent extends React.Component {
                         name: 'undefined',
                         symbol: { fill: '#333' },
                     }]}
-                    itemsPerRow={config.legendOrientation === 'top' || config.legendOrientation === 'bottom' ||
-                        legendItems.length > maxLegendItems ? legendColumns : null}
+                    itemsPerRow={legendItems.length > maxLegendItems ? legendColumns : null}
                     events={[
                         {
                             target: 'data',
