@@ -14,7 +14,7 @@ Where the props?
 - `data` is the array of data sets fed to the charts.
 - `metadata` is the JSON object that contains information about the provided dataset.
 
-checkout the [samples and documentation](https://wso2.github.io/react-vizgrammar)
+Checkout the [samples and documentation](https://wso2.github.io/react-vizgrammar).
 
 ### Chart `config` prop
 Users have to provide parameters for the widget using config object in order to create the chart type they require. It is a JSON object that has a well defined configuration attributes to customize the chart.
@@ -23,7 +23,7 @@ The following is a basic configuration to plot a line chart:
 ```javascript
     let config = {
         x : "rpm",
-        charts : [{type: "line",  y : "torque", color: "EngineType"}],
+        charts : [{type: "line", y : "torque", color: "EngineType"}],
         maxLength: 10,
         width: 400,
         height: 200
@@ -38,7 +38,7 @@ Once the `config` is provided, user can provide a dataset to visualize the chart
     };
 ```
 
-`metadata.names` is an array consists of column names/fields of the table and `metadata.types` contains their types 
+`metadata.names` is an array which consists of column names/fields of the table and `metadata.types` contains their types 
 (ordinal, time or linear), `names` and `types` are aligned together in a way that "Column1" => 'ordinal' and "Column2" => 'linear' and so on.
 
 ```javascript
@@ -47,13 +47,13 @@ Once the `config` is provided, user can provide a dataset to visualize the chart
         ["value2", numericValue2,...],
     ];
 ```
-`data` collection of arrays of data rows. Single row is stored as an array and their element order follows the order of `metadata.names`.
+`data` is a collection of arrays of data rows. Each row is stored as an array and their element order follows the order of `metadata.names`.
 
 Sample data table would be like following:
 ```javascript
     metadata = {
-        "names" : ["rpm","torque","horsepower", "EngineType"],
-        "types" : ["linear","linear", "ordinal","ordinal"]
+        "names" : ["rpm", "torque", "horsepower", "EngineType"],
+        "types" : ["linear", "linear", "ordinal", "ordinal"]
     };
 
     data = [
@@ -70,14 +70,14 @@ Sample data table would be like following:
 These prerequisites must be installed before proceeding with the build process. 
 
 #### Build the Library
-In order to build React-VizGrammar from the sources, Get a clone from this repository and then run the following commands in the terminal from the react-vizgrammar directory.
+In order to build React-VizGrammar from the sources, clone this repository and run the following commands in the terminal from the react-vizgrammar directory.
 ```bash
     npm install
     npm run build
 ```
 
 #### Build and run samples
-To build and start the dev-server and view the samples, inside the main directory run the following command afer installing the npm dependencies.
+In order to build and start the dev-server and view the samples, run the following command inside the main directory after installing the npm dependencies.
 ```bash
     npm run samples
 ```
