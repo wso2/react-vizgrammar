@@ -17,9 +17,9 @@ Where the props?
 checkout the [samples and documentation](https://wso2.github.io/react-vizgrammar)
 
 ### Chart `config` prop
-Users have to provide parameters for the widget using config object inorder to create the chart type they require. It is a JSON object that has a well defined configuration attributes to customize the chart.
+Users have to provide parameters for the widget using config object in order to create the chart type they require. It is a JSON object that has a well defined configuration attributes to customize the chart.
 
-Following is a basic configuration to plot a line chart,
+The following is a basic configuration to plot a line chart:
 ```javascript
     let config = {
         x : "rpm",
@@ -30,7 +30,7 @@ Following is a basic configuration to plot a line chart,
     }
 ```
 ### `metadata` prop and `data` prop
-Once the `config` is provided. User can provide a dataset to visualize the chart. For easy interpretation React-VizGrammar require this dataset to be arranged in a tabular way similar to the way explained below.
+Once the `config` is provided, user can provide a dataset to visualize the chart. For easy interpretation React-VizGrammar requires this dataset to be arranged in a tabular way similar to the way explained below.
 ```javascript
     metadata = {
         "names": ["Column1", "Column2",...],
@@ -70,7 +70,7 @@ Sample data table would be like following:
 These prerequisites must be installed before proceeding with the build process. 
 
 #### Build the Library
-In order build React-VizGrammar from the sources, Get a clone from this repository and then run the following commands in the terminal from the react-vizgrammar directory.
+In order to build React-VizGrammar from the sources, Get a clone from this repository and then run the following commands in the terminal from the react-vizgrammar directory.
 ```bash
     npm install
     npm run build
