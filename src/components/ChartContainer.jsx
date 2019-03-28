@@ -88,7 +88,7 @@ export default class ChartContainer extends React.Component {
         let xAxisPaddingBottom = config.style ? config.style.xAxisPaddingBottom || legendOffset : legendOffset;
         let domainPadding = this.props.domainPadding || 0;
 
-        if (isOrdinal) {
+        if (isOrdinal && !(_.findIndex(config.charts, o => o.orientation === 'left') > -1)) {
             Object.keys(dataSets).forEach(function(e) {
                 dataSets[e].forEach(function(t) {
                     Object.keys(t).forEach(function(k){
@@ -107,13 +107,15 @@ export default class ChartContainer extends React.Component {
         }
 
         if ((config.style && config.style.xAxisTickAngle) || tickAngle === 45) {
-            if (xAxisPaddingBottom == 0 && config.legendOrientation === 'bottom'){
+            if (xAxisPaddingBottom === 0 && config.legendOrientation === 'bottom'){
                 xAxisPaddingBottom = 120;
+            } else if (xAxisPaddingBottom === 0) {
+                xAxisPaddingBottom = 100;
             } else {
                 xAxisPaddingBottom = xAxisPaddingBottom + 50;
             }
-        } else if ( xAxisPaddingBottom == 0) {
-            if (config.legendOrientation === 'bottom') {
+        } else if ( xAxisPaddingBottom === 0) {
+            if (config.legend === true && config.legendOrientation === 'bottom') {
                 xAxisPaddingBottom = 80;
             } else {
                 xAxisPaddingBottom = 50;
