@@ -161,6 +161,16 @@ export default class ScatterPlot extends BaseChart {
         this.setState({ chartArray, dataSets, xScale, yDomain, xDomain, isOrdinal });
     }
 
+    trimLegendLabel(characterLength, text) {
+        if (text) {
+            if (text.length > characterLength) {
+                return text.slice(0, 6) + '...' + text.slice(-(characterLength - 7));
+            } else {
+                return text + new Array(16 - text.length).join(' ');
+            }
+        }
+    }
+
     handleMouseClickEvent(props) {
         const { onClick } = this.props;
 
@@ -205,7 +215,11 @@ export default class ScatterPlot extends BaseChart {
                 }
                 // Adding Legend records
                 _.keys(chart.dataSetNames).forEach((colorColumn) => {
-                    legendComponents.push({ name: colorColumn, symbol: { fill: chart.dataSetNames[colorColumn] } });
+                    legendComponents.push({
+                        name: this.trimLegendLabel(16, colorColumn),
+                        fullName: colorColumn,
+                        symbol: { fill: chart.dataSetNames[colorColumn]
+                    } });
                 });
                 chartComponents.push((
                     <VictoryScatter

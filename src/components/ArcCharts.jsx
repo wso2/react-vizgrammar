@@ -53,6 +53,16 @@ export default class ArcChart extends BaseChart {
         return onClick && onClick(data);
     }
 
+    trimLegendLabel(characterLength, text) {
+        if (text) {
+            if (text.length > characterLength) {
+                return text.slice(0, 6) + '...' + text.slice(-(characterLength - 7));
+            } else {
+                return text + new Array(16 - text.length).join(' ');
+            }
+        }
+    }
+
     sortDataBasedOnConfig(props) {
         const { config, metadata, data } = props;
         let { chartInfo, pieChartData, random } = this.state;
@@ -148,7 +158,12 @@ export default class ArcChart extends BaseChart {
                 disableContainer
                 arcChart={!config.percentage}
                 legendOffset={legendOffset}
-                legendItems={pieChartData.map(data => ({ name: data.x, symbol: data.symbol }))}
+                legendItems={
+                    pieChartData.map(data => ({
+                        name: this.trimLegendLabel(16, data.x),
+                        fullName: data.x,
+                        symbol: data.symbol
+                    }))}
             >
                 <VictoryPie
                     height={height}
@@ -221,7 +236,13 @@ export default class ArcChart extends BaseChart {
                             <LegendComponent
                                 height={height}
                                 width={width}
-                                legendItems={pieChartData.map(data => ({ name: data.x, symbol: data.symbol }))}
+                                legendItems={
+                                    pieChartData.map(data => ({
+                                        name: this.trimLegendLabel(16, data.x),
+                                        fullName: data.x,
+                                        symbol: data.symbol
+                                    }))
+                                }
                                 interaction={() => { }}
                                 config={config}
                             /> : null
