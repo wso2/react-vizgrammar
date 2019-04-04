@@ -29,13 +29,6 @@ export default class LegendComponent extends React.Component {
         const maxLegendItems = Math.floor((height - 100) / 25);
         const legendColumns = Math.floor(width / 160);
 
-        if (legendItems) {
-            legendItems.forEach((item) => {
-                item.initialName = item.name;
-                item.name = this.trimLegendLabel(16, item.name);
-            });
-        }
-
         return (
             <VictoryPortal>
                 <VictoryLegend
@@ -116,13 +109,5 @@ export default class LegendComponent extends React.Component {
                 />
             </VictoryPortal>
         );
-    }
-
-    trimLegendLabel(characterLength, text) {
-        if (text.length > characterLength) {
-            return text.slice(0, 6) + '...' + text.slice(-(characterLength - 7));
-        } else {
-            return text + new Array(16 - text.length).join(' ');
-        }
     }
 }

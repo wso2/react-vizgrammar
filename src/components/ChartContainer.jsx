@@ -114,7 +114,7 @@ export default class ChartContainer extends React.Component {
             } else {
                 xAxisPaddingBottom = xAxisPaddingBottom + 50;
             }
-        } else if ( xAxisPaddingBottom === 0) {
+        } else if (xAxisPaddingBottom === 0) {
             if (config.legend === true && config.legendOrientation === 'bottom') {
                 xAxisPaddingBottom = 80;
             } else {

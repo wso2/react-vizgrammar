@@ -32,7 +32,7 @@ export default class CustomLegend extends React.Component {
     render() {
         const { config, theme, datum } = this.props;
         return (
-            <g data-tip={datum.initialName}>
+            <g data-tip={datum.fullName}>
                 <VictoryLabel
                     {...this.props}
                     style={{

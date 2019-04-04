@@ -37,6 +37,16 @@ export default class AreaChart extends BaseChart {
         this.handleLegendInteraction = this.handleLegendInteraction.bind(this);
     }
 
+    static trimLegendLabel(characterLength, text) {
+        if (text) {
+            if (text.length > characterLength) {
+                return text.slice(0, 6) + '...' + text.slice(-(characterLength - 7));
+            } else {
+                return text + new Array(16 - text.length).join(' ');
+            }
+        }
+    }
+
     /**
      * Generate the chart components in the case where there's only Area charts defined in the chart config.
      * @param {Array} chartArray - Array containing objects that has the information to visualize each area chart.
@@ -55,7 +65,8 @@ export default class AreaChart extends BaseChart {
             const localChartComp = [];
             _.keys(chart.dataSetNames).forEach((dsName) => {
                 legendComponents.push({
-                    name: dsName,
+                    name: this.trimLegendLabel(16, dsName),
+                    fullName: dsName,
                     symbol: { fill: _.indexOf(ignoreArray, dsName) > -1 ? '#d3d3d3' : chart.dataSetNames[dsName] },
                     chartIndex,
                 });
