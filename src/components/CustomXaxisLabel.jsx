@@ -45,7 +45,7 @@ export default class CustomXaxisLabel extends React.Component {
                     {...this.props}
                     angle={(config.style && config.style.xAxisTickAngle) ? config.style.xAxisTickAngle : tickAngle}
                     theme={theme}
-                    textAnchor={(config.style && config.style.xAxisTickAngle) || tickAngle === 45 ? 'start' : 'middle'}
+                    textAnchor={((config.style && config.style.xAxisTickAngle) || tickAngle === 45) ? 'start' : 'middle'}
                     text={this.trimTickLabel(12,text)}
                 />
             </g>

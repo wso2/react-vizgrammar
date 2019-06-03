@@ -218,8 +218,8 @@ export default class ScatterPlot extends BaseChart {
                     legendComponents.push({
                         name: this.trimLegendLabel(16, colorColumn),
                         fullName: colorColumn,
-                        symbol: { fill: chart.dataSetNames[colorColumn]
-                    } });
+                        symbol: { fill: chart.dataSetNames[colorColumn] }
+                    });
                 });
                 chartComponents.push((
                     <VictoryScatter
