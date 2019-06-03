@@ -42,7 +42,9 @@ export default class LegendComponent extends React.Component {
                                 return config.legendOffset ? config.legendOffset : 0;
                             } else if (legendItems.length > (maxLegendItems - 1)) {
                                 return config.legendOffset ? config.legendOffset : 20;
-                            } else return config.legendOffset ? config.legendOffset : 100;
+                            } else {
+                                return config.legendOffset ? config.legendOffset : 100;
+                            }
                         })()
                     }
                     y={
@@ -80,9 +82,10 @@ export default class LegendComponent extends React.Component {
                     }
                     style={{
                         title: {
-                            fontSize: (config.style ? (config.style.legendTitleSize ||
-                                theme.legend.style.title.fontSize) : theme.legend.style.title.fontSize),
-                            fill: config.style ? config.style.legendTitleColor : theme.legend.style.title.fill,
+                            fontSize: (config.style && config.style.legendTitleSize) ?
+                                config.style.legendTitleSize : theme.legend.style.title.fontSize,
+                            fill: (config.style && config.style.legendTitleColor) ? config.style.legendTitleColor :
+                                theme.legend.style.title.fill,
                         },
                     }}
                     data={legendItems.length > 0 ? legendItems : [{
