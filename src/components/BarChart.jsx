@@ -296,8 +296,8 @@ export default class BarChart extends BaseChart {
                 fullBarWidth = this.calculateBarWidth(BarChart.isHorizontal(config), height, width,
                     (xAxisRange[1] - xAxisRange[0]), config.timeStep.toLowerCase());
             } else {
-                fullBarWidth = ((BarChart.isHorizontal(config) ?
-                    (height - 120) : (width - 280)) / ((dataSetLength + (2 * (config.linearSeriesStep || 1))) / (config.linearSeriesStep || 1)));
+                fullBarWidth = (BarChart.isHorizontal(config) ? (height - 120) : (width - 280)) /
+                    ((dataSetLength + (2 * (config.linearSeriesStep || 1))) / (config.linearSeriesStep || 1));
             }
         }
 
