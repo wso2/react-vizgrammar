@@ -76,6 +76,16 @@ export default class ChartContainer extends React.Component {
         }
     }
 
+    yAxisTickFormat() {
+        return (data) => {
+            if (data % 1 !== 0) {
+                return data;
+            } else {
+                return Number(data).toFixed(0);
+            }
+        };
+    }
+
     render() {
         const { width, height, xScale, legendOffset,legendItems,
             theme, config, horizontal, disableAxes, yDomain, isOrdinal, dataSets, barData, arcChart, xDomain } = this.props;
@@ -325,7 +335,7 @@ export default class ChartContainer extends React.Component {
                                             theme={currentTheme}
                                         />
                                     }
-                                    tickFormat={!horizontal ? null : this.xAxisTickFormat(xScale, config, isOrdinal,arr)}
+                                    tickFormat={!horizontal ? this.yAxisTickFormat() : this.xAxisTickFormat(xScale, config, isOrdinal,arr)}
                                     axisLabelComponent={
                                         <VictoryLabel
                                             angle={0}

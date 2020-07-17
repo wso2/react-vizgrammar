@@ -28,8 +28,11 @@ export default class CustomYaxisLabel extends React.Component {
         super(props);
     }
 
-    trimTickLabel(characterLength, text) {
-        if (text.length > characterLength) {
+    formatTickLabel(characterLength, text, config) {
+        const regexp = /^\d+\.\d+$/;
+        if (config.ignoreYaxisDecimalPoints && regexp.test(text))
+            return;
+        else if (text.length > characterLength) {
             return text.slice(0, 6) + '...' + text.slice(-(characterLength - 7));
         } else {
             return text;
@@ -45,7 +48,7 @@ export default class CustomYaxisLabel extends React.Component {
                     {...this.props}
                     angle={(config.style && config.style.yAxisTickAngle) ? config.style.yAxisTickAngle : 0}
                     theme={theme}
-                    text={this.trimTickLabel(12,text)}
+                    text={this.formatTickLabel(12, text, config)}
                 />
             </g>
         );
