@@ -25,6 +25,7 @@ import './resources/css/tableChart.css';
 import { getDefaultColorScale } from './helper';
 import VizGError from '../VizGError';
 import BaseChart from './BaseChart';
+import Pagination from './Pagination';
 
 const DAFAULT_ROW_COUNT_FOR_PAGINATION = 5;
 
@@ -314,6 +315,10 @@ export default class TableChart extends BaseChart {
                         manual={manual}
                         {...manualProps}
                         loading={this.state.loading}
+                        PaginationComponent={
+                            config && config.hideTotalPageCount ?
+                                Pagination : undefined
+                        }
                     />
                 </div>
             </div>
