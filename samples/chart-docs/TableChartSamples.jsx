@@ -321,6 +321,10 @@ export default class TableChartSamples extends React.Component {
                                     <li>
                                         <strong>dataFunction</strong> -  function to match data and do styling.
                                     </li>
+                                    <li>
+                                        <strong>hideTotalPageCount</strong> -  boolean value to hide/show total page count for table chart
+                                        when pagination is enabled default: false
+                                    </li>
                                 </ul>
                             </div>
                         </ChartWrapper>

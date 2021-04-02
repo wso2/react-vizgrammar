@@ -74,7 +74,8 @@ export default class ServerSidePaginationTableChart extends React.Component {
             pagination: true,
             filterable: true,
             append: false,
-            sortable: false
+            sortable: false,
+            hideTotalPageCount: false,
         };
 
         this.normalDataSetMetadata = {
